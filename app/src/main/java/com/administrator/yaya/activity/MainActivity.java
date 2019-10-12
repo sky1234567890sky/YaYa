@@ -184,22 +184,23 @@ public class MainActivity extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     private void popupSelector() {
-        View inflate= LayoutInflater.from(this).inflate(R.layout.layout_yingye, null);
-        TextView yy = inflate.findViewById(R.id.tv_yy);//营业游戏币数量
-        Button cancel = inflate.findViewById(R.id.cancel);
-        Button ok = inflate.findViewById(R.id.ok);
 
-        popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        View inflate= LayoutInflater.from(this).inflate(R.layout.layout_yingye, null);
+        TextView yy = inflate.findViewById(R.id.game_money_number);//营业游戏币数量
+        Button cancel = inflate.findViewById(R.id.cancel_pop);
+        Button ok = inflate.findViewById(R.id.ok_pop);
+
+        popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         popupWindow.setOutsideTouchable(true);
 //        popupWindow.setAnimationStyle(R.style.PopupAnimation);
-        popupWindow.showAtLocation(inflate, Gravity.BOTTOM, 0, 0);
+        popupWindow.showAtLocation(inflate, Gravity.CENTER, 0, 0);
         // 设置背景颜色变暗
         WindowManager.LayoutParams lp = this.getWindow().getAttributes();
         lp.alpha = 0.7f;
         this.getWindow().setAttributes(lp);
+
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {

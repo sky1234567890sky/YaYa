@@ -1,5 +1,7 @@
 package com.administrator.yaya.activity;
 
+import android.view.View;
+
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
