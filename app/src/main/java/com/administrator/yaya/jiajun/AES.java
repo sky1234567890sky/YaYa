@@ -60,7 +60,7 @@ package com.administrator.yaya.jiajun;
 // A tutorial guide to using AES encryption in Android
 // First we generate a 256 bit secret key; then we use that secret key to AES encrypt a plaintext message.
 // Finally we decrypt the ciphertext to get our original message back.
-// We don't keep a copy of the secret key - we generate the secret key whenever it is needed, 
+// We don't keep a copy of the secret key- we generate the secret key whenever it is needed,
 // so we must remember all the parameters needed to generate it -
 // the salt, the IV, the human-friendly passphrase, all the algorithms and parameters to those algorithms.
 // Peter van der Linden, April 15 2012

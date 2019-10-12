@@ -1,9 +1,8 @@
 package com.administrator.yaya.jiajun;
 
-import com.teach.news10.Frame.Application10;
 
 /**
- * Created by 任小龙 on 2019/7/8.
+ * Created by sky on 2019/7/8.
  */
 public class Demo {
    /* UEL：http://hsp2.wx.pangjiachen.com/miapp/APPYF.A0000./gateway

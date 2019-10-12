@@ -1,12 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.MainActivity">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        app:titleTextColor="@color/c_ffffff"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/title_tb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/homepage"
+                android:textColor="@color/c_000000"
+                android:textSize="@dimen/sp_24"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <FrameLayout
+            android:id="@+id/home_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/rl_nav" />
+
+        <RelativeLayout
+            android:id="@+id/rl_nav"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_49"
+            android:layout_alignParentBottom="true"
+            >
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:background="@color/grey_second"
+                android:paddingTop="@dimen/dp_5"
+                >
+                <RadioButton
+                    android:id="@+id/homepage"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableTop="@drawable/select_homepage"
+                    android:gravity="center"
+                    android:text="@string/homepage"
+                    android:textColor="@color/radiobutton_textcolor"
+                    />
+                <RadioButton
+                    android:id="@+id/inventory_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableTop="@drawable/select_inventory"
+                    android:gravity="center"
+                    android:text="@string/inventory"
+                    android:textColor="@color/radiobutton_textcolor"
+                    />
+                <!--营业-->
+                <RadioButton
+                    android:id="@+id/dobusiness_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    />
+                <RadioButton
+                    android:id="@+id/orderform_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableTop="@drawable/select_orderform"
+                    android:gravity="center"
+                    android:text="@string/orderform"
+                    android:textColor="@color/radiobutton_textcolor"
+                    />
+
+                <RadioButton
+                    android:id="@+id/mine_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableTop="@drawable/select_my"
+                    android:gravity="center"
+                    android:text="@string/my"
+                    android:textColor="@color/radiobutton_textcolor"
+                    />
+            </RadioGroup>
+        </RelativeLayout>
+        <!--营业-->
+        <ImageView
+            android:id="@+id/dobusiness_iv"
+            android:layout_width="@dimen/dp_90"
+            android:layout_height="@dimen/dp_82"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="0dp"
+            android:src="@mipmap/icon_fb"
+            />
+    </RelativeLayout>
 </LinearLayout>

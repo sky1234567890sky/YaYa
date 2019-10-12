@@ -6,4 +6,8 @@
     <color name="app_setting">#FF001838</color>
     <color name="grey_first">#999999</color>
     <color name="grey_second">#a4a4a4</color>
+    <color name="c_000000">#000000</color>
+    <color name="c_ffffff">#ffffff</color>
+    <color name="blue">#006DFF</color>
+    <color name="c_BBBBBB">#BBBBBB</color>
 </resources>

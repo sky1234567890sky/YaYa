@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:orientation="vertical"
+    android:layout_marginLeft="@dimen/dp_43"
+    android:layout_marginRight="@dimen/dp_43"
+    android:background="@color/c_ffffff"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_yy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确认营业"
+            android:textColor="@color/c_000000"
+            android:textStyle="normal"
+            android:textSize="@dimen/sp_18"
+            android:layout_marginTop="@dimen/dp_13"
+            android:layout_centerHorizontal="true"
+            />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/c_BBBBBB"
+        android:layout_marginTop="@dimen/dp_50"
+        >
+    </View>
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="当前游戏币库存：xxx"
+        android:layout_marginTop="@dimen/dp_59"
+        android:layout_marginLeft="@dimen/dp_22"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/c_000000"
+        />
+
+    <Button
+        android:id="@+id/ok"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginLeft="@dimen/dp_52"
+        android:layout_marginTop="@dimen/dp_120"
+        android:text="@string/cancel"
+        android:background="@drawable/shape_btn_gray"
+        android:textColor="@color/c_000000"
+        />
+
+    <Button
+        android:id="@+id/ok_popup"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_42"
+        android:layout_marginTop="@dimen/dp_120"
+        android:layout_alignParentRight="true"
+        android:text="@string/ok"
+        android:background="@drawable/shape_btn_gray"
+        android:textColor="@color/c_000000"
+        />
+
+
+</RelativeLayout>
