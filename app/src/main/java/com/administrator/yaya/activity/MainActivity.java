@@ -68,7 +68,6 @@ public class MainActivity extends BaseActivity {
     private MyFragment myFragment;
     private long exittime;
     private PopupWindow popupWindow;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -105,6 +104,7 @@ public class MainActivity extends BaseActivity {
         inventoryFragment = new InventoryFragment();
         orderFormkFragment = new OrderFormkFragment();
         myFragment = new MyFragment();
+
         fragments = new ArrayList<Fragment>();
         fragments.add(homePageFragment);
         fragments.add(inventoryFragment);
@@ -123,35 +123,30 @@ public class MainActivity extends BaseActivity {
     protected void initListener() {
         super.initListener();
 
-
     }
-
     @OnClick({R.id.homepage, R.id.inventory_btn, R.id.dobusiness_btn, R.id.orderform_btn, R.id.mine_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.homepage:
+            case R.id.homepage://首页
                 mHomepage.setChecked(true);
                 switchFragment(AppConstants.TYPE_HOMEPAGER);
                 break;
-            case R.id.inventory_btn:
+            case R.id.inventory_btn://库存
                 switchFragment(AppConstants.TYPE_INVENTORY);
                 break;
             case R.id.dobusiness_btn:
                 popupSelector();//营业
                 break;
-            case R.id.orderform_btn:
+            case R.id.orderform_btn://订单
                 switchFragment(AppConstants.TYPE_ORDERFORM);
                 break;
-            case R.id.mine_btn:
+            case R.id.mine_btn://我的
                 switchFragment(AppConstants.TYPE_MY);
                 break;
         }
     }
-
     private int mLastType = 0;
-
     private void switchFragment(int type) {
-
         FragmentTransaction transaction = manager.beginTransaction();
         Fragment fragment = fragments.get(type);
         //显示
@@ -174,7 +169,7 @@ public class MainActivity extends BaseActivity {
                 popupWindow.dismiss();
             }
             if ((System.currentTimeMillis() - exittime) > 2000) {  //如果两次连续点击的时间>2s，就不执行操作
-                ToastUtil.showShort("再按一次退出潜水伴侣");
+                ToastUtil.showShort("再按一次退出丫丫");
                 exittime = System.currentTimeMillis();
             } else {
                 finish();
@@ -187,11 +182,11 @@ public class MainActivity extends BaseActivity {
     private void popupSelector() {
 
         View inflate= LayoutInflater.from(this).inflate(R.layout.layout_yingye, null);
-        TextView yy = inflate.findViewById(R.id.game_money_number);//营业游戏币数量
+        TextView yy = inflate.findViewById(R.id.game_money_number);//显示营业游戏币数量
         Button cancel = inflate.findViewById(R.id.cancel_pop);
         Button ok = inflate.findViewById(R.id.ok_pop);
 
-        popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         popupWindow.setOutsideTouchable(true);
 //        popupWindow.setAnimationStyle(R.style.PopupAnimation);

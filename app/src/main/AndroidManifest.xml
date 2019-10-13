@@ -74,7 +74,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.UpGameMoneyActivity"></activity>
+        <activity android:name=".activity.UpGameMoneyActivity" />
+        <activity android:name=".ui.ImmediatelyBuyActivity"></activity>
     </application>
 
 </manifest>
