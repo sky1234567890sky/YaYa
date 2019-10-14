@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.administrator.yaya">
-
     <!-- 权限声明 -->
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -52,30 +51,36 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.RegisterActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".activity.RetrievePasswordActivity"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait">
+        </activity>
         <receiver
             android:name=".broadcast.NetStatusBroadCast"
             android:enabled="true"
             android:exported="true" />
 
         <activity android:name=".activity.UpGameMoneyActivity" />
-        <activity android:name=".ui.ImmediatelyBuyActivity"></activity>
+        <activity android:name=".ui.ImmediatelyBuyActivity" />
+        <activity android:name=".activity.SplashActivity">
+
+        </activity>
     </application>
 
 </manifest>

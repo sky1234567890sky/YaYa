@@ -1,40 +1,33 @@
 package com.administrator.yaya.base;
-
-import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
+import com.administrator.yaya.R;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 import static com.scwang.smartrefresh.layout.util.DensityUtil.px2dp;
-
 public abstract class BaseActivity extends AppCompatActivity {
-
-    private BaseApp mApplication;
-    private LinearLayoutManager mManager;
-
+    protected BaseApp mApplication;
+    protected LinearLayoutManager mManager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApplication = (BaseApp) getApplication();
         setContentView(getLayoutId());
         ButterKnife.bind(this);
+        overridePendingTransition(R.anim.from_right, R.anim.no_slide);//划入
+        //沉浸式状态栏
 
         initMvp();
         initView();
         initData();
         initListener();
     }
-
     protected abstract int getLayoutId();
 
     protected void initListener() {
@@ -88,6 +81,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected int getLoadType(Object[] t) {
+
         return (int) ((Object[]) t[1])[0];
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.no_slide, R.anim.out_right);//划出
     }
 }

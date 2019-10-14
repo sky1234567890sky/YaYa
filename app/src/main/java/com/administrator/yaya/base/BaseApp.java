@@ -8,6 +8,7 @@ import com.administrator.yaya.local_utils.DeviceUuidFactory;
 import java.util.UUID;
 
 public class BaseApp extends Application {
+
     public static BaseApp mBaseApp;
     public String mToken = "";
     public UUID mUuid;

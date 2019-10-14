@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/login"
-                android:textColor="@color/c_000000"
+                android:textColor="@color/c_ffffff"
                 android:textSize="@dimen/dp_18" />
         </RelativeLayout>
     </com.administrator.yaya.design.CommonTitle>
@@ -107,7 +107,7 @@
             />
     </LinearLayout>
     <Button
-        android:id="@+id/findpass_ok_btn"
+        android:id="@+id/login_btn"
         android:layout_width="@dimen/dp_305"
         android:layout_height="@dimen/dp_44"
         android:background="@drawable/shape_btn"

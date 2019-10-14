@@ -19,4 +19,6 @@
     <string name="cancel">取消</string>
     <string name="ok">确认</string>
     <string name="retrievepassword">忘记密码</string>
+    <string name="photo">拍照</string>
+    <string name="camera">相册</string>
 </resources>
