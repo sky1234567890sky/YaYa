@@ -72,13 +72,17 @@ dependencies {
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
     implementation 'top.zibin:Luban:1.1.3'
     implementation 'xstream:xstream:1.2.2'
+    //noinspection GradleDependency
     implementation 'com.android.support:multidex:1.0.1'
 
+    //沉浸式状态栏
     implementation 'cn.yc:YCStatusBarLib:1.3.1'
 
     //WeChat
+    //noinspection GradleDynamicVersion
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     implementation files('libs/fastjson-1.2.41.jar')
+    //noinspection GradleDynamicVersion
     api 'com.miguelcatalan:materialsearchview:1.+'
     implementation 'org.jetbrains:annotations-java5:15.0'
 

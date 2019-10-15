@@ -31,6 +31,7 @@ import com.administrator.yaya.fragment.InventoryFragment;
 import com.administrator.yaya.fragment.MyFragment;
 import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.utils.AppConstants;
+import com.administrator.yaya.utils.FragmentUtils;
 import com.administrator.yaya.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -40,12 +41,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
-    @BindView(R.id.title_tb)
-    TextView mTitle;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+//    @BindView(R.id.title_tb)
+//    TextView mTitle;
+//    @BindView(R.id.toolbar)
+//    Toolbar mToolbar;
     @BindView(R.id.home_fragment)
     FrameLayout mFl;
+
     @BindView(R.id.homepage)
     RadioButton mHomepage;
     @BindView(R.id.inventory_btn)
@@ -79,9 +81,10 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         super.initView();
 
-        mToolbar.setTitle("");
-        mTitle.setText(R.string.homepage);
-        setSupportActionBar(mToolbar);//支持Toolbar
+//        mToolbar.setTitle("");
+//        mTitle.setText(R.string.homepage);
+//        setSupportActionBar(mToolbar);//支持Toolbar
+        mHomepage.setChecked(true);
 
         titles = new ArrayList<Integer>();
         titles.add(R.string.homepage);
@@ -119,22 +122,22 @@ public class MainActivity extends BaseActivity {
         super.initData();
 
     }
-
-
     @Override
     protected void initListener() {
         super.initListener();
-
     }
     @OnClick({R.id.homepage, R.id.inventory_btn, R.id.dobusiness_btn, R.id.orderform_btn, R.id.mine_btn,R.id.dobusiness_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.homepage://首页
                 mHomepage.setChecked(true);
-                switchFragment(AppConstants.TYPE_HOMEPAGER);
+//                switchFragment(AppConstants.TYPE_HOMEPAGER);
+                FragmentUtils.addFragment(manager,homePageFragment.getClass(),R.id.home_fragment,null);
                 break;
             case R.id.inventory_btn://库存
-                switchFragment(AppConstants.TYPE_INVENTORY);
+//                mToolbar.setVisibility(View.GONE);
+//                switchFragment(AppConstants.TYPE_INVENTORY);
+                FragmentUtils.addFragment(manager,inventoryFragment.getClass(),R.id.home_fragment,null);
                 break;
             case R.id.dobusiness_iv:
 //            case R.id.dobusiness_btn:
@@ -142,10 +145,12 @@ public class MainActivity extends BaseActivity {
                 break;
 
             case R.id.orderform_btn://订单
-                switchFragment(AppConstants.TYPE_ORDERFORM);
+//                switchFragment(AppConstants.TYPE_ORDERFORM);
+                FragmentUtils.addFragment(manager,orderFormkFragment.getClass(),R.id.home_fragment,null);
                 break;
             case R.id.mine_btn://我的
-                switchFragment(AppConstants.TYPE_MY);
+//                switchFragment(AppConstants.TYPE_MY);
+                FragmentUtils.addFragment(manager,myFragment.getClass(),R.id.home_fragment,null);
                 break;
         }
     }
@@ -163,7 +168,7 @@ public class MainActivity extends BaseActivity {
         //记录当前选中位置
         mLastType = type;
         //设置标题
-        mTitle.setText(titles.get(type));
+//        mTitle.setText(titles.get(type));
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -224,8 +229,10 @@ public class MainActivity extends BaseActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, UpGameMoneyActivity.class);
                 startActivity(intent);
+                popupWindow.dismiss();
             }
         });
     }

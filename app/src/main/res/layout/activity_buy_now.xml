@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.home.BuyNowActivity">
+
+    <com.administrator.yaya.design.CommonTitle
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        app:canBack="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/now_buy_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:src="@mipmap/back_hover"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/now_buy"
+                android:textColor="@color/c_ffffff"
+                android:textSize="@dimen/dp_18"
+                tools:ignore="SpUsage" />
+        </RelativeLayout>
+    </com.administrator.yaya.design.CommonTitle>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+    </LinearLayout>
+
+
+</LinearLayout>

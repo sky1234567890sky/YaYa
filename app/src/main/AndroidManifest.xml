@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.administrator.yaya">
+
     <!-- 权限声明 -->
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -51,26 +52,23 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"
-            >
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RetrievePasswordActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
+
         <receiver
             android:name=".broadcast.NetStatusBroadCast"
             android:enabled="true"
@@ -78,9 +76,13 @@
 
         <activity android:name=".activity.UpGameMoneyActivity" />
         <activity android:name=".ui.ImmediatelyBuyActivity" />
-        <activity android:name=".activity.SplashActivity">
-
-        </activity>
+        <activity android:name=".activity.SplashActivity" />
+        <activity android:name=".activity.my.PersonalDatActivity" />
+        <activity android:name=".activity.my.SettingActivity" />
+        <activity android:name=".activity.my.UpdataPasswordActivity" />
+        <activity android:name=".activity.my.CustomerServiceActivity" />
+        <activity android:name=".activity.inventory.PaymentsReceiveActivity" />
+        <activity android:name=".activity.home.BuyNowActivity"></activity>
     </application>
 
 </manifest>

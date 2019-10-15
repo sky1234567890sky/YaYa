@@ -24,6 +24,7 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.hjq.permissions.OnPermission;
+import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoImpl;
@@ -115,13 +116,12 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
         switch (view.getId()) {
             case R.id.register_back_iv:
                 finish();
-
                 break;
             case R.id.register_headleriv://点击头像
 //                mView.setSmsVerifyCallback(this);
                 //初始化底部弹出拍照的pop
                 mPop = new SlideFromBottomPopup(this);
-                mPop.setLineText(getString(R.string.photo), getString(R.string.camera), getString(R.string.cancel));
+                mPop.setLineText(getString(R.string.camera),getString(R.string.photo), getString(R.string.cancel));
                 mPop.setBottomClickListener(this);
                 mPop.showPopupWindow();
                 break;
@@ -160,15 +160,13 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        ToastUtil.showShort(event.getKeyCode()+"");
+//        ToastUtil.showShort(event.getKeyCode()+"");
         if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
             ToastUtil.showShort("enter click");
             return true;
         }
         return super.dispatchKeyEvent(event);
     }
-
-
     /**
      * 点击相册选图
      */
@@ -230,6 +228,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
         String path = result.getImage().getCompressPath() != null ? result.getImage().getCompressPath() : result.getImage().getOriginalPath();//先设置到列表中
         if (!TextUtils.isEmpty(path)) {
             ToastUtil.showShort("上传成功");
+
 //            showLoadingDialog();
 //            mPresenter.getData(ApiConfig.UPLOAD_IMAGE, path);
 //            Glide.with(this).load(path).into(mImage);

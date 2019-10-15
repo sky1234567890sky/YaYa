@@ -1,12 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.OrderFormkFragment">
-    <TextView
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar3"
+        android:minHeight="?attr/actionBarSize"
+        app:titleTextColor="@color/c_ffffff"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <!--<TextView-->
+            <!--android:id="@+id/title_tb"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_marginTop="@dimen/dp_10"-->
+            <!--android:text="@string/homepage"-->
+            <!--android:textColor="@color/c_000000"-->
+            <!--android:textSize="@dimen/sp_24"-->
+            <!--android:textStyle="normal" />-->
+            <TextView
+                android:id="@+id/inventory_money"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_45"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_21"
+                android:gravity="center_vertical"
+                android:text="今日收款：$5000元"
+                android:textColor="@color/c_101010"
+                android:textSize="@dimen/sp_14"
+                tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/orderform_tab"
+        app:tabTextColor="@color/c_4d4d4d"
+        app:tabSelectedTextColor="@color/c_000000"
+        app:tabIndicatorHeight="@dimen/dp_2"
+        app:tabIndicator="@drawable/tab_indicator_b"
+        />
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="顶单"
-        android:textSize="@dimen/sp_20" />
-</FrameLayout>
+        android:id="@+id/orderform_vp" />
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/orderform_fl"-->
+        <!--/>-->
+</LinearLayout>

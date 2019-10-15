@@ -107,8 +107,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
     public void clickBottom() {
 
     }
-
-
     @OnClick({R.id.login_back_iv, R.id.login_headler_iv, R.id.login_btn, R.id.tv_registered, R.id.tv_forgetPassword})
     public void onViewClicked(View view) {
         switch (view.getId()) {
