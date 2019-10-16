@@ -35,4 +35,8 @@
     </string>
     <string name="pay_receive">支付宝收款码</string>
     <string name="now_buy">立即购买</string>
+    <string name="system_msg">系统消息</string>
+    <string name="my_invite">我的邀请</string>
+    <string name="book">小账本</string>
+    <string name="myincome">我的收益</string>
 </resources>

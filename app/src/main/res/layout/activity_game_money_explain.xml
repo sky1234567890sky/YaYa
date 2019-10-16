@@ -6,8 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.my.PersonalDatActivity">
-
+    tools:context=".activity.my.GameMoneyExplainActivity">
     <com.administrator.yaya.design.CommonTitle
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
@@ -16,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
-                android:id="@+id/personal_back_iv"
+                android:id="@+id/system_msg_back_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -29,10 +28,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/personaldata"
+                android:text="@string/system_msg"
                 android:textColor="@color/c_ffffff"
                 android:textSize="@dimen/dp_18"
                 tools:ignore="SpUsage" />
         </RelativeLayout>
     </com.administrator.yaya.design.CommonTitle>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="游戏币的兑换比例说明......"
+        tools:ignore="HardcodedText"
+        android:textSize="@dimen/sp_14"
+        android:layout_marginLeft="@dimen/dp_61"
+        android:layout_marginTop="@dimen/dp_31"
+        android:textColor="@color/c_000000"
+        />
 </LinearLayout>

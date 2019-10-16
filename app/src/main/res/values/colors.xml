@@ -13,4 +13,6 @@
     <color name="c_101010">#101010</color>
     <color name="c_red">#FF0000</color>
     <color name="c_4d4d4d">#4d4d4d</color>
+    <color name="c_00000000">#00000000</color>
+    <color name="c_fff">#fff</color>
 </resources>

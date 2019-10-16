@@ -1,0 +1,18 @@
+package com.administrator.yaya.activity.my;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import com.administrator.yaya.R;
+
+/**
+ * 系统消息
+ */
+public class SystemMessagesActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_system_messages);
+    }
+}

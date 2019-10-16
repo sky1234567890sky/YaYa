@@ -36,13 +36,85 @@
         </RelativeLayout>
     </com.administrator.yaya.design.CommonTitle>
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginLeft="@dimen/dp_13"
+        android:layout_marginRight="@dimen/dp_13"
+        android:background="@drawable/background_rl"
         >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <com.administrator.yaya.utils.RoundImageCircleView
+                android:id="@+id/now_bu_gamemoney_iv"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_23"
+                android:layout_marginTop="@dimen/dp_10"
+                />
+            <TextView
+                android:layout_toRightOf="@id/now_bu_gamemoney_iv"
+                android:layout_marginLeft="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="游戏币购买"
+            android:textColor="@color/c_000000"
+            android:textSize="@dimen/dp_14"
+                android:layout_centerVertical="true"
 
+            />
+
+        </RelativeLayout>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="游戏币单价:10.0"
+            android:textColor="@color/c_000000"
+            android:textSize="@dimen/dp_14"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_23"
+            android:layout_marginTop="@dimen/dp_27"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp_10"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="游戏币数量："
+                android:textColor="@color/c_000000"
+                android:textSize="@dimen/sp_14"
+                android:layout_marginLeft="@dimen/dp_23"
+                />
+            <EditText
+                android:id="@+id/buy_gamemoney_number"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="请填写购买游戏币数量"
+                android:textSize="@dimen/sp_14"
+                android:background="@null"
+                android:gravity="center_vertical"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+        </LinearLayout>
     </LinearLayout>
 
 
