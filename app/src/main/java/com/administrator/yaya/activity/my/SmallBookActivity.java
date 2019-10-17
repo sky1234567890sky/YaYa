@@ -1,4 +1,4 @@
-package com.administrator.yaya.activity.inventory;
+package com.administrator.yaya.activity.my;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,13 +6,13 @@ import android.os.Bundle;
 import com.administrator.yaya.R;
 
 /**
- * 支付收款
+ * 小账本
  */
-public class PaymentsReceiveActivity extends AppCompatActivity {
+public class SmallBookActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payments_receive);
+        setContentView(R.layout.activity_small_book);
     }
 }

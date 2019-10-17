@@ -17,6 +17,11 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+}
+
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 //    implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -89,6 +94,10 @@ dependencies {
     //noinspection GradleDynamicVersion
     api 'com.miguelcatalan:materialsearchview:1.+'
     implementation 'org.jetbrains:annotations-java5:15.0'
+
+    //RoundImageView支持圆形、圆角、椭圆，可定制每个角的大小
+    implementation 'org.raphets:roundimageview:1.2.0'
+    implementation 'com.makeramen:roundedimageview:2.2.1'
 
     implementation project(':takephoto')
     implementation project(':basepop')

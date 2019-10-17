@@ -43,6 +43,7 @@
         android:layout_marginTop="@dimen/dp_4"
         android:layout_marginLeft="@dimen/dp_13"
         android:layout_marginRight="@dimen/dp_13"
+        android:layout_marginBottom="@dimen/dp_4"
         android:background="@drawable/background_rl"
         >
         <RelativeLayout
@@ -51,8 +52,8 @@
             >
             <com.administrator.yaya.utils.RoundImageCircleView
                 android:id="@+id/now_bu_gamemoney_iv"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_launcher"
                 android:layout_centerVertical="true"
@@ -68,7 +69,6 @@
             android:textColor="@color/c_000000"
             android:textSize="@dimen/dp_14"
                 android:layout_centerVertical="true"
-
             />
 
         </RelativeLayout>
@@ -76,7 +76,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="游戏币单价:10.0"
+            android:text="游戏币单价:￥10.0"
             android:textColor="@color/c_000000"
             android:textSize="@dimen/dp_14"
             android:layout_centerVertical="true"
@@ -108,14 +108,109 @@
                 android:gravity="center_vertical"
                 />
         </LinearLayout>
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:orientation="vertical"
+            android:background="@drawable/background_rl"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
+            >
+            <!--剩余数量-->
+            <TextView
+                android:id="@+id/buy_gamemoney_remaining_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_13"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:text="剩余数量：3000"
+                tools:ignore="HardcodedText"
+                />
+            <TextView
+                android:id="@+id/buy_min_gamemoney_remaining_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="最小购买数量数量：3000"
+                android:layout_marginLeft="@dimen/dp_13"
+                android:layout_below="@+id/buy_gamemoney_remaining_quantity"
+                tools:ignore="HardcodedText"
+                />
+            <TextView
+                android:id="@+id/buy_max_gamemoney_remaining_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/buy_gamemoney_remaining_quantity"
+                android:layout_toRightOf="@id/buy_min_gamemoney_remaining_quantity"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="最大购买数量：3000"
+                tools:ignore="HardcodedText"
+                />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/pay_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="应付金额:￥3000.0"
+            android:textColor="@color/c_000000"
+            android:textSize="@dimen/dp_14"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_23"
+            android:layout_marginTop="@dimen/dp_10"
+            />
+        <TextView
+            android:id="@+id/pay_way"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付方式:银行卡转账"
+            android:textColor="@color/c_000000"
+            android:textSize="@dimen/sp_14"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_23"
+            android:layout_marginTop="@dimen/dp_10"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:gravity="center_vertical"
             >
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="付款人姓名："
+                android:textColor="@color/c_000000"
+                android:textSize="@dimen/sp_14"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_23"
+                android:textStyle="normal"
+                />
+            <EditText
+                android:id="@+id/bank_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="请输入银行卡持有人姓名"
+                android:textSize="@dimen/sp_14"
+                />
         </LinearLayout>
-    </LinearLayout>
 
+    </LinearLayout>
+    <Button
+        android:id="@+id/nowbuy_commit_btn"
+        android:layout_width="@dimen/dp_305"
+        android:layout_height="@dimen/dp_44"
+        android:background="@drawable/shape_btn"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_35"
+        android:layout_marginTop="@dimen/dp_50"
+        android:text="@string/commit_overform"
+        android:textColor="@color/c_ffffff"
+        android:layout_gravity="center"
+        />
 
 </LinearLayout>

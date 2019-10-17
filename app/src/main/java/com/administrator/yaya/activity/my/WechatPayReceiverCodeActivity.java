@@ -1,4 +1,4 @@
-package com.administrator.yaya.activity;
+package com.administrator.yaya.activity.my;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,13 +6,14 @@ import android.os.Bundle;
 import com.administrator.yaya.R;
 
 /**
- * 忘记密码
+ * 微信收款码
  */
-public class RetrievePasswordActivity extends AppCompatActivity {
+public class WechatPayReceiverCodeActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retrieve_password);
+        setContentView(R.layout.activity_wechat_pay_receiver_code);
 
     }
 }

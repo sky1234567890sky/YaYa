@@ -28,8 +28,9 @@ import razerdp.design.SlideFromBottomPopup;
  */
 public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick {
 
-    @BindView(R.id.login_back_iv)
-    ImageView loginBackIv;
+//    @BindView(R.id.login_back_iv)
+//    ImageView loginBackIv;
+
     @BindView(R.id.login_headler_iv)
     ImageView loginHeadlerIv;
     @BindView(R.id.et_uname)
@@ -107,12 +108,9 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
     public void clickBottom() {
 
     }
-    @OnClick({R.id.login_back_iv, R.id.login_headler_iv, R.id.login_btn, R.id.tv_registered, R.id.tv_forgetPassword})
+    @OnClick({ R.id.login_headler_iv, R.id.login_btn, R.id.tv_registered, R.id.tv_forgetPassword})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.login_back_iv:
-                finish();
-                break;
             case R.id.login_headler_iv:
                 break;
             case R.id.login_btn:

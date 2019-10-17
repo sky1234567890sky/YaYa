@@ -52,10 +52,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
-            >
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
@@ -84,11 +81,15 @@
         <activity android:name=".activity.my.SettingActivity" />
         <activity android:name=".activity.my.UpdataPasswordActivity" />
         <activity android:name=".activity.my.CustomerServiceActivity" />
-        <activity android:name=".activity.inventory.PaymentsReceiveActivity" />
+        <activity android:name=".activity.my.AlipayReceiverCodeActivity" />
         <activity android:name=".activity.home.BuyNowActivity" />
         <activity android:name=".activity.my.SystemMessagesActivity" />
         <activity android:name=".activity.my.GameMoneyExplainActivity" />
-        <activity android:name=".activity.my.MyIncomeActivity"></activity>
+        <activity android:name=".activity.my.MyIncomeActivity" />
+        <activity android:name=".activity.my.MyInviteActivity" />
+        <activity android:name=".activity.my.SmallBookActivity" />
+        <activity android:name=".activity.my.WechatPayReceiverCodeActivity" />
+        <activity android:name=".activity.home.AffirmMessageActivity"></activity>
     </application>
 
 </manifest>

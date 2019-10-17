@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.my.AlipayReceiverCodeActivity">
+    tools:context=".activity.my.WechatPayReceiverCodeActivity">
 
     <com.administrator.yaya.design.CommonTitle
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
-                android:id="@+id/pay_receive_back_iv"
+                android:id="@+id/wechatpay_receive_back_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -29,10 +29,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/pay_receive"
+                android:text="@string/wechatpay_receive"
                 android:textColor="@color/c_ffffff"
                 android:textSize="@dimen/dp_18"
-                tools:ignore="SpUsage" />
+                tools:ignore="SpUsage"
+                />
         </RelativeLayout>
     </com.administrator.yaya.design.CommonTitle>
 
@@ -52,7 +53,7 @@
             tools:ignore="SpUsage" />
 
         <Switch
-            android:id="@+id/two_switch"
+            android:id="@+id/wechatpay_two_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -61,10 +62,10 @@
             />
     </RelativeLayout>
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <LinearLayout
             android:layout_width="@dimen/dp_150"
             android:layout_height="@dimen/dp_150"
@@ -75,7 +76,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/add1"
+                android:id="@+id/pay_add1_iv"
                 android:layout_width="@dimen/dp_50"
                 android:layout_height="@dimen/dp_50"
                 android:src="@mipmap/ic_launcher" />
@@ -94,7 +95,7 @@
             tools:ignore="RtlHardcoded">
 
             <ImageView
-                android:id="@+id/add2"
+                android:id="@+id/pay_add2_iv"
                 android:layout_width="@dimen/dp_50"
                 android:layout_height="@dimen/dp_50"
                 android:src="@mipmap/ic_launcher"
@@ -142,7 +143,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/add3"
+                android:id="@+id/pay_add3_iv"
                 android:layout_width="@dimen/dp_50"
                 android:layout_height="@dimen/dp_50"
                 android:src="@mipmap/ic_launcher" />
@@ -160,7 +161,7 @@
             android:gravity="center"
             android:orientation="vertical">
             <ImageView
-                android:id="@+id/add4"
+                android:id="@+id/pay_add4_iv"
                 android:layout_width="@dimen/dp_50"
                 android:layout_height="@dimen/dp_50"
                 android:src="@mipmap/ic_launcher" />
@@ -173,15 +174,15 @@
         android:layout_marginRight="@dimen/dp_24"
         android:layout_marginTop="@dimen/dp_14"
         >
-    <TextView
-        android:layout_width="@dimen/dp_150"
-        android:layout_height="wrap_content"
-        android:text="2000元"
-        android:textColor="@color/c_101010"
-        android:textSize="@dimen/sp_14"
-        android:gravity="center"
-        tools:ignore="HardcodedText,RtlHardcoded"
-        />
+        <TextView
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="wrap_content"
+            android:text="2000元"
+            android:textColor="@color/c_101010"
+            android:textSize="@dimen/sp_14"
+            android:gravity="center"
+            tools:ignore="HardcodedText,RtlHardcoded"
+            />
         <TextView
             android:layout_width="@dimen/dp_150"
             android:layout_height="wrap_content"

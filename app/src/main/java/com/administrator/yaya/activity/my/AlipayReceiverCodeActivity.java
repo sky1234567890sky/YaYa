@@ -1,4 +1,4 @@
-package com.administrator.yaya.activity;
+package com.administrator.yaya.activity.my;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,13 +6,13 @@ import android.os.Bundle;
 import com.administrator.yaya.R;
 
 /**
- * 忘记密码
+ * 支付宝收款
  */
-public class RetrievePasswordActivity extends AppCompatActivity {
+public class AlipayReceiverCodeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retrieve_password);
+        setContentView(R.layout.activity_payments_receive);
 
     }
 }

@@ -4,15 +4,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.base.BaseActivity;
 
 /**
  * 系统消息
  */
-public class SystemMessagesActivity extends AppCompatActivity {
-
+public class SystemMessagesActivity extends BaseActivity {
+//    recycleview
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_system_messages);
+    protected int getLayoutId() {
+        return R.layout.activity_system_messages;
     }
 }

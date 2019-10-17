@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.BaseActivity;
+import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.fragment.HomePageFragment;
 import com.administrator.yaya.fragment.InventoryFragment;
 import com.administrator.yaya.fragment.MyFragment;
@@ -85,25 +86,33 @@ public class MainActivity extends BaseActivity {
 //        mTitle.setText(R.string.homepage);
 //        setSupportActionBar(mToolbar);//支持Toolbar
         mHomepage.setChecked(true);
-
         titles = new ArrayList<Integer>();
         titles.add(R.string.homepage);
         titles.add(R.string.inventory);
         titles.add(R.string.orderform);
         titles.add(R.string.my);
-
         //初始化页面管理类
         manager = getSupportFragmentManager();
         initFragment();
         addHomeFragment();
-    }
 
+    }
     private void addHomeFragment() {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.home_fragment, fragments.get(0));
         transaction.commit();
-    }
 
+        //Activity跳转到Fragment ，"affirm","2"
+        int affirm = getIntent().getIntExtra("affirm", 0);
+        if (affirm==2){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_fragment,inventoryFragment)
+                    .addToBackStack(null)
+                    .commit();
+            mInventoryBtn.setChecked(true);
+        }
+    }
     private void initFragment() {
         homePageFragment = new HomePageFragment();
         inventoryFragment = new InventoryFragment();
@@ -116,7 +125,6 @@ public class MainActivity extends BaseActivity {
         fragments.add(orderFormkFragment);
         fragments.add(myFragment);
     }
-
     @Override
     protected void initData() {
         super.initData();
@@ -170,6 +178,7 @@ public class MainActivity extends BaseActivity {
         //设置标题
 //        mTitle.setText(titles.get(type));
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction()==KeyEvent.ACTION_DOWN&&keyCode == KeyEvent.KEYCODE_BACK) {
