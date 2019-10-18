@@ -16,7 +16,6 @@ android {
         }
     }
 }
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.soundcloud.android.crop:lib_crop:1.0.0'

@@ -1,4 +1,7 @@
 package com.administrator.yaya.base;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -6,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
+import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -24,13 +28,27 @@ public abstract class BaseActivity extends AppCompatActivity {
         mApplication = (BaseApp) getApplication();
         setContentView(getLayoutId());
         ButterKnife.bind(this);
+
         overridePendingTransition(R.anim.from_right, R.anim.no_slide);//划入
         //沉浸式状态栏
         initMvp();
         initView();
         initData();
         initListener();
+
+
     }
+
+
+
+
+
+    private void setTextViewStyles(TextView textView) {
+        LinearGradient mLinearGradient = new LinearGradient(0, 0, textView.getPaint().getTextSize() * textView.getText().length(), 0, Color.parseColor("#FF076BF0"), Color.parseColor("#FF35A6FF"), Shader.TileMode.CLAMP);
+        textView.getPaint().setShader(mLinearGradient);
+        textView.invalidate();
+    }
+
     protected abstract int getLayoutId();
 
     protected void initListener() {

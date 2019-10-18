@@ -15,16 +15,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <!--<ImageView-->
-                <!--android:id="@+id/login_back_iv"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginLeft="@dimen/dp_20"-->
-                <!--android:layout_marginTop="@dimen/dp_15"-->
-                <!--android:layout_marginBottom="@dimen/dp_15"-->
-                <!--android:src="@mipmap/back_hover"-->
-                <!--/>-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,14 +26,13 @@
     </com.administrator.yaya.design.CommonTitle>
 
     <ImageView
+        android:id="@+id/login_headler_iv"
         android:layout_width="@dimen/dp_85"
         android:layout_height="@dimen/dp_85"
-        android:id="@+id/login_headler_iv"
         android:src="@mipmap/ic_launcher"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_30"
         />
-
     <LinearLayout
         android:layout_marginRight="@dimen/dp_35"
         android:layout_marginLeft="@dimen/dp_35"
@@ -62,18 +51,18 @@
             android:src="@mipmap/shake"
             />
         <EditText
-            android:id="@+id/et_uname"
+            android:id="@+id/login_name_et"
             android:layout_marginTop="@dimen/dp_13"
             android:layout_marginLeft="@dimen/dp_15"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
             android:textSize="@dimen/sp_14"
             android:maxLines="1"
+            android:lines="1"
             android:hint="@string/et_phone"
             />
     </LinearLayout>
-
     <LinearLayout
         android:layout_marginRight="@dimen/dp_35"
         android:layout_marginLeft="@dimen/dp_35"
@@ -91,15 +80,6 @@
             android:layout_height="@dimen/dp_18"
             android:src="@mipmap/key"
             />
-        <!--<ToggleButton-->
-            <!--android:id="@+id/togglePwd"-->
-            <!--android:layout_width="20dp"-->
-            <!--android:layout_height="20dp"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:background="@drawable/toggle_pwd_selector"-->
-            <!--android:padding="10dp"-->
-            <!--android:textOff=""-->
-            <!--android:textOn=""-->
         <EditText
             android:id="@+id/et_login_password"
             android:layout_marginTop="@dimen/dp_13"
@@ -114,7 +94,6 @@
             android:lines="1"
             />
     </LinearLayout>
-
     <Button
         android:id="@+id/login_btn"
         android:layout_width="@dimen/dp_305"

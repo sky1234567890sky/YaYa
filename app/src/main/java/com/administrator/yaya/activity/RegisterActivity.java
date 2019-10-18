@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.ApiConfig;
@@ -19,8 +20,12 @@ import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.bean.LoginInfo;
 import com.administrator.yaya.bean.VerifyCodeInfo;
+import com.administrator.yaya.bean.login_register_bean.TestInviteCode;
+import com.administrator.yaya.bean.login_register_bean.TestRegister;
 import com.administrator.yaya.design.SmsVerifyView;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.AppValidationMgr;
+import com.administrator.yaya.utils.CountDownTimerUtils;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.hjq.permissions.OnPermission;
@@ -40,6 +45,7 @@ import razerdp.design.SlideFromBottomPopup;
  * 注册界面
  */
 public class RegisterActivity extends BaseMvpActivity<LoginModel>implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick{
+
     @BindView(R.id.register_back_iv)
     ImageView registerBackIv;
     @BindView(R.id.register_headleriv)
@@ -47,12 +53,16 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
 
     @BindView(R.id.register_et_uname)
     EditText registerEtUname;
+
     @BindView(R.id.et_register_verificationcode)
     EditText etRegisterVerificationcode;
+
     @BindView(R.id.btn_register_phonecode)
-    TextView btnRegisterPhonecode;
+    TextView mInvitecode;
+
     @BindView(R.id.et_register_pw)
     EditText etRegisterPw;
+
     @BindView(R.id.et_getcode)
     EditText etGetcode;
     @BindView(R.id.register_register_btn)
@@ -62,6 +72,8 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
 //    SmsVerifyView mView;
     private SlideFromBottomPopup mPop;
     private TakePhotoImpl mTakePhoto;
+    private CountDownTimerUtils mDownTimerUtils;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_register;
@@ -78,6 +90,12 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     }
 
     @Override
+    protected void initView() {
+        //倒计时工具类
+        mDownTimerUtils = new CountDownTimerUtils(mInvitecode, 60000, 1000);
+    }
+
+    @Override
     public void onError(int whichApi, Throwable e) {
 //        mView.reset();
     }
@@ -85,14 +103,37 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     public void onResponse(int whichApi, Object[] t) {
         //TODO:隐藏进度条
         switch (whichApi) {
+            case ApiConfig.TEXT_REGISTER://注册
+                TestRegister register = (TestRegister) t[0];
+                if (register!=null){
+                    ToastUtil.showShort("注册有数据");
+                    //跳转只登陆界面登录
+
+                }
+                break;
+            case ApiConfig.TEXT_InviteCode://验证码
+
+                //获取验证码前判断手机号是否被注册
+
+                TestInviteCode invitecode = (TestInviteCode) t[0];
+                if (invitecode!=null){
+                    ToastUtil.showShort("打死别给邀请码:");
+                    //用短信推送验证码
+
+                }
+                break;
+
             case ApiConfig.GET_SMS_MJG://获取验证码
+
                 VerifyCodeInfo verifyCodeInfos = (VerifyCodeInfo) t[0];
                 if (verifyCodeInfos != null) ToastUtil.showShort("短信发送成功注意验收");
+
                 break;
             case ApiConfig.GET_SMS:
                 VerifyCodeInfo info = (VerifyCodeInfo) t[0];
 //                mView.setVerifyCode(info.verify_token);
                 break;
+
             case ApiConfig.LOGIN_ACC:
                 //获取的是唯一用户ID，用来确认身份
                 LoginInfo loginInfo = (LoginInfo) t[0];
@@ -109,7 +150,13 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     }
     private void loginIm() {
         //TODO:登录聊天逻辑处理
+    }
 
+    @Override
+    protected void initData() {
+        super.initData();
+        //给权限
+        getPermission();
     }
     @OnClick({R.id.register_back_iv, R.id.register_headleriv, R.id.btn_register_phonecode, R.id.register_register_btn})
     public void onViewClicked(View view) {
@@ -127,18 +174,28 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
                 break;
 
             case R.id.btn_register_phonecode://验证码
+                mDownTimerUtils.start();
+                mPresenter.getData(ApiConfig.TEXT_INVITECODE,0);
+                ToastUtil.showShort("验证码已发送请注意查收");
 
                 break;
             case R.id.register_register_btn://注册
+                //MD5加密解密
+
+                String number1 = registerEtUname.getText().toString().trim();
+                String password1 = etRegisterPw.getText().toString().trim();
+                if (number1.isEmpty() || number1 == null || password1.isEmpty() || password1 == null) {
+                    ToastUtil.showShort("账号和密码不能为空");
+                }else{
+                    String regex = "[A-Za-z0-9]{4,12}";
+                    if (AppValidationMgr.isPhone(number1) && password1.matches(regex) ){
+                        mPresenter.getData(ApiConfig.TEXT_REGISTER,number1,password1);
+                        ToastUtil.showShort("在请求数据...");
+                    } else ToastUtil.showShort("请输入正确的手机号");
+                }
 
                 break;
         }
-    }
-    @Override
-    protected void initData() {
-        super.initData();
-        //给权限
-        getPermission();
     }
     private void getPermission() {
         XXPermissions.with(this)

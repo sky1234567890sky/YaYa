@@ -3,18 +3,35 @@ package com.administrator.yaya.model;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.ICommonModel;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.base.INetService;
+import com.administrator.yaya.base.NetConfig;
 import com.administrator.yaya.base.NetManager;
 import com.administrator.yaya.bean.LoginInfo;
 import com.administrator.yaya.bean.VerifyCodeInfo;
-
 public class LoginModel implements ICommonModel {
     @Override
     public void getData(ICommonView view, int whichApi, Object[] t) {
-        NetManager manager = NetManager.getNetManager();
+        NetManager netManager = NetManager.getNetManager();
         switch (whichApi) {
+            case ApiConfig.TEXT_LOGIN:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestLogin((String) t[0],(String) t[0]),view,whichApi,0);
+               break;
+
+               case ApiConfig.TEXT_REGISTER:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestRegister((String) t[0],(String) t[0],(String) t[0]),view,whichApi,1);
+               break;
+            case ApiConfig.TEXT_INVITECODE:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestInviteCode((String) t[0],(String) t[0],(String) t[0]),view,whichApi,1);
+                break;
+
+
+
             case ApiConfig.GET_SMS_MJG:
-                String phoneNum = (String) t[0];
-                manager.method(manager.getNetService("http://47.93.217.58/api/").getSMS(phoneNum),view,whichApi);
+//                String phoneNum = (String) t[0];
+//                manager.method(manager.getNetService("http://47.93.217.58/api/").getSMS(phoneNum),view,whichApi);
                 break;
             case ApiConfig.GET_SMS://模拟验证码
                 long mills = System.currentTimeMillis();
@@ -30,8 +47,8 @@ public class LoginModel implements ICommonModel {
                 }
                 view.onResponse(whichApi,info);
                 break;
-
             case ApiConfig.LOGIN_ACC:
+                
                 String path = (String) t[0];
                 LoginInfo loginInfo = new LoginInfo(path, System.currentTimeMillis() + "", "登录成功","renxiaolong");
                 try {
