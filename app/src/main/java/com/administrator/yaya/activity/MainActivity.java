@@ -1,6 +1,7 @@
 package com.administrator.yaya.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,11 +26,13 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.BaseActivity;
+import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.fragment.HomePageFragment;
 import com.administrator.yaya.fragment.InventoryFragment;
 import com.administrator.yaya.fragment.MyFragment;
 import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.utils.AppConstants;
+import com.administrator.yaya.utils.FragmentUtils;
 import com.administrator.yaya.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -39,12 +42,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
-    @BindView(R.id.title_tb)
-    TextView mTitle;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+//    @BindView(R.id.title_tb)
+//    TextView mTitle;
+//    @BindView(R.id.toolbar)
+//    Toolbar mToolbar;
     @BindView(R.id.home_fragment)
     FrameLayout mFl;
+
     @BindView(R.id.homepage)
     RadioButton mHomepage;
     @BindView(R.id.inventory_btn)
@@ -59,6 +63,7 @@ public class MainActivity extends BaseActivity {
     RadioGroup mRg;
     @BindView(R.id.dobusiness_iv)
     ImageView mDobusinessIv;
+
     private FragmentManager manager;
     private ArrayList<Fragment> fragments;
     private ArrayList<Integer> titles;
@@ -77,28 +82,37 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         super.initView();
 
-        mToolbar.setTitle("");
-        mTitle.setText(R.string.homepage);
-        setSupportActionBar(mToolbar);//支持Toolbar
-
+//        mToolbar.setTitle("");
+//        mTitle.setText(R.string.homepage);
+//        setSupportActionBar(mToolbar);//支持Toolbar
+        mHomepage.setChecked(true);
         titles = new ArrayList<Integer>();
         titles.add(R.string.homepage);
         titles.add(R.string.inventory);
         titles.add(R.string.orderform);
         titles.add(R.string.my);
-
         //初始化页面管理类
         manager = getSupportFragmentManager();
         initFragment();
         addHomeFragment();
-    }
 
+    }
     private void addHomeFragment() {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.home_fragment, fragments.get(0));
         transaction.commit();
-    }
 
+        //Activity跳转到Fragment ，"affirm","2"
+        int affirm = getIntent().getIntExtra("affirm", 0);
+        if (affirm==2){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_fragment,inventoryFragment)
+                    .addToBackStack(null)
+                    .commit();
+            mInventoryBtn.setChecked(true);
+        }
+    }
     private void initFragment() {
         homePageFragment = new HomePageFragment();
         inventoryFragment = new InventoryFragment();
@@ -111,37 +125,40 @@ public class MainActivity extends BaseActivity {
         fragments.add(orderFormkFragment);
         fragments.add(myFragment);
     }
-
     @Override
     protected void initData() {
         super.initData();
 
     }
-
-
     @Override
     protected void initListener() {
         super.initListener();
-
     }
-    @OnClick({R.id.homepage, R.id.inventory_btn, R.id.dobusiness_btn, R.id.orderform_btn, R.id.mine_btn})
+    @OnClick({R.id.homepage, R.id.inventory_btn, R.id.dobusiness_btn, R.id.orderform_btn, R.id.mine_btn,R.id.dobusiness_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.homepage://首页
                 mHomepage.setChecked(true);
-                switchFragment(AppConstants.TYPE_HOMEPAGER);
+//                switchFragment(AppConstants.TYPE_HOMEPAGER);
+                FragmentUtils.addFragment(manager,homePageFragment.getClass(),R.id.home_fragment,null);
                 break;
             case R.id.inventory_btn://库存
-                switchFragment(AppConstants.TYPE_INVENTORY);
+//                mToolbar.setVisibility(View.GONE);
+//                switchFragment(AppConstants.TYPE_INVENTORY);
+                FragmentUtils.addFragment(manager,inventoryFragment.getClass(),R.id.home_fragment,null);
                 break;
-            case R.id.dobusiness_btn:
+            case R.id.dobusiness_iv:
+//            case R.id.dobusiness_btn:
                 popupSelector();//营业
                 break;
+
             case R.id.orderform_btn://订单
-                switchFragment(AppConstants.TYPE_ORDERFORM);
+//                switchFragment(AppConstants.TYPE_ORDERFORM);
+                FragmentUtils.addFragment(manager,orderFormkFragment.getClass(),R.id.home_fragment,null);
                 break;
             case R.id.mine_btn://我的
-                switchFragment(AppConstants.TYPE_MY);
+//                switchFragment(AppConstants.TYPE_MY);
+                FragmentUtils.addFragment(manager,myFragment.getClass(),R.id.home_fragment,null);
                 break;
         }
     }
@@ -159,14 +176,17 @@ public class MainActivity extends BaseActivity {
         //记录当前选中位置
         mLastType = type;
         //设置标题
-        mTitle.setText(titles.get(type));
+//        mTitle.setText(titles.get(type));
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (event.getAction()==KeyEvent.ACTION_DOWN&&keyCode == KeyEvent.KEYCODE_BACK) {
             //如果点击的是后退键  首先判断popupWindow是否能够后退   返回值是boolean类型的
-            if (popupWindow.isShowing()){
-                popupWindow.dismiss();
+            if (popupWindow!=null) {
+                if (popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                }
             }
             if ((System.currentTimeMillis() - exittime) > 2000) {  //如果两次连续点击的时间>2s，就不执行操作
                 ToastUtil.showShort("再按一次退出丫丫");
@@ -180,13 +200,16 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
     private void popupSelector() {
-
         View inflate= LayoutInflater.from(this).inflate(R.layout.layout_yingye, null);
         TextView yy = inflate.findViewById(R.id.game_money_number);//显示营业游戏币数量
         Button cancel = inflate.findViewById(R.id.cancel_pop);
         Button ok = inflate.findViewById(R.id.ok_pop);
 
-        popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,true);
+        //手动设置 PopupWindow 响应返回键并关闭的问题
+//        popupWindow.setFocusable(true);
+//        popupWindow.setFocusableInTouchMode(true);  //为了保险起见加上这句
+        popupWindow.setBackgroundDrawable(new BitmapDrawable()); // www.linuxidc.com响应返回键必须的语句
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         popupWindow.setOutsideTouchable(true);
 //        popupWindow.setAnimationStyle(R.style.PopupAnimation);
@@ -211,11 +234,14 @@ public class MainActivity extends BaseActivity {
                 popupWindow.dismiss();
             }
         });
+
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, UpGameMoneyActivity.class);
                 startActivity(intent);
+                popupWindow.dismiss();
             }
         });
     }

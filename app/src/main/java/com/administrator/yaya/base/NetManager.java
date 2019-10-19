@@ -7,6 +7,7 @@ import com.administrator.yaya.base.convert.MyGsonConverterFactory;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import razerdp.design.WheelView;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -34,8 +35,8 @@ public class NetManager {
                 .build().create(INetService.class);
         return service;
     }
-    public <T> void method(Observable<T> leftMenuInfo, final ICommonView view, final int whichApi, final int... t){
 
+    public <T> void method(Observable<T> leftMenuInfo,final ICommonView view, final int whichApi, final Object... t){
         leftMenuInfo.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver() {
@@ -43,11 +44,11 @@ public class NetManager {
                     public void onSuccess(Object value) {
                         view.onResponse(whichApi, value,(t != null && t.length != 0) ? t[0] : 0);
                     }
-
                     @Override
                     public void onFailed(Throwable e) {
                         view.onError(whichApi, e);
                     }
                 });
     }
+
 }

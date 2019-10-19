@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.administrator.yaya">
-
     <!-- 权限声明 -->
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -29,11 +28,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <!-- 震动权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-feature android:name="android.hardware.camera" />
     <!-- 使用照相机权限 -->
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
     <uses-permission android:name="android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -52,6 +49,9 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,9 +59,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait" />
@@ -75,7 +72,36 @@
             android:exported="true" />
 
         <activity android:name=".activity.UpGameMoneyActivity" />
-        <activity android:name=".ui.ImmediatelyBuyActivity"></activity>
-    </application>
+        <activity android:name=".ui.ImmediatelyBuyActivity" />
+        <activity android:name=".activity.SplashActivity" />
+        <activity android:name=".activity.my.PersonalDatActivity" />
+        <activity android:name=".activity.my.SettingActivity" />
+        <activity android:name=".activity.my.UpdataPasswordActivity" />
+        <activity android:name=".activity.my.CustomerServiceActivity" />
+        <activity android:name=".activity.my.AlipayReceiverCodeActivity" />
+        <activity android:name=".activity.home.BuyNowActivity" />
+        <activity android:name=".activity.my.SystemMessagesActivity" />
+        <activity android:name=".activity.my.GameMoneyExplainActivity" />
+        <activity android:name=".activity.my.MyIncomeActivity" />
+        <activity android:name=".activity.my.MyInviteActivity" />
+        <activity android:name=".activity.my.SmallBookActivity" />
+        <activity android:name=".activity.my.WechatPayReceiverCodeActivity" />
+        <activity android:name=".activity.home.AffirmMessageActivity"></activity>
 
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+
+    </application>
 </manifest>

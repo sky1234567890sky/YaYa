@@ -1,5 +1,6 @@
 package com.administrator.yaya.design;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
@@ -35,6 +36,7 @@ public class SmsVerifyView extends LinearLayout implements View.OnClickListener 
     private Handler mHandler = new Handler();
 
     private Runnable runnable = new Runnable() {
+        @SuppressLint("SetTextI18n")
         @Override
         public void run() {
             mVerify.setText(time--+getContext().getString(R.string.verify_second));

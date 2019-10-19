@@ -19,4 +19,32 @@
     <string name="cancel">取消</string>
     <string name="ok">确认</string>
     <string name="retrievepassword">忘记密码</string>
+    <string name="photo">拍照</string>
+    <string name="camera">相册</string>
+    <string name="upgame">上架游戏币</string>
+    <string name="up_jia">上架</string>
+    <string name="personaldata">个人资料</string>
+    <string name="setting">设置</string>
+    <string name="update_ps">修改密码</string>
+    <string name="custom_service">联系客服</string>
+    <string name="custom_service_tv">
+        我们客服在线时间为：9:00 - 18:00
+    </string>
+    <string name="custom_service_tv2">
+        如有需要，请拨打：400-900-340
+    </string>
+    <string name="pay_receive">支付宝收款码</string>
+    <string name="now_buy">立即购买</string>
+    <string name="system_msg">系统消息</string>
+    <string name="my_invite">我的邀请</string>
+    <string name="book">小账本</string>
+    <string name="myincome">我的收益</string>
+    <string name="wechatpay_receive">微信收款码</string>
+    <string name="small_book">小账本</string>
+    <string name="invite_friend">邀请朋友</string>
+    <string name="forget_pas">忘记密码</string>
+    <string name="et_new_login_possword">请输入新的登录密码（6-12位）</string>
+    <string name="commit_overform">提交订单</string>
+    <string name="affirm_msg">确认信息</string>
+    <string name="look_stock_state">查看进货状态</string>
 </resources>

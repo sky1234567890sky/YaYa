@@ -41,4 +41,10 @@ ext {
     minify = true
     leakCanary='1.5.4'
     smartRefresh='1.1.0-alpha-14'
+    SmartRefreshLayout='1.1.0-alpha-14'
+    logginginterceptor = '3.9.1'
+    smarttablayout = '1.7.0@aar'
+    logginginterceptor = '3.9.1'
+    smarttablayout = '1.7.0@aar'
+    abiFilters = ['armeabi-v7a', 'arm64-v8a']//'arm64-v8a', 'armeabi-v7a', 'x86', 'armeabi'
 }
