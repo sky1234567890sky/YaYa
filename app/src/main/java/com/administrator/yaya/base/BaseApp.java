@@ -3,6 +3,7 @@ package com.administrator.yaya.base;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.administrator.yaya.local_utils.DeviceUuidFactory;
 
@@ -21,7 +22,7 @@ public class BaseApp extends Application {
         super.onCreate();
         mBaseApp = this;
         mUuid = DeviceUuidFactory.getInstance(getApplication()).getDeviceUuid();
-
+        MultiDex.install(this);
     }
 
     public static Context getApplication(){

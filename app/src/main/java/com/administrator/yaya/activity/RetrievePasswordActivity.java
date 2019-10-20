@@ -42,43 +42,44 @@ public class RetrievePasswordActivity extends BaseMvpActivity<LoginModel> implem
     Button forgetOkBtn;
     private CountDownTimerUtils downTimerUtils;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retrieve_password);
-        ButterKnife.bind(this);
-
-    }
-
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_retrieve_password);
+//        ButterKnife.bind(this);
+//
+//    }
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.activity_retrieve_password;
     }
-
     @OnClick({R.id.forget_back_iv, R.id.register_headler_iv, R.id.forget_getcode_btn, R.id.forget_ok_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.forget_back_iv:
+                finish();
                 break;
             case R.id.register_headler_iv:
+
                 break;
             case R.id.forget_getcode_btn://获取验证码
                 //倒计时工具类
                 downTimerUtils = new CountDownTimerUtils(getcode, 60000, 1000);
+
                 break;
             case R.id.forget_ok_btn:
+
                 break;
         }
     }
-
     @Override
     protected LoginModel getModel() {
-        return null;
+        return new LoginModel();
     }
 
     @Override
     protected CommonPresenter getPresenter() {
-        return null;
+        return new CommonPresenter();
     }
 
     @Override
