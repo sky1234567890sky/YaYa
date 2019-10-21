@@ -8,8 +8,8 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-
+        //
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -119,4 +119,6 @@ dependencies {
     implementation project(':takephoto')
     implementation project(':basepop')
     implementation files('libs/alipaySdk-20180403.jar')
+
+    implementation 'com.android.support:multidex:1.0.3'
 }

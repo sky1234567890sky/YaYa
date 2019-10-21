@@ -16,6 +16,7 @@ import com.administrator.yaya.base.ICommonModel;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.CountDownTimerUtils;
+import com.administrator.yaya.utils.ToastUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import butterknife.BindView;
@@ -34,6 +35,7 @@ public class RetrievePasswordActivity extends BaseMvpActivity<LoginModel> implem
     EditText forgetEtPhone;
     @BindView(R.id.forget_et_verificationCode)
     EditText getcode;
+
     @BindView(R.id.forget_getcode_btn)
     TextView forgetGetcodeBtn;
     @BindView(R.id.forget_et_login_password)
@@ -42,43 +44,50 @@ public class RetrievePasswordActivity extends BaseMvpActivity<LoginModel> implem
     Button forgetOkBtn;
     private CountDownTimerUtils downTimerUtils;
 
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_retrieve_password);
+//        ButterKnife.bind(this);
+//
+//    }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retrieve_password);
-        ButterKnife.bind(this);
-
+    protected int getLayoutId() {
+        return R.layout.activity_retrieve_password;
     }
 
     @Override
-    protected int getLayoutId() {
-        return 0;
+    protected void initView() {
+        //倒计时工具类
+        downTimerUtils = new CountDownTimerUtils(forgetGetcodeBtn, 60000, 1000);
     }
 
     @OnClick({R.id.forget_back_iv, R.id.register_headler_iv, R.id.forget_getcode_btn, R.id.forget_ok_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.forget_back_iv:
+                finish();
                 break;
             case R.id.register_headler_iv:
+
                 break;
             case R.id.forget_getcode_btn://获取验证码
-                //倒计时工具类
-                downTimerUtils = new CountDownTimerUtils(getcode, 60000, 1000);
+                downTimerUtils.start();
+                ToastUtil.showLong("验证码已发送请注意验收");
                 break;
             case R.id.forget_ok_btn:
+
                 break;
         }
     }
-
     @Override
     protected LoginModel getModel() {
-        return null;
+        return new LoginModel();
     }
 
     @Override
     protected CommonPresenter getPresenter() {
-        return null;
+        return new CommonPresenter();
     }
 
     @Override
