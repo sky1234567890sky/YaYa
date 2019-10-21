@@ -37,8 +37,6 @@ import butterknife.Unbinder;
 public class OrderFormkFragment extends Fragment {
     @BindView(R.id.inventory_money)
     TextView mInventoryMoney;
-    @BindView(R.id.toolbar3)
-    Toolbar mToolbar3;
     @BindView(R.id.tab_layout)
     SlidingTabLayout tabLayout;
     @BindView(R.id.orderform_vp)

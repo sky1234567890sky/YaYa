@@ -2,7 +2,6 @@ package com.administrator.yaya.bean;
 
 public class VerifyCodeInfo {
     public boolean success;
-
     public String verify_token;
 
     public boolean isSuccess() {

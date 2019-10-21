@@ -67,13 +67,11 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     EditText etGetcode;
     @BindView(R.id.register_register_btn)
     Button registerRegisterBtn;
-
 //    @BindView(R.id.sms_verify_view)
 //    SmsVerifyView mView;
     private SlideFromBottomPopup mPop;
     private TakePhotoImpl mTakePhoto;
     private CountDownTimerUtils mDownTimerUtils;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_register;
@@ -108,13 +106,11 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
                 if (register!=null){
                     ToastUtil.showShort("注册有数据");
                     //跳转只登陆界面登录
-
                 }
                 break;
             case ApiConfig.TEXT_InviteCode://验证码
 
                 //获取验证码前判断手机号是否被注册
-
                 TestInviteCode invitecode = (TestInviteCode) t[0];
                 if (invitecode!=null){
                     ToastUtil.showShort("打死别给邀请码:");
@@ -126,8 +122,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
             case ApiConfig.GET_SMS_MJG://获取验证码
 
                 VerifyCodeInfo verifyCodeInfos = (VerifyCodeInfo) t[0];
-                if (verifyCodeInfos != null) ToastUtil.showShort("短信发送成功注意验收");
-
+                if (verifyCodeInfos != null) ToastUtil.showShort("短信发送成功注意验收"+verifyCodeInfos.getVerify_token());
                 break;
             case ApiConfig.GET_SMS:
                 VerifyCodeInfo info = (VerifyCodeInfo) t[0];
@@ -158,6 +153,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
         //给权限
         getPermission();
     }
+
     @OnClick({R.id.register_back_iv, R.id.register_headleriv, R.id.btn_register_phonecode, R.id.register_register_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -175,7 +171,8 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
 
             case R.id.btn_register_phonecode://验证码
                 mDownTimerUtils.start();
-                mPresenter.getData(ApiConfig.TEXT_INVITECODE,0);
+
+//                mPresenter.getData(ApiConfig.TEXT_INVITECODE,0);
                 ToastUtil.showShort("验证码已发送请注意查收");
 
                 break;
@@ -214,12 +211,11 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
                 });
 //                XXPermissions.gotoPermissionSettings(this);//跳转到权限设置页面
     }
-
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 //        ToastUtil.showShort(event.getKeyCode()+"");
         if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-            ToastUtil.showShort("enter click");
+//            ToastUtil.showShort("enter click");
             return true;
         }
         return super.dispatchKeyEvent(event);
@@ -300,13 +296,12 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     public void takeFail(TResult result, String msg) {
         ToastUtil.showShort(msg);
     }
-
     /**
      * 取消获取图片
      */
     @Override
     public void takeCancel() {
-        ToastUtil.showShort("cancel_get_image");
+//        ToastUtil.showShort("cancel_get_image");
     }
 
     @Override

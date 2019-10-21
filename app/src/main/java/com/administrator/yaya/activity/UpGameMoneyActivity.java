@@ -20,8 +20,6 @@ import butterknife.OnClick;
 public class UpGameMoneyActivity extends AppCompatActivity {
     @BindView(R.id.upgame_back_iv)
     ImageView upgameBackIv;
-    @BindView(R.id.upgame_money_number)
-    TextView upgameMoneyNumber;
     @BindView(R.id.tv_upgame_money_number2)
     TextView tvUpgameMoneyNumber2;
     @BindView(R.id.et_upgame_money_number2)

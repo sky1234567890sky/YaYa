@@ -87,7 +87,7 @@ public class MyInviteActivity extends BaseActivity implements View.OnClickListen
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         popupWindow.setOutsideTouchable(true);
 
-//        popupWindow.setAnimationStyle(R.style.PopupAnimation);
+        popupWindow.setAnimationStyle(R.style.PopupAnimation);
         popupWindow.showAtLocation(inflate, Gravity.CENTER, 0, 0);
         // 设置背景颜色变暗
         WindowManager.LayoutParams lp = this.getWindow().getAttributes();

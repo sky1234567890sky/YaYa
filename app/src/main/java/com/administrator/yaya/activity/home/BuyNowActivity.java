@@ -25,7 +25,8 @@ public class BuyNowActivity extends AppCompatActivity {
     @BindView(R.id.now_buy_iv)
     ImageView nowBuyIv;
     @BindView(R.id.now_bu_gamemoney_iv)
-    RoundImageCircleView nowBuGamemoneyIv;
+    ImageView nowBuGamemoneyIv;
+
     @BindView(R.id.buy_gamemoney_number)
     EditText buyGamemoneyNumber;
     @BindView(R.id.buy_gamemoney_remaining_quantity)

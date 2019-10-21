@@ -30,6 +30,7 @@ public class HomePageFragment extends Fragment {
     TextView homeGamemoneyPrice;
     @BindView(R.id.home_buy_now_btn_tv)
     TextView homeBuyNowBtnTv;
+
     @BindView(R.id.tv_use)
     TextView tvUse;
     @BindView(R.id.tv_sheng)

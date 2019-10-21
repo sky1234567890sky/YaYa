@@ -37,14 +37,14 @@ public class AffirmMessageActivity extends AppCompatActivity {
     TextView bankCopy;
     @BindView(R.id.money_tv)
     TextView moneyTv;
-    @BindView(R.id.monry_btn_copy)
-    TextView monryBtnCopy;
     @BindView(R.id.remark_tv)
     TextView remarkTv;
     @BindView(R.id.remark_btn_copy)
     TextView remarkBtnCopy;
     @BindView(R.id.affirm_msg_look_btn)
     Button affirmMsgLookBtn;
+    @BindView(R.id.bank_money)
+    TextView bankMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class AffirmMessageActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.affirm_msg_back_iv, R.id.receiver_copy, R.id.bank_code_number_copy, R.id.bank_copy, R.id.monry_btn_copy, R.id.remark_btn_copy, R.id.affirm_msg_look_btn})
+    @OnClick({R.id.affirm_msg_back_iv, R.id.receiver_copy, R.id.bank_code_number_copy, R.id.bank_copy,R.id.bank_money,R.id.remark_btn_copy, R.id.affirm_msg_look_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.affirm_msg_back_iv:
@@ -69,7 +69,7 @@ public class AffirmMessageActivity extends AppCompatActivity {
             case R.id.bank_copy:
                 ToastUtil.showShort("已复制");
                 break;
-            case R.id.monry_btn_copy:
+            case R.id.bank_money:
                 ToastUtil.showShort("已复制");
                 break;
             case R.id.remark_btn_copy:
@@ -77,7 +77,7 @@ public class AffirmMessageActivity extends AppCompatActivity {
                 break;
             case R.id.affirm_msg_look_btn:
                 Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("affirm",2);
+                intent.putExtra("affirm", 2);
                 startActivity(intent);
                 break;
         }
@@ -87,5 +87,9 @@ public class AffirmMessageActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.no_slide, R.anim.out_right);//划出
+    }
+
+    @OnClick(R.id.bank_money)
+    public void onViewClicked() {
     }
 }

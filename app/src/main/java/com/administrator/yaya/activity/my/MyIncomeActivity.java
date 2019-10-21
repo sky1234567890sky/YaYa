@@ -14,12 +14,10 @@ import com.administrator.yaya.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 /**
  * TODO:我的收益（累计收益）界面
  */
 public class MyIncomeActivity extends AppCompatActivity {
-
     @BindView(R.id.myincome_back_iv)
     ImageView myincomeBackIv;
     @BindView(R.id.myincome_game_money_plain_iv)
