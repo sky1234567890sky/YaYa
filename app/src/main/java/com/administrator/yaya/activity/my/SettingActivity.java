@@ -32,7 +32,7 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.my_wechat_code_rl)
     RelativeLayout myWechatCodeRl;
 
-    @OnClick({R.id.my_wechat_code_rl,R.id.my_invientory_rl, R.id.my_small_rl, R.id.my_pay_code_rl, R.id.my_update_password_rl, R.id.my_relation_service_rl})
+    @OnClick({R.id.my_wechat_code_rl,R.id.setting_back_iv,R.id.my_invientory_rl, R.id.my_small_rl, R.id.my_pay_code_rl, R.id.my_update_password_rl, R.id.my_relation_service_rl})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.my_invientory_rl://我的邀請
@@ -42,6 +42,9 @@ public class SettingActivity extends BaseActivity {
             case R.id.my_small_rl://小賬本
             Intent sba = new Intent(this, SmallBookActivity.class);
             startActivity(sba);
+            break;
+            case R.id.setting_back_iv:
+            SettingActivity.this.finish();
             break;
             case R.id.my_pay_code_rl://支付寶收款碼
             Intent pra = new Intent(this, AlipayReceiverCodeActivity.class);

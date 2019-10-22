@@ -103,7 +103,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         popupWindow.setBackgroundDrawable(new BitmapDrawable()); // www.linuxidc.com响应返回键必须的语句
 
         popupWindow.setBackgroundDrawable(new ColorDrawable());
-        popupWindow.setOutsideTouchable(true);
 
         popupWindow.setAnimationStyle(R.style.PopupAnimation);
         popupWindow.showAtLocation(inflate, Gravity.CENTER, 0, 0);

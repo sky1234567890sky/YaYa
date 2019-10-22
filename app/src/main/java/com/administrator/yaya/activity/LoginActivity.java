@@ -82,8 +82,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //            mPsw.setText("");
 //        }
     }
-
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
@@ -95,7 +93,9 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                     SharedPrefrenceUtils.saveString(LoginActivity.this,NormalConfig.PASS_WORD,pwd);
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
+
                 }
+
                 break;
         }
     }
@@ -141,7 +141,9 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 name = mName.getText().toString();
                 pwd = mPsw.getText().toString();
                 //对当前用户输入的密码进行MD5加密再进行比对判断, MD5Utils.md5( ); psw 进行加密判断是否一致
-                login();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+//                login();
                 break;
             case R.id.tv_registered:
                 startActivity(new Intent(this,RegisterActivity.class));

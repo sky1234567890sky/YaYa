@@ -111,15 +111,6 @@ public class MainActivity extends BaseActivity {
             mInventoryBtn.setChecked(true);
         }
 
-        int orderform = getIntent().getIntExtra("orderform", 0);
-        if (orderform == 3) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.home_fragment, orderFormkFragment)
-                    .addToBackStack(null)
-                    .commit();
-            mOrderformBtn.setChecked(true);
-        }
     }
     private void initFragment() {
         homePageFragment = new HomePageFragment();
@@ -229,7 +220,6 @@ public class MainActivity extends BaseActivity {
 //        popupWindow.setFocusableInTouchMode(true);  //为了保险起见加上这句
         popupWindow.setBackgroundDrawable(new BitmapDrawable()); // www.linuxidc.com响应返回键必须的语句
         popupWindow.setBackgroundDrawable(new ColorDrawable());
-        popupWindow.setOutsideTouchable(false);
 
         popupWindow.setAnimationStyle(R.style.PopupAnimation);
         popupWindow.showAtLocation(inflate, Gravity.CENTER , 0, 0);
@@ -270,9 +260,12 @@ public class MainActivity extends BaseActivity {
 //                Intent intent = new Intent(this, MainActivity.this);
 //                intent.putExtra("affirm", 2);
 //                startActivity(intent);
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                intent.putExtra("orderform", 3);
+//                intentintentIntent intentIntentintent = new Intent(MainActivity.this, MainActivity.class);
+//                intent.putExtra("orderform", 3);
 //                startActivity(intent);
+                mOrderformBtn.setChecked(true);
+                FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, bundle);
+
                 popupWindow.dismiss();
             }
         });
