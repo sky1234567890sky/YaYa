@@ -1,5 +1,6 @@
 package com.administrator.yaya.activity;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -139,7 +141,6 @@ public class MainActivity extends BaseActivity {
     protected void initListener() {
         super.initListener();
     }
-
     @OnClick({R.id.homepage, R.id.inventory_btn, R.id.dobusiness_btn, R.id.orderform_btn, R.id.mine_btn, R.id.dobusiness_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -170,21 +171,6 @@ public class MainActivity extends BaseActivity {
 
     private int mLastType = 0;
 
-    private void switchFragment(int type) {
-        FragmentTransaction transaction = manager.beginTransaction();
-        Fragment fragment = fragments.get(type);
-        //显示
-        if (!fragment.isAdded()) {
-            transaction.add(R.id.home_fragment, fragment);
-        }
-        //隐藏
-        Fragment lastFragment = fragments.get(mLastType);
-        transaction.hide(lastFragment).show(fragment).commit();
-        //记录当前选中位置
-        mLastType = type;
-        //设置标题
-//        mTitle.setText(titles.get(type));
-    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
@@ -203,7 +189,7 @@ public class MainActivity extends BaseActivity {
             }
             return true;
         }
-        return super.onKeyDown(keyCode, event);
+        return false;
     }
 
     private void popupSelector() {
@@ -214,7 +200,7 @@ public class MainActivity extends BaseActivity {
         TextView mPopupTvCancel = inflate.findViewById(R.id.popup_tv_cancel);
         TextView mPopupTvOk = inflate.findViewById(R.id.popup_tv_ok);
 
-        popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
         //手动设置 PopupWindow 响应返回键并关闭的问题
         popupWindow.setFocusable(true);
 //        popupWindow.setFocusableInTouchMode(true);  //为了保险起见加上这句
@@ -225,7 +211,7 @@ public class MainActivity extends BaseActivity {
         popupWindow.showAtLocation(inflate, Gravity.CENTER , 0, 0);
         // 设置背景颜色变暗
         WindowManager.LayoutParams lp = this.getWindow().getAttributes();
-        lp.alpha = 0.7f;
+        lp.alpha = 0.5f;
         this.getWindow().setAttributes(lp);
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -257,17 +243,22 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 //                直接上架
-//                Intent intent = new Intent(this, MainActivity.this);
-//                intent.putExtra("affirm", 2);
-//                startActivity(intent);
-//                intentintentIntent intentIntentintent = new Intent(MainActivity.this, MainActivity.class);
-//                intent.putExtra("orderform", 3);
-//                startActivity(intent);
-                mOrderformBtn.setChecked(true);
-                FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, bundle);
 
+//                mOrderformBtn.setChecked(true);
+//                FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, bundle);
+                startActivity(new Intent(MainActivity.this,UpGameMoneyActivity.class));
                 popupWindow.dismiss();
             }
         });
+        popupWindow.setOutsideTouchable(false);
+//        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getY()>=0){//PopupWindow内部的事件
+//                    return false;
+//                }
+//                return true;
+//            }
+//        });
     }
 }

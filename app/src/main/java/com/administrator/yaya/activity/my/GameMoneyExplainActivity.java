@@ -21,8 +21,7 @@ public class GameMoneyExplainActivity extends BaseActivity {
     protected int getLayoutId() {
         return R.layout.activity_game_money_explain;
     }
-
-    @OnClick(R.id.system_msg_back_iv)
+    @OnClick(R.id.game_money_explain_iv)
     public void onViewClicked() {
         GameMoneyExplainActivity.this.finish();
     }

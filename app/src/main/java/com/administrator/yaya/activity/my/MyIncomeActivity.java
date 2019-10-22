@@ -145,12 +145,12 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
 
     @Override
     protected LoginModel getModel() {
-        return null;
+        return new LoginModel();
     }
 
     @Override
     protected CommonPresenter getPresenter() {
-        return null;
+        return new CommonPresenter();
     }
 
     @Override

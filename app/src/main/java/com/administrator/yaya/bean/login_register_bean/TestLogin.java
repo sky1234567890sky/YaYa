@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 public class TestLogin implements Serializable {
-
     /**
      * msg : 操作成功
      * code : 0
@@ -17,7 +16,6 @@ public class TestLogin implements Serializable {
     private DataBean data;
     private Parcel dest;
     private int flags;
-
     public String getMsg() {
         return msg;
     }
