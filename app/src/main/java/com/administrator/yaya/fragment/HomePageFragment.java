@@ -3,6 +3,7 @@ package com.administrator.yaya.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,20 +13,35 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.home.BuyNowActivity;
+import com.administrator.yaya.base.ApiConfig;
+import com.administrator.yaya.base.BaseMvpFragment;
+import com.administrator.yaya.base.CommonPresenter;
+import com.administrator.yaya.base.ICommonModel;
+import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.homepage.TextHomePageData;
+import com.administrator.yaya.bean.login_register_bean.TestLogin;
+import com.administrator.yaya.model.LoginModel;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-public class HomePageFragment extends Fragment {
+public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
 
     @BindView(R.id.title_tb)
     TextView titleTb;
-    @BindView(R.id.iv)
+    @BindView(R.id.headler_iv)
     ImageView iv;
+
     @BindView(R.id.home_gamemoney_name)
     TextView homeGamemoneyName;
+
     @BindView(R.id.home_gamemoney_price)
     TextView homeGamemoneyPrice;
     @BindView(R.id.home_buy_now_btn_tv)
@@ -43,34 +59,34 @@ public class HomePageFragment extends Fragment {
     TextView tvWechatSheng;
     @BindView(R.id.tv_wechat_day)
     TextView tvWechatDay;
-    Unbinder unbinder;
     @BindView(R.id.ll1)
     LinearLayout ll1;
     @BindView(R.id.ll2)
     LinearLayout ll2;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home_page, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initView();
-        initListener();
-        return view;
+    protected void initData() {
+        mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA,1);
     }
-
-    private void initListener() {
+    @Override
+    protected void initView(View inflate) {
 
     }
-
-    private void initView() {
-
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_home_page;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    public void onResponse(int whichApi, Object[] t) {
+        switch (whichApi) {
+            case ApiConfig.TEXT_HOMEPAGE_DATA:
+                TextHomePageData data = (TextHomePageData) t[0];
+                TextHomePageData.DataBean.UserInfoBean userInfo = data.getData().getUserInfo();
+
+                Glide.with(this).load(userInfo.getUserHeadImg()).placeholder(R.mipmap.icon).into(iv);
+                break;
+        }
     }
 
     @OnClick({ R.id.home_buy_now_btn_tv})
@@ -82,4 +98,20 @@ public class HomePageFragment extends Fragment {
                 break;
         }
     }
+
+    @Override
+    protected LoginModel getModel() {
+        return new LoginModel();
+    }
+    @Override
+    protected CommonPresenter getPresenter() {
+        return new CommonPresenter();
+    }
+
+    @Override
+    public void onError(int whichApi, Throwable e) {
+
+    }
+
+
 }

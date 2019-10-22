@@ -1,14 +1,15 @@
 package com.administrator.yaya.base;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.support.multidex.MultiDex;
-
+import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.local_utils.DeviceUuidFactory;
-
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.UUID;
 
 public class BaseApp extends Application {
@@ -24,7 +25,6 @@ public class BaseApp extends Application {
         mUuid = DeviceUuidFactory.getInstance(getApplication()).getDeviceUuid();
         MultiDex.install(this);
     }
-
     public static Context getApplication(){
         return mBaseApp.getApplicationContext();
     }

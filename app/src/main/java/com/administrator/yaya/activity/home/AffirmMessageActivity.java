@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.MainActivity;
+import com.administrator.yaya.base.BaseMvpActivity;
+import com.administrator.yaya.base.CommonPresenter;
+import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
@@ -19,7 +23,7 @@ import butterknife.OnClick;
 /**
  * 确认信息
  */
-public class AffirmMessageActivity extends AppCompatActivity {
+public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
 
     @BindView(R.id.affirm_msg_back_iv)
     ImageView affirmMsgBackIv;
@@ -46,12 +50,16 @@ public class AffirmMessageActivity extends AppCompatActivity {
     @BindView(R.id.bank_money)
     TextView bankMoney;
 
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_affirm_message);
+//        overridePendingTransition(R.anim.from_right, R.anim.no_slide);//划入
+//        ButterKnife.bind(this);
+//    }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_affirm_message);
-        overridePendingTransition(R.anim.from_right, R.anim.no_slide);//划入
-        ButterKnife.bind(this);
+    protected int getLayoutId() {
+        return R.layout.activity_affirm_message;
     }
 
     @OnClick({R.id.affirm_msg_back_iv, R.id.receiver_copy, R.id.bank_code_number_copy, R.id.bank_copy,R.id.bank_money,R.id.remark_btn_copy, R.id.affirm_msg_look_btn})
@@ -89,7 +97,24 @@ public class AffirmMessageActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.no_slide, R.anim.out_right);//划出
     }
 
-    @OnClick(R.id.bank_money)
-    public void onViewClicked() {
+
+    @Override
+    protected LoginModel getModel() {
+        return new LoginModel();
+    }
+
+    @Override
+    protected CommonPresenter getPresenter() {
+        return new CommonPresenter();
+    }
+
+    @Override
+    public void onError(int whichApi, Throwable e) {
+
+    }
+
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
+
     }
 }

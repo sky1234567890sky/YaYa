@@ -16,16 +16,23 @@ public class LoginModel implements ICommonModel {
         switch (whichApi) {
             case ApiConfig.TEXT_LOGIN:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestLogin((String) t[0], (String) t[0]), view, whichApi, 0);
+                        .getTestLogin((String) t[0], (String) t[0]), view, whichApi);
                 break;
 
-            case ApiConfig.TEXT_REGISTER:
+            case ApiConfig.TEXT_REGISTER://注册
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestRegister((String) t[0], (String) t[0], (String) t[0]), view, whichApi, 1);
+                        .getTestRegister((String) t[0], (String) t[0], (String) t[0],(String) t[0]), view, whichApi);
                 break;
+
             case ApiConfig.TEXT_INVITECODE:
 //                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
 //                        .getTestInviteCode((String) t[0],(String) t[0],(String) t[0]),view,whichApi,1);
+                break;
+
+                //首页
+            case ApiConfig.TEXT_HOMEPAGE_DATA:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTextHomePageData((int) t[0]), view, whichApi);
                 break;
 
             case ApiConfig.GET_SMS_MJG:
@@ -47,7 +54,6 @@ public class LoginModel implements ICommonModel {
                 view.onResponse(whichApi, info);
                 break;
             case ApiConfig.LOGIN_ACC:
-
                 String path = (String) t[0];
                 LoginInfo loginInfo = new LoginInfo(path, System.currentTimeMillis() + "", "登录成功", "renxiaolong");
                 try {

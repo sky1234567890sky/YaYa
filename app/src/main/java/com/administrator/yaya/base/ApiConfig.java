@@ -14,4 +14,5 @@ public class ApiConfig {
     public static final int TEXT_INVITECODE = 7;
 
 
+    public static final int TEXT_HOMEPAGE_DATA = 8;
 }

@@ -2,6 +2,7 @@ package com.administrator.yaya.base;
 
 import com.administrator.yaya.bean.LoginInfo;
 import com.administrator.yaya.bean.VerifyCodeInfo;
+import com.administrator.yaya.bean.homepage.TextHomePageData;
 import com.administrator.yaya.bean.login_register_bean.TestInviteCode;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
 import com.administrator.yaya.bean.login_register_bean.TestRegister;
@@ -29,20 +30,24 @@ public interface INetService {
     Observable<VerifyCodeInfo> getVerify2(@Body RequestBody pBody);
     //====================================?
 //    登录
-    @POST("yayaApp/appLogin")
+    @POST("appLogin")
     @FormUrlEncoded
     //@Headers({"Content-Type:application/x-www-form-urlencoded","Authorization:Basic ZG1kOjEyMzQ1Ng=="})
     Observable<TestLogin> getTestLogin(@Field("userPhone") String userPhone, @Field("userPwd") String userPwd);
 
 //    注册
-    @POST("yayaApp/appRegister")
+    @POST("appRegister")
     @FormUrlEncoded
-    Observable<TestRegister> getTestRegister(@Field("userPhone") String userPhone,@Field("userPhone") String userPwd,@Field("userInvitationCode") String userInvitationCode);
+    Observable<TestRegister> getTestRegister(@Field("userPhone") String userPhone,@Field("userPwd") String userPwd,@Field("userInvitationCode") String userInvitationCode,@Field("codename") String codename);
 
     //验证码
-    @POST("yayaApp/appInvite")
+    @POST("appInvite")
     @FormUrlEncoded
     Observable<TestInviteCode> getTestInviteCode(String s, String s1, String s2);
 
+    //首页
+    @POST("index")
+    @FormUrlEncoded
+    Observable<TextHomePageData> getTextHomePageData(@Field("userId") int userId);
 
 }

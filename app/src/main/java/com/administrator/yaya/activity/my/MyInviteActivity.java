@@ -3,6 +3,7 @@ package com.administrator.yaya.activity.my;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,6 +17,10 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.BaseActivity;
+import com.administrator.yaya.base.BaseMvpActivity;
+import com.administrator.yaya.base.CommonPresenter;
+import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.ChangTvSizeUtils;
 import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
@@ -24,9 +29,9 @@ import butterknife.OnClick;
 /**
  * 我的邀請
  */
-public class MyInviteActivity extends BaseActivity implements View.OnClickListener {
+public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements View.OnClickListener {
 
-    @BindView(R.id.small_book_back_iv)
+    @BindView(R.id.myinvite_book_back_iv)
     ImageView smallBookBackIv;
     @BindView(R.id.myinvite_friend)
     TextView myinviteFriend;
@@ -36,11 +41,10 @@ public class MyInviteActivity extends BaseActivity implements View.OnClickListen
     TextView myNameStateTv;
     @BindView(R.id.tv3)
     TextView tv3;
-    @BindView(R.id.wire)
-    View wire;
-    @BindView(R.id.get_gamemoney_tv)
+
+    @BindView(R.id.today_get_gamemoney_tv)
     TextView getGamemoneyTv;
-    @BindView(R.id.all_gamemoney_tv)
+    @BindView(R.id.today_all_gamemoney_tv)
     TextView allGamemoneyTv;
     @BindView(R.id.my_superior_rl)
     RecyclerView mySuperiorRl;
@@ -53,15 +57,29 @@ public class MyInviteActivity extends BaseActivity implements View.OnClickListen
     private TextView mMyinviteTwoDimentionCodTv;
     private TextView mMyinviteShareWechatBtnTv;
     private ImageView mMyinviteCloneDissPopupIv;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_invite;
     }
-    @OnClick({R.id.small_book_back_iv, R.id.myinvite_friend})
+
+    @Override
+    protected void initView() {
+
+        SpannableString getInventory = ChangTvSizeUtils.changTVsize("25.00");
+        getGamemoneyTv.setText(getInventory);
+        allGamemoneyTv.setText(getInventory);
+    }
+    @Override
+    protected void initListener() {
+
+    }
+
+    @OnClick({R.id.myinvite_book_back_iv, R.id.myinvite_friend})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.small_book_back_iv:
-                finish();
+                MyInviteActivity.this.finish();
                 break;
             case R.id.myinvite_friend://邀请好友
                 popupSelector();
@@ -112,9 +130,31 @@ public class MyInviteActivity extends BaseActivity implements View.OnClickListen
                 popupWindow.dismiss();
                 break;
             case R.id.myinvite_share_wechat_btn_tv: //拉起微信去分享
+                //跳转微信
+
                 popupWindow.dismiss();
                 break;
         }
+
+    }
+
+    @Override
+    protected LoginModel getModel() {
+        return new LoginModel();
+    }
+
+    @Override
+    protected CommonPresenter getPresenter() {
+        return new CommonPresenter();
+    }
+
+    @Override
+    public void onError(int whichApi, Throwable e) {
+        ToastUtil.showShort(e.getMessage());
+    }
+
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
 
     }
 }

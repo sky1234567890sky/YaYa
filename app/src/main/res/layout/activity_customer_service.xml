@@ -14,13 +14,11 @@
         android:src="@mipmap/logo"
         android:layout_alignParentBottom="true"
         tools:ignore="ContentDescription" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-
     <com.administrator.yaya.design.CommonTitle
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
@@ -48,7 +46,6 @@
                 tools:ignore="SpUsage" />
         </RelativeLayout>
     </com.administrator.yaya.design.CommonTitle>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,9 +55,9 @@
         tools:ignore="RtlHardcoded"
         android:textSize="@dimen/sp_16"
         android:layout_marginTop="@dimen/dp_146"
-
         />
     <TextView
+        android:id="@+id/phone_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#333333"
@@ -68,6 +65,7 @@
         tools:ignore="RtlHardcoded"
         android:textSize="@dimen/sp_16"
         android:gravity="center_horizontal"
+        android:autoLink = "phone"
         />
 </LinearLayout>
 </RelativeLayout>

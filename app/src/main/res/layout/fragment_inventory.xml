@@ -24,7 +24,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_45"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_21"
                 android:gravity="center_vertical"
                 android:text="库存合计：￥3000元"
                 android:textColor="@color/c_ffffff"

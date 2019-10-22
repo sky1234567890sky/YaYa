@@ -40,7 +40,6 @@ public class OrderFormkFragment extends Fragment {
     @BindView(R.id.tab_layout)
     SlidingTabLayout tabLayout;
     @BindView(R.id.orderform_vp)
-
     ViewPager vp;
     Unbinder unbinder;
     private FragmentManager manager;
@@ -53,7 +52,6 @@ public class OrderFormkFragment extends Fragment {
     public OrderFormkFragment() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

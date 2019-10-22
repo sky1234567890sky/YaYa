@@ -3,9 +3,11 @@ package com.administrator.yaya.activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.BaseActivity;
+import com.administrator.yaya.bean.login_register_bean.TestLogin;
 import com.administrator.yaya.fragment.HomePageFragment;
 import com.administrator.yaya.fragment.InventoryFragment;
 import com.administrator.yaya.fragment.MyFragment;
@@ -29,6 +32,7 @@ import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.utils.FragmentUtils;
 import com.administrator.yaya.utils.ToastUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -41,7 +45,6 @@ public class MainActivity extends BaseActivity {
 //    Toolbar mToolbar;
     @BindView(R.id.home_fragment)
     FrameLayout mFl;
-
     @BindView(R.id.homepage)
     RadioButton mHomepage;
     @BindView(R.id.inventory_btn)
@@ -66,6 +69,9 @@ public class MainActivity extends BaseActivity {
     private MyFragment myFragment;
     private long exittime;
     private PopupWindow popupWindow;
+    private TestLogin loginData;
+    private Bundle bundle;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -78,6 +84,7 @@ public class MainActivity extends BaseActivity {
 //        mTitle.setText(R.string.homepage);
 //        setSupportActionBar(mToolbar);//支持Toolbar
         mHomepage.setChecked(true);
+
         titles = new ArrayList<Integer>();
         titles.add(R.string.homepage);
         titles.add(R.string.inventory);
@@ -87,9 +94,7 @@ public class MainActivity extends BaseActivity {
         manager = getSupportFragmentManager();
         initFragment();
         addHomeFragment();
-
     }
-
     private void addHomeFragment() {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.home_fragment, fragments.get(0));
@@ -105,8 +110,17 @@ public class MainActivity extends BaseActivity {
                     .commit();
             mInventoryBtn.setChecked(true);
         }
-    }
 
+        int orderform = getIntent().getIntExtra("orderform", 0);
+        if (orderform == 3) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_fragment, orderFormkFragment)
+                    .addToBackStack(null)
+                    .commit();
+            mOrderformBtn.setChecked(true);
+        }
+    }
     private void initFragment() {
         homePageFragment = new HomePageFragment();
         inventoryFragment = new InventoryFragment();
@@ -123,9 +137,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
         super.initData();
-
+//        loginData = (TestLogin) getIntent().getSerializableExtra("login");
+//        if (loginData != null){
+//            bundle = new Bundle();
+//        bundle.putSerializable("homepage", loginData);
+//        homePageFragment.setArguments(bundle);
+//    }
     }
-
     @Override
     protected void initListener() {
         super.initListener();
@@ -137,12 +155,12 @@ public class MainActivity extends BaseActivity {
             case R.id.homepage://首页
                 mHomepage.setChecked(true);
 //                switchFragment(AppConstants.TYPE_HOMEPAGER);
-                FragmentUtils.addFragment(manager, homePageFragment.getClass(), R.id.home_fragment, null);
+                FragmentUtils.addFragment(manager, homePageFragment.getClass(), R.id.home_fragment,bundle);
                 break;
             case R.id.inventory_btn://库存
 //                mToolbar.setVisibility(View.GONE);
 //                switchFragment(AppConstants.TYPE_INVENTORY);
-                FragmentUtils.addFragment(manager, inventoryFragment.getClass(), R.id.home_fragment, null);
+                FragmentUtils.addFragment(manager, inventoryFragment.getClass(), R.id.home_fragment, bundle);
                 break;
             case R.id.dobusiness_iv:
 //            case R.id.dobusiness_btn:
@@ -150,11 +168,11 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.orderform_btn://订单
 //                switchFragment(AppConstants.TYPE_ORDERFORM);
-                FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, null);
+                FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, bundle);
                 break;
             case R.id.mine_btn://我的
 //                switchFragment(AppConstants.TYPE_MY);
-                FragmentUtils.addFragment(manager, myFragment.getClass(), R.id.home_fragment, null);
+                FragmentUtils.addFragment(manager, myFragment.getClass(), R.id.home_fragment, bundle);
                 break;
         }
     }
@@ -238,7 +256,6 @@ public class MainActivity extends BaseActivity {
                 popupWindow.dismiss();
             }
         });
-
         mPopupTvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -249,8 +266,13 @@ public class MainActivity extends BaseActivity {
         mPopupTvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UpGameMoneyActivity.class);
-                startActivity(intent);
+//                直接上架
+//                Intent intent = new Intent(this, MainActivity.this);
+//                intent.putExtra("affirm", 2);
+//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                intent.putExtra("orderform", 3);
+//                startActivity(intent);
                 popupWindow.dismiss();
             }
         });

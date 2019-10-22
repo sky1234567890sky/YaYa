@@ -14,13 +14,9 @@ import com.administrator.yaya.R;
  * 已完成
  */
 public class FinishFragment extends Fragment {
-
-
     public FinishFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

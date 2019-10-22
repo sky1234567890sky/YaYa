@@ -2,10 +2,12 @@ package com.administrator.yaya.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -45,9 +47,9 @@ import razerdp.design.SlideFromBottomPopup;
  * 注册界面
  */
 public class RegisterActivity extends BaseMvpActivity<LoginModel>implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick{
-
     @BindView(R.id.register_back_iv)
     ImageView registerBackIv;
+
     @BindView(R.id.register_headleriv)
     ImageView registerHeadlerIv;
 
@@ -57,7 +59,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     @BindView(R.id.et_register_verificationcode)
     EditText etRegisterVerificationcode;
 
-    @BindView(R.id.btn_register_phonecode)
+    @BindView(R.id.btn_register_phonecode)//手機驗證碼
     TextView mInvitecode;
 
     @BindView(R.id.et_register_pw)
@@ -65,6 +67,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
 
     @BindView(R.id.et_getcode)
     EditText etGetcode;
+
     @BindView(R.id.register_register_btn)
     Button registerRegisterBtn;
 //    @BindView(R.id.sms_verify_view)
@@ -76,53 +79,50 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     protected int getLayoutId() {
         return R.layout.activity_register;
     }
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
-
     @Override
     protected void initView() {
+        //设置此界面为竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //倒计时工具类
         mDownTimerUtils = new CountDownTimerUtils(mInvitecode, 60000, 1000);
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
 //        mView.reset();
+//        ToastUtil.showShort(e.getMessage());
     }
+
     @Override
     public void onResponse(int whichApi, Object[] t) {
         //TODO:隐藏进度条
         switch (whichApi) {
             case ApiConfig.TEXT_REGISTER://注册
                 TestRegister register = (TestRegister) t[0];
-                if (register!=null){
-                    ToastUtil.showShort("注册有数据");
-                    //跳转只登陆界面登录
+
+                if (register.getCode()!=500){
+                    ToastUtil.showShort(register.getMsg());
+                    Log.i("tag",register.getMsg());
+//                    关闭页面，重新输入一次登录
+                    finish();
                 }
                 break;
-            case ApiConfig.TEXT_InviteCode://验证码
-
+            case ApiConfig.TEXT_InviteCode://邀请码
                 //获取验证码前判断手机号是否被注册
                 TestInviteCode invitecode = (TestInviteCode) t[0];
-                if (invitecode!=null){
-                    ToastUtil.showShort("打死别给邀请码:");
-                    //用短信推送验证码
-
-                }
                 break;
 
             case ApiConfig.GET_SMS_MJG://获取验证码
-
                 VerifyCodeInfo verifyCodeInfos = (VerifyCodeInfo) t[0];
-                if (verifyCodeInfos != null) ToastUtil.showShort("短信发送成功注意验收"+verifyCodeInfos.getVerify_token());
+                if (verifyCodeInfos != null)
+                    ToastUtil.showShort("短信发送成功注意验收"+verifyCodeInfos.getVerify_token());
                 break;
             case ApiConfig.GET_SMS:
                 VerifyCodeInfo info = (VerifyCodeInfo) t[0];
@@ -151,14 +151,14 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     protected void initData() {
         super.initData();
         //给权限
-        getPermission();
+//        getPermission();
     }
 
     @OnClick({R.id.register_back_iv, R.id.register_headleriv, R.id.btn_register_phonecode, R.id.register_register_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.register_back_iv:
-                finish();
+                RegisterActivity.this.finish();
                 break;
             case R.id.register_headleriv://点击头像
 //                mView.setSmsVerifyCallback(this);
@@ -168,48 +168,36 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
                 mPop.setBottomClickListener(this);
                 mPop.showPopupWindow();
                 break;
-
             case R.id.btn_register_phonecode://验证码
                 mDownTimerUtils.start();
-
 //                mPresenter.getData(ApiConfig.TEXT_INVITECODE,0);
                 ToastUtil.showShort("验证码已发送请注意查收");
-
                 break;
             case R.id.register_register_btn://注册
                 //MD5加密解密
-
-                String number1 = registerEtUname.getText().toString().trim();
-                String password1 = etRegisterPw.getText().toString().trim();
-                if (number1.isEmpty() || number1 == null || password1.isEmpty() || password1 == null) {
-                    ToastUtil.showShort("账号和密码不能为空");
-                }else{
-                    String regex = "[A-Za-z0-9]{4,12}";
-                    if (AppValidationMgr.isPhone(number1) && password1.matches(regex) ){
-                        mPresenter.getData(ApiConfig.TEXT_REGISTER,number1,password1);
-                        ToastUtil.showShort("在请求数据...");
-                    } else ToastUtil.showShort("请输入正确的手机号");
-                }
-
+                register();
                 break;
         }
     }
-    private void getPermission() {
-        XXPermissions.with(this)
-                .constantRequest()//可设置被拒绝后继续申请，直到用户授权或者永久拒绝
-//                .constantRequest(Permission.SYSTEM_ALERT_WINDOW, Permission.REQUEST_INSTALL_PACKAGES)//支持请求 6.0 悬浮窗权限 8.0 请求安装权限
-                .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .request(new OnPermission() {
-                    @Override
-                    public void hasPermission(List<String> granted, boolean isAll) {
 
-                    }
-                    @Override
-                    public void noPermission(List<String> denied, boolean quick) {
-                        if (denied.size() != 0) ToastUtil.showLong("拒绝权限影响您正常使用");
-                    }
-                });
-//                XXPermissions.gotoPermissionSettings(this);//跳转到权限设置页面
+    private void register() {
+
+        String number1 = registerEtUname.getText().toString().trim();
+        String password1 = etRegisterPw.getText().toString().trim();
+        String VerificationCode = etRegisterVerificationcode.getText().toString().trim();
+        String inviteCode = etGetcode.getText().toString().trim();
+        if (number1.isEmpty() || number1 == null || password1.isEmpty() || password1 == null || VerificationCode.isEmpty() ||VerificationCode==null || inviteCode.isEmpty()||inviteCode==null) {
+            ToastUtil.showShort("请输入完整信息");
+        }else{
+            String regex = "[A-Za-z0-9]{4,12}";
+            if (AppValidationMgr.isPhone(number1) && password1.matches(regex) ){
+                //邀请码与验证码验证
+                mPresenter.getData(ApiConfig.TEXT_REGISTER,number1,password1,VerificationCode,inviteCode);
+            } else ToastUtil.showShort("请输入正确的手机号");
+        }
+    }
+    private void getPermission() {
+
     }
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {

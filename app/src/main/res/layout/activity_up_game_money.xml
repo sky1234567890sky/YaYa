@@ -148,6 +148,7 @@
                 android:layout_width="@dimen/dp_17"
                 android:layout_height="@dimen/dp_17"
                 android:button="@null"
+                android:checked="true"
                 android:background="@drawable/upgame_rb_selector1"
                   />
             <TextView
@@ -165,6 +166,7 @@
                 android:button="@null"
                 android:background="@drawable/upgame_rb_selector2"
                 android:layout_marginLeft="@dimen/dp_29_5"
+                android:checked="false"
                 />
             <TextView
                 android:layout_width="wrap_content"
