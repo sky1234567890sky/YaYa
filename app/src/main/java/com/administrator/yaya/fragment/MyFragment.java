@@ -34,15 +34,10 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  */
 public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
-
-
     @BindView(R.id.get_gamemoney_tv)
     TextView getGamemoneyTv;
-
     @BindView(R.id.all_gamemoney_tv)
     TextView allGamemoneyTv;
-
-    Unbinder unbinder;
     @BindView(R.id.inventory_money)
     TextView inventoryMoney;
 
@@ -80,31 +75,23 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initView();
-        return view;
+    protected int getLayoutId() {
+        return R.layout.fragment_my;
     }
 
     @Override
-    protected int getLayoutId() {
-        return 0;
-    }
-
-    private void initView() {
+    protected void initView(View inflate) {
         SpannableString getInventory = ChangTvSizeUtils.changTVsize("0.00");
         getGamemoneyTv.setText(getInventory);
         SpannableString getInventory2 = ChangTvSizeUtils.changTVsize("1900.00");
         allGamemoneyTv.setText(getInventory2);
+
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    protected void initData() {
+
+
     }
 
     @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll,R.id.my_right_ll})
@@ -144,7 +131,6 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     public void onError(int whichApi, Throwable e) {
 
     }
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
 

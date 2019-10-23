@@ -83,7 +83,7 @@ public class OrderFormkFragment extends Fragment {
         tabLayout.setViewPager(vp);
 //        tabLayout.setDistributeEvenly(true);
         vp.setCurrentItem(0);
-        if (tabLayout.getTabCount()>1)tabLayout.setCurrentTab(1);
+        if (tabLayout.getTabCount()>1)tabLayout.setCurrentTab(0);
         orderFormAdapter.notifyDataSetChanged();
     }
 

@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-<!--android:background="#50222222"-->
+    xmlns:tools="http://schemas.android.com/tools">
+
     <RelativeLayout
         android:layout_width="@dimen/dp_300"
         android:layout_height="@dimen/dp_295"
         android:layout_centerInParent="true"
-        android:background="@mipmap/querenyingye"
-        >
+        android:background="@mipmap/shangjiakapian"
+        tools:ignore="UselessParent">
         <ImageView
             android:id="@+id/cancel_pop_close_iv"
             android:layout_width="@dimen/dp_42"
@@ -21,7 +19,7 @@
             android:paddingLeft="@dimen/dp_15"
             android:paddingRight="@dimen/dp_15"
             android:src="@mipmap/icon_close"
-            tools:ignore="RtlHardcoded"
+            tools:ignore="ContentDescription,RtlHardcoded"
             />
         <TextView
             android:id="@+id/popup_tv_number"
@@ -31,7 +29,8 @@
             android:layout_marginTop="@dimen/dp_140"
             android:text="2000"
             android:textColor="#ffffffff"
-            android:textSize="45sp" />
+            android:textSize="45sp"
+            tools:ignore="HardcodedText" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,7 +70,8 @@
                 android:textColor="#EBEBEB"
                 android:textSize="@dimen/dp_15"
                 android:textStyle="normal"
-                tools:ignore="SpUsage" />
+                tools:ignore="RtlHardcoded,SpUsage" />
         </LinearLayout>
     </RelativeLayout>
+
 </RelativeLayout>

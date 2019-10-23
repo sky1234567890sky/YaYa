@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="ExtraText" android:shape="oval">
+    <solid android:color="#fff" />
+    <stroke
+        android:width="3dp"
+        android:color="#00000000" />
+    <size
+        android:width="20dp"
+        android:height="20dp" />
+    <item name="android:shadowDx"
+        tools:ignore="MissingPrefix">0</item>
+    <item name="android:shadowDy"
+        tools:ignore="MissingPrefix">2</item>
+    <item name="android:shadowColor"
+        tools:ignore="MissingPrefix">#4d59b7ff</item>
+</shape>

@@ -113,6 +113,15 @@ public class MainActivity extends BaseActivity {
             mInventoryBtn.setChecked(true);
         }
 
+        int upaway = getIntent().getIntExtra("upaway", 0);
+        if (upaway == 3) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_fragment, orderFormkFragment)
+                    .addToBackStack(null)
+                    .commit();
+            mOrderformBtn.setChecked(true);
+        }
     }
     private void initFragment() {
         homePageFragment = new HomePageFragment();
@@ -130,12 +139,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
         super.initData();
-//        loginData = (TestLogin) getIntent().getSerializableExtra("login");
-//        if (loginData != null){
-//            bundle = new Bundle();
-//        bundle.putSerializable("homepage", loginData);
-//        homePageFragment.setArguments(bundle);
-//    }
     }
     @Override
     protected void initListener() {
@@ -191,7 +194,6 @@ public class MainActivity extends BaseActivity {
         }
         return false;
     }
-
     private void popupSelector() {
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_yingye, null);
         //显示营业游戏币数量
@@ -242,11 +244,10 @@ public class MainActivity extends BaseActivity {
         mPopupTvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                直接上架
-
-//                mOrderformBtn.setChecked(true);
-//                FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, bundle);
-                startActivity(new Intent(MainActivity.this,UpGameMoneyActivity.class));
+//                直接营业
+                mOrderformBtn.setChecked(true);
+                FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, bundle);
+//                startActivity(new Intent(MainActivity.this,UpGameMoneyActivity.class));
                 popupWindow.dismiss();
             }
         });

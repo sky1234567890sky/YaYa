@@ -19,25 +19,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-
-
-    <com.administrator.yaya.design.CommonTitle
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_44"
-        app:canBack="true">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+        android:layout_height="@dimen/dp_44">
             <ImageView
                 android:id="@+id/myinvite_book_back_iv"
-                android:layout_width="@dimen/dp_9"
-                android:layout_height="@dimen/dp_15"
-                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_width="@dimen/dp_39"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
                 android:layout_centerVertical="true"
-                android:padding="@dimen/dp_10"
-                android:src="@mipmap/icon_back"
                 android:background="@drawable/ripple_bg"
+                android:src="@mipmap/icon_back"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -59,11 +52,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/dp_13"
                 />
-
-
-        </RelativeLayout>
-    </com.administrator.yaya.design.CommonTitle>
-
+    </RelativeLayout>
 
 
     -<RelativeLayout

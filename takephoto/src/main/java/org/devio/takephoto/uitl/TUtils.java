@@ -88,7 +88,6 @@ public class TUtils {
             contextWrap.getActivity().startActivityForResult(intentWap.getIntent(), intentWap.getRequestCode());
         }
     }
-
     /**
      * 安全地发送Intent
      *

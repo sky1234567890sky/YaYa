@@ -78,7 +78,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     @OnClick({R.id.myinvite_book_back_iv, R.id.myinvite_friend})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.small_book_back_iv:
+            case R.id.myinvite_book_back_iv:
                 MyInviteActivity.this.finish();
                 break;
             case R.id.myinvite_friend://邀请好友
@@ -96,7 +96,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         mMyinviteShareWechatBtnTv = inflate.findViewById(R.id.myinvite_share_wechat_btn_tv);//微信分享按钮
         mMyinviteCloneDissPopupIv = inflate.findViewById(R.id.myinvite_clone_diss_popup_iv);//关闭弹窗
 
-        popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
         //手动设置 PopupWindow 响应返回键并关闭的问题
         popupWindow.setFocusable(true);
 //        popupWindow.setFocusableInTouchMode(true);  //为了保险起见加上这句
@@ -130,7 +130,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 break;
             case R.id.myinvite_share_wechat_btn_tv: //拉起微信去分享
                 //跳转微信
-
                 popupWindow.dismiss();
                 break;
         }

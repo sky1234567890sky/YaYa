@@ -54,24 +54,24 @@ public class SlideFromBottomPopup extends BasePopupWindow {
             mText3 = popupView.findViewById(R.id.tx_3);
             mText1.setOnClickListener(
                     new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (sBottomPopClick != null)
-                    sBottomPopClick.clickTop();
-                }
-            });
+                        @Override
+                        public void onClick(View v) {
+                            if (sBottomPopClick != null)
+                                sBottomPopClick.clickTop();
+                        }
+                    });
             mText2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (sBottomPopClick != null)
-                    sBottomPopClick.clickCenter();
+                        sBottomPopClick.clickCenter();
                 }
             });
             mText3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (sBottomPopClick != null)
-                    sBottomPopClick.clickBottom();
+                        sBottomPopClick.clickBottom();
                 }
             });
         }

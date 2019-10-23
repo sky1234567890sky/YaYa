@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.OrderFormkFragment">
+
+    <ImageView
+        android:layout_width="@dimen/dp_312_5"
+        android:layout_height="@dimen/dp_127_5"
+        android:src="@mipmap/logo"
+        android:layout_alignParentBottom="true"
+        tools:ignore="ContentDescription" />
+
         <RelativeLayout
+            android:id="@+id/orderform_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/title_bg_blue"
+            android:background="@drawable/title_bg_blue2"
             >
-            <!--<TextView-->
-            <!--android:id="@+id/title_tb"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:layout_marginTop="@dimen/dp_10"-->
-            <!--android:text="@string/homepage"-->
-            <!--android:textColor="@color/c_000000"-->
-            <!--android:textSize="@dimen/sp_24"-->
-            <!--android:textStyle="normal" />-->
             <TextView
                 android:id="@+id/inventory_money"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_45"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_21"
+                android:layout_marginLeft="@dimen/dp_15"
                 android:gravity="center_vertical"
-                android:text="今日收款：￥5000元"
+                android:text="游戏币：5000"
                 android:textColor="@color/c_ffffff"
                 android:textSize="@dimen/sp_16"
                 tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded" />
@@ -37,6 +35,7 @@
 
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/tab_layout"
+        android:layout_below="@id/orderform_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
         android:background="@color/white"
@@ -52,7 +51,8 @@
         />
 
     <android.support.v4.view.ViewPager
+        android:layout_below="@id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/orderform_vp" />
-</LinearLayout>
+</RelativeLayout>

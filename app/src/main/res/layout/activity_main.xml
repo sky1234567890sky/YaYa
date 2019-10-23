@@ -47,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_49"
             android:layout_alignParentBottom="true"
+
             >
             <RadioGroup
                 android:id="@+id/rg"
@@ -69,6 +70,7 @@
                     android:gravity="center"
                     android:text="@string/homepage"
                     android:textColor="@color/radiobutton_textcolor"
+                    android:background="@drawable/ripple_bg"
                     />
                 <RadioButton
                     android:id="@+id/inventory_btn"

@@ -34,7 +34,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApplication = (BaseApp) getApplication();
-        getPermission();//给权限
         setContentView(getLayoutId());
         ButterKnife.bind(this);
         overridePendingTransition(R.anim.from_right, R.anim.no_slide);//划入
@@ -69,7 +68,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 //                XXPermissions.gotoPermissionSettings(this);//跳转到权限设置页面
 
     }
-
     protected abstract int getLayoutId();
 
     protected void initListener() {

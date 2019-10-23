@@ -22,27 +22,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="center"
+                android:textColor="#333333"
                 android:text="test1" />
 
-            <View style="@style/line_style" />
-
+            <View android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#F6F6F6"
+                />
             <TextView
                 android:id="@+id/tx_2"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="center"
+                android:textColor="#333333"
                 android:text="test2" />
 
-            <View style="@style/line_style" />
-
+            <View style="@style/line_style"
+                />
             <TextView
                 android:id="@+id/tx_3"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="center"
-                android:textColor="@color/red_theme"
-                android:text="test3" />
-
+                android:textColor="#333333"
+                android:text="test3"
+                />
         </LinearLayout>
     </RelativeLayout>
 

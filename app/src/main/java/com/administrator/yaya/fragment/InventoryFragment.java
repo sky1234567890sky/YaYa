@@ -14,6 +14,10 @@ import android.widget.TextView;
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.inventory.adapter.InventoryAdapter;
 import com.administrator.yaya.adapter.home.OrderFormAdapter;
+import com.administrator.yaya.base.BaseMvpFragment;
+import com.administrator.yaya.base.CommonPresenter;
+import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.model.LoginModel;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -25,15 +29,12 @@ import butterknife.Unbinder;
 /**
  * 库存
  */
-public class InventoryFragment extends Fragment {
-
+public class InventoryFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
     @BindView(R.id.inventory_money)
     TextView inventoryMoney;
     @BindView(R.id.inventory_tab_layout)
     SlidingTabLayout mTab;
     Unbinder unbinder;
-    @BindView(R.id.inventory_toolbar)
-    Toolbar inventoryToolbar;
     @BindView(R.id.inventory_vp)
     ViewPager vp;
     private ArrayList<String> titles;
@@ -47,6 +48,11 @@ public class InventoryFragment extends Fragment {
         initView();
         initlistener();
         return view;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return 0;
     }
 
     private void initView() {
@@ -111,5 +117,25 @@ public class InventoryFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    protected LoginModel getModel() {
+        return null;
+    }
+
+    @Override
+    protected CommonPresenter getPresenter() {
+        return null;
+    }
+
+    @Override
+    public void onError(int whichApi, Throwable e) {
+
+    }
+
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
+
     }
 }

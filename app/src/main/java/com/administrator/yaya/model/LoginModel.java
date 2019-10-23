@@ -31,7 +31,7 @@ public class LoginModel implements ICommonModel {
 
                 //首页
             case ApiConfig.TEXT_HOMEPAGE_DATA:
-                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                netManager.method(netManager.getNetService("http://192.168.0.198:8080/yayaApp/")
                         .getTextHomePageData((int) t[0]), view, whichApi);
                 break;
 

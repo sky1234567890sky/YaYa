@@ -452,4 +452,7 @@
     <dimen name="dp_21_5" >21.5dp</dimen>
     <dimen name="dp_25_5">25.5dp</dimen>
     <dimen name="dp_20_5">20.5dp</dimen>
+    <dimen name="dp_46_5">46.5dp</dimen>
+    <dimen name="dp_22_5" >22.5dp</dimen>
+    <dimen name="dp_16_5">16.5dp</dimen>
 </resources>

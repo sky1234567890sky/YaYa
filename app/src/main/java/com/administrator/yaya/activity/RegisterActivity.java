@@ -38,6 +38,8 @@ import org.devio.takephoto.app.TakePhotoImpl;
 import org.devio.takephoto.compress.CompressConfig;
 import org.devio.takephoto.model.CropOptions;
 import org.devio.takephoto.model.TResult;
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.util.List;
 import butterknife.BindView;
@@ -69,7 +71,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     EditText etGetcode;
 
     @BindView(R.id.register_register_btn)
-    Button registerRegisterBtn;
+    TextView registerRegisterBtn;
 //    @BindView(R.id.sms_verify_view)
 //    SmsVerifyView mView;
     private SlideFromBottomPopup mPop;

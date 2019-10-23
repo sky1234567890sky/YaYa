@@ -6,6 +6,7 @@ public class NormalConfig {
     public static String log2 = "又双叒叕";
     public static String log3 = "貔貅貔貅";
     public static final String ISFIRST = "isFirst";
+    public static final String ISFIRSTRUN = "isFirstRun";//是否第一次登陸
     public static final String TOKEN = "token";
     public static final String USER_NAME = "username";
     public static final String PASS_WORD = "password";

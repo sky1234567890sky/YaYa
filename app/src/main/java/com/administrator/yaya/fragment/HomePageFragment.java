@@ -83,12 +83,11 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TextHomePageData data = (TextHomePageData) t[0];
                 TextHomePageData.DataBean.UserInfoBean userInfo = data.getData().getUserInfo();
-
+                Log.i("tag", "首页: "+data.getData().toString());
                 Glide.with(this).load(userInfo.getUserHeadImg()).placeholder(R.mipmap.icon).into(iv);
                 break;
         }
     }
-
     @OnClick({ R.id.home_buy_now_btn_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -98,7 +97,6 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
                 break;
         }
     }
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
