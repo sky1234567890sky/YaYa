@@ -67,6 +67,7 @@
             tools:ignore="SpUsage" />
 
         <Switch
+            android:thumb="@style/switch_color"
             android:id="@+id/wechatpay_two_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

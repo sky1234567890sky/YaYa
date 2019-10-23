@@ -75,6 +75,8 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
         mTab.addTab(mTab.newTab().setText("收入记录"));
         mTab.addTab(mTab.newTab().setText("支出记录"));
         mTab.addTab(mTab.newTab().setText("返利记录"));
+
+        mTab.setupWithViewPager(vp);
     }
     @Override
     protected void initListener() {
@@ -126,7 +128,6 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
 //            }
 //        });
 ////        vp.addOnPageChangeListener(new SlidingTabLayout(tabLayout));
-//        tabLayout.setViewPager(vp);
     }
 
     @OnClick({R.id.myincome_back_iv, R.id.myincome_game_money_plain_iv})
@@ -144,12 +145,12 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
 
     @Override
     protected LoginModel getModel() {
-        return null;
+        return new LoginModel();
     }
 
     @Override
     protected CommonPresenter getPresenter() {
-        return null;
+        return new CommonPresenter();
     }
 
     @Override

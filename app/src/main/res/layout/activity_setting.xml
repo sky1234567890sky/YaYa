@@ -27,7 +27,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
                 <ImageView
                     android:id="@+id/setting_back_iv"
                     android:layout_width="@dimen/dp_9"
@@ -36,7 +35,8 @@
                     android:layout_marginLeft="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_15"
                     android:layout_marginBottom="@dimen/dp_15"
-                    android:src="@mipmap/icon_back" />
+                    android:src="@mipmap/icon_back"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
