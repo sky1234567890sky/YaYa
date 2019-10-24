@@ -24,16 +24,21 @@ public class LoginModel implements ICommonModel {
                         .getTestRegister((String) t[0], (String) t[0], (String) t[0],(String) t[0]), view, whichApi);
                 break;
 
-            case ApiConfig.TEXT_INVITECODE:
+            case ApiConfig.TEXT_INVITECODE://验证码
 //                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
 //                        .getTestInviteCode((String) t[0],(String) t[0],(String) t[0]),view,whichApi,1);
+
                 break;
 
-                //首页
+                //首页-我的
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 netManager.method(netManager.getNetService("http://192.168.0.198:8080/yayaApp/")
                         .getTextHomePageData((int) t[0]), view, whichApi);
                 break;
+
+
+
+
 
             case ApiConfig.GET_SMS_MJG:
 //                String phoneNum = (String) t[0];

@@ -1,8 +1,8 @@
 package com.administrator.yaya.activity.home;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.text.ClipboardManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,7 +17,6 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -50,25 +49,27 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     @BindView(R.id.bank_money)
     TextView bankMoney;
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_affirm_message);
-//        overridePendingTransition(R.anim.from_right, R.anim.no_slide);//划入
-//        ButterKnife.bind(this);
-//    }
     @Override
     protected int getLayoutId() {
         return R.layout.activity_affirm_message;
     }
 
-    @OnClick({R.id.affirm_msg_back_iv, R.id.receiver_copy, R.id.bank_code_number_copy, R.id.bank_copy,R.id.bank_money,R.id.remark_btn_copy, R.id.affirm_msg_look_btn})
+    @Override
+    protected void initView() {
+
+
+    }
+
+    @OnClick({R.id.affirm_msg_back_iv, R.id.receiver_copy, R.id.bank_code_number_copy, R.id.bank_copy, R.id.bank_money, R.id.remark_btn_copy, R.id.affirm_msg_look_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.affirm_msg_back_iv:
                 finish();
                 break;
             case R.id.receiver_copy:
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+// 将文本内容放到系统剪贴板里。
+                cm.setText(receiverCopy.getText());
                 ToastUtil.showShort("已复制");
                 break;
             case R.id.bank_code_number_copy:
@@ -90,13 +91,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                 break;
         }
     }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.no_slide, R.anim.out_right);//划出
-    }
-
 
     @Override
     protected LoginModel getModel() {
