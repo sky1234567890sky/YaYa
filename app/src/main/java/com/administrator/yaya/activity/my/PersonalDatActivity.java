@@ -36,7 +36,6 @@ import razerdp.design.SlideFromBottomPopup;
  * 个人资料
  */
 public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick {
-
     @BindView(R.id.personal_back_iv)
     ImageView personalBackIv;
     @BindView(R.id.personal_header_iv)
@@ -57,7 +56,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
 //        ButterKnife.bind(this);
 //
 //    }
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_personal_dat;

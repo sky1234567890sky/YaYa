@@ -73,32 +73,30 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //        ToastUtil.showShort(e.getMessage());
     }
 
-    SharedPreferences setting;
-    final String INITIALIZED = "initialized";
-    Boolean user_first;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_login;
     }
     @Override
     protected void initView() {
-        super.initView();
-    }
-//        SharedPreferences firstLogin = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE);
+
+//            SharedPreferences firstLogin = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE);
 //        boolean isFirstRun = firstLogin.getBoolean(NormalConfig.ISFIRSTRUN, false);
-//        SharedPreferences.Editor edit = firstLogin.edit();
-//        //true代表是第一次運行false不是第一次運行
-//        if (isFirstRun){
-//            //不是第一次登陆
-//            Intent intent = new Intent();
-//            intent.setClass(LoginActivity.this,MainActivity.class);
-//            startActivity(intent);
-//        }else{
-//            SharedPreferences.Editor editor = edit.putBoolean(NormalConfig.ISFIRST, true);
-//            edit.commit();
-//            Intent intent = new Intent();
-//            Intent intent1 = intent.setClass(LoginActivity.this, LoginActivity.class);
-//            startActivity(intent1);
+////            firstLogin.getString("")
+//            SharedPreferences.Editor edit = firstLogin.edit();
+//            //true代表是第一次運行false不是第一次運行
+//            if (isFirstRun){
+//                //不是第一次登陆
+//                Intent intent = new Intent();
+//                intent.setClass(LoginActivity.this,MainActivity.class);
+//                startActivity(intent);
+//            }else{
+//                SharedPreferences.Editor editor = edit.putBoolean(NormalConfig.ISFIRST, true);
+//                edit.commit();
+//                Intent intent = new Intent();
+//                Intent intent1 = intent.setClass(LoginActivity.this, LoginActivity.class);
+//                startActivity(intent1);
+//            }
 //        }
 
 //        SharedPreferences login = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE);
@@ -116,8 +114,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //            } else {
 //               return;
 //            }
-//        }
-
+        }
     //没网也能登？
 //        String PASSWORD = SharedPrefrenceUtils.getString(LoginActivity.this, NormalConfig.PASS_WORD);
 //        String USERNAME = SharedPrefrenceUtils.getString(LoginActivity.this, NormalConfig.USER_NAME);
@@ -129,7 +126,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //            showMessage("error");
 //            mPsw.setText("");
 //        }
-
     @SuppressLint("ApplySharedPref")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -143,6 +139,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //                    SharedPreferences.Editor login = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE).edit();
 //                    login.putBoolean(NormalConfig.ISFIRSTRUN, true);
 //                    login.commit();
+
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -155,7 +152,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 startActivity(intent);
                 finish();
                 break;
-
         }
     }
 
@@ -209,9 +205,9 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 name = mName.getText().toString();
                 pwd = mPsw.getText().toString();
                 //对当前用户输入的密码进行MD5加密再进行比对判断, MD5Utils.md5( ); psw 进行加密判断是否一致
-//                Intent intent = new Intent(this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
                 login();
                 break;
             case R.id.tv_registered:
