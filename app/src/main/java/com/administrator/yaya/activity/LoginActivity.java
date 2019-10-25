@@ -115,11 +115,11 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                     SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.USER_NAME, name);
                     SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.PASS_WORD, pwd);
 
-                    Intent intent = new Intent(this, MainActivity.class);
-                    editorMain.putBoolean(NormalConfig.ISFIRST,true);
-                    editorMain.commit();
-                    startActivity(intent);
-                    LoginActivity.this.finish();
+//                    Intent intent = new Intent(this, MainActivity.class);
+//                    editorMain.putBoolean(NormalConfig.ISFIRST,true);
+//                    editorMain.commit();
+//                    startActivity(intent);
+//                    LoginActivity.this.finish();
                 }
                 break;
         }
@@ -130,8 +130,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
         super.initData();
         String name = mName.getText().toString().trim();
         String psw = mPsw.getText().toString().trim();
-
-
     }
     @OnClick({R.id.login_btn, R.id.tv_registered, R.id.tv_forgetPassword})
     public void onViewClicked(View view) {
@@ -139,11 +137,15 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
             case R.id.login_btn:
                 name = mName.getText().toString();
                 pwd = mPsw.getText().toString();
-//                Intent intent = new Intent(this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
+
+                Intent intent = new Intent(this, MainActivity.class);
+                editorMain.putBoolean(NormalConfig.ISFIRST,true);
+                editorMain.commit();
+                startActivity(intent);
+                LoginActivity.this.finish();
+
                 //解析數據
-                login();
+//                login();
                 break;
             case R.id.tv_registered:
                 Intent intent1 = new Intent(this, RegisterActivity.class);
@@ -154,6 +156,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 break;
         }
     }
+
     private void login() {
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd)) {
             String regex = "[A-Za-z0-9]{4,12}";
@@ -173,8 +176,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //            ToastUtil.showShort(name+"\n"+psw);
         }
     }
-
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();

@@ -130,10 +130,13 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     public void takeSuccess(TResult result) {
         String path = result.getImage().getCompressPath() != null ? result.getImage().getCompressPath() : result.getImage().getOriginalPath();//先设置到列表中
         if (!TextUtils.isEmpty(path)) {
-            ToastUtil.showShort("上传成功");
+//            ToastUtil.showShort("上传成功");
 //            showLoadingDialog();
 //            mPresenter.getData(ApiConfig.UPLOAD_IMAGE, path);
 //            Glide.with(this).load(path).into(mImage);
+            SharedPrefrenceUtils.saveString(this,NormalConfig.HEADLER_IMAGEVIEW,path);
+            
+            Glide.with(this).load(path).placeholder(R.mipmap.icon).into(personalHeaderIv);
         }
     }
 
