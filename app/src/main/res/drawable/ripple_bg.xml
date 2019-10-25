@@ -9,6 +9,5 @@
             <corners android:radius="4dp"/>
         </shape>
     </item>
-
     <item android:drawable="@drawable/rounded_corners" />
 </ripple>

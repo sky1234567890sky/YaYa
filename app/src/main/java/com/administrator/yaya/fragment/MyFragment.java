@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,14 @@ import com.administrator.yaya.activity.my.MyInviteActivity;
 import com.administrator.yaya.activity.my.PersonalDatActivity;
 import com.administrator.yaya.activity.my.SettingActivity;
 import com.administrator.yaya.activity.my.SystemMessagesActivity;
+import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.homepage.TextHomePageData;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ChangTvSizeUtils;
+import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -133,7 +137,16 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     }
     @Override
     public void onResponse(int whichApi, Object[] t) {
-
+        switch (whichApi) {
+            case ApiConfig.TEXT_HOMEPAGE_DATA:
+                TextHomePageData data = (TextHomePageData) t[0];
+                TextHomePageData.DataBean data1 = data.getData();
+                TextHomePageData.DataBean.UserInfoBean userInfo = data1.getUserInfo();
+//                Log.i("tag", "===>:"+data.toString());
+                if (data.getCode() == 0 || userInfo != null)
+                    Glide.with(this).load(userInfo.getUserHeadImg()).placeholder(R.mipmap.icon).into(iv);
+                myNameTv.setText(userInfo.getUserName());
+                break;
+        }
     }
-
 }

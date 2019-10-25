@@ -78,7 +78,7 @@
                 android:id="@+id/iv"
                 android:layout_width="@dimen/dp_50"
                 android:layout_height="@dimen/dp_50"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/icon"
                 app:riv_oval="true"
                 />
 
@@ -181,9 +181,6 @@
             </LinearLayout>
 
         </RelativeLayout>
-
-        -
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

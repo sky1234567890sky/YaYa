@@ -34,6 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApplication = (BaseApp) getApplication();
+        initExit();
         setContentView(getLayoutId());
         ButterKnife.bind(this);
         overridePendingTransition(R.anim.from_right, R.anim.no_slide);//划入
@@ -44,29 +45,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         initListener();
     }
 
-    private void setTextViewStyles(TextView textView) {
+    protected void initExit() {
+
+    }
+
+    protected void setTextViewStyles(TextView textView) {
         LinearGradient mLinearGradient = new LinearGradient(0, 0, textView.getPaint().getTextSize() * textView.getText().length(), 0, Color.parseColor("#FF076BF0"), Color.parseColor("#FF35A6FF"), Shader.TileMode.CLAMP);
         textView.getPaint().setShader(mLinearGradient);
         textView.invalidate();
-    }
-
-    private void getPermission() {
-        XXPermissions.with(this)
-                .constantRequest()//可设置被拒绝后继续申请，直到用户授权或者永久拒绝
-//                .constantRequest(Permission.SYSTEM_ALERT_WINDOW, Permission.REQUEST_INSTALL_PACKAGES)//支持请求 6.0 悬浮窗权限 8.0 请求安装权限
-                .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .request(new OnPermission() {
-                    @Override
-                    public void hasPermission(List<String> granted, boolean isAll) {
-
-                    }
-                    @Override
-                    public void noPermission(List<String> denied, boolean quick) {
-                        if (denied.size() != 0) ToastUtil.showLong("拒绝权限影响您正常使用");
-                    }
-                });
-//                XXPermissions.gotoPermissionSettings(this);//跳转到权限设置页面
-
     }
     protected abstract int getLayoutId();
 

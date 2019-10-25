@@ -3,6 +3,8 @@ package com.administrator.yaya.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -57,6 +59,121 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
     private String name;
     private String pwd;
     private String spPsw;
+    private SharedPreferences sprfMain;
+    private SharedPreferences.Editor editorMain;
+
+    @SuppressLint("CommitPrefEdits")
+    @Override
+    protected void initExit() {
+        //在加载布局文件前判断是否登陆过
+        sprfMain = PreferenceManager.getDefaultSharedPreferences(this);
+        editorMain = sprfMain.edit();
+        //.getBoolean("main",false)；当找不到"main"所对应的键值是默认返回false
+        if(sprfMain.getBoolean(NormalConfig.ISFIRST,false)){
+            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+            startActivity(intent);
+            LoginActivity.this.finish();
+        }
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_login;
+    }
+    @Override
+    protected void initView() {
+
+//        SharedPreferences login = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE);
+//        boolean issave = login.getBoolean(NormalConfig.ISFIRSTRUN, false);
+//
+//        String username = login.getString(NormalConfig.USER_NAME, null);
+//        String password = login.getString(NormalConfig.PASS_WORD, null);
+//        //记住密码
+//        if (username.isEmpty() && password.isEmpty()) {
+//            return;
+//        } else {
+//            if (issave == true) {
+//                mName.setText(username);
+//                mPsw.setText(password);
+//                initData();// 网络请求
+//            } else {
+//                return;
+//            }
+//        }
+    }
+    @SuppressLint("ApplySharedPref")
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
+        switch (whichApi) {
+            case ApiConfig.TEXT_LOGIN:
+                TestLogin info = (TestLogin) t[0];
+
+                ToastUtil.showShort(info.getMsg());
+
+                if (info.getCode() == 0) {
+                    //登录成功保存头像 手机号 密码
+                    SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.USER_NAME, name);
+                    SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.PASS_WORD, pwd);
+
+                    Intent intent = new Intent(this, MainActivity.class);
+                    editorMain.putBoolean(NormalConfig.ISFIRST,true);
+                    editorMain.commit();
+                    startActivity(intent);
+                    LoginActivity.this.finish();
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        String name = mName.getText().toString().trim();
+        String psw = mPsw.getText().toString().trim();
+
+
+    }
+    @OnClick({R.id.login_btn, R.id.tv_registered, R.id.tv_forgetPassword})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.login_btn:
+                name = mName.getText().toString();
+                pwd = mPsw.getText().toString();
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+                //解析數據
+                login();
+                break;
+            case R.id.tv_registered:
+                Intent intent1 = new Intent(this, RegisterActivity.class);
+                startActivityForResult(intent1,99);
+                break;
+            case R.id.tv_forgetPassword:
+                startActivity(new Intent(this, RetrievePasswordActivity.class));
+                break;
+        }
+    }
+    private void login() {
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd)) {
+            String regex = "[A-Za-z0-9]{4,12}";
+            if (AppValidationMgr.isPhone(name) && pwd.matches(regex)) {
+                mPresenter.getData(ApiConfig.TEXT_LOGIN, name, pwd);
+            } else ToastUtil.showShort("请输入正确的手机号");
+        } else ToastUtil.showShort("请输入账号或密码");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==99 && resultCode==100){
+            //回传的手机号密码
+            String name = data.getStringExtra(NormalConfig.USER_NAME);
+            String psw = data.getStringExtra(NormalConfig.PASS_WORD);
+//            ToastUtil.showShort(name+"\n"+psw);
+        }
+    }
+
 
     @Override
     protected LoginModel getModel() {
@@ -70,108 +187,12 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 
     @Override
     public void onError(int whichApi, Throwable e) {
-//        ToastUtil.showShort(e.getMessage());
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_login;
-    }
-    @Override
-    protected void initView() {
-
-//            SharedPreferences firstLogin = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE);
-//        boolean isFirstRun = firstLogin.getBoolean(NormalConfig.ISFIRSTRUN, false);
-////            firstLogin.getString("")
-//            SharedPreferences.Editor edit = firstLogin.edit();
-//            //true代表是第一次運行false不是第一次運行
-//            if (isFirstRun){
-//                //不是第一次登陆
-//                Intent intent = new Intent();
-//                intent.setClass(LoginActivity.this,MainActivity.class);
-//                startActivity(intent);
-//            }else{
-//                SharedPreferences.Editor editor = edit.putBoolean(NormalConfig.ISFIRST, true);
-//                edit.commit();
-//                Intent intent = new Intent();
-//                Intent intent1 = intent.setClass(LoginActivity.this, LoginActivity.class);
-//                startActivity(intent1);
-//            }
-//        }
-
-//        SharedPreferences login = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE);
-//        boolean issave = login.getBoolean(NormalConfig.ISFIRSTRUN, false);
-//        String username = login.getString("username", null);
-//        String password = login.getString("password", null);
-//        //记住密码
-//        if (username.isEmpty() && password.isEmpty()) {
-//            return;
-//        } else {
-//            if (issave == true) {
-//                mName.setText(username);
-//                mPsw.setText(password);
-//               initData();// 网络请求
-//            } else {
-//               return;
-//            }
-        }
-    //没网也能登？
-//        String PASSWORD = SharedPrefrenceUtils.getString(LoginActivity.this, NormalConfig.PASS_WORD);
-//        String USERNAME = SharedPrefrenceUtils.getString(LoginActivity.this, NormalConfig.USER_NAME);
-//        if (USERNAME.equals(name)  && PASSWORD.equals(pwd)){
-//            //匹配成功登录跳转
-//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//            startActivity(intent);
-//        }else{
-//            showMessage("error");
-//            mPsw.setText("");
-//        }
-    @SuppressLint("ApplySharedPref")
-    @Override
-    public void onResponse(int whichApi, Object[] t) {
-        switch (whichApi) {
-            case ApiConfig.TEXT_LOGIN:
-                TestLogin info = (TestLogin) t[0];
-                if (info.getCode() == 0) {
-                    SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.USER_NAME, name);
-                    SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.PASS_WORD, pwd);
-
-//                    SharedPreferences.Editor login = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE).edit();
-//                    login.putBoolean(NormalConfig.ISFIRSTRUN, true);
-//                    login.commit();
-
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            case 0:
-                SharedPreferences.Editor login = getSharedPreferences("login", MODE_PRIVATE).edit();
-                login.putBoolean("issave", true);
-                login.commit();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
-                break;
-        }
-    }
-
-    @Override
-    public void smsCodeSend() {
-    }
-    @Override
-    public void countryCodeOpen() {
-
-    }
-    @Override
-    protected void initData() {
-        super.initData();
-        String trim = mName.getText().toString().trim();
-
     }
     @Override
     public void takeSuccess(TResult result) {
 
     }
+
     @Override
     public void takeFail(TResult result, String msg) {
 
@@ -197,33 +218,14 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 
     }
 
-    @OnClick({R.id.login_btn, R.id.tv_registered, R.id.tv_forgetPassword})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.login_btn:
-                //解析数据
-                name = mName.getText().toString();
-                pwd = mPsw.getText().toString();
-                //对当前用户输入的密码进行MD5加密再进行比对判断, MD5Utils.md5( ); psw 进行加密判断是否一致
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
-                login();
-                break;
-            case R.id.tv_registered:
-                startActivity(new Intent(this, RegisterActivity.class));
-                break;
-            case R.id.tv_forgetPassword:
-                startActivity(new Intent(this, RetrievePasswordActivity.class));
-                break;
-        }
+    @Override
+    public void smsCodeSend() {
     }
-    private void login() {
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd)) {
-            String regex = "[A-Za-z0-9@#@$%^&*()!]{4,12}";
-            if (AppValidationMgr.isPhone(name) && pwd.matches(regex)) {
-                mPresenter.getData(ApiConfig.TEXT_LOGIN, name, pwd);
-            } else ToastUtil.showShort("请输入正确的手机号");
-        } else ToastUtil.showShort("请输入账号或密码");
+
+    @Override
+    public void countryCodeOpen() {
+
     }
+
+
 }

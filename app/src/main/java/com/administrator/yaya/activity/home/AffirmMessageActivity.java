@@ -67,22 +67,34 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                 finish();
                 break;
             case R.id.receiver_copy:
-                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-// 将文本内容放到系统剪贴板里。
-                cm.setText(receiverCopy.getText());
-                ToastUtil.showShort("已复制");
+                ClipboardManager name = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                // 将文本内容放到系统剪贴板里。
+                name.setText(receiverName.getText());
+                ToastUtil.showShort("已复制至粘贴栏");
                 break;
             case R.id.bank_code_number_copy:
-                ToastUtil.showShort("已复制");
+                ClipboardManager number = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                // 将文本内容放到系统剪贴板里。
+                number.setText(bankCodeNumber.getText());
+                ToastUtil.showShort("已复制至粘贴栏");
                 break;
             case R.id.bank_copy:
-                ToastUtil.showShort("已复制");
+                ClipboardManager bank = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                // 将文本内容放到系统剪贴板里。
+                bank.setText(bankYinhang.getText());
+                ToastUtil.showShort("已复制至粘贴栏");
                 break;
             case R.id.bank_money:
-                ToastUtil.showShort("已复制");
+                ClipboardManager bankQian = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                // 将文本内容放到系统剪贴板里。
+                bankQian.setText(bankMoney.getText());
+                ToastUtil.showShort("已复制至粘贴栏");
                 break;
             case R.id.remark_btn_copy:
-                ToastUtil.showShort("已复制");
+                ClipboardManager remark = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                // 将文本内容放到系统剪贴板里。
+                remark.setText(remarkTv.getText());
+                ToastUtil.showShort("已复制至粘贴栏");
                 break;
             case R.id.affirm_msg_look_btn:
                 Intent intent = new Intent(this, MainActivity.class);

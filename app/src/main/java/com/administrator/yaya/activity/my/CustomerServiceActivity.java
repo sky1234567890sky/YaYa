@@ -44,7 +44,6 @@ public class CustomerServiceActivity extends BaseActivity {
 //        ButterKnife.bind(this);
 //
 //    }
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_customer_service;

@@ -21,6 +21,7 @@ import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.homepage.TextHomePageData;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -76,15 +77,15 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     protected int getLayoutId() {
         return R.layout.fragment_home_page;
     }
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TextHomePageData data = (TextHomePageData) t[0];
-                TextHomePageData.DataBean.UserInfoBean userInfo = data.getData().getUserInfo();
-                Log.i("tag", "首页: "+data.getData().toString());
-                Glide.with(this).load(userInfo.getUserHeadImg()).placeholder(R.mipmap.icon).into(iv);
+//                Object commodity = data.getData().getCommodity();
+
+//                if (data.getCode()==0 || data1!=null || userInfo!=null)
+//                Glide.with(this).load().placeholder(R.mipmap.icon).into(iv);
                 break;
         }
     }
@@ -108,7 +109,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+//        ToastUtil.showShort(e.getMessage());
     }
 
 

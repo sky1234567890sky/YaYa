@@ -12,11 +12,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.design.SmsVerifyView;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
+import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.devio.takephoto.app.TakePhoto;
@@ -35,7 +39,7 @@ import razerdp.design.SlideFromBottomPopup;
 /**
  * 个人资料
  */
-public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick {
+public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback,SlideFromBottomPopup.BottomPopClick {
     @BindView(R.id.personal_back_iv)
     ImageView personalBackIv;
     @BindView(R.id.personal_header_iv)
@@ -46,16 +50,10 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     TextView persionalName;
     @BindView(R.id.persional_phone_code)
     TextView persionalPhoneCode;
+
     private SlideFromBottomPopup mPop;
     private TakePhotoImpl mTakePhoto;
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_personal_dat);
-//        ButterKnife.bind(this);
-//
-//    }
     @Override
     protected int getLayoutId() {
         return R.layout.activity_personal_dat;
@@ -85,26 +83,27 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     protected void initView() {
         super.initView();
 
-    }
+        String phone_code = SharedPrefrenceUtils.getString(this, NormalConfig.USER_NAME);//手机号
+        String headler_iamge = SharedPrefrenceUtils.getString(this, NormalConfig.HEADLER_IMAGEVIEW);//头像
 
+        if (persionalPhoneCode!=null && headler_iamge!=null){
+            persionalPhoneCode.setText(phone_code);
+            Glide.with(this).load(headler_iamge).placeholder(R.mipmap.icon).into(personalHeaderIv);
+        }
+    }
     @Override
     protected void initData() {
         super.initData();
-
     }
-
     @Override
     protected void initListener() {
 
-
     }
-
     @OnClick({R.id.personal_back_iv, R.id.personal_header_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.personal_back_iv:
-
-                finish();
+                PersonalDatActivity.this.finish();
                 break;
             case R.id.personal_header_iv:
                 //初始化底部弹出拍照的pop
@@ -125,18 +124,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
             return true;
         }
         return super.dispatchKeyEvent(event);
-    }
-
-
-
-    @Override
-    public void smsCodeSend() {
-
-    }
-
-    @Override
-    public void countryCodeOpen() {
-
     }
 
     @Override
@@ -205,4 +192,13 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     }
 
 
+    @Override
+    public void smsCodeSend() {
+
+    }
+
+    @Override
+    public void countryCodeOpen() {
+
+    }
 }

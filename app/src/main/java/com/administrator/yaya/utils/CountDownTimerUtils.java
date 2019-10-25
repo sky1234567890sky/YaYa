@@ -29,7 +29,6 @@ public class CountDownTimerUtils extends CountDownTimer {
         super(millisInFuture, countDownInterval);
         this.mTextView = textView;
     }
-
     /**
      * 倒计时期间会调用
      * @param millisUntilFinished

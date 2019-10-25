@@ -25,9 +25,11 @@ import com.administrator.yaya.bean.VerifyCodeInfo;
 import com.administrator.yaya.bean.login_register_bean.TestInviteCode;
 import com.administrator.yaya.bean.login_register_bean.TestRegister;
 import com.administrator.yaya.design.SmsVerifyView;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.AppValidationMgr;
 import com.administrator.yaya.utils.CountDownTimerUtils;
+import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.hjq.permissions.OnPermission;
@@ -49,6 +51,7 @@ import razerdp.design.SlideFromBottomPopup;
  * 注册界面
  */
 public class RegisterActivity extends BaseMvpActivity<LoginModel>implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick{
+
     @BindView(R.id.register_back_iv)
     ImageView registerBackIv;
 
@@ -101,26 +104,25 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
 //        mView.reset();
 //        ToastUtil.showShort(e.getMessage());
     }
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         //TODO:隐藏进度条
         switch (whichApi) {
             case ApiConfig.TEXT_REGISTER://注册
                 TestRegister register = (TestRegister) t[0];
-
-                if (register.getCode()!=500){
+                if (register.getCode()==500){
                     ToastUtil.showShort(register.getMsg());
-                    Log.i("tag",register.getMsg());
-//                    关闭页面，重新输入一次登录
+
+                    Intent intent = new Intent();
+                    intent.putExtra(NormalConfig.USER_NAME,registerEtUname.getText().toString());
+                    intent.putExtra(NormalConfig.PASS_WORD,etRegisterPw.getText().toString());
+                    setResult(100,intent);
                     finish();
-                }
-                break;
+                };
             case ApiConfig.TEXT_InviteCode://邀请码
                 //获取验证码前判断手机号是否被注册
                 TestInviteCode invitecode = (TestInviteCode) t[0];
                 break;
-
             case ApiConfig.GET_SMS_MJG://获取验证码
                 VerifyCodeInfo verifyCodeInfos = (VerifyCodeInfo) t[0];
                 if (verifyCodeInfos != null)
@@ -136,7 +138,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
                 LoginInfo loginInfo = (LoginInfo) t[0];
 //                ToastUtil.showShort(loginInfo.msg);
                 //将这两个保存，并传给application
-                mApplication.mToken = loginInfo.token;
+//                mApplication.mToken = loginInfo.token;
 //                mApplication.mUserPhoto  = loginInfo.nick;//传给Application用来给聊天界面
                 //将token保存到本地
 //                SharedPrefrenceUtils.saveString(this,NormalConfig.TOKEN,loginInfo.token);
@@ -153,7 +155,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     protected void initData() {
         super.initData();
         //给权限
-//        getPermission();
+        getPermission();
     }
 
     @OnClick({R.id.register_back_iv, R.id.register_headleriv, R.id.btn_register_phonecode, R.id.register_register_btn})
@@ -188,6 +190,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
         String password1 = etRegisterPw.getText().toString().trim();
         String VerificationCode = etRegisterVerificationcode.getText().toString().trim();
         String inviteCode = etGetcode.getText().toString().trim();
+
         if (number1.isEmpty() || number1 == null || password1.isEmpty() || password1 == null || VerificationCode.isEmpty() ||VerificationCode==null || inviteCode.isEmpty()||inviteCode==null) {
             ToastUtil.showShort("请输入完整信息");
         }else{
@@ -195,11 +198,31 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
             if (AppValidationMgr.isPhone(number1) && password1.matches(regex) ){
                 //邀请码与验证码验证
                 mPresenter.getData(ApiConfig.TEXT_REGISTER,number1,password1,VerificationCode,inviteCode);
+
+//                Intent intent = new Intent();
+//                intent.putExtra(NormalConfig.USER_NAME,registerEtUname.getText().toString());
+//                intent.putExtra(NormalConfig.PASS_WORD,etRegisterPw.getText().toString());
+//                setResult(100,intent);
+//                finish();
             } else ToastUtil.showShort("请输入正确的手机号");
         }
     }
     private void getPermission() {
+        XXPermissions.with(this)
+                .constantRequest()//可设置被拒绝后继续申请，直到用户授权或者永久拒绝
+//                .constantRequest(Permission.SYSTEM_ALERT_WINDOW, Permission.REQUEST_INSTALL_PACKAGES)//支持请求 6.0 悬浮窗权限 8.0 请求安装权限
+                .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .request(new OnPermission() {
+                    @Override
+                    public void hasPermission(List<String> granted, boolean isAll) {
 
+                    }
+                    @Override
+                    public void noPermission(List<String> denied, boolean quick) {
+                        if (denied.size() != 0) ToastUtil.showLong("拒绝权限影响您正常使用");
+                    }
+                });
+//                XXPermissions.gotoPermissionSettings(this);//跳转到权限设置页面
     }
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
@@ -270,11 +293,14 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     public void takeSuccess(TResult result) {
         String path = result.getImage().getCompressPath() != null ? result.getImage().getCompressPath() : result.getImage().getOriginalPath();//先设置到列表中
         if (!TextUtils.isEmpty(path)) {
-            ToastUtil.showShort("上传成功");
+            //记住头像
+            SharedPrefrenceUtils.saveString(this,NormalConfig.HEADLER_IMAGEVIEW,path);
 
+            ToastUtil.showShort("上传成功");
 //            showLoadingDialog();
 //            mPresenter.getData(ApiConfig.UPLOAD_IMAGE, path);
-//            Glide.with(this).load(path).into(mImage);
+
+            Glide.with(this).load(path).into(registerHeadlerIv);
         }
     }
     /**

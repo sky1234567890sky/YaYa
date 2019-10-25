@@ -39,10 +39,8 @@
             android:inputType="phone"
             android:padding="@dimen/dp_15" />
     </RelativeLayout>
-
     <View style="@style/style_cut_line"
         />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/dp_10"

@@ -69,7 +69,7 @@
         app:riv_oval="true"
         android:layout_height="@dimen/dp_50"
         android:layout_width="@dimen/dp_50"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/icon"
         android:id="@+id/myinvite_iv"
         />
     <TextView

@@ -41,27 +41,12 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     private ArrayList<Fragment> fragments;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_inventory, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initView();
-        initlistener();
-        return view;
+    protected int getLayoutId() {
+        return R.layout.fragment_inventory;
     }
 
     @Override
-    protected int getLayoutId() {
-        return 0;
-    }
-
-    private void initView() {
-        /**
-         * tablayout切换时有显示隐藏效果，在一个界面上
-         *
-         */
-//        inventory_tab.addTab(inventory_tab.newTab().setText("待付款"));
-//        inventory_tab.addTab(inventory_tab.newTab().setText("已收款"));
+    protected void initView(View inflate) {
 
         titles = new ArrayList<>();
         titles.add("待付款");
@@ -112,21 +97,14 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //        });
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
     @Override
     protected LoginModel getModel() {
-        return null;
+        return new LoginModel();
     }
 
     @Override
     protected CommonPresenter getPresenter() {
-        return null;
+        return new CommonPresenter();
     }
 
     @Override
@@ -136,6 +114,6 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 
     @Override
     public void onResponse(int whichApi, Object[] t) {
-
+        
     }
 }

@@ -188,7 +188,7 @@
         android:layout_marginLeft="@dimen/dp_35"
         android:layout_marginTop="@dimen/dp_85"
         android:layout_marginRight="@dimen/dp_35"
-        android:background="@drawable/shape_btn"
+        android:background="@drawable/ripple_btn"
         android:text="@string/up_jia"
         android:textColor="@color/c_ffffff"
         android:textSize="@dimen/sp_14" />
