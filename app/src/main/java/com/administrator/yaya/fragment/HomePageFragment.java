@@ -74,10 +74,10 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     @Override
     protected void initView(View inflate) {
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.c_ffffff));
-
     }
     @Override
     protected int getLayoutId() {
+
         return R.layout.fragment_home_page;
     }
     @Override
@@ -120,10 +120,5 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     @Override
     public void onResume() {
         super.onResume();
-        registerNetWorkStatus();
-    }
-
-    private void registerNetWorkStatus() {
-
     }
 }

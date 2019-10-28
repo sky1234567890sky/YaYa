@@ -37,7 +37,6 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.ButterKnife;
 import static com.scwang.smartrefresh.layout.util.DensityUtil.px2dp;
 
@@ -50,6 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private NetStatusBroadCast mNetStatusBroadCast;
     public Activity activity;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +67,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.c_000000));
     }
     protected void initExit() {
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

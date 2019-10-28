@@ -102,7 +102,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
             @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
-
+                
             }
         });
     }
@@ -117,14 +117,15 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 String minNumber = buyMinGamemoneyRemainingQuantity.getText().toString();
                 String s = buyGamemoneyNumber.getText().toString();
 
-                int i = Integer.parseInt(s);
-                if (3000<=i || i<=10000){
-                    //付款人姓名上传对照
-                    String name = bankName.getText().toString();
-
-                    Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
-                    startActivity(intent);
-                } else {
+                if (!s.isEmpty()) {
+                    int i = Integer.parseInt(s);
+                    if (3000 <= i || i <= 10000) {
+                        //付款人姓名上传对照
+                        String name = bankName.getText().toString();
+                        Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
+                        startActivity(intent);
+                    }
+                }else {
                     ToastUtil.showShort("请输入规定数量游戏币");
                 }
                 break;

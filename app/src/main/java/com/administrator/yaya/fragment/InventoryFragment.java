@@ -49,7 +49,6 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     @Override
     protected void initView(View inflate) {
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.blue));
-
         titles = new ArrayList<>();
         titles.add("待付款");
         titles.add("已付款");

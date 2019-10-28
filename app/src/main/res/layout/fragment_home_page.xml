@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wukong"
+    android:background="@color/c_ffffff"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     tools:context=".fragment.HomePageFragment">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_25"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
     <ImageView
         android:layout_width="@dimen/dp_312_5"
         android:layout_height="@dimen/dp_127_5"
@@ -368,4 +377,5 @@
         </LinearLayout>
     </RelativeLayout>
     </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

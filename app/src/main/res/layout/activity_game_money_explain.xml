@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/c_fff"
     tools:context=".activity.my.GameMoneyExplainActivity">
     <ImageView
         android:layout_width="@dimen/dp_312_5"
@@ -12,13 +13,11 @@
         android:src="@mipmap/logo"
         android:layout_alignParentBottom="true"
         tools:ignore="ContentDescription" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44">

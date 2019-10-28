@@ -72,6 +72,8 @@ public class MainActivity extends BaseActivity {
     private Bundle bundle;
     @Override
     protected int getLayoutId() {
+        StatusBarUtil.setTranslucent(MainActivity.this);
+
         return R.layout.activity_main;
     }
 
@@ -101,10 +103,12 @@ public class MainActivity extends BaseActivity {
         addHomeFragment();
     }
     private void addHomeFragment() {
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.home_fragment, fragments.get(0));
-        transaction.commit();
+//        FragmentTransaction transaction = manager.beginTransaction();
+//        transaction.add(R.id.home_fragment, fragments.get(0));
+//        transaction.show(fragments.get(0));
+//        transaction.commit();
 
+        FragmentUtils.addFragment(manager,fragments.get(0).getClass(),R.id.home_fragment);
         //Activity跳转到Fragment ，"affirm","2"
         int affirm = getIntent().getIntExtra("affirm", 0);
         if (affirm == 2) {

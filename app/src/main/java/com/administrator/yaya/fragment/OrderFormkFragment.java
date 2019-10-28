@@ -85,7 +85,6 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
         super.initView(view);
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.blue));
 
-
         fragments = new ArrayList<>();
         titles = new ArrayList<>();
 
