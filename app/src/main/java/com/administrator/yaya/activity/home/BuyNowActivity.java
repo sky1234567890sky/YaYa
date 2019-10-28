@@ -53,6 +53,9 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     @BindView(R.id.pay_money)
     TextView payMoney;
 
+@BindView(R.id.pay_money2)
+    TextView payMoney2;
+
     @BindView(R.id.pay_way)
     TextView payWay;
 
@@ -103,24 +106,22 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
         buyGamemoneyNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                Log.i("tag", "1:: "+s.toString()+"\n"+start+"\n"+count+"\n"+after);
+                //                Log.i("tag", "1:: "+s.toString()+"\n"+start+"\n"+count+"\n"+after);
             }
-
             @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (count>0){
-//                    String tv = s.toString();
-////                    Log.i("tag", "2:: "+s.toString()+"\n"+start+"\n"+before+"\n"+count);
-//                }
-                int i = Integer.parseInt(String.valueOf(s));
-                payMoney.setText("应付金额￥："+10*i);
+                if (s.length() <= 0 || s.equals("")) {
+                    payMoney2.setText("0");
+                    return;
+                } else {
+                    int i = Integer.parseInt(String.valueOf(s));
+                    payMoney2.setText(10*i+"");
+                }
             }
-
             @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
-
 
             }
         });

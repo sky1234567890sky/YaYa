@@ -176,17 +176,36 @@
                 tools:ignore="HardcodedText"
                 />
         </RelativeLayout>
-        <TextView
-            android:id="@+id/pay_money"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="应付金额:￥0.0"
-            android:textColor="@color/c_000000"
-            android:textSize="@dimen/dp_15"
-            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/dp_25"
             android:layout_marginLeft="@dimen/dp_12_5"
-            android:layout_marginTop="@dimen/dp_20"
-            tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,SpUsage" />
+            >
+            <TextView
+                android:id="@+id/pay_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="应付金额￥:"
+                android:textColor="@color/c_000000"
+                android:textSize="@dimen/dp_15"
+                tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,SpUsage" />
+            <TextView
+                android:id="@+id/pay_money2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:text="0.0"
+                android:textColor="@color/c_000000"
+                android:textSize="@dimen/dp_15"
+                tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,SpUsage" />
+
+        </LinearLayout>
+
+
         <TextView
             android:id="@+id/pay_way"
             android:layout_width="wrap_content"
