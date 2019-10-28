@@ -1,6 +1,7 @@
 package com.administrator.yaya.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -157,7 +158,6 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
         //给权限
         getPermission();
     }
-
     @OnClick({R.id.register_back_iv, R.id.register_headleriv, R.id.btn_register_phonecode, R.id.register_register_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -184,6 +184,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
         }
     }
 
+    @SuppressLint("NewApi")
     private void register() {
 
         String number1 = registerEtUname.getText().toString().trim();
@@ -222,8 +223,12 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
                         if (denied.size() != 0) ToastUtil.showLong("拒绝权限影响您正常使用");
                     }
                 });
-//                XXPermissions.gotoPermissionSettings(this);//跳转到权限设置页面
+//        跳转到设置页面
+        if (XXPermissions.isHasPermission(this, Permission.Group.STORAGE)) {
+                XXPermissions.gotoPermissionSettings(this);//跳转到权限设置页面
+        }
     }
+
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 //        ToastUtil.showShort(event.getKeyCode()+"");

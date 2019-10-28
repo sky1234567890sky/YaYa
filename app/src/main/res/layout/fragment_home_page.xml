@@ -5,8 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_ffffff"
+    android:background="@drawable/wukong"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".fragment.HomePageFragment">
     <ImageView
         android:layout_width="@dimen/dp_312_5"
@@ -14,28 +15,27 @@
         android:src="@mipmap/logo"
         android:layout_alignParentBottom="true"
         tools:ignore="ContentDescription" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-    <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_44"
-    >
-    <TextView
-    android:id="@+id/title_tb"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:layout_marginTop="@dimen/dp_10"
-    android:text="@string/homepage"
-    android:textColor="#333333"
-    android:textSize="@dimen/sp_18"
-    android:textStyle="normal"
-    />
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                >
+            <TextView
+                android:id="@+id/title_tb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/homepage"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="normal"
+                />
+            </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_100"

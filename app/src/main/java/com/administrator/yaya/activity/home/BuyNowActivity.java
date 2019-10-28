@@ -3,31 +3,23 @@ package com.administrator.yaya.activity.home;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
-import com.administrator.yaya.activity.my.GameMoneyExplainActivity;
 import com.administrator.yaya.base.BaseMvpActivity;
-import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /***
  * 立即购买
@@ -52,8 +44,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
     @BindView(R.id.pay_money)
     TextView payMoney;
-
-@BindView(R.id.pay_money2)
+    @BindView(R.id.pay_money2)
     TextView payMoney2;
 
     @BindView(R.id.pay_way)
@@ -67,14 +58,21 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
     @BindView(R.id.buy_max_gamemoney_remaining_quantity)
     TextView buyMaxGamemoneyRemainingQuantity;
+    private int i ;
+
     @Override
-    protected LoginModel getModel() {
-        return new LoginModel();
+    protected void initView() {
+        super.initView();
     }
 
     @Override
-    protected CommonPresenter getPresenter() {
-        return new CommonPresenter();
+    public void onError(int whichApi, Throwable e) {
+
+    }
+
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
+
     }
 
     @Override
@@ -82,23 +80,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
         return R.layout.activity_buy_now;
     }
 
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    protected void initView() {
-        super.initView();
-
-    }
-
-
-    @Override
-    public void onError(int whichApi, Throwable e) {
-
-    }
-    @Override
-    public void onResponse(int whichApi, Object[] t) {
-
-    }
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initListener() {
@@ -106,7 +87,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
         buyGamemoneyNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //                Log.i("tag", "1:: "+s.toString()+"\n"+start+"\n"+count+"\n"+after);
             }
             @SuppressLint("SetTextI18n")
             @Override
@@ -130,6 +110,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.now_buy_iv:
+                finish();
                 break;
             case R.id.nowbuy_commit_btn:
                 String maxNumber = buyMaxGamemoneyRemainingQuantity.getText().toString();
@@ -140,19 +121,24 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 if (3000<=i || i<=10000){
                     //付款人姓名上传对照
                     String name = bankName.getText().toString();
-//                    if (){
 
-//                        }
-                    Intent intent = new Intent(this, AffirmMessageActivity.class);
+                    Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
                     startActivity(intent);
-
-                }else{
-                        ToastUtil.showShort("请输入规定数量游戏币");
-                    }
+                } else {
+                    ToastUtil.showShort("请输入规定数量游戏币");
+                }
                 break;
         }
     }
+    @Override
+    protected LoginModel getModel() {
+        return new LoginModel();
+    }
 
+    @Override
+    protected CommonPresenter getPresenter() {
+        return new CommonPresenter();
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

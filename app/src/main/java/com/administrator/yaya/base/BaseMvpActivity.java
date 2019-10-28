@@ -5,6 +5,7 @@ import android.widget.Toast;
 import com.administrator.yaya.utils.ToastUtil;
 
 public abstract class BaseMvpActivity<M> extends BaseActivity implements ICommonView {
+
     protected M mModel;
     protected CommonPresenter mPresenter;
 

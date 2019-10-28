@@ -121,4 +121,13 @@ dependencies {
     implementation files('libs/alipaySdk-20180403.jar')
 
     implementation 'com.android.support:multidex:1.0.3'
+    //noinspection GradleDynamicVersion,GradleDependency
+    implementation 'com.hjq:xxpermissions:1.+'
+
+    //微信分享
+    //noinspection GradleDynamicVersion
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+
+    //沉浸式状态栏
+    implementation 'com.jaeger.statusbarutil:library:1.4.0'
 }

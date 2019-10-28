@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.activity.home.BuyNowActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
@@ -24,6 +25,7 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.jaeger.library.StatusBarUtil;
 
 import java.io.Serializable;
 
@@ -71,6 +73,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     }
     @Override
     protected void initView(View inflate) {
+//        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.c_ffffff));
 
     }
     @Override
@@ -82,10 +85,12 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TextHomePageData data = (TextHomePageData) t[0];
-//                Object commodity = data.getData().getCommodity();
+                if (data.getCode()==0 || data!=null || data.getData()!=null) {
+                    TextHomePageData.DataBean.UserInfoBean userInfo = data.getData().getUserInfo();
+                    Glide.with(this).load(userInfo.getUserHeadImg()).placeholder(R.mipmap.icon).into(iv);
 
-//                if (data.getCode()==0 || data1!=null || userInfo!=null)
-//                Glide.with(this).load().placeholder(R.mipmap.icon).into(iv);
+                }
+
                 break;
         }
     }
@@ -112,5 +117,13 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 //        ToastUtil.showShort(e.getMessage());
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerNetWorkStatus();
+    }
 
+    private void registerNetWorkStatus() {
+
+    }
 }

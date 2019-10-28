@@ -107,14 +107,11 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
         switch (whichApi) {
             case ApiConfig.TEXT_LOGIN:
                 TestLogin info = (TestLogin) t[0];
-
                 ToastUtil.showShort(info.getMsg());
-
                 if (info.getCode() == 0) {
                     //登录成功保存头像 手机号 密码
                     SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.USER_NAME, name);
                     SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.PASS_WORD, pwd);
-
 //                    Intent intent = new Intent(this, MainActivity.class);
 //                    editorMain.putBoolean(NormalConfig.ISFIRST,true);
 //                    editorMain.commit();
@@ -143,15 +140,14 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 editorMain.commit();
                 startActivity(intent);
                 LoginActivity.this.finish();
-
                 //解析數據
 //                login();
                 break;
-            case R.id.tv_registered:
+            case R.id.tv_registered://回传值
                 Intent intent1 = new Intent(this, RegisterActivity.class);
                 startActivityForResult(intent1,99);
                 break;
-            case R.id.tv_forgetPassword:
+            case R.id.tv_forgetPassword://忘记密码
                 startActivity(new Intent(this, RetrievePasswordActivity.class));
                 break;
         }
@@ -165,7 +161,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
             } else ToastUtil.showShort("请输入正确的手机号");
         } else ToastUtil.showShort("请输入账号或密码");
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -227,6 +222,4 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
     public void countryCodeOpen() {
 
     }
-
-
 }

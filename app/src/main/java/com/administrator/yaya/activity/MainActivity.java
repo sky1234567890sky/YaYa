@@ -1,6 +1,6 @@
 package com.administrator.yaya.activity;
-
 import android.animation.Animator;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -23,7 +23,6 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.BaseActivity;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
@@ -33,15 +32,13 @@ import com.administrator.yaya.fragment.MyFragment;
 import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.utils.FragmentUtils;
 import com.administrator.yaya.utils.ToastUtil;
-
+import com.jaeger.library.StatusBarUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.OnClick;
-
 public class MainActivity extends BaseActivity {
-    //    @BindView(R.id.title_tb)
+    //@BindView(R.id.title_tb)
 //    TextView mTitle;
 //    @BindView(R.id.toolbar)
 //    Toolbar mToolbar;
@@ -73,11 +70,17 @@ public class MainActivity extends BaseActivity {
     private PopupWindow popupWindow;
     private TestLogin loginData;
     private Bundle bundle;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
     }
+
+    @Override
+    protected void initExit() {
+        super.initExit();
+
+    }
+
     @Override
     protected void initView() {
         super.initView();
@@ -140,6 +143,13 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
         super.initData();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        registerNetWorkStatus();//监听网络状态
+    }
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -252,6 +262,7 @@ public class MainActivity extends BaseActivity {
             }
         });
         popupWindow.setOutsideTouchable(false);
+
 //        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
@@ -261,5 +272,10 @@ public class MainActivity extends BaseActivity {
 //                return true;
 //            }
 //        });
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this,null);
     }
 }

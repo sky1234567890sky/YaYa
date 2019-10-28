@@ -135,7 +135,7 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
 //            mPresenter.getData(ApiConfig.UPLOAD_IMAGE, path);
 //            Glide.with(this).load(path).into(mImage);
             SharedPrefrenceUtils.saveString(this,NormalConfig.HEADLER_IMAGEVIEW,path);
-            
+
             Glide.with(this).load(path).placeholder(R.mipmap.icon).into(personalHeaderIv);
         }
     }
@@ -158,7 +158,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
 //        mTakePhoto.onPickFromGallery();
         mPop.dismiss();
     }
-
     private CropOptions getOption() {
         return new CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(false).create();
     }

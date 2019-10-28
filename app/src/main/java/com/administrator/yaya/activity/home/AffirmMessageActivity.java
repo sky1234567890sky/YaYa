@@ -123,4 +123,5 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     public void onResponse(int whichApi, Object[] t) {
 
     }
+
 }

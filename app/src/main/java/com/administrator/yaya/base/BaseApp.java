@@ -9,6 +9,9 @@ import android.support.multidex.MultiDex;
 import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.local_utils.DeviceUuidFactory;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
 import java.util.LinkedList;
 import java.util.UUID;
 
@@ -17,13 +20,24 @@ public class BaseApp extends Application {
     public static BaseApp mBaseApp;
     public String mToken = "";
     public UUID mUuid;
-
+    public boolean mPlayInWifi;
+    public boolean mImIsLogin = false;
+    public static String AppId="4c60d31758736f2ad0f78641bc9c22a4";
     @Override
     public void onCreate() {
         super.onCreate();
         mBaseApp = this;
+        //两种方式注册
+        initWechat();
         mUuid = DeviceUuidFactory.getInstance(getApplication()).getDeviceUuid();
         MultiDex.install(this);
+    }
+    private void initWechat() {
+        //TODO:你的appId
+        // 三个参数分别是上下文、应用的appId、是否检查签名（默认为false）
+        IWXAPI mWxApi = WXAPIFactory.createWXAPI(this,AppId, true);
+// 注册
+        mWxApi.registerApp(AppId);
     }
     public static Context getApplication(){
         return mBaseApp.getApplicationContext();
@@ -31,7 +45,6 @@ public class BaseApp extends Application {
     public static BaseApp getInstance() {
         return mBaseApp;
     }
-
 //    用户点击后直接退出程序并返回桌面。
     // 添加Activity到列表中维持
     public void addActivity(Activity activity) {

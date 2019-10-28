@@ -31,6 +31,7 @@
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 
+
     <!--<style name="switch_color">-->
         <!--<item name="colorAccent">@color/blue</item>-->
     <!--</style>-->

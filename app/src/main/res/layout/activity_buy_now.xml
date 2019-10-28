@@ -121,6 +121,7 @@
                 android:inputType="phone|number"
                 android:digits="1234567890"
                 android:singleLine="true"
+                android:maxLength="5"
                 android:textStyle="normal"
                 tools:ignore="Autofill,HardcodedText,TextFields" />
             <!--digits这个属性限制只能输入0-9这些数字</span>-->
@@ -193,14 +194,16 @@
                 android:textColor="@color/c_000000"
                 android:textSize="@dimen/dp_15"
                 tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,SpUsage" />
+
             <TextView
                 android:id="@+id/pay_money2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_5"
-                android:text="0.0"
+                android:text="0"
                 android:textColor="@color/c_000000"
                 android:textSize="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/dp_10"
+
                 tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,SpUsage" />
 
         </LinearLayout>

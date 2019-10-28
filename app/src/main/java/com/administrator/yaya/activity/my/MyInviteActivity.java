@@ -1,7 +1,11 @@
 package com.administrator.yaya.activity.my;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.Gravity;
@@ -17,11 +21,21 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.BaseActivity;
+import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ChangTvSizeUtils;
 import com.administrator.yaya.utils.ToastUtil;
+import com.administrator.yaya.utils.WxShareUtils;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -58,23 +72,37 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     private TextView mMyinviteShareWechatBtnTv;
     private ImageView mMyinviteCloneDissPopupIv;
 
+
+    //TODO:注册你的wechatAppId
+    //需要像微信注册我们申请的应用，在前面我们申请的应用审核完后的APP_ID 和APP_SECRET 就填写在这里：
+//    private static final String APP_ID = "";
+//    private static final String APP_SECRET = "123456";
+    private IWXAPI api;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_invite;
     }
+//    //向微信注册app
+//    public void register(Context context) {
+//        if(api==null){
+//            api = WXAPIFactory.createWXAPI(context, APP_ID, true);
+//            api.registerApp(APP_ID);
+//        }
+//    }
 
     @Override
     protected void initView() {
-
+//        register(this);
         SpannableString getInventory = ChangTvSizeUtils.changTVsize("25.00");
         getGamemoneyTv.setText(getInventory);
         allGamemoneyTv.setText(getInventory);
     }
+
+
     @Override
     protected void initListener() {
-
     }
-
     @OnClick({R.id.myinvite_book_back_iv, R.id.myinvite_friend})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -86,7 +114,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 break;
         }
     }
-
     private void popupSelector() {
         //分享二维码
         View inflate = LayoutInflater.from(this).inflate(R.layout.myinvite_popup, null);
@@ -122,6 +149,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         mMyinviteShareWechatBtnTv.setOnClickListener(this);
         mMyinviteCloneDissPopupIv.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -130,11 +158,68 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 break;
             case R.id.myinvite_share_wechat_btn_tv: //拉起微信去分享
                 //跳转微信
+                initShareIv();
                 popupWindow.dismiss();
                 break;
         }
 
     }
+
+    private void initShareIv() {
+
+        //方法一：
+//        WXWebpageObject webpage = new WXWebpageObject();
+//        webpage.webpageUrl = "网页链接";
+//        final WXMediaMessage msg = new WXMediaMessage(webpage);
+//        msg.title = "网页标题";
+//        msg.description = "网页内容";
+//
+//        Bitmap thumb = BitmapFactory.decodeResource(BaseApp.getApplication().getResources(), R.mipmap.icon);
+////        这个bitmap不能超过32kb
+//        if(thumb != null) {
+//            Bitmap mBp = Bitmap.createScaledBitmap(thumb, 120, 120, true);
+//            thumb.recycle();
+//            msg.thumbData = bmpToByteArray(thumb,true);
+//        }
+//        SendMessageToWX.Req req = new SendMessageToWX.Req();    //创建一个请求对象
+//        req.message = msg;
+//        //req.scene = SendMessageToWX.Req.WXSceneTimeline;    //设置发送到朋友圈
+//        req.scene = SendMessageToWX.Req.WXSceneSession;   //设置发送给朋友
+//        req.transaction = "设置一个tag";  //用于在回调中区分是哪个分享请求
+//        boolean successed = api.sendReq(req);   //如果调用成功微信,会返回true
+
+        //方法二
+        Glide.with(this).asBitmap().load("图片url").into(new SimpleTarget<Bitmap>() {
+            /**
+             * 成功的回调
+             */
+            @Override
+            public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
+                // 下面这句代码是一个过度dialog，因为是获取网络图片，需要等待时间
+//                mDialog.dismiss();
+                // 调用方法
+                //TODO:你的AppId
+                WxShareUtils.shareWeb(BaseApp.getInstance(),BaseApp.AppId,
+                        "http://www.tengxun.com", "网页标题", "网页描述",
+                        bitmap);
+            }
+            /**
+             * 失败的回调
+             */
+            @Override
+            public void onLoadFailed(Drawable errorDrawable) {
+                super.onLoadFailed(errorDrawable);
+//                mDialog.dismiss();
+                WxShareUtils.shareWeb(BaseApp.getInstance(),BaseApp.AppId,
+                        "http://www.tengxun.com", "网页标题", "网页描述",
+                        null);
+            }
+        });
+    }
+
+//    private byte[] bmpToByteArray(Bitmap thumb, boolean b) {
+//        return new byte[0];
+//    }
 
     @Override
     protected LoginModel getModel() {
