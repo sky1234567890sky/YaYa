@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.administrator.yaya">
+    <!--4c60d31758736f2ad0f78641bc9c22a4-->
     <!-- 权限声明 -->
     <!-- 拨打电话的权限，这里必须要添加权限，否则当点击电话号码的时候程序会崩溃 -->
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -15,20 +16,21 @@
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.INSTALL_SHORTCUT" />
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <uses-permission android:name="android.permission.CLEAR_APP_DATA" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 震动权限 -->
     <uses-feature android:name="android.hardware.camera" />
     <!-- 使用照相机权限 -->
@@ -36,8 +38,6 @@
 
     <uses-permission android:name="android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <application
         android:name=".base.BaseApp"
         android:allowBackup="true"
@@ -48,8 +48,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute"
-        >
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -73,6 +72,7 @@
             android:name=".broadcast.NetStatusBroadCast"
             android:enabled="true"
             android:exported="true" />
+
         <activity android:name=".activity.UpGameMoneyActivity" />
         <activity android:name=".ui.ImmediatelyBuyActivity" />
         <activity android:name=".activity.SplashActivity" />
@@ -88,22 +88,36 @@
         <activity android:name=".activity.my.MyInviteActivity" />
         <activity android:name=".activity.my.SmallBookActivity" />
         <activity android:name=".activity.my.WechatPayReceiverCodeActivity" />
-        <activity android:name=".activity.home.AffirmMessageActivity">
-        </activity>
+        <activity android:name=".activity.home.AffirmMessageActivity" />
+        <!--微信分享-->
+        <!--// 下面三行代码必须要有-->
+        <activity
+        android:name=".wxapi.WXEntryActivity"
+        android:exported="true"
+        />
+
+        <!--android:screenOrientation="portrait"-->
+        <!--android:theme="@style/NoTitleTranslucent80Theme"-->
+        <!--写在style.xml文件里（windowAnimationStyle可以不添加，这里只是一个动画）：-->
+
+        <!--// 下面两行代码可有可无-->
+        <!--// 指定一个主题，这里是无标题、半透明的主题-->
+
+
+        <!--支付宝-->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
-
+            android:windowSoftInputMode="adjustResize|stateHidden" />
     </application>
+
+
 </manifest>

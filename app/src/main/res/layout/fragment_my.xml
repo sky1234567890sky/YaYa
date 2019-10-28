@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_ffffff"
+    android:background="@drawable/the_girl"
+    android:fitsSystemWindows="true"
     tools:context=".fragment.MyFragment">
     <ImageView
         android:layout_width="@dimen/dp_312_5"
@@ -72,7 +73,7 @@
             android:layout_marginLeft="@dimen/dp_12_5"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_12_5"
-            android:background="@drawable/background_rl"
+            android:background="@drawable/homepage_shape_bg"
             android:paddingLeft="@dimen/dp_14">
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/iv"
@@ -187,10 +188,8 @@
             android:layout_marginLeft="@dimen/dp_12"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_12"
-            android:background="@drawable/login_register_up_et_shape"
+            android:background="@drawable/homepage_shape_bg"
             android:padding="@dimen/dp_15">
-            -
-
             <LinearLayout
                 android:id="@+id/ll1"
                 android:layout_width="match_parent"
@@ -316,10 +315,8 @@
             android:layout_marginLeft="@dimen/dp_12_5"
             android:layout_marginTop="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_12_5"
-            android:background="@drawable/background_rl"
+            android:background="@drawable/homepage_shape_bg"
             android:padding="@dimen/dp_15">
-            -
-
             <LinearLayout
                 android:id="@+id/ll2"
                 android:layout_width="match_parent"

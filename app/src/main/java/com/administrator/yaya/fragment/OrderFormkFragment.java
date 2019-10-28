@@ -1,4 +1,5 @@
 package com.administrator.yaya.fragment;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -17,12 +18,18 @@ import com.administrator.yaya.activity.orderform.CancelFragment;
 import com.administrator.yaya.activity.orderform.FinishFragment;
 import com.administrator.yaya.activity.orderform.SellFragment;
 import com.administrator.yaya.adapter.home.OrderFormAdapter;
+import com.administrator.yaya.base.BaseMvpActivity;
+import com.administrator.yaya.base.BaseMvpFragment;
+import com.administrator.yaya.base.CommonPresenter;
+import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.AppConstants;
 import com.administrator.yaya.utils.FragmentUtils;
 import com.administrator.yaya.utils.SetIndicator;
 import com.administrator.yaya.utils.SetIndicator2;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.jaeger.library.StatusBarUtil;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
@@ -34,7 +41,8 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OrderFormkFragment extends Fragment {
+public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
+
     @BindView(R.id.inventory_money)
     TextView mInventoryMoney;
     @BindView(R.id.tab_layout)
@@ -52,18 +60,32 @@ public class OrderFormkFragment extends Fragment {
     public OrderFormkFragment() {
         // Required empty public constructor
     }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        View view = inflater.inflate(R.layout.fragment_order_formk, container, false);
+//        unbinder = ButterKnife.bind(this, view);
+//        manager = getFragmentManager();
+//        initView();
+//        intiListener();
+//        return view;
+//    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_order_formk, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        manager = getFragmentManager();
-        initView();
-        intiListener();
-        return view;
+    public void onResponse(int whichApi, Object[] t) {
+
+    }
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_order_formk;
     }
 
-    private void initView() {
+    @Override
+    protected void initView(View view) {
+        super.initView(view);
+//        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.blue));
+
+
         fragments = new ArrayList<>();
         titles = new ArrayList<>();
 
@@ -87,12 +109,20 @@ public class OrderFormkFragment extends Fragment {
         orderFormAdapter.notifyDataSetChanged();
     }
 
-    private void intiListener() {
+    @Override
+    protected LoginModel getModel() {
+        return new LoginModel();
+    }
+
+    @Override
+    protected CommonPresenter getPresenter() {
+        return new CommonPresenter();
+    }
+
+    @Override
+    public void onError(int whichApi, Throwable e) {
 
     }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
+
 }

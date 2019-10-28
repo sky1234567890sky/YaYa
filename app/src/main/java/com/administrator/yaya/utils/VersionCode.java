@@ -19,7 +19,6 @@ public class VersionCode {
         }
         return versioncode + "";
     }
-
     // 获取进程号
     public static String getAppVersionName(Context context) {
         String versionName = null;

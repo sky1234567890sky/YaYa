@@ -28,6 +28,7 @@ import com.administrator.yaya.bean.homepage.TextHomePageData;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ChangTvSizeUtils;
 import com.bumptech.glide.Glide;
+import com.jaeger.library.StatusBarUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,19 +86,17 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 
     @Override
     protected void initView(View inflate) {
+//        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.c_ffffff));
+
         SpannableString getInventory = ChangTvSizeUtils.changTVsize("0.00");
         getGamemoneyTv.setText(getInventory);
         SpannableString getInventory2 = ChangTvSizeUtils.changTVsize("1900.00");
         allGamemoneyTv.setText(getInventory2);
-
     }
-
     @Override
     protected void initData() {
 
-
     }
-
     @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll,R.id.my_right_ll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -142,7 +141,7 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 TextHomePageData data = (TextHomePageData) t[0];
                 TextHomePageData.DataBean data1 = data.getData();
                 TextHomePageData.DataBean.UserInfoBean userInfo = data1.getUserInfo();
-//                Log.i("tag", "===>:"+data.toString());
+
                 if (data.getCode() == 0 || userInfo != null)
                     Glide.with(this).load(userInfo.getUserHeadImg()).placeholder(R.mipmap.icon).into(iv);
                 myNameTv.setText(userInfo.getUserName());

@@ -13,7 +13,6 @@ public class NetStatusBroadCast extends BroadcastReceiver {
             if (mNetStatusListener != null) mNetStatusListener.onNetChanged(state);
         }
     }
-
     private NetStatusListener mNetStatusListener;
 
     public void setNetStatusListener(NetStatusListener pNetStatusListener) {
