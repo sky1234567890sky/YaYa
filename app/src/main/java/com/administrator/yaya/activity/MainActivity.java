@@ -262,7 +262,6 @@ public class MainActivity extends BaseActivity {
             }
         });
         popupWindow.setOutsideTouchable(false);
-
 //        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
@@ -274,8 +273,8 @@ public class MainActivity extends BaseActivity {
 //        });
     }
 
-    @Override
-    protected void setStatusBar() {
-        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this,null);
-    }
+//    @Override
+//    protected void setStatusBar() {
+//        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this,null);
+//    }
 }
