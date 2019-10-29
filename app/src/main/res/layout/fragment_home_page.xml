@@ -139,7 +139,6 @@
         android:paddingRight="@dimen/dp_22_5"
         android:paddingBottom="@dimen/dp_30"
         >
-
         <LinearLayout
             android:id="@+id/ll1"
             android:layout_width="match_parent"
