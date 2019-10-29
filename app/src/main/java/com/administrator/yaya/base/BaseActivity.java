@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.MainActivity;
@@ -42,7 +43,6 @@ import butterknife.ButterKnife;
 import static com.scwang.smartrefresh.layout.util.DensityUtil.px2dp;
 
 public abstract class BaseActivity extends AppCompatActivity {
-
     protected BaseApp mApplication;
     protected LinearLayoutManager mManager;
     private long lastClickTime;
@@ -68,7 +68,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void setStatusBar() {
 //        StatusBarUtil.setColor(this, getResources().getColor(R.color.c_000000));
+        //当系统版本为4.4或者4.4以上时可以使用沉浸式状态栏
 
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            //透明状态栏
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            //透明导航栏
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//        }
     }
     protected void initExit() {
     }
@@ -79,7 +86,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     protected void setTextViewStyles(TextView textView) {
         LinearGradient mLinearGradient = new LinearGradient(0, 0, textView.getPaint().getTextSize() * textView.getText().length(), 0, Color.parseColor("#FF076BF0"), Color.parseColor("#FF35A6FF"), Shader.TileMode.CLAMP);
         textView.getPaint().setShader(mLinearGradient);
@@ -88,7 +94,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int getLayoutId();
 
     protected void initListener() {
-
     }
 
     protected void initData() {

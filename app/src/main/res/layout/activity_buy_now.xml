@@ -124,6 +124,7 @@
                 android:singleLine="true"
                 android:maxLength="5"
                 android:textStyle="normal"
+                android:textCursorDrawable="@drawable/edit_cursor_color"
                 tools:ignore="Autofill,HardcodedText,TextFields" />
             <!--digits这个属性限制只能输入0-9这些数字</span>-->
         </LinearLayout>
@@ -249,6 +250,7 @@
                 android:textColor="@color/c_000000"
                 android:hint="请输入银行卡持有人姓名"
                 android:textSize="@dimen/sp_14"
+                android:textCursorDrawable="@drawable/edit_cursor_color"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
 

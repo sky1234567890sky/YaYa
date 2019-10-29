@@ -20,7 +20,6 @@ import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
 /***
  * 立即购买
  * sky
@@ -58,7 +57,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
     @BindView(R.id.buy_max_gamemoney_remaining_quantity)
     TextView buyMaxGamemoneyRemainingQuantity;
-    private int i ;
 
     @Override
     protected void initView() {
@@ -87,24 +85,22 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
         buyGamemoneyNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
             @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                i = Integer.parseInt(String.valueOf(s));
-                if (s.length()>0 || !s.equals("")) {
-                    if (count>0){
-                        payMoney2.setText( 10*i+"");
-                    }
-                }else if(count<=0){
-                    payMoney2.setText(0+"");
+                if (s.length() <= 0 || s.equals("")) {
+                    payMoney2.setText("0");
                     return;
+                } else {
+                    int i = Integer.parseInt(String.valueOf(s));
+                    payMoney2.setText(10*i+"");
                 }
             }
             @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
     }
@@ -119,16 +115,19 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 String maxNumber = buyMaxGamemoneyRemainingQuantity.getText().toString();
                 String minNumber = buyMinGamemoneyRemainingQuantity.getText().toString();
                 String s = buyGamemoneyNumber.getText().toString();
+                if (!s.isEmpty()) {
+                    int i = Integer.parseInt(s);
+                    if (3000 <= i && i <= 10000) {
+                        //付款人姓名上传对照
+                        String name = bankName.getText().toString();
 
-                int i = Integer.parseInt(s);
-                if (3000 <= i || i <= 10000) {
-                    //付款人姓名上传对照
-                    String name = bankName.getText().toString();
-
-                    Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
-                    startActivity(intent);
-                } else {
-                    ToastUtil.showShort("请输入规定数量游戏币");
+                        Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
+                        startActivity(intent);
+                    }else {
+                        ToastUtil.showShort("请输入规定数量游戏币数量");
+                    }
+                }else {
+                    ToastUtil.showShort("请输入购买数量");
                 }
                 break;
         }
