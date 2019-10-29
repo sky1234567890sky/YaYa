@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:background="@drawable/the_girl"
+    android:background="@color/c_ffffff"
     tools:context=".fragment.InventoryFragment">
 
     <ImageView

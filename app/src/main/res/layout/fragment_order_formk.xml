@@ -4,17 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wukong"
+    android:background="@color/c_ffffff"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.OrderFormkFragment">
-
     <ImageView
         android:layout_width="@dimen/dp_312_5"
         android:layout_height="@dimen/dp_127_5"
         android:src="@mipmap/logo"
         android:layout_alignParentBottom="true"
         tools:ignore="ContentDescription" />
-
         <RelativeLayout
             android:id="@+id/orderform_rl"
             android:layout_width="match_parent"
@@ -55,5 +53,6 @@
         android:layout_below="@id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/orderform_vp" />
+        android:id="@+id/orderform_vp"
+        />
 </RelativeLayout>

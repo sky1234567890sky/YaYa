@@ -92,15 +92,15 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 i = Integer.parseInt(String.valueOf(s));
-                if (s.length() >0 || !s.equals("")) {
+                if (s.length()>0 || !s.equals("")) {
                     if (count>0){
                         payMoney2.setText( 10*i+"");
                     }
                 }else if(count<=0){
                     payMoney2.setText(0+"");
+                    return;
                 }
             }
-
             @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
