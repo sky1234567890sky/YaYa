@@ -22,7 +22,11 @@ public class BaseApp extends Application {
     public UUID mUuid;
     public boolean mPlayInWifi;
     public boolean mImIsLogin = false;
+
     public static String AppId="4c60d31758736f2ad0f78641bc9c22a4";
+    public static String APP_SERECET="";
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -38,6 +42,7 @@ public class BaseApp extends Application {
         IWXAPI mWxApi = WXAPIFactory.createWXAPI(this,AppId, true);
 // 注册
         mWxApi.registerApp(AppId);
+
     }
     public static Context getApplication(){
         return mBaseApp.getApplicationContext();

@@ -1,19 +1,15 @@
 package com.administrator.yaya.base;
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.ActionBar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,24 +18,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+
 import com.administrator.yaya.R;
-import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.broadcast.NetStatusBroadCast;
-import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
-import com.administrator.yaya.utils.ToastUtil;
-import com.hjq.permissions.OnPermission;
-import com.hjq.permissions.XXPermissions;
-import com.jaeger.library.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+
 import static com.scwang.smartrefresh.layout.util.DensityUtil.px2dp;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -50,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private NetStatusBroadCast mNetStatusBroadCast;
     public Activity activity;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +54,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
         initListener();
     }
-
     protected void setStatusBar() {
 //        StatusBarUtil.setColor(this, getResources().getColor(R.color.c_000000));
+
         //当系统版本为4.4或者4.4以上时可以使用沉浸式状态栏
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -76,8 +65,18 @@ public abstract class BaseActivity extends AppCompatActivity {
 //            //透明导航栏
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 //        }
+
+//        YCAppBar.translucentStatusBar(this, true);
+//        YCAppBar.setStatusBarLightMode(this,true);
+
+        //设置状态栏为黑色
+        YCAppBar.setStatusBarColor(this,
+                ContextCompat.getColor(this,
+                        R.color.c_000000));
     }
+
     protected void initExit() {
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -90,7 +90,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 //            api.registerApp(APP_ID);
 //        }
 //    }
-
     @Override
     protected void initView() {
 //        register(this);
@@ -98,8 +97,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         getGamemoneyTv.setText(getInventory);
         allGamemoneyTv.setText(getInventory);
     }
-
-
     @Override
     protected void initListener() {
     }
@@ -167,6 +164,19 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 
     private void initShareIv() {
 
+
+        //登录
+        WxShareUtils.WxLogin(this);
+
+        //分享textview
+        WxShareUtils.WxTextShare(this,"微信分享",WxShareUtils.WECHAT_FRIEND);//分享好友
+
+        //分享图片
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.icon);
+
+        WxShareUtils.WxBitmapShare(this,bitmap,WxShareUtils.WECHAT_FRIEND);
+
+
         //方法一：
 //        WXWebpageObject webpage = new WXWebpageObject();
 //        webpage.webpageUrl = "网页链接";
@@ -188,33 +198,9 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 //        req.transaction = "设置一个tag";  //用于在回调中区分是哪个分享请求
 //        boolean successed = api.sendReq(req);   //如果调用成功微信,会返回true
 
+
         //方法二
-        Glide.with(this).asBitmap().load("图片url").into(new SimpleTarget<Bitmap>() {
-            /**
-             * 成功的回调
-             */
-            @Override
-            public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
-                // 下面这句代码是一个过度dialog，因为是获取网络图片，需要等待时间
-//                mDialog.dismiss();
-                // 调用方法
-                //TODO:你的AppId
-                WxShareUtils.shareWeb(BaseApp.getInstance(),BaseApp.AppId,
-                        "http://www.tengxun.com", "网页标题", "网页描述",
-                        bitmap);
-            }
-            /**
-             * 失败的回调
-             */
-            @Override
-            public void onLoadFailed(Drawable errorDrawable) {
-                super.onLoadFailed(errorDrawable);
-//                mDialog.dismiss();
-                WxShareUtils.shareWeb(BaseApp.getInstance(),BaseApp.AppId,
-                        "http://www.tengxun.com", "网页标题", "网页描述",
-                        null);
-            }
-        });
+
     }
 
 //    private byte[] bmpToByteArray(Bitmap thumb, boolean b) {

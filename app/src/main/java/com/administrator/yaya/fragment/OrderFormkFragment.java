@@ -23,15 +23,7 @@ import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.model.LoginModel;
-import com.administrator.yaya.utils.AppConstants;
-import com.administrator.yaya.utils.FragmentUtils;
-import com.administrator.yaya.utils.SetIndicator;
-import com.administrator.yaya.utils.SetIndicator2;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.flyco.tablayout.listener.OnTabSelectListener;
-import com.jaeger.library.StatusBarUtil;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -60,16 +52,6 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
     public OrderFormkFragment() {
         // Required empty public constructor
     }
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_order_formk, container, false);
-//        unbinder = ButterKnife.bind(this, view);
-//        manager = getFragmentManager();
-//        initView();
-//        intiListener();
-//        return view;
-//    }
 
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -84,8 +66,6 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
     protected void initView(View view) {
         super.initView(view);
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.blue));
-
-
         fragments = new ArrayList<>();
         titles = new ArrayList<>();
 

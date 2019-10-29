@@ -28,7 +28,6 @@ import com.administrator.yaya.bean.homepage.TextHomePageData;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ChangTvSizeUtils;
 import com.bumptech.glide.Glide;
-import com.jaeger.library.StatusBarUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

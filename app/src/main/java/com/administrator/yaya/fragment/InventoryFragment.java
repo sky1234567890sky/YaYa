@@ -19,7 +19,6 @@ import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.model.LoginModel;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 
