@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "com.administrator.yaya"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -13,16 +12,20 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //
         multiDexEnabled true
+        //resConfigs "zh"      //删除无用的语言资源
     }
     buildTypes {
         release {
             minifyEnabled false
+            shrinkResources false  //true 开启shrinkResources去除无用资源
+            //在打包的时候会自动清除掉无用的资源，通过Android Studio自带的 “Remove Unused Resources
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     dataBinding {
         enabled = true
     }
+
 //    compileOptions {
 //        sourceCompatibility 1.8
 //        targetCompatibility 1.8
@@ -140,6 +143,7 @@ dependencies {
     implementation 'com.gongwen:marqueelibrary:1.1.3'//跑馬燈
     //二维码
     //noinspection GradleDynamicVersion
+    implementation 'com.google.zxing:core:3.3.0'
 //    implementation 'com.github.jwkj:LibZXing:v1.+'
 
 }

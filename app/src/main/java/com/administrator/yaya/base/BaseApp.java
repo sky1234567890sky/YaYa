@@ -24,8 +24,8 @@ public class BaseApp extends Application {
     public boolean mImIsLogin = false;
 
     public static String AppId="4c60d31758736f2ad0f78641bc9c22a4";
-    public static String APP_SERECET="";
 
+    public static String APP_SERECET="";
 
     @Override
     public void onCreate() {
@@ -39,9 +39,9 @@ public class BaseApp extends Application {
     private void initWechat() {
         //TODO:你的appId
         // 三个参数分别是上下文、应用的appId、是否检查签名（默认为false）
-        IWXAPI mWxApi = WXAPIFactory.createWXAPI(this,AppId, true);
-// 注册
-        mWxApi.registerApp(AppId);
+//        IWXAPI mWxApi = WXAPIFactory.createWXAPI(this,AppId, true);
+//// 注册
+//        mWxApi.registerApp(AppId);
 
     }
     public static Context getApplication(){

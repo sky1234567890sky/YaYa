@@ -22,7 +22,9 @@ import java.net.URLConnection;
 
 public class WxShareUtils {
     public static int WECHAT_FRIEND = 0;  //分享好友
+
     public static int WECHAT_MOMENT = 1;  //分享朋友圈
+
     private static IWXAPI iwxapi;
 
     public static IWXAPI getWXAPI(Context context){
@@ -140,8 +142,6 @@ public class WxShareUtils {
         }
         return true;
     }
-
-
     /**
      * 图片url转bitmap
      */
@@ -154,7 +154,6 @@ public class WxShareUtils {
             InputStream in;
             in = conn.getInputStream();
             map = BitmapFactory.decodeStream(in);
-            // TODO Auto-generated catch block
         } catch (IOException e) {
             e.printStackTrace();
         }

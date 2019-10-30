@@ -1,5 +1,7 @@
 package com.administrator.yaya.base;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,15 +9,22 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.administrator.yaya.utils.ToastUtil;
+import com.hjq.permissions.OnPermission;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -40,6 +49,7 @@ public abstract class BaseFragment extends Fragment {
         return inflate;
 
     }
+
     protected abstract int getLayoutId();
 
     protected void initData() {
@@ -49,7 +59,6 @@ public abstract class BaseFragment extends Fragment {
     protected void initListener() {
 
     }
-
 
 
     protected void initView(View inflate) {
@@ -92,6 +101,27 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (bind!=null)bind.unbind();
+        if (bind != null) bind.unbind();
+    }
+
+    public void getPermission() {//是否打开询问开启权限
+        XXPermissions.with(getActivity())
+//                .constantRequest()//可设置被拒绝后继续申请，直到用户授权或者永久拒绝
+//                .constantRequest(Permission.SYSTEM_ALERT_WINDOW, Permission.REQUEST_INSTALL_PACKAGES)//支持请求 6.0 悬浮窗权限 8.0 请求安装权限
+                .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .request(new OnPermission() {
+                    @Override
+                    public void hasPermission(List<String> granted, boolean isAll) {
+
+                    }
+                    @Override
+                    public void noPermission(List<String> denied, boolean quick) {
+                        if (denied.size() != 0) ToastUtil.showLong("拒绝权限影响您正常使用");
+                    }
+                });
+//        跳转到设置页面
+//        if (XXPermissions.isHasPermission(getContext(), Permission.Group.STORAGE)) {
+//            XXPermissions.gotoPermissionSettings(getContext());//跳转到权限设置页面
+//        }
     }
 }

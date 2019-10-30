@@ -35,24 +35,24 @@
                 android:textSize="@dimen/sp_18"
                 android:textStyle="normal"
                 />
-                <com.yc.cn.ycbannerlib.marquee.MarqueeView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/marqueeView"
-                    android:layout_width="@dimen/dp_120"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_height="@dimen/dp_40"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginRight="@dimen/dp_12_5"
-                    android:layout_gravity="center_vertical"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    app:paddingStart="@dimen/dp_0"
-                    app:mvAnimDuration="1000"
-                    app:mvInterval="2000"
-                    app:mvTextColor="#464C4E"
-                    app:mvTextSize="@dimen/sp_16"
-                    app:mvSingleLine="true"
-                    />
+                <!--<com.yc.cn.ycbannerlib.marquee.MarqueeView-->
+                    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+                    <!--android:id="@+id/marqueeView"-->
+                    <!--android:layout_width="@dimen/dp_120"-->
+                    <!--android:layout_marginTop="@dimen/dp_10"-->
+                    <!--android:layout_height="@dimen/dp_40"-->
+                    <!--android:layout_marginLeft="@dimen/dp_10"-->
+                    <!--android:layout_marginRight="@dimen/dp_12_5"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--app:paddingStart="@dimen/dp_0"-->
+                    <!--app:mvAnimDuration="1000"-->
+                    <!--app:mvInterval="2000"-->
+                    <!--app:mvTextColor="#464C4E"-->
+                    <!--app:mvTextSize="@dimen/sp_16"-->
+                    <!--app:mvSingleLine="true"-->
+                    <!--/>-->
             </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -81,7 +81,8 @@
             android:layout_width="@dimen/dp_75"
             android:layout_height="@dimen/dp_75"
             android:layout_marginLeft="@dimen/dp_12_5"
-            android:src="@mipmap/icon" />
+            android:src="@mipmap/icon"
+            />
 
         <TextView
             android:id="@+id/home_gamemoney_name"
@@ -108,24 +109,24 @@
             android:textSize="@dimen/sp_14" />
     </RelativeLayout>
 
-        <com.gongwen.marqueen.SimpleMarqueeView
-            android:id="@+id/marquee"
-            android:layout_marginLeft="@dimen/dp_12_5"
-            android:layout_marginTop="@dimen/dp_9_5"
-            android:layout_marginRight="@dimen/dp_12_5"
-            android:layout_height="@dimen/dp_40"
-            android:layout_width="match_parent"
-            android:flipInterval="2500"
-            android:inAnimation="@anim/in_right"
-            android:outAnimation="@anim/out_left"
-            app:marqueeAnimDuration="2000"
-            app:smvTextGravity="center_vertical"
-            app:smvTextSize="18sp"
-            android:autoStart="true"
-            android:animateFirstView="true"
-            app:smvTextColor="@color/c_cccccc"
-            app:smvTextSingleLine="true"
-            />
+        <!--<com.gongwen.marqueen.SimpleMarqueeView-->
+            <!--android:id="@+id/marquee"-->
+            <!--android:layout_marginLeft="@dimen/dp_12_5"-->
+            <!--android:layout_marginTop="@dimen/dp_9_5"-->
+            <!--android:layout_marginRight="@dimen/dp_12_5"-->
+            <!--android:layout_height="@dimen/dp_40"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:flipInterval="2500"-->
+            <!--android:inAnimation="@anim/in_right"-->
+            <!--android:outAnimation="@anim/out_left"-->
+            <!--app:marqueeAnimDuration="2000"-->
+            <!--app:smvTextGravity="center_vertical"-->
+            <!--app:smvTextSize="18sp"-->
+            <!--android:autoStart="true"-->
+            <!--android:animateFirstView="true"-->
+            <!--app:smvTextColor="@color/c_cccccc"-->
+            <!--app:smvTextSingleLine="true"-->
+            <!--/>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -144,7 +145,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_width="@dimen/dp_17"

@@ -1,8 +1,6 @@
 package com.administrator.yaya.activity;
-import android.animation.Animator;
+
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,14 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.BaseActivity;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
@@ -32,11 +28,11 @@ import com.administrator.yaya.fragment.HomePageFragment;
 import com.administrator.yaya.fragment.InventoryFragment;
 import com.administrator.yaya.fragment.MyFragment;
 import com.administrator.yaya.fragment.OrderFormkFragment;
-import com.administrator.yaya.local_utils.statusbar.Utils;
-import com.administrator.yaya.utils.AppConstants;
 import com.administrator.yaya.utils.FragmentUtils;
 import com.administrator.yaya.utils.ToastUtil;
+
 import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
@@ -82,13 +78,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initExit() {
         super.initExit();
-
     }
 
     @Override
     protected void initView() {
-
         super.initView();
+        MonitorNetWorkChange();
 //        mToolbar.setTitle("");
 //        mTitle.setText(R.string.homepage);
 //        setSupportActionBar(mToolbar);//支持Toolbar
@@ -204,8 +199,6 @@ public class MainActivity extends BaseActivity {
                 //设置状态栏文字颜色及图标为浅色
 //                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 //                getWindow().getDecorView().findViewById(android.R.id.content).setPadding(0, 0, 0, CommonUtils.navigationHeight);
-
-
                 //设置状态栏为浅蓝
                 YCAppBar.setStatusBarColor(this,
                         ContextCompat.getColor(this,
@@ -225,9 +218,7 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
-
     private int mLastType = 0;
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
@@ -322,8 +313,6 @@ public class MainActivity extends BaseActivity {
 //    protected void setStatusBar() {
 //        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this,null);
 //    }
-
-
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onSaveInstanceState(Bundle outState) {

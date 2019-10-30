@@ -155,6 +155,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     @Override
     protected void initData() {
         super.initData();
+
         //给权限
         getPermission();
     }
@@ -205,29 +206,11 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
 //                intent.putExtra(NormalConfig.PASS_WORD,etRegisterPw.getText().toString());
 //                setResult(100,intent);
 //                finish();
-            } else ToastUtil.showShort("请输入正确的手机号");
+            } else ToastUtil.showShort("请输入正确的格式");
         }
     }
-    private void getPermission() {
-        XXPermissions.with(this)
-                .constantRequest()//可设置被拒绝后继续申请，直到用户授权或者永久拒绝
-//                .constantRequest(Permission.SYSTEM_ALERT_WINDOW, Permission.REQUEST_INSTALL_PACKAGES)//支持请求 6.0 悬浮窗权限 8.0 请求安装权限
-                .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .request(new OnPermission() {
-                    @Override
-                    public void hasPermission(List<String> granted, boolean isAll) {
 
-                    }
-                    @Override
-                    public void noPermission(List<String> denied, boolean quick) {
-                        if (denied.size() != 0) ToastUtil.showLong("拒绝权限影响您正常使用");
-                    }
-                });
-//        跳转到设置页面
-        if (XXPermissions.isHasPermission(this, Permission.Group.STORAGE)) {
-                XXPermissions.gotoPermissionSettings(this);//跳转到权限设置页面
-        }
-    }
+
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
@@ -304,7 +287,6 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
             ToastUtil.showShort("上传成功");
 //            showLoadingDialog();
 //            mPresenter.getData(ApiConfig.UPLOAD_IMAGE, path);
-
             Glide.with(this).load(path).into(registerHeadlerIv);
         }
     }

@@ -1,6 +1,7 @@
 package com.administrator.yaya.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,9 +26,13 @@ import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.homepage.TextHomePageData;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ChangTvSizeUtils;
+import com.administrator.yaya.utils.NormalConfig;
+import com.administrator.yaya.utils.glideutils.GlideEngine;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +56,7 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     ImageView settingIv;
     @BindView(R.id.iv)
     ImageView iv;
+
     @BindView(R.id.my_name_tv)
     TextView myNameTv;
     @BindView(R.id.my_name_state_tv)
@@ -73,6 +79,8 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     View wire;
     @BindView(R.id.my_right_ll)
     LinearLayout myRightLl;
+    private TextHomePageData.DataBean.UserInfoBean userInfo;
+    private TextHomePageData.DataBean databean;
 
     public MyFragment() {
         // Required empty public constructor
@@ -83,19 +91,22 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
         return R.layout.fragment_my;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.c_ffffff));
-
-        SpannableString getInventory = ChangTvSizeUtils.changTVsize("0.00");
-        getGamemoneyTv.setText(getInventory);
-        SpannableString getInventory2 = ChangTvSizeUtils.changTVsize("1900.00");
-        allGamemoneyTv.setText(getInventory2);
+//        if (databean.getUserEarningsToday()!=null) {SpannableString spannableString = ChangTvSizeUtils.changTVsize((Integer.parseInt( databean.getUserEarningsToday()) + Integer.parseInt("0.00"))+"");
+//        getGamemoneyTv.setText(spannableString);}
+//        SpannableString getInventory2 = ChangTvSizeUtils.changTVsize((userInfo.getUserEarningsTotal()+Integer.parseInt("0.00"))+"");
+//        if (getInventory2!=null)allGamemoneyTv.setText(getInventory2);
     }
+
     @Override
     protected void initData() {
-
+        getPermission();//权限
+        mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA,1);
     }
+
     @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll,R.id.my_right_ll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -109,9 +120,9 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 break;
             case R.id.my_ll:
                 Intent pd = new Intent(getActivity(), PersonalDatActivity.class);
+                pd.putExtra("NickName",userInfo.getUserNickName());
                 startActivity(pd);
                 break;
-
                 case R.id.my_right_ll:
                 Intent myincome = new Intent(getActivity(), MyIncomeActivity.class);
                 startActivity(myincome);
@@ -133,17 +144,38 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     public void onError(int whichApi, Throwable e) {
 
     }
+    @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TextHomePageData data = (TextHomePageData) t[0];
-                TextHomePageData.DataBean data1 = data.getData();
-                TextHomePageData.DataBean.UserInfoBean userInfo = data1.getUserInfo();
+                databean = data.getData();
+                userInfo = databean.getUserInfo();
+                if (data.getCode() == 0 && userInfo != null && databean !=null) {
+                    String userHeadImg = userInfo.getUserHeadImg();
 
-                if (data.getCode() == 0 || userInfo != null)
-                    Glide.with(this).load(userInfo.getUserHeadImg()).placeholder(R.mipmap.icon).into(iv);
-                myNameTv.setText(userInfo.getUserName());
+                    //保存图片 跟 昵称  没网也能显示
+                    SharedPrefrenceUtils.saveString(getActivity(),NormalConfig.HEADLER_IMAGEVIEW,userHeadImg);
+                    SharedPrefrenceUtils.saveString(getActivity(),NormalConfig.USER_NICK,userInfo.getUserNickName());
+
+                    String head_portrait = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW);
+
+//                    GlideEngine.loadImage(iv,"http://ww1.sinaimg.cn/large/0065oQSqly1g2pquqlp0nj30n00yiq8u.jpg");
+//
+                    RequestOptions requestOptions = new RequestOptions().centerCrop();
+
+                    Glide.with(getContext()).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(iv);
+
+//                  福利  "http://ww1.sinaimg.cn/large/0065oQSqly1g2pquqlp0nj30n00yiq8u.jpg"
+                    myNameTv.setText(userInfo.getUserName());
+                    getGamemoneyTv.setText(databean.getUserEarningsToday()+"");//今日收益
+                    allGamemoneyTv.setText(userInfo.getUserEarningsTotal()+"");//累计收益
+
+                    tvUse.setText(userInfo.getZfbEd()+"");//支付宝已使用额度
+                    tvWechatUse.setText(userInfo.getWxEd()+"");//微信已使用额度
+                }
+
                 break;
         }
     }

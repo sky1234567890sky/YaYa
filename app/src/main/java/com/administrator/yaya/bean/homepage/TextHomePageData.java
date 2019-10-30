@@ -4,10 +4,11 @@ import java.io.Serializable;
 
 public class TextHomePageData implements Serializable {
 
+
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":0,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"commodity":null,"userEarningsToday":null}
+     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":0,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":17,"userEarningsTotal":17,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"commodity":null,"userEarningsToday":"17"}
      */
 
     private String msg;
@@ -40,14 +41,14 @@ public class TextHomePageData implements Serializable {
 
     public static class DataBean {
         /**
-         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":0,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
+         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":0,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":17,"userEarningsTotal":17,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
          * commodity : null
-         * userEarningsToday : null
+         * userEarningsToday : 17
          */
 
         private UserInfoBean userInfo;
         private Object commodity;
-        private Object userEarningsToday;
+        private String userEarningsToday;
 
         public UserInfoBean getUserInfo() {
             return userInfo;
@@ -65,11 +66,11 @@ public class TextHomePageData implements Serializable {
             this.commodity = commodity;
         }
 
-        public Object getUserEarningsToday() {
+        public String getUserEarningsToday() {
             return userEarningsToday;
         }
 
-        public void setUserEarningsToday(Object userEarningsToday) {
+        public void setUserEarningsToday(String userEarningsToday) {
             this.userEarningsToday = userEarningsToday;
         }
 
@@ -92,8 +93,8 @@ public class TextHomePageData implements Serializable {
              * userStatus : 1
              * userInvitationCode : 6666
              * userParentId : 0
-             * userEarningsNow : 0
-             * userEarningsTotal : 0
+             * userEarningsNow : 17
+             * userEarningsTotal : 17
              * userContributeTotal : 0
              * zfbEd : 0
              * wxEd : 0
@@ -350,58 +351,6 @@ public class TextHomePageData implements Serializable {
 
             public static class ParamsBean {
             }
-
-            @Override
-            public String toString() {
-                return "UserInfoBean{" +
-                        "searchValue=" + searchValue +
-                        ", createBy=" + createBy +
-                        ", createTime=" + createTime +
-                        ", updateBy=" + updateBy +
-                        ", updateTime=" + updateTime +
-                        ", remark=" + remark +
-                        ", params=" + params +
-                        ", userId=" + userId +
-                        ", userName='" + userName + '\'' +
-                        ", userNickName='" + userNickName + '\'' +
-                        ", userHeadImg='" + userHeadImg + '\'' +
-                        ", userPhone='" + userPhone + '\'' +
-                        ", userPwd='" + userPwd + '\'' +
-                        ", userProfit=" + userProfit +
-                        ", userStatus=" + userStatus +
-                        ", userInvitationCode='" + userInvitationCode + '\'' +
-                        ", userParentId=" + userParentId +
-                        ", userEarningsNow=" + userEarningsNow +
-                        ", userEarningsTotal=" + userEarningsTotal +
-                        ", userContributeTotal=" + userContributeTotal +
-                        ", zfbEd=" + zfbEd +
-                        ", wxEd=" + wxEd +
-                        ", vxButtonStatus=" + vxButtonStatus +
-                        ", zfbButtonStatus=" + zfbButtonStatus +
-                        ", parentUser=" + parentUser +
-                        ", juniorUsers=" + juniorUsers +
-                        ", junior=" + junior +
-                        '}';
-            }
-        }
-
-        @Override
-        public String toString() {
-            return "DataBean{" +
-                    "userInfo=" + userInfo +
-                    ", commodity=" + commodity +
-                    ", userEarningsToday=" + userEarningsToday +
-                    '}';
         }
     }
-
-    @Override
-    public String toString() {
-        return "TextHomePageData{" +
-                "msg='" + msg + '\'' +
-                ", code=" + code +
-                ", data=" + data +
-                '}';
-    }
-
 }

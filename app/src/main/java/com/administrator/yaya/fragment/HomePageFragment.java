@@ -1,10 +1,8 @@
 package com.administrator.yaya.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,26 +15,16 @@ import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.homepage.TextHomePageData;
 import com.administrator.yaya.model.LoginModel;
-import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
-import com.gongwen.marqueen.SimpleMF;
-import com.gongwen.marqueen.SimpleMarqueeView;
-import com.gongwen.marqueen.util.OnItemClickListener;
-import com.yc.cn.ycbannerlib.marquee.MarqueeView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
 
     @BindView(R.id.title_tb)
     TextView titleTb;
     @BindView(R.id.headler_iv)
-    ImageView iv;
+    ImageView mHeadlerIv;
 
     @BindView(R.id.home_gamemoney_name)
     TextView homeGamemoneyName;
@@ -62,12 +50,12 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     LinearLayout ll1;
     @BindView(R.id.ll2)
     LinearLayout ll2;
-    @BindView(R.id.marqueeView)
-    MarqueeView mMarqueeView;
 
-    @BindView(R.id.marquee)
-    SimpleMarqueeView mMarquee;
-
+//    @BindView(R.id.marqueeView)
+//    MarqueeView mMarqueeView;
+//
+//    @BindView(R.id.marquee)
+//    SimpleMarqueeView mMarquee;
     @Override
     protected void initData() {
         mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, 1);
@@ -83,36 +71,36 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     protected void initListener() {
         super.initListener();
 
+//        final ArrayList<String> list =new  ArrayList<String>();
+//        list.add("今日头条:喜讯，今日日本自愿归属中国版图");
+//        list.add("头条：美国自愿捐献国库还给中国抵债");
+//        list.add("中东局势好转，将会是新的战争爆发。");
+////根据公告字符串列表启动轮播
+//        mMarqueeView.startWithList(list);
+////设置点击事件
+//        mMarqueeView.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position, TextView textView) {
+//                ToastUtil.showShort("你点击了"+list.get(position));
+//            }
+//        });
+//        //获取SimpleMF 跑马灯工厂  
+//        SimpleMF<String> marqueeFactory = new SimpleMF<>(getActivity());
+//        //MarqueeView设置工厂   
+//        mMarquee.setMarqueeFactory(marqueeFactory);
+//        if (null != marqueeFactory && null != mMarquee) {
+//            // 设置 跑马text数据
+//            marqueeFactory.setData(list);
+//            //开启跑马灯  
+//            mMarquee.startFlipping();
+//        }
+//        mMarquee.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClickListener(View mView, Object mData, int mPosition) {
+//                ToastUtil.showShort("你点了第"+mPosition+"个文字");
+//        }
+//    });
 
-        final ArrayList<String> list =new  ArrayList<String>();
-        list.add("今日头条:喜讯，今日日本自愿归属中国版图");
-        list.add("头条：美国自愿捐献国库还给中国抵债");
-        list.add("中东局势好转，将会是新的战争爆发。");
-//根据公告字符串列表启动轮播
-        mMarqueeView.startWithList(list);
-//设置点击事件
-        mMarqueeView.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, TextView textView) {
-                ToastUtil.showShort("你点击了"+list.get(position));
-            }
-        });
-        //获取SimpleMF 跑马灯工厂  
-        SimpleMF<String> marqueeFactory = new SimpleMF<>(getActivity());
-        //MarqueeView设置工厂   
-        mMarquee.setMarqueeFactory(marqueeFactory);
-        if (null != marqueeFactory && null != mMarquee) {
-            // 设置 跑马text数据
-            marqueeFactory.setData(list);
-            //开启跑马灯  
-            mMarquee.startFlipping();
-        }
-        mMarquee.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClickListener(View mView, Object mData, int mPosition) {
-                ToastUtil.showShort("你点了第"+mPosition+"个文字");
-        }
-    });
     }
     @Override
     protected int getLayoutId() {
@@ -124,16 +112,13 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TextHomePageData data = (TextHomePageData) t[0];
-                if (data.getCode() == 0 || data != null || data.getData() != null) {
+                if (data.getCode() == 0 && data != null && data.getData() != null) {
                     TextHomePageData.DataBean.UserInfoBean userInfo = data.getData().getUserInfo();
-                    Glide.with(this).load(userInfo.getUserHeadImg()).placeholder(R.mipmap.icon).into(iv);
-
+                    Glide.with(getActivity()).load(userInfo.getUserHeadImg()).placeholder(R.mipmap.icon).into(mHeadlerIv);
                 }
-
                 break;
         }
     }
-
     @OnClick({R.id.home_buy_now_btn_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
