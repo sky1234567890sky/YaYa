@@ -80,6 +80,7 @@
             android:digits="1234567890"
             android:singleLine="true"
             android:textStyle="normal"
+            android:textCursorDrawable="@drawable/edit_cursor_color"
             />
     </LinearLayout>
     <LinearLayout
@@ -114,6 +115,7 @@
             android:inputType="textPassword"
             android:lines="1"
             android:textStyle="normal"
+            android:textCursorDrawable="@drawable/edit_cursor_color"
             />
     </LinearLayout>
 

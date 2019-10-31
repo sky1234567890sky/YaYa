@@ -61,8 +61,8 @@ public class CustomerServiceActivity extends BaseActivity {
                 break;
             case R.id.phone_code:
                 String phoneNumber = "400-900-340";
-                Intent myCallIntent = new Intent(Intent.ACTION_DIAL,
-                        Uri.parse("如有需要，请拨打：" + phoneNumber));
+                Intent myCallIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("如有需要，请拨打：" + phoneNumber));
+                myCallIntent.setAction(Intent.ACTION_VIEW);
                 startActivity(myCallIntent);
                 break;
         }

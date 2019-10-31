@@ -1,21 +1,18 @@
 package com.administrator.yaya.activity;
-import android.animation.Animator;
-import android.app.Activity;
-import android.content.Intent;
+
+import android.annotation.SuppressLint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.BaseActivity;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
@@ -32,11 +30,13 @@ import com.administrator.yaya.fragment.MyFragment;
 import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.utils.FragmentUtils;
 import com.administrator.yaya.utils.ToastUtil;
-import com.jaeger.library.StatusBarUtil;
-import java.io.Serializable;
+
 import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+
 public class MainActivity extends BaseActivity {
     //@BindView(R.id.title_tb)
 //    TextView mTitle;
@@ -72,25 +72,27 @@ public class MainActivity extends BaseActivity {
     private Bundle bundle;
     @Override
     protected int getLayoutId() {
-        StatusBarUtil.setTranslucent(MainActivity.this);
-
+//        Utils.setStatusBar(this, false, false);
         return R.layout.activity_main;
     }
-
     @Override
     protected void initExit() {
         super.initExit();
-
     }
-
     @Override
     protected void initView() {
         super.initView();
-
 //        mToolbar.setTitle("");
 //        mTitle.setText(R.string.homepage);
 //        setSupportActionBar(mToolbar);//支持Toolbar
         mHomepage.setChecked(true);
+
+        if (mHomepage.isChecked()){
+            //设置状态栏为白色
+            YCAppBar.setStatusBarColor(this,
+                    ContextCompat.getColor(this,
+                            R.color.c_cccccc));
+        }
 
         titles = new ArrayList<Integer>();
         titles.add(R.string.homepage);
@@ -102,13 +104,12 @@ public class MainActivity extends BaseActivity {
         initFragment();
         addHomeFragment();
     }
-    private void addHomeFragment() {
-//        FragmentTransaction transaction = manager.beginTransaction();
-//        transaction.add(R.id.home_fragment, fragments.get(0));
-//        transaction.show(fragments.get(0));
-//        transaction.commit();
 
-        FragmentUtils.addFragment(manager,fragments.get(0).getClass(),R.id.home_fragment);
+    private void addHomeFragment() {
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.home_fragment, fragments.get(0));
+        transaction.commit();
+
         //Activity跳转到Fragment ，"affirm","2"
         int affirm = getIntent().getIntExtra("affirm", 0);
         if (affirm == 2) {
@@ -163,31 +164,59 @@ public class MainActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.homepage://首页
                 mHomepage.setChecked(true);
-//                switchFragment(AppConstants.TYPE_HOMEPAGER);
                 FragmentUtils.addFragment(manager, homePageFragment.getClass(), R.id.home_fragment,bundle);
+                //设置状态栏文字颜色及图标为浅色
+//                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//                getWindow().getDecorView().findViewById(android.R.id.content).setPadding(0, 0, 0, CommonUtils.navigationHeight);
+                //设置状态栏为白色
+                YCAppBar.setStatusBarColor(this,
+                        ContextCompat.getColor(this,
+                                R.color.c_cccccc));
+//                switchFragment(AppConstants.TYPE_HOMEPAGER);
                 break;
+
             case R.id.inventory_btn://库存
+                FragmentUtils.addFragment(manager, inventoryFragment.getClass(), R.id.home_fragment, bundle);
+                //设置状态栏文字颜色及图标为浅色
+//                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//                getWindow().getDecorView().findViewById(android.R.id.content).setPadding(0, 0, 0, CommonUtils.navigationHeight);
+                //设置状态栏为浅蓝
+                YCAppBar.setStatusBarColor(this,
+                        ContextCompat.getColor(this,
+                                R.color.light_blue));
 //                mToolbar.setVisibility(View.GONE);
 //                switchFragment(AppConstants.TYPE_INVENTORY);
-                FragmentUtils.addFragment(manager, inventoryFragment.getClass(), R.id.home_fragment, bundle);
                 break;
             case R.id.dobusiness_iv:
 //            case R.id.dobusiness_btn:
                 popupSelector();//营业
                 break;
+
             case R.id.orderform_btn://订单
-//                switchFragment(AppConstants.TYPE_ORDERFORM);
                 FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, bundle);
+                //设置状态栏文字颜色及图标为浅色
+//                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//                getWindow().getDecorView().findViewById(android.R.id.content).setPadding(0, 0, 0, CommonUtils.navigationHeight);
+                //设置状态栏为浅蓝
+                YCAppBar.setStatusBarColor(this,
+                        ContextCompat.getColor(this,
+                                R.color.light_blue));
+//                switchFragment(AppConstants.TYPE_ORDERFORM);
                 break;
             case R.id.mine_btn://我的
-//                switchFragment(AppConstants.TYPE_MY);
                 FragmentUtils.addFragment(manager, myFragment.getClass(), R.id.home_fragment, bundle);
+                //设置状态栏文字颜色及图标为浅色
+//                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//                getWindow().getDecorView().findViewById(android.R.id.content).setPadding(0, 0, 0, CommonUtils.navigationHeight);
+                //设置状态栏为白色
+                YCAppBar.setStatusBarColor(this,
+                        ContextCompat.getColor(this,
+                                R.color.c_cccccc));
+//                switchFragment(AppConstants.TYPE_MY);
                 break;
         }
     }
-
     private int mLastType = 0;
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
@@ -248,6 +277,7 @@ public class MainActivity extends BaseActivity {
                 popupWindow.dismiss();
             }
         });
+
         mPopupTvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -266,7 +296,6 @@ public class MainActivity extends BaseActivity {
             }
         });
         popupWindow.setOutsideTouchable(false);
-
 //        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
@@ -278,8 +307,17 @@ public class MainActivity extends BaseActivity {
 //        });
     }
 
+//    @Override
+//    protected void setStatusBar() {
+//        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this,null);
+//    }
+    @SuppressLint("MissingSuperCall")
     @Override
-    protected void setStatusBar() {
-        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this,null);
+    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+        //奔溃前保存位置
+//        if (!= null) {
+//            outState.putInt(Utils.HOME_CURRENT_TAB_POSITION, bindingView.tabLayout.getCurrentTab());
+//        }
     }
 }

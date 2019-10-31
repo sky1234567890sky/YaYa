@@ -113,7 +113,9 @@
                 android:background="@null"
                 android:hint="请填写上架游戏币数量"
                 android:maxLines="1"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:textCursorDrawable="@drawable/edit_cursor_color"
+                />
         </LinearLayout>
 
         <LinearLayout

@@ -20,4 +20,5 @@
     <color name="c_view">#B3B3B3</color>
     <color name="c_et_tvcolor">#CCCCCC</color>
     <color name="c_cccccc">#CCCCCC</color>
+    <color name="light_blue">#ff35a6ff</color>
 </resources>

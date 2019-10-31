@@ -26,6 +26,7 @@ import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ChangTvSizeUtils;
+import com.administrator.yaya.utils.MyQrCode;
 import com.administrator.yaya.utils.ToastUtil;
 import com.administrator.yaya.utils.WxShareUtils;
 import com.bumptech.glide.Glide;
@@ -90,7 +91,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 //            api.registerApp(APP_ID);
 //        }
 //    }
-
     @Override
     protected void initView() {
 //        register(this);
@@ -98,8 +98,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         getGamemoneyTv.setText(getInventory);
         allGamemoneyTv.setText(getInventory);
     }
-
-
     @Override
     protected void initListener() {
     }
@@ -117,27 +115,22 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     private void popupSelector() {
         //分享二维码
         View inflate = LayoutInflater.from(this).inflate(R.layout.myinvite_popup, null);
-
         mMyinviteTwoDimentionCodeIv = inflate.findViewById(R.id.myinvite_two_dimention_code_iv);//二维码图片
         mMyinviteTwoDimentionCodTv = inflate.findViewById(R.id.myinvite_two_dimention_cod_tv);//邀请码
         mMyinviteShareWechatBtnTv = inflate.findViewById(R.id.myinvite_share_wechat_btn_tv);//微信分享按钮
         mMyinviteCloneDissPopupIv = inflate.findViewById(R.id.myinvite_clone_diss_popup_iv);//关闭弹窗
-
         popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
         //手动设置 PopupWindow 响应返回键并关闭的问题
         popupWindow.setFocusable(true);
 //        popupWindow.setFocusableInTouchMode(true);  //为了保险起见加上这句
         popupWindow.setBackgroundDrawable(new BitmapDrawable()); // www.linuxidc.com响应返回键必须的语句
-
         popupWindow.setBackgroundDrawable(new ColorDrawable());
-
         popupWindow.setAnimationStyle(R.style.PopupAnimation);
         popupWindow.showAtLocation(inflate, Gravity.CENTER, 0, 0);
         // 设置背景颜色变暗
         WindowManager.LayoutParams lp = this.getWindow().getAttributes();
         lp.alpha = 0.5f;
         this.getWindow().setAttributes(lp);
-
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -146,6 +139,14 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 MyInviteActivity.this.getWindow().setAttributes(lp);
             }
         });
+
+        //二維碼
+        //Bitmap bitmap = MyQrCode.QRCode.createQRCode("我是苏克阳", 500);//不需要logo，传入分享链接和二维码图片大小
+        //需要logo，传入分享链接,二维码大小以及logo图片
+          Bitmap bitmap = MyQrCode.QRCode.createQRCodeWithLogo("苏克阳", 500, BitmapFactory.decodeResource(getResources(),R.mipmap.icon));
+        mMyinviteTwoDimentionCodeIv.setImageBitmap(bitmap);
+
+        //隐藏弹窗点击事件
         mMyinviteShareWechatBtnTv.setOnClickListener(this);
         mMyinviteCloneDissPopupIv.setOnClickListener(this);
     }
@@ -162,18 +163,21 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 popupWindow.dismiss();
                 break;
         }
-
     }
-
     private void initShareIv() {
-
+        //登录
+//        WxShareUtils.WxLogin(this);
+        //分享textview
+        WxShareUtils.WxTextShare(this,"微信分享",WxShareUtils.WECHAT_FRIEND);//分享好友
+        //分享图片
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.icon);
+        WxShareUtils.WxBitmapShare(this,bitmap,WxShareUtils.WECHAT_FRIEND);
         //方法一：
 //        WXWebpageObject webpage = new WXWebpageObject();
 //        webpage.webpageUrl = "网页链接";
 //        final WXMediaMessage msg = new WXMediaMessage(webpage);
 //        msg.title = "网页标题";
 //        msg.description = "网页内容";
-//
 //        Bitmap thumb = BitmapFactory.decodeResource(BaseApp.getApplication().getResources(), R.mipmap.icon);
 ////        这个bitmap不能超过32kb
 //        if(thumb != null) {
@@ -188,33 +192,9 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 //        req.transaction = "设置一个tag";  //用于在回调中区分是哪个分享请求
 //        boolean successed = api.sendReq(req);   //如果调用成功微信,会返回true
 
+
         //方法二
-        Glide.with(this).asBitmap().load("图片url").into(new SimpleTarget<Bitmap>() {
-            /**
-             * 成功的回调
-             */
-            @Override
-            public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
-                // 下面这句代码是一个过度dialog，因为是获取网络图片，需要等待时间
-//                mDialog.dismiss();
-                // 调用方法
-                //TODO:你的AppId
-                WxShareUtils.shareWeb(BaseApp.getInstance(),BaseApp.AppId,
-                        "http://www.tengxun.com", "网页标题", "网页描述",
-                        bitmap);
-            }
-            /**
-             * 失败的回调
-             */
-            @Override
-            public void onLoadFailed(Drawable errorDrawable) {
-                super.onLoadFailed(errorDrawable);
-//                mDialog.dismiss();
-                WxShareUtils.shareWeb(BaseApp.getInstance(),BaseApp.AppId,
-                        "http://www.tengxun.com", "网页标题", "网页描述",
-                        null);
-            }
-        });
+
     }
 
 //    private byte[] bmpToByteArray(Bitmap thumb, boolean b) {

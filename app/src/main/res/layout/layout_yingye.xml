@@ -33,12 +33,13 @@
             android:textColor="#ffffffff"
             android:textSize="45sp" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/dp_22"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/popup_tv_cancel"
                 android:layout_width="wrap_content"
@@ -50,10 +51,10 @@
                 android:paddingTop="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_45"
                 android:paddingBottom="@dimen/dp_10"
-                android:text="@string/cancel"
                 android:textColor="#EBEBEB"
                 android:textSize="@dimen/dp_15"
                 android:textStyle="normal"
+                android:text="@string/cancel"
                 tools:ignore="RtlHardcoded,SpUsage"
                 />
 
@@ -61,18 +62,18 @@
                 android:id="@+id/popup_tv_ok"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_5"
                 android:layout_marginRight="@dimen/dp_15"
                 android:background="@drawable/popup_btn_shape"
                 android:paddingLeft="@dimen/dp_45"
                 android:paddingTop="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_45"
                 android:paddingBottom="@dimen/dp_10"
-                android:text="@string/ok"
+                android:layout_alignParentRight="true"
                 android:textColor="#EBEBEB"
                 android:textSize="@dimen/dp_15"
                 android:textStyle="normal"
+                android:text="@string/ok"
                 tools:ignore="SpUsage" />
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

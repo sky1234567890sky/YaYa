@@ -16,7 +16,7 @@ public class LoginModel implements ICommonModel {
         switch (whichApi) {
             case ApiConfig.TEXT_LOGIN:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestLogin((String) t[0], (String) t[0]), view, whichApi);
+                        .getTestLogin((String) t[0], (String) t[1]), view, whichApi);
                 break;
 
             case ApiConfig.TEXT_REGISTER://注册
@@ -27,18 +27,46 @@ public class LoginModel implements ICommonModel {
             case ApiConfig.TEXT_INVITECODE://验证码
 //                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
 //                        .getTestInviteCode((String) t[0],(String) t[0],(String) t[0]),view,whichApi,1);
-
                 break;
-
                 //首页-我的
             case ApiConfig.TEXT_HOMEPAGE_DATA:
-                netManager.method(netManager.getNetService("http://192.168.0.198:8080/yayaApp/")
-                        .getTextHomePageData((int) t[0]), view, whichApi);
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestHomePageData((int) t[0]),view, whichApi);
+                break;
+
+                //立即购买
+            case ApiConfig.TEXT_BUY_COM:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestBuyCom(),view, whichApi);
+                break;
+
+                //提交订单
+            case ApiConfig.TEXT_ORDER_STOCK:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestOrderStock((int) t[0], (String) t[1], (String) t[2],(String) t[3]),view, whichApi);
+                break;
+
+            //查看进货状态 所有进货订单  getTextAllOrderStock
+            case ApiConfig.TEXT_AllORDER_STOCK:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestAllOrderStock((int) t[0],(int) t[1]),view, whichApi);
+                break;
+
+            //付款信息
+            case ApiConfig.TEXT_GATHERING:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestGathering((String)t[0]),view, whichApi);
                 break;
 
 
 
 
+
+
+
+
+
+//==================================================>
 
             case ApiConfig.GET_SMS_MJG:
 //                String phoneNum = (String) t[0];

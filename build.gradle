@@ -2,19 +2,27 @@
 buildscript {
     repositories {
         google()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         jcenter()
     }
     dependencies {
         //noinspection GradleDependency
         classpath 'com.android.tools.build:gradle:3.2.1'
+        //微信资源压缩打包工具通过短资源名称，采用７zip对APP进行极致压缩实现减小APP的目标，效果非常的好，强烈推荐
+        //classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.1.7'
+
+//        classpath 'me.tatarka:gradle-retrolambda:3.3.1'
     }
 }
 allprojects {
     repositories {
         google()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://jitpack.io'}
         jcenter()
     }
 }
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
@@ -48,3 +56,45 @@ ext {
     smarttablayout = '1.7.0@aar'
     abiFilters = ['armeabi-v7a', 'arm64-v8a']//'arm64-v8a', 'armeabi-v7a', 'x86', 'armeabi'
 }
+
+//微信资源压缩打包工具
+//andResGuard {
+//    mappingFile = null
+//    use7zip = true
+//    useSign = true
+//    keepRoot = false
+//    // add <your_application_id>.R.drawable.icon into whitelist.
+//    // because the launcher will get thgge icon with his name
+//    def packageName =<your_application_id>
+//            whiteList = [
+//            //for your icon
+//            packageName + ".R.drawable.icon",
+//            //for fabric
+//            packageName + ".R.string.com.crashlytics.*",
+//            //for umeng update
+//            packageName + ".R.string.umeng*",
+//            packageName + ".R.string.UM*",
+//            packageName + ".R.string.tb_*",
+//            packageName + ".R.layout.umeng*",
+//            packageName + ".R.layout.tb_*",
+//            packageName + ".R.drawable.umeng*",
+//            packageName + ".R.drawable.tb_*",
+//            packageName + ".R.anim.umeng*",
+//            packageName + ".R.color.umeng*",
+//            packageName + ".R.color.tb_*",
+//            packageName + ".R.style.*UM*",
+//            packageName + ".R.style.umeng*",
+//            packageName + ".R.id.umeng*"
+//    ]
+//    compressFilePattern = [
+//            "*.png",
+//            "*.jpg",
+//            "*.jpeg",
+//            "*.gif",
+//            "resources.arsc"
+//    ]
+//    sevenzip {
+//        artifact = 'com.tencent.mm:SevenZip:1.1.7'
+//        //path = "/usr/local/bin/7za"
+//    }
+//}

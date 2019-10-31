@@ -1,21 +1,20 @@
 package com.administrator.yaya.bean.login_register_bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 public class TestLogin implements Serializable {
+
+
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":0,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
+     * data : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":13,"userName":null,"userNickName":null,"userHeadImg":null,"userPhone":"18898186027","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"W0VXY2","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":21,"parentUser":null,"juniorUsers":null,"junior":null}
      */
+
     private String msg;
     private int code;
     private DataBean data;
-    private Parcel dest;
-    private int flags;
+
     public String getMsg() {
         return msg;
     }
@@ -39,8 +38,6 @@ public class TestLogin implements Serializable {
     public void setData(DataBean data) {
         this.data = data;
     }
-
-
     public static class DataBean {
         /**
          * searchValue : null
@@ -50,28 +47,27 @@ public class TestLogin implements Serializable {
          * updateTime : null
          * remark : null
          * params : {}
-         * userId : 1
-         * userName : 钱浩龙
-         * userNickName : qhl
-         * userHeadImg : http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg
-         * userPhone : 17631365666
+         * userId : 13
+         * userName : null
+         * userNickName : null
+         * userHeadImg : null
+         * userPhone : 18898186027
          * userPwd : 1234
-         * userProfit : 0
+         * userProfit : 6.0E-4
          * userStatus : 1
-         * userInvitationCode : 6666
-         * userParentId : 0
+         * userInvitationCode : W0VXY2
+         * userParentId : 1
          * userEarningsNow : 0
          * userEarningsTotal : 0
          * userContributeTotal : 0
          * zfbEd : 0
          * wxEd : 0
          * vxButtonStatus : 2
-         * zfbButtonStatus : 2
+         * zfbButtonStatus : 21
          * parentUser : null
          * juniorUsers : null
          * junior : null
          */
-
         private Object searchValue;
         private Object createBy;
         private Object createTime;
@@ -80,12 +76,12 @@ public class TestLogin implements Serializable {
         private Object remark;
         private ParamsBean params;
         private int userId;
-        private String userName;
-        private String userNickName;
-        private String userHeadImg;
+        private Object userName;
+        private Object userNickName;
+        private Object userHeadImg;
         private String userPhone;
         private String userPwd;
-        private int userProfit;
+        private double userProfit;
         private int userStatus;
         private String userInvitationCode;
         private int userParentId;
@@ -164,27 +160,27 @@ public class TestLogin implements Serializable {
             this.userId = userId;
         }
 
-        public String getUserName() {
+        public Object getUserName() {
             return userName;
         }
 
-        public void setUserName(String userName) {
+        public void setUserName(Object userName) {
             this.userName = userName;
         }
 
-        public String getUserNickName() {
+        public Object getUserNickName() {
             return userNickName;
         }
 
-        public void setUserNickName(String userNickName) {
+        public void setUserNickName(Object userNickName) {
             this.userNickName = userNickName;
         }
 
-        public String getUserHeadImg() {
+        public Object getUserHeadImg() {
             return userHeadImg;
         }
 
-        public void setUserHeadImg(String userHeadImg) {
+        public void setUserHeadImg(Object userHeadImg) {
             this.userHeadImg = userHeadImg;
         }
 
@@ -204,11 +200,11 @@ public class TestLogin implements Serializable {
             this.userPwd = userPwd;
         }
 
-        public int getUserProfit() {
+        public double getUserProfit() {
             return userProfit;
         }
 
-        public void setUserProfit(int userProfit) {
+        public void setUserProfit(double userProfit) {
             this.userProfit = userProfit;
         }
 

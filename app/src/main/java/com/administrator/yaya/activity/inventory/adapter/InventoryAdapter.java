@@ -4,13 +4,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
 import java.util.ArrayList;
-
 public class InventoryAdapter extends FragmentStatePagerAdapter {
     private final ArrayList<Fragment> fragments;
     private final ArrayList<String> titles;
-
     public InventoryAdapter(FragmentManager fm, ArrayList<Fragment> fragments, ArrayList<String> titles) {
         super(fm);
         this.fragments = fragments;

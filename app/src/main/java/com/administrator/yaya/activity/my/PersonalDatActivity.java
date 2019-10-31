@@ -1,5 +1,4 @@
 package com.administrator.yaya.activity.my;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.design.SmsVerifyView;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.MyPermission;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
@@ -42,12 +42,16 @@ import razerdp.design.SlideFromBottomPopup;
 public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback,SlideFromBottomPopup.BottomPopClick {
     @BindView(R.id.personal_back_iv)
     ImageView personalBackIv;
+
     @BindView(R.id.personal_header_iv)
     RoundedImageView personalHeaderIv;
+
     @BindView(R.id.persional_ll)
     RelativeLayout persionalLl;
+
     @BindView(R.id.persional_name)
     TextView persionalName;
+
     @BindView(R.id.persional_phone_code)
     TextView persionalPhoneCode;
 
@@ -63,7 +67,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
@@ -82,6 +85,11 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     @Override
     protected void initView() {
         super.initView();
+//        昵称
+//        String nickName = getIntent().getStringExtra("NickName");
+        String nickName = SharedPrefrenceUtils.getString(BaseApp.getApplication(), NormalConfig.USER_NICK);
+
+        if (nickName!=null)persionalName.setText(nickName);
 
         String phone_code = SharedPrefrenceUtils.getString(this, NormalConfig.USER_NAME);//手机号
         String headler_iamge = SharedPrefrenceUtils.getString(this, NormalConfig.HEADLER_IMAGEVIEW);//头像
@@ -95,10 +103,11 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     protected void initData() {
         super.initData();
     }
+//    "http://ww1.sinaimg.cn/large/0065oQSqly1g2pquqlp0nj30n00yiq8u.jpg"
     @Override
     protected void initListener() {
-
     }
+
     @OnClick({R.id.personal_back_iv, R.id.personal_header_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -106,6 +115,8 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
                 PersonalDatActivity.this.finish();
                 break;
             case R.id.personal_header_iv:
+                //获取权限工具类
+//                MyPermission.getPermission(this,true,false);
                 //初始化底部弹出拍照的pop
                 mPop = new SlideFromBottomPopup(this);
                 mPop.setLineText(getString(R.string.camera),getString(R.string.photo), getString(R.string.cancel));
@@ -114,8 +125,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
                 break;
         }
     }
-
-
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 //        ToastUtil.showShort(event.getKeyCode()+"");
@@ -125,7 +134,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
         }
         return super.dispatchKeyEvent(event);
     }
-
     @Override
     public void takeSuccess(TResult result) {
         String path = result.getImage().getCompressPath() != null ? result.getImage().getCompressPath() : result.getImage().getOriginalPath();//先设置到列表中
@@ -142,12 +150,12 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
 
     @Override
     public void takeFail(TResult result, String msg) {
-        ToastUtil.showShort(msg);
+//        ToastUtil.showShort(msg);
     }
 
     @Override
     public void takeCancel() {
-        ToastUtil.showShort("取消获取图片");
+//        ToastUtil.showShort("取消获取图片");
     }
 
     @Override
@@ -170,7 +178,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
         Uri imageUri = Uri.fromFile(file);
         return imageUri;
     }
-
     @Override
     public void clickCenter() {
         mTakePhoto = new TakePhotoImpl(this, this);

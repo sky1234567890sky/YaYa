@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     tools:context=".activity.MainActivity">
+
     <!--<android.support.v7.widget.Toolbar-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
@@ -31,10 +32,11 @@
                 <!--android:textStyle="normal" />-->
         <!--</RelativeLayout>-->
     <!--</android.support.v7.widget.Toolbar>-->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        tools:ignore="UselessParent">
         <FrameLayout
             android:id="@+id/home_fragment"
             android:layout_width="match_parent"
@@ -80,6 +82,7 @@
                     android:gravity="center"
                     android:text="@string/inventory"
                     android:textColor="@color/radiobutton_textcolor"
+                    android:background="@drawable/ripple_bg"
                     />
                 <!--营业-->
                 <RadioButton
@@ -101,6 +104,7 @@
                     android:gravity="center"
                     android:text="@string/orderform"
                     android:textColor="@color/radiobutton_textcolor"
+                    android:background="@drawable/ripple_bg"
                     />
                 <RadioButton
                     android:id="@+id/mine_btn"
@@ -112,6 +116,7 @@
                     android:gravity="center"
                     android:text="@string/my"
                     android:textColor="@color/radiobutton_textcolor"
+                    android:background="@drawable/ripple_bg"
                     />
             </RadioGroup>
         </RelativeLayout>

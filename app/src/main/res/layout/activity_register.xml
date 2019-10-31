@@ -96,6 +96,7 @@
             android:digits="1234567890"
             android:singleLine="true"
             android:textStyle="normal"
+            android:textCursorDrawable="@drawable/edit_cursor_color"
             />
     </LinearLayout>
 
@@ -133,6 +134,7 @@
             android:inputType="phone|number"
             android:singleLine="true"
             android:textStyle="normal"
+            android:textCursorDrawable="@drawable/edit_cursor_color"
             />
         <TextView
             android:id="@+id/btn_register_phonecode"
@@ -180,6 +182,7 @@
             android:textColorHint="@color/c_et_tvcolor"
             android:textColor="@color/c_000000"
             android:lines="1"
+            android:textCursorDrawable="@drawable/edit_cursor_color"
             />
     </LinearLayout>
 
@@ -214,6 +217,7 @@
             android:inputType="phone|number"
             android:singleLine="true"
             android:textStyle="normal"
+            android:textCursorDrawable="@drawable/edit_cursor_color"
             />
     </LinearLayout>
     <!--<TextView-->
