@@ -147,15 +147,22 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+            
             @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int i = Integer.parseInt(String.valueOf(s));
                 if (s.length() <= 0 || s.equals("")) {
                     payMoney2.setText("0");
                     return;
-                }else {
-                    int i = Integer.parseInt(String.valueOf(s));
-                    payMoney2.setText(comPrice*i+"");
+                }else{
+                    payMoney2.setText(i * 123 + "");
+                }
+
+                if (comPurchaseNumMax>i){
+                    buyGamemoneyRemainingQuantity.setText(comPurchaseNumMax-i);
+                }else{
+                    ToastUtil.showLong("已超过最大购买数");
                 }
             }
             @SuppressLint("SetTextI18n")
@@ -179,7 +186,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     if (comPurchaseNumMin <= i && i <= comPurchaseNumMax) {
                         //付款人姓名上传对照
                         String name = bankName.getText().toString().trim();
-
                         if (!name.isEmpty()) {
                             Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
                             intent.putExtra("bankName",name);

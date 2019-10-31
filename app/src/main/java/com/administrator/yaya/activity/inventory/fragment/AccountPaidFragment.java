@@ -44,16 +44,16 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_BUY_COM:
-                TestAccountPaid testAccountPaid = (TestAccountPaid) t[0];
-                if (testAccountPaid.getCode() == 0 && testAccountPaid.getData() != null) {
-//                    TestAccountPaid.DataBean data = testAccountPaid.getData();
-//                    List<TestAccountPaid.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
-//                    mYifuOrderNumber.setText("订单编号:"+);
-//                    Glide.with(this).load(comImg).into(nowBuGamemoneyIv);
-
-                } else {
-                    ToastUtil.showShort(testAccountPaid.getMsg());
-                }
+//                TestAccountPaid testAccountPaid = (TestAccountPaid) t[0];
+//                if (testAccountPaid.getCode() == 0 && testAccountPaid.getData() != null) {
+////                    TestAccountPaid.DataBean data = testAccountPaid.getData();
+////                    List<TestAccountPaid.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
+////                    mYifuOrderNumber.setText("订单编号:"+);
+////                    Glide.with(this).load(comImg).into(nowBuGamemoneyIv);
+//
+//                } else {
+//                    ToastUtil.showShort(testAccountPaid.getMsg());
+//                }
                 break;
         }
     }

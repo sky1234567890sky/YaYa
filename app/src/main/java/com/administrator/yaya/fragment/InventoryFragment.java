@@ -10,6 +10,7 @@ import com.administrator.yaya.R;
 import com.administrator.yaya.activity.inventory.adapter.InventoryAdapter;
 import com.administrator.yaya.activity.inventory.fragment.AccountPaidFragment;
 import com.administrator.yaya.activity.inventory.fragment.ObligationFragment;
+import com.administrator.yaya.base.BaseFragment;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
@@ -36,7 +37,7 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     @BindView(R.id.inventory_vp)
     ViewPager vp;
     private ArrayList<String> titles;
-    private ArrayList<Fragment> fragments;
+    private ArrayList<BaseFragment> fragments;
 
     @Override
     protected int getLayoutId() {
@@ -62,8 +63,7 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
         InventoryAdapter adapter = new InventoryAdapter(getChildFragmentManager(), fragments, titles);
         vp.setAdapter(adapter);
         mTab.setupWithViewPager(vp);
-        adapter.notifyDataSetChanged();
-
+//        adapter.notifyDataSetChanged();
 //        mTab.setViewPager(vp);
 //        vp.setCurrentItem(0);
 //        if (mTab.getTabCount() > 1) mTab.setCurrentTab(0);

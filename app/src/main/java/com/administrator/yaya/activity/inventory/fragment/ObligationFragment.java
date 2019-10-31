@@ -46,14 +46,14 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_BUY_COM:
-                //待付款
-                TestObligation testObligation = (TestObligation) t[0];
-                if (testObligation.getCode() == 0 && testObligation.getData() != null) {
-//                    TestObligation.DataBean data = testObligation.getData();
-
-                } else {
-                    ToastUtil.showShort(testObligation.getMsg());
-                }
+//                //待付款
+//                TestObligation testObligation = (TestObligation) t[0];
+//                if (testObligation.getCode() == 0 && testObligation.getData() != null) {
+////                    TestObligation.DataBean data = testObligation.getData();
+//
+//                } else {
+//                    ToastUtil.showShort(testObligation.getMsg());
+//                }
                 break;
         }
     }
@@ -64,17 +64,17 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_obligation;
+        return R.layout.fragment_obligation1;
     }
 
     @Override
     protected LoginModel getModel() {
-        return getModel();
+        return new LoginModel();
     }
 
     @Override
     protected CommonPresenter getPresenter() {
-        return getPresenter();
+        return new CommonPresenter();
     }
 
     @Override

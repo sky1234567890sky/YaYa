@@ -21,10 +21,10 @@ public class LoginModel implements ICommonModel {
 
             case ApiConfig.TEXT_REGISTER://注册
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestRegister((String) t[0], (String) t[0], (String) t[0],(String) t[0]), view, whichApi);
+                        .getTestRegister((String) t[0], (String) t[1], (String) t[2],(String) t[3]), view, whichApi);
                 break;
-
             case ApiConfig.TEXT_INVITECODE://验证码
+
 //                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
 //                        .getTestInviteCode((String) t[0],(String) t[0],(String) t[0]),view,whichApi,1);
                 break;
