@@ -61,7 +61,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
     TextView tvForgetPassword;
     private String name;
     private String pwd;
-    private String spPsw;
+
     private SharedPreferences sprfMain;
     private SharedPreferences.Editor editorMain;
 
@@ -78,7 +78,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
             LoginActivity.this.finish();
         }
     }
-
     @Override
     protected int getLayoutId() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -86,8 +85,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
     }
     @Override
     protected void initView(){
-
-        MonitorNetWorkChange();
+//        MonitorNetWorkChange();
 //        SharedPreferences login = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE);
 //        boolean issave = login.getBoolean(NormalConfig.ISFIRSTRUN, false);
 //
@@ -112,18 +110,25 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_LOGIN:
-
                 TestLogin info = (TestLogin) t[0];
-                ToastUtil.showShort(info.getMsg());
-                if (info.getCode()==0) {
+
+                if (info.getCode()==0 && info.getData()!=null) {
+
+                    int userId = info.getData().getUserId();
+
                     ToastUtil.showShort(info.getMsg());
                     //登录成功保存头像 手机号 密码
-                    SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.USER_NAME, name);
-                    SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.PASS_WORD, pwd);
+                    SharedPrefrenceUtils.saveString(LoginActivity.this,NormalConfig.USER_NAME, name);
+                    SharedPrefrenceUtils.saveString(LoginActivity.this,NormalConfig.PASS_WORD, pwd);
+                    //保存id
+                    SharedPrefrenceUtils.saveString(LoginActivity.this,NormalConfig.USER_ID,String.valueOf(userId));
+
                     Intent intent = new Intent(this, MainActivity.class);
-                    editorMain.putBoolean(NormalConfig.ISFIRST, true);
+
+                    editorMain.putBoolean(NormalConfig.ISFIRST, true);//成功的记录第一次登录
                     editorMain.commit();
                     startActivity(intent);
+
                     LoginActivity.this.finish();
                 }else{
                     ToastUtil.showShort(info.getMsg());
@@ -131,7 +136,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 break;
         }
     }
-
     @Override
     protected void initData() {
         super.initData();
@@ -144,7 +148,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
             case R.id.login_btn:
                 name = mName.getText().toString();
                 pwd = mPsw.getText().toString();
-
 //                Intent intent = new Intent(this, MainActivity.class);
 //                editorMain.putBoolean(NormalConfig.ISFIRST,true);
 //                editorMain.commit();
@@ -167,14 +170,19 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd)) {
             String regex = "[A-Za-z0-9]{4,12}";
             if (AppValidationMgr.isPhone(name) && pwd.matches(regex)) {
-//                mPresenter.getData(ApiConfig.TEXT_LOGIN, name, pwd);
-                okLogin();
+
+                mPresenter.getData(ApiConfig.TEXT_LOGIN, name, pwd);
+//                okLogin();
             } else ToastUtil.showShort("请输入正确的手机号");
         } else ToastUtil.showShort("请输入账号或密码");
     }
 
     private void okLogin() {
-
+//        Intent intent = new Intent(this, MainActivity.class);
+//                editorMain.putBoolean(NormalConfig.ISFIRST,true);
+//                editorMain.commit();
+//                startActivity(intent);
+//                LoginActivity.this.finish();
     }
 
     @Override

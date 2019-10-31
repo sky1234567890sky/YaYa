@@ -10,7 +10,6 @@ public abstract class BaseMvpFragment<M> extends BaseFragment implements ICommon
         mModel = getModel();
         if (mPresenter != null && mModel != null) mPresenter.attach(this, (ICommonModel) mModel);
     }
-
     protected abstract M getModel();
 
     protected abstract CommonPresenter getPresenter();

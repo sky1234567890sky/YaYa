@@ -14,5 +14,9 @@ public class ApiConfig {
     public static final int TEXT_INVITECODE = 7;
 
 
-    public static final int TEXT_HOMEPAGE_DATA = 8;
+    public static final int TEXT_HOMEPAGE_DATA = 8;//首页 我的
+    public static final int TEXT_BUY_COM = 9;//立即购买
+    public static final int TEXT_ORDER_STOCK = 10;//提交订单
+    public static final int TEXT_AllORDER_STOCK = 11;//查看进货状态 所有进货订单
+    public static final int TEXT_GATHERING = 12;//付款信息
 }

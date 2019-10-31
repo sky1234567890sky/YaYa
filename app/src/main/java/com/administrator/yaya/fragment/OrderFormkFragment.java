@@ -87,6 +87,7 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
         vp.setCurrentItem(0);
         if (tabLayout.getTabCount()>1)tabLayout.setCurrentTab(0);
         orderFormAdapter.notifyDataSetChanged();
+
     }
 
     @Override

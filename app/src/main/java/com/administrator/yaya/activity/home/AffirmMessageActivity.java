@@ -1,5 +1,6 @@
 package com.administrator.yaya.activity.home;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.ClipboardManager;
@@ -10,10 +11,15 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.MainActivity;
+import com.administrator.yaya.base.ApiConfig;
+import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.orderform.TestToOrderStock;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
@@ -28,6 +34,7 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     ImageView affirmMsgBackIv;
     @BindView(R.id.receiver_name)
     TextView receiverName;
+
     @BindView(R.id.receiver_copy)
     TextView receiverCopy;
     @BindView(R.id.bank_code_number)
@@ -41,23 +48,29 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     @BindView(R.id.money_tv)
     TextView moneyTv;
     @BindView(R.id.remark_tv)
-    TextView remarkTv;
+    TextView mRemarkTv;
     @BindView(R.id.remark_btn_copy)
     TextView remarkBtnCopy;
     @BindView(R.id.affirm_msg_look_btn)
     Button affirmMsgLookBtn;
     @BindView(R.id.bank_money)
     TextView bankMoney;
+    @BindView(R.id.remark)
+    TextView mRemark;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_affirm_message;
     }
-
     @Override
     protected void initView() {
 
+        String commodityAmount = getIntent().getStringExtra("commodityAmount");
+        String payerName = getIntent().getStringExtra("bankName");
+        String commodityPrice = getIntent().getStringExtra("commodityPrice");//应付款金额
 
+        String userId = SharedPrefrenceUtils.getString(BaseApp.getApplication(), NormalConfig.USER_ID);
+        if (userId!=null)mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK,Integer.parseInt(userId),commodityPrice,payerName,commodityAmount);
     }
 
     @OnClick({R.id.affirm_msg_back_iv, R.id.receiver_copy, R.id.bank_code_number_copy, R.id.bank_copy, R.id.bank_money, R.id.remark_btn_copy, R.id.affirm_msg_look_btn})
@@ -66,36 +79,41 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
             case R.id.affirm_msg_back_iv:
                 finish();
                 break;
+
             case R.id.receiver_copy:
                 ClipboardManager name = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
-                name.setText(receiverName.getText());
+                if (receiverName!=null)name.setText(receiverName.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
+
             case R.id.bank_code_number_copy:
                 ClipboardManager number = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
-                number.setText(bankCodeNumber.getText());
+                if (bankCodeNumber!=null)number.setText(bankCodeNumber.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
             case R.id.bank_copy:
                 ClipboardManager bank = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
-                bank.setText(bankYinhang.getText());
+                if (bankYinhang!=null)bank.setText(bankYinhang.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
+
             case R.id.bank_money:
                 ClipboardManager bankQian = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
-                bankQian.setText(bankMoney.getText());
+                if (bankMoney!=null)bankQian.setText(bankMoney.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
+
             case R.id.remark_btn_copy:
                 ClipboardManager remark = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
-                remark.setText(remarkTv.getText());
+                if (mRemarkTv!=null)remark.setText(mRemarkTv.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
+
             case R.id.affirm_msg_look_btn:
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("affirm", 2);
@@ -108,20 +126,41 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
 
     }
-
+    @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
+        switch (whichApi) {
+            case ApiConfig.TEXT_ORDER_STOCK:
+                 TestToOrderStock testToOrderStock = (TestToOrderStock) t[0];
 
+                if (testToOrderStock.getCode()==0 && testToOrderStock.getData()!=null){
+
+                    TestToOrderStock.DataBean data = testToOrderStock.getData();
+
+                    String bankName = data.getBankName();
+                    String payeeName = data.getPayeeName();//收款人姓名
+                    int gaId = data.getGaId();
+                    String bankCard = data.getBankCard();//银行卡号
+                    int comMoney = data.getComMoney();//金额
+                    String remark = data.getRemark();//备注信息
+
+                    bankYinhang.setText(bankName);
+                    receiverName.setText(payeeName);
+                    bankCodeNumber.setText(bankCard);
+                    moneyTv.setText(comMoney+"");
+                    mRemarkTv.setText(remark);
+                }else{
+                    ToastUtil.showShort(testToOrderStock.getMsg());
+                }
+                break;
+        }
     }
-
 }

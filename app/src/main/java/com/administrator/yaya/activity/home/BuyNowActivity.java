@@ -11,12 +11,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.administrator.yaya.BR;
 import com.administrator.yaya.R;
+import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.homepage.TestBuyCom;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ToastUtil;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.makeramen.roundedimageview.RoundedImageView;
+
+import org.raphets.roundimageview.RoundImageView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,8 +37,13 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     @BindView(R.id.now_buy_iv)
     ImageView nowBuyIv;
 
+    @BindView(R.id.buy_comName)
+    TextView mComName;
+    @BindView(R.id.buy_comPrice)
+    TextView mComPrice;
+
     @BindView(R.id.now_bu_gamemoney_iv)
-    ImageView nowBuGamemoneyIv;
+    RoundedImageView nowBuGamemoneyIv;
 
     @BindView(R.id.buy_gamemoney_number)
     EditText buyGamemoneyNumber;
@@ -40,6 +53,9 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
     @BindView(R.id.buy_min_gamemoney_remaining_quantity)
     TextView buyMinGamemoneyRemainingQuantity;
+
+    @BindView(R.id.buy_max_gamemoney_remaining_quantity)
+    TextView buyMaxGamemoneyRemainingQuantity;
 
     @BindView(R.id.pay_money)
     TextView payMoney;
@@ -55,8 +71,9 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     @BindView(R.id.bank_name)
     EditText bankName;
 
-    @BindView(R.id.buy_max_gamemoney_remaining_quantity)
-    TextView buyMaxGamemoneyRemainingQuantity;
+    private int comPurchaseNumMax;
+    private int comPurchaseNumMin;
+    private int comPrice;
 
     @Override
     protected void initView() {
@@ -64,13 +81,56 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     }
 
     @Override
-    public void onError(int whichApi, Throwable e) {
+    protected void initData() {
+        super.initData();
 
+        mPresenter.getData(ApiConfig.TEXT_BUY_COM);
     }
 
     @Override
-    public void onResponse(int whichApi, Object[] t) {
+    public void onError(int whichApi, Throwable e) {
+    }
 
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
+        switch (whichApi) {
+            case ApiConfig.TEXT_BUY_COM:
+
+                TestBuyCom  testBuyCom= (TestBuyCom) t[0];
+
+            if (testBuyCom.getCode()==0 && testBuyCom.getData()!=null){
+
+                String comImg = testBuyCom.getData().getComImg();
+
+                Glide.with(this).load(comImg).apply(new RequestOptions().centerCrop()).into(nowBuGamemoneyIv);
+
+                String comName = testBuyCom.getData().getComName();//货物名称
+
+                mComName.setText(comName);
+                //货物单价
+                comPrice = testBuyCom.getData().getComPrice();
+
+                mComPrice.setText("游戏币单价:￥"+ comPrice);
+
+                int comInventory = testBuyCom.getData().getComInventory();//库存数量
+
+                buyGamemoneyRemainingQuantity.setText("剩余数量:￥"+comInventory);
+                //最大购买量
+                comPurchaseNumMax = testBuyCom.getData().getComPurchaseNumMax();
+
+                //最小购买量
+                comPurchaseNumMin = testBuyCom.getData().getComPurchaseNumMin();
+
+                buyMinGamemoneyRemainingQuantity.setText("最小购买数量："+comPurchaseNumMin);
+
+                buyMaxGamemoneyRemainingQuantity.setText("最大购买数量："+comPurchaseNumMax);
+
+            }else{
+                ToastUtil.showShort(testBuyCom.getMsg());
+            }
+                break;
+        }
     }
 
     @Override
@@ -82,6 +142,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     @Override
     protected void initListener() {
         nowBuyIv.setOnClickListener(this);
+
         buyGamemoneyNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -93,14 +154,15 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 if (s.length() <= 0 || s.equals("")) {
                     payMoney2.setText("0");
                     return;
-                } else {
+                }else {
                     int i = Integer.parseInt(String.valueOf(s));
-                    payMoney2.setText(10*i+"");
+                    payMoney2.setText(comPrice*i+"");
                 }
             }
             @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         });
     }
@@ -110,19 +172,22 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
             case R.id.now_buy_iv:
                 finish();
                 break;
-
             case R.id.nowbuy_commit_btn:
-                String maxNumber = buyMaxGamemoneyRemainingQuantity.getText().toString();
-                String minNumber = buyMinGamemoneyRemainingQuantity.getText().toString();
-                String s = buyGamemoneyNumber.getText().toString();
+                String s = buyGamemoneyNumber.getText().toString();//货物数量
+                String paymoey = payMoney2.getText().toString().trim();//付款金额
                 if (!s.isEmpty()) {
                     int i = Integer.parseInt(s);
-                    if (3000 <= i && i <= 10000) {
+                    if (comPurchaseNumMin <= i && i <= comPurchaseNumMax) {
                         //付款人姓名上传对照
-                        String name = bankName.getText().toString();
+                        String name = bankName.getText().toString().trim();
 
-                        Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
-                        startActivity(intent);
+                        if (!name.isEmpty()) {
+                            Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
+                            intent.putExtra("bankName",name);
+                            intent.putExtra("commodityAmount",s);
+                            intent.putExtra("commodityPrice",paymoey);
+                            startActivity(intent);
+                        }
                     }else {
                         ToastUtil.showShort("请输入规定数量游戏币数量");
                     }

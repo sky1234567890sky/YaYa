@@ -79,11 +79,9 @@ public class MainActivity extends BaseActivity {
     protected void initExit() {
         super.initExit();
     }
-
     @Override
     protected void initView() {
         super.initView();
-        MonitorNetWorkChange();
 //        mToolbar.setTitle("");
 //        mTitle.setText(R.string.homepage);
 //        setSupportActionBar(mToolbar);//支持Toolbar

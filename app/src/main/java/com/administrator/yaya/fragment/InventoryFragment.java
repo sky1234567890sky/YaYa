@@ -1,39 +1,37 @@
 package com.administrator.yaya.fragment;
 
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.inventory.adapter.InventoryAdapter;
-import com.administrator.yaya.adapter.home.OrderFormAdapter;
+import com.administrator.yaya.activity.inventory.fragment.AccountPaidFragment;
+import com.administrator.yaya.activity.inventory.fragment.ObligationFragment;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.model.LoginModel;
-import com.flyco.tablayout.SlidingTabLayout;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
  * 库存
  */
 public class InventoryFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
-    @BindView(R.id.inventory_money)
+    @BindView(R.id.inventory_allgamemoneys)
     TextView inventoryMoney;
-    @BindView(R.id.inventory_tab_layout)
-    SlidingTabLayout mTab;
+//    @BindView(R.id.inventory_stab_layou)
+//    SlidingTabLayout mTab;
+
+    @BindView(R.id.inventory_stab_layou)
+    TabLayout mTab;
+
     Unbinder unbinder;
     @BindView(R.id.inventory_vp)
     ViewPager vp;
@@ -47,22 +45,30 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 
     @Override
     protected void initView(View inflate) {
-//        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.blue));
 
         titles = new ArrayList<>();
         titles.add("待付款");
         titles.add("已付款");
 
         fragments = new ArrayList<>();
+
+        AccountPaidFragment accountPaidFragment = new AccountPaidFragment();
+        ObligationFragment obligationFragment = new ObligationFragment();
+
+        fragments.add(accountPaidFragment);
+        fragments.add(obligationFragment);
+
         InventoryAdapter adapter = new InventoryAdapter(getChildFragmentManager(), fragments, titles);
         vp.setAdapter(adapter);
-        mTab.setViewPager(vp);
-        vp.setCurrentItem(0);
-        if (mTab.getTabCount() > 1) mTab.setCurrentTab(1);
+        mTab.setupWithViewPager(vp);
         adapter.notifyDataSetChanged();
-    }
 
-    private void initlistener() {
+//        mTab.setViewPager(vp);
+//        vp.setCurrentItem(0);
+//        if (mTab.getTabCount() > 1) mTab.setCurrentTab(0);
+//        adapter.notifyDataSetChanged();
+//    }
+//    private void initlistener() {
 //        inventory_tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 //            @Override
 //            public void onTabSelected(TabLayout.Tab tab) {
@@ -72,7 +78,6 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //                        inventoryBuyTime.setVisibility(View.VISIBLE);
 //                        inventoryCancelBtn.setVisibility(View.VISIBLE);
 //                        inventoryPayMoney.setVisibility(View.VISIBLE);
-//
 //                        inventoryUpBtn.setVisibility(View.GONE);
 //                        inventoryPayMoney2.setVisibility(View.GONE);
 //                        break;

@@ -86,8 +86,10 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     protected void initView() {
         super.initView();
 //        昵称
-        String nickName = getIntent().getStringExtra("NickName");
-        persionalName.setText(nickName);
+//        String nickName = getIntent().getStringExtra("NickName");
+        String nickName = SharedPrefrenceUtils.getString(BaseApp.getApplication(), NormalConfig.USER_NICK);
+
+        if (nickName!=null)persionalName.setText(nickName);
 
         String phone_code = SharedPrefrenceUtils.getString(this, NormalConfig.USER_NAME);//手机号
         String headler_iamge = SharedPrefrenceUtils.getString(this, NormalConfig.HEADLER_IMAGEVIEW);//头像
@@ -100,9 +102,7 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     @Override
     protected void initData() {
         super.initData();
-
     }
-
 //    "http://ww1.sinaimg.cn/large/0065oQSqly1g2pquqlp0nj30n00yiq8u.jpg"
     @Override
     protected void initListener() {

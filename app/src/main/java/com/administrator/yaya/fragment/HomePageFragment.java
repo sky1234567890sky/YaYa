@@ -1,7 +1,7 @@
 package com.administrator.yaya.fragment;
 
 import android.content.Intent;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,9 +13,12 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
-import com.administrator.yaya.bean.homepage.TextHomePageData;
+import com.administrator.yaya.bean.homepage.TestHomePageData;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
-import com.bumptech.glide.Glide;
+import com.administrator.yaya.utils.NormalConfig;
+import com.administrator.yaya.utils.ToastUtil;
+import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,27 +53,28 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     LinearLayout ll1;
     @BindView(R.id.ll2)
     LinearLayout ll2;
+    private TestHomePageData.DataBean databean;
+    private TestHomePageData.DataBean.UserInfoBean userInfo;
 
-//    @BindView(R.id.marqueeView)
+    //    @BindView(R.id.marqueeView)
 //    MarqueeView mMarqueeView;
-//
 //    @BindView(R.id.marquee)
 //    SimpleMarqueeView mMarquee;
     @Override
     protected void initData() {
-        mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, 1);
+        String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
+        if (!TextUtils.isEmpty(userId))mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA,Integer.parseInt(userId));
+        else{ToastUtil.showShort("网络请求有误");}
     }
 
     @Override
     protected void initView(View inflate) {
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.c_ffffff));
-
     }
 
     @Override
     protected void initListener() {
         super.initListener();
-
 //        final ArrayList<String> list =new  ArrayList<String>();
 //        list.add("今日头条:喜讯，今日日本自愿归属中国版图");
 //        list.add("头条：美国自愿捐献国库还给中国抵债");
@@ -106,15 +110,22 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     protected int getLayoutId() {
         return R.layout.fragment_home_page;
     }
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
-                TextHomePageData data = (TextHomePageData) t[0];
-                if (data.getCode() == 0 && data != null && data.getData() != null) {
-                    TextHomePageData.DataBean.UserInfoBean userInfo = data.getData().getUserInfo();
-                    Glide.with(getActivity()).load(userInfo.getUserHeadImg()).placeholder(R.mipmap.icon).into(mHeadlerIv);
+                TestHomePageData data = (TestHomePageData) t[0];
+                databean = data.getData();
+                userInfo = databean.getUserInfo();
+
+                if (data.getCode() == 0 && userInfo != null && databean != null) {
+                    String userHeadImg = userInfo.getUserHeadImg();
+                    RequestOptions requestOptions = new RequestOptions().centerCrop();
+//                    Glide.with(getContext()).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(iv);
+                    tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
+                    tvWechatUse.setText(userInfo.getWxEd() + "");//微信已使用额度
+                } else {
+                    ToastUtil.showShort(data.getMsg());
                 }
                 break;
         }

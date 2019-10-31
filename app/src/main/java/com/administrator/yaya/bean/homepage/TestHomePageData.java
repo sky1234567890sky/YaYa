@@ -2,13 +2,13 @@ package com.administrator.yaya.bean.homepage;
 
 import java.io.Serializable;
 
-public class TextHomePageData implements Serializable {
+public class TestHomePageData implements Serializable {
 
 
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":0,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":17,"userEarningsTotal":17,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"commodity":null,"userEarningsToday":"17"}
+     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":0,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":17,"userEarningsTotal":17,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"commodity":null,"userEarningsToday":null}
      */
 
     private String msg;
@@ -43,12 +43,12 @@ public class TextHomePageData implements Serializable {
         /**
          * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":0,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":17,"userEarningsTotal":17,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
          * commodity : null
-         * userEarningsToday : 17
+         * userEarningsToday : null
          */
 
         private UserInfoBean userInfo;
         private Object commodity;
-        private String userEarningsToday;
+        private Object userEarningsToday;
 
         public UserInfoBean getUserInfo() {
             return userInfo;
@@ -66,11 +66,11 @@ public class TextHomePageData implements Serializable {
             this.commodity = commodity;
         }
 
-        public String getUserEarningsToday() {
+        public Object getUserEarningsToday() {
             return userEarningsToday;
         }
 
-        public void setUserEarningsToday(String userEarningsToday) {
+        public void setUserEarningsToday(Object userEarningsToday) {
             this.userEarningsToday = userEarningsToday;
         }
 
