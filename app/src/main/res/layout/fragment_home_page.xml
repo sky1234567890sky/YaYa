@@ -165,10 +165,6 @@
                 android:textSize="@dimen/sp_16" />
 
         </LinearLayout>
-
-
-        -
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -325,7 +321,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="x"
+                    android:text="0"
                     android:textColor="#333333"
                     android:textSize="@dimen/sp_25"  />
 
@@ -355,7 +351,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="x"
+                    android:text="50000"
                     android:textColor="#333333"
                     android:textSize="@dimen/sp_25"  />
 
@@ -385,7 +381,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="x"
+                    android:text="50000"
                     android:textColor="#333333"
                     android:textSize="@dimen/sp_25"  />
 

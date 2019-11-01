@@ -22,7 +22,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44">
-
             <ImageView
                 android:id="@+id/now_buy_iv"
                 android:layout_width="@dimen/dp_39"
@@ -125,6 +124,7 @@
                 android:numeric="integer"
                 android:maxLength="8"
                 android:digits="1234567890"
+                android:maxLength="8"
                 android:singleLine="true"
                 android:textStyle="normal"
                 android:textCursorDrawable="@drawable/edit_cursor_color"

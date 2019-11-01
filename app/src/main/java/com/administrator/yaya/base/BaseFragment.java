@@ -40,7 +40,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(getLayoutId(), null);
-
         bind = ButterKnife.bind(this, inflate);
         initMvp();
         initView(inflate);

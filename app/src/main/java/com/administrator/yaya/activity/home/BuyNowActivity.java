@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.administrator.yaya.BR;
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
@@ -145,7 +146,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-
             @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {

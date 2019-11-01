@@ -1,6 +1,5 @@
 package com.administrator.yaya.model;
 
-import com.administrator.yaya.BR;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.ICommonModel;
 import com.administrator.yaya.base.ICommonView;

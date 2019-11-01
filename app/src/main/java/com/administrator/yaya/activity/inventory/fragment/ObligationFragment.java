@@ -3,11 +3,8 @@ package com.administrator.yaya.activity.inventory.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,12 +21,11 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -146,7 +142,7 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
 
     @Override
     protected CommonPresenter getPresenter() {
-        return new CommonPresenter();
+        return getPresenter();
     }
 
     @Override

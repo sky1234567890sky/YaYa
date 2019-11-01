@@ -13,10 +13,11 @@ import butterknife.OnClick;
 /**
  * 游戏币说明
  */
-
 public class GameMoneyExplainActivity extends BaseActivity {
     @BindView(R.id.game_money_explain_iv)
+
     ImageView systemMsgBackIv;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_game_money_explain;

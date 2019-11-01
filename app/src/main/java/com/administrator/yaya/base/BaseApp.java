@@ -36,6 +36,7 @@ public class BaseApp extends Application {
         mUuid = DeviceUuidFactory.getInstance(getApplication()).getDeviceUuid();
         MultiDex.install(this);
     }
+
     private void initWechat() {
         //TODO:你的appId
         // 三个参数分别是上下文、应用的appId、是否检查签名（默认为false）

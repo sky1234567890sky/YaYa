@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
@@ -24,7 +22,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-
 import com.administrator.yaya.R;
 import com.administrator.yaya.broadcast.NetBroadcastReceiver;
 import com.administrator.yaya.broadcast.NetStatusBroadCast;
@@ -35,12 +32,9 @@ import com.hjq.permissions.XXPermissions;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
 import java.util.List;
-
 import butterknife.ButterKnife;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
-
 import static com.scwang.smartrefresh.layout.util.DensityUtil.px2dp;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -100,6 +94,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     protected void setTextViewStyles(TextView textView) {
         LinearGradient mLinearGradient = new LinearGradient(0, 0, textView.getPaint().getTextSize() * textView.getText().length(), 0, Color.parseColor("#FF076BF0"), Color.parseColor("#FF35A6FF"), Shader.TileMode.CLAMP);
         textView.getPaint().setShader(mLinearGradient);
@@ -108,6 +103,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int getLayoutId();
 
     protected void initListener() {
+
     }
 
     protected void initData() {
