@@ -123,6 +123,7 @@
                 android:gravity="center_vertical"
                 android:inputType="phone|number"
                 android:numeric="integer"
+                android:maxLength="8"
                 android:digits="1234567890"
                 android:singleLine="true"
                 android:textStyle="normal"
@@ -144,7 +145,7 @@
             tools:ignore="RtlHardcoded">
             <!--剩余数量-->
             <TextView
-                android:id="@+id/buy_gamemoney_remaining_quantity"
+                android:id="@+id/buy_gamemoney_shengyu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_13"
@@ -163,7 +164,7 @@
                 android:layout_marginLeft="@dimen/dp_13"
                 android:textSize="@dimen/sp_13"
                 android:textStyle="normal"
-                android:layout_below="@+id/buy_gamemoney_remaining_quantity"
+                android:layout_below="@+id/buy_gamemoney_shengyu"
                 android:textColor="#999999"
                 tools:ignore="HardcodedText"
                 />
@@ -174,14 +175,13 @@
                 android:textColor="#999999"
                 android:textSize="@dimen/sp_13"
                 android:textStyle="normal"
-                android:layout_below="@+id/buy_gamemoney_remaining_quantity"
+                android:layout_below="@+id/buy_gamemoney_shengyu"
                 android:layout_toRightOf="@id/buy_min_gamemoney_remaining_quantity"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:text="最大购买数量：xxx"
                 tools:ignore="HardcodedText"
                 />
         </RelativeLayout>
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

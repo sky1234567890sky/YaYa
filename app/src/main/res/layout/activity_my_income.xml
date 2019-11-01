@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:textSize="@dimen/sp_26"
             android:textColor="@color/white"
-            android:text="800.00"
+            android:text="xxx"
             android:layout_toLeftOf="@id/wire"
             android:layout_marginTop="@dimen/dp_22"
             android:gravity="center"
@@ -88,11 +88,11 @@
             android:layout_toRightOf="@id/wire"
             android:gravity="center"
             android:textSize="@dimen/sp_26"
-            android:text="2900.00"
+            android:text="xxx"
             android:textColor="@color/white"
             android:layout_marginTop="@dimen/dp_22"
             android:layout_alignParentRight="true"
-            />
+            tools:ignore="HardcodedText" />
         <TextView
             android:id="@+id/get_gamemoney_down_tv"
             android:layout_height="wrap_content"

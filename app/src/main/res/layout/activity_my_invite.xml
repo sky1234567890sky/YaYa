@@ -55,7 +55,7 @@
     </RelativeLayout>
 
 
-    -<RelativeLayout
+    <RelativeLayout
     android:background="@drawable/background_rl"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
@@ -80,8 +80,9 @@
         android:layout_marginLeft="@dimen/dp_25"
         android:textSize="@dimen/sp_16"
         android:textColor="#333333"
-        android:text="@string/app_name"
+        android:text="xxx"
         android:layout_toRightOf="@id/myinvite_iv"
+        android:layout_alignTop="@id/myinvite_iv"
         />
 
     <TextView
@@ -93,7 +94,7 @@
         android:textSize="@dimen/sp_14"
         android:textColor="#333333"
         android:textStyle="normal"
-        android:text="ID : 255552"
+        android:text="ID : xxx"
         android:layout_toRightOf="@id/myinvite_iv"
         android:layout_alignBottom="@id/myinvite_iv"
         tools:ignore="HardcodedText,RtlHardcoded" />
@@ -105,9 +106,9 @@
         android:layout_marginTop="@dimen/dp_12"
         android:textSize="@dimen/sp_14"
         android:textColor="#000"
-        android:text="返利比例：0.2%"
+        android:text="返利比例：xxx"
         android:layout_toRightOf="@id/my_name_state_tv"
-        android:layout_alignBottom="@id/iv"
+        android:layout_alignBottom="@id/my_name_state_tv"
         />
 </RelativeLayout>
     <!---->
@@ -134,7 +135,7 @@
             android:layout_width="match_parent"
             android:textSize="@dimen/sp_26"
             android:textColor="@color/white"
-            android:text="0.00"
+            android:text="xxx"
             android:layout_toLeftOf="@id/wire"
             android:layout_marginTop="@dimen/dp_22"
             android:gravity="center"
@@ -146,7 +147,7 @@
             android:layout_toRightOf="@id/wire"
             android:gravity="center"
             android:textSize="@dimen/sp_26"
-            android:text="1900.00"
+            android:text="xxx"
             android:textColor="@color/white"
             android:layout_marginTop="@dimen/dp_22"
             android:layout_alignParentRight="true"

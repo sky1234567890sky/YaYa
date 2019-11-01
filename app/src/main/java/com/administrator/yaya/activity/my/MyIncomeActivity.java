@@ -72,11 +72,11 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
 //        tabLayout.addNewTab("收入记录");
 //        tabLayout.addNewTab("支出记录");
 //        tabLayout.addNewTab("返利记录");
+
         mTab.addTab(mTab.newTab().setText("收入记录"));
         mTab.addTab(mTab.newTab().setText("支出记录"));
         mTab.addTab(mTab.newTab().setText("返利记录"));
-
-        mTab.setupWithViewPager(vp);
+//        mTab.setupWithViewPager(vp);
     }
     @Override
     protected void initListener() {

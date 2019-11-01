@@ -9,10 +9,15 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.my.TestAlipayReceiverCode;
+import com.administrator.yaya.bean.my.TestWechatReceiverCode;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
@@ -72,8 +77,26 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 
     @Override
     protected void initData() {
+//        参数:
+//        用户id		userId
+//        类型		type	1、微信 2、支付宝
+        String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        if (userId!=null) {
+//            mPresenter.getData(ApiConfig.ALIPAY_RECEIVER_CODE, Integer.parseInt(userId), 1);
+        }
+    }
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
+        switch (whichApi) {
+            case ApiConfig.TEST_WECHAT_RECEIVER_CODE:
+                TestWechatReceiverCode testWechatReceiverCode = (TestWechatReceiverCode) t[0];
+                if (testWechatReceiverCode!=null ){
 
-
+                }else{
+//                    ToastUtil.showShort(testSmallBook.toString());
+                }
+                break;
+        }
     }
 
     @Override
@@ -88,11 +111,6 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
-    }
-
-    @Override
-    public void onResponse(int whichApi, Object[] t) {
 
     }
 

@@ -14,6 +14,8 @@ import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.model.LoginModel;
+import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
 
@@ -26,48 +28,72 @@ import butterknife.Unbinder;
 public class InventoryFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
     @BindView(R.id.inventory_allgamemoneys)
     TextView inventoryMoney;
-//    @BindView(R.id.inventory_stab_layou)
-//    SlidingTabLayout mTab;
 
     @BindView(R.id.inventory_stab_layou)
-    TabLayout mTab;
-
-    Unbinder unbinder;
+    SlidingTabLayout mTab;
+//    @BindView(R.id.inventory_stab_layou)
+//    TabLayout mTab;
     @BindView(R.id.inventory_vp)
     ViewPager vp;
     private ArrayList<String> titles;
     private ArrayList<Fragment> fragments;
+    private AccountPaidFragment accountPaidFragment;
+    private ObligationFragment obligationFragment;
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_inventory;
+    public boolean getUserVisibleHint() {
+        return super.getUserVisibleHint();
     }
-
     @Override
     protected void initView(View inflate) {
-
         titles = new ArrayList<>();
         titles.add("待付款");
         titles.add("已付款");
-
         fragments = new ArrayList<>();
-
-        AccountPaidFragment accountPaidFragment = new AccountPaidFragment();
-        ObligationFragment obligationFragment = new ObligationFragment();
-
-        fragments.add(accountPaidFragment);
+        accountPaidFragment = new AccountPaidFragment();
+        obligationFragment = new ObligationFragment();
         fragments.add(obligationFragment);
+        fragments.add(accountPaidFragment);
 
         InventoryAdapter adapter = new InventoryAdapter(getChildFragmentManager(), fragments, titles);
         vp.setAdapter(adapter);
-        mTab.setupWithViewPager(vp);
-        adapter.notifyDataSetChanged();
-
-//        mTab.setViewPager(vp);
-//        vp.setCurrentItem(0);
-//        if (mTab.getTabCount() > 1) mTab.setCurrentTab(0);
+//        mTab.setupWithViewPager(vp);
 //        adapter.notifyDataSetChanged();
-//    }
+        mTab.setViewPager(vp);
+        vp.setCurrentItem(0);
+        if (mTab.getTabCount() > 1) mTab.setCurrentTab(0);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        mTab.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+                switch (position) {
+                    case 0:
+//                        accountPaidFragment.setAccountpaidOnclikListener(new AccountPaidFragment.AccountpaidOnclikListener() {
+//                            @Override
+//                            public void setonclik(String amount) {
+                                inventoryMoney.setText("游戏币库存合计：");
+//                            }
+//                        });
+
+                        break;
+                    case 1:
+                        inventoryMoney.setText("游戏币库存合计：");
+                        break;
+                }
+            }
+            @Override
+            public void onTabReselect(int position) {
+
+            }
+        });
+    }
+
+    //    }
 //    private void initlistener() {
 //        inventory_tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 //            @Override
@@ -101,6 +127,11 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //
 //            }
 //        });
+
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_inventory;
     }
 
     @Override
@@ -117,7 +148,6 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     public void onError(int whichApi, Throwable e) {
 
     }
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         

@@ -21,6 +21,7 @@ import butterknife.OnClick;
 
 //上架游戏币
 public class UpGameMoneyActivity extends AppCompatActivity {
+
     @BindView(R.id.upgame_back_iv)
     ImageView upgameBackIv;
     @BindView(R.id.tv_upgame_money_number2)

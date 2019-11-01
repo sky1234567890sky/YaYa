@@ -1,5 +1,6 @@
 package com.administrator.yaya.model;
 
+import com.administrator.yaya.BR;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.ICommonModel;
 import com.administrator.yaya.base.ICommonView;
@@ -21,49 +22,81 @@ public class LoginModel implements ICommonModel {
 
             case ApiConfig.TEXT_REGISTER://注册
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestRegister((String) t[0], (String) t[0], (String) t[0],(String) t[0]), view, whichApi);
+                        .getTestRegister((String) t[0], (String) t[0], (String) t[0], (String) t[0]), view, whichApi);
                 break;
 
             case ApiConfig.TEXT_INVITECODE://验证码
 //                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
 //                        .getTestInviteCode((String) t[0],(String) t[0],(String) t[0]),view,whichApi,1);
                 break;
-                //首页-我的
+            //首页-我的
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestHomePageData((int) t[0]),view, whichApi);
+                        .getTestHomePageData((int) t[0]), view, whichApi);
                 break;
 
-                //立即购买
+            //立即购买
             case ApiConfig.TEXT_BUY_COM:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestBuyCom(),view, whichApi);
+                        .getTestBuyCom(), view, whichApi);
                 break;
 
-                //提交订单
+            //提交订单
             case ApiConfig.TEXT_ORDER_STOCK:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestOrderStock((int) t[0], (String) t[1], (String) t[2],(String) t[3]),view, whichApi);
+                        .getTestOrderStock((int) t[0], (String) t[1], (String) t[2], (String) t[3]), view, whichApi);
                 break;
-
             //查看进货状态 所有进货订单  getTextAllOrderStock
-            case ApiConfig.TEXT_AllORDER_STOCK:
+//            case ApiConfig.TEXT_AllORDER_STOCK:
+//                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+//                        .getTestAllOrderStock((int) t[0],(int) t[1]),view, whichApi);
+//                break;
+
+            //付款信息 2已付款  1待付款
+            case ApiConfig.TEXT_GATHERING://待付款
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestAllOrderStock((int) t[0],(int) t[1]),view, whichApi);
+                        .getTestOrderStock((int) t[0], (int) t[1]), view, whichApi);
+                break;
+            case ApiConfig.TEXT_GATHERING2://已付款
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestAccountPaid((int) t[0], (int) t[1]), view, whichApi);
+                break;
+            case ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestPayToAffimInfo((String) t[0]), view, whichApi);
                 break;
 
-            //付款信息
-            case ApiConfig.TEXT_GATHERING:
+            case ApiConfig.TEST_CANCEL_ORDER_STOCK://取消订单
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestGathering((String)t[0]),view, whichApi);
+                        .getTestCancelOrderStock((int) t[0]), view, whichApi);
                 break;
 
 
-
-
-
-
-
+            //通知消息
+            case ApiConfig.TEST_NOTIFICATION_INFO:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestNotificationInfo((int) t[0]), view, whichApi);
+                break;
+            //我的邀请
+            case ApiConfig.TEST_MY_INVITE:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestMyInvite((int) t[0]), view, whichApi);
+                break;
+            //我的小账本
+            case ApiConfig.TEST_SMALLBOOK:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestSmallBook((int) t[0]), view, whichApi);
+                break;
+            //支付宝二维码
+            case ApiConfig.TEST_ALIPAY_RECEIVER_CODE:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getAlipayReceiverCode((int) t[0], (int) t[1]), view, whichApi);
+                break;
+            //微信二维码
+            case ApiConfig.TEST_WECHAT_RECEIVER_CODE:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getWechatReceiverCode((int) t[0], (int) t[1]), view, whichApi);
+                break;
 
 
 //==================================================>

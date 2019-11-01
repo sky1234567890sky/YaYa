@@ -86,14 +86,12 @@ public class MainActivity extends BaseActivity {
 //        mTitle.setText(R.string.homepage);
 //        setSupportActionBar(mToolbar);//支持Toolbar
         mHomepage.setChecked(true);
-
-        if (mHomepage.isChecked()){
-            //设置状态栏为白色
-            YCAppBar.setStatusBarColor(this,
-                    ContextCompat.getColor(this,
-                            R.color.c_cccccc));
-        }
-
+//        if (mHomepage.isChecked()){
+//            //设置状态栏为白色
+//            YCAppBar.setStatusBarColor(this,
+//                    ContextCompat.getColor(this,
+//                            R.color.c_cccccc));
+//        }
         titles = new ArrayList<Integer>();
         titles.add(R.string.homepage);
         titles.add(R.string.inventory);
@@ -130,7 +128,17 @@ public class MainActivity extends BaseActivity {
                     .commit();
             mOrderformBtn.setChecked(true);
         }
+        int orderform = getIntent().getIntExtra("orderform", 0);
+        if (orderform == 4) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_fragment, orderFormkFragment)
+                    .addToBackStack(null)
+                    .commit();
+            mOrderformBtn.setChecked(true);
+        }
     }
+
     private void initFragment() {
         homePageFragment = new HomePageFragment();
         inventoryFragment = new InventoryFragment();
@@ -165,25 +173,19 @@ public class MainActivity extends BaseActivity {
             case R.id.homepage://首页
                 mHomepage.setChecked(true);
                 FragmentUtils.addFragment(manager, homePageFragment.getClass(), R.id.home_fragment,bundle);
-                //设置状态栏文字颜色及图标为浅色
-//                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//                getWindow().getDecorView().findViewById(android.R.id.content).setPadding(0, 0, 0, CommonUtils.navigationHeight);
-                //设置状态栏为白色
-                YCAppBar.setStatusBarColor(this,
-                        ContextCompat.getColor(this,
-                                R.color.c_cccccc));
+               //设置状态栏为白色
+//                YCAppBar.setStatusBarColor(this,
+//                        ContextCompat.getColor(this,
+//                                R.color.c_cccccc));
 //                switchFragment(AppConstants.TYPE_HOMEPAGER);
                 break;
 
             case R.id.inventory_btn://库存
                 FragmentUtils.addFragment(manager, inventoryFragment.getClass(), R.id.home_fragment, bundle);
-                //设置状态栏文字颜色及图标为浅色
-//                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//                getWindow().getDecorView().findViewById(android.R.id.content).setPadding(0, 0, 0, CommonUtils.navigationHeight);
-                //设置状态栏为浅蓝
-                YCAppBar.setStatusBarColor(this,
-                        ContextCompat.getColor(this,
-                                R.color.light_blue));
+               //设置状态栏为浅蓝
+//                YCAppBar.setStatusBarColor(this,
+//                        ContextCompat.getColor(this,
+//                                R.color.light_blue));
 //                mToolbar.setVisibility(View.GONE);
 //                switchFragment(AppConstants.TYPE_INVENTORY);
                 break;
@@ -194,24 +196,18 @@ public class MainActivity extends BaseActivity {
 
             case R.id.orderform_btn://订单
                 FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, bundle);
-                //设置状态栏文字颜色及图标为浅色
-//                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//                getWindow().getDecorView().findViewById(android.R.id.content).setPadding(0, 0, 0, CommonUtils.navigationHeight);
                 //设置状态栏为浅蓝
-                YCAppBar.setStatusBarColor(this,
-                        ContextCompat.getColor(this,
-                                R.color.light_blue));
+//                YCAppBar.setStatusBarColor(this,
+//                        ContextCompat.getColor(this,
+//                                R.color.light_blue));
 //                switchFragment(AppConstants.TYPE_ORDERFORM);
                 break;
             case R.id.mine_btn://我的
                 FragmentUtils.addFragment(manager, myFragment.getClass(), R.id.home_fragment, bundle);
-                //设置状态栏文字颜色及图标为浅色
-//                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//                getWindow().getDecorView().findViewById(android.R.id.content).setPadding(0, 0, 0, CommonUtils.navigationHeight);
                 //设置状态栏为白色
-                YCAppBar.setStatusBarColor(this,
-                        ContextCompat.getColor(this,
-                                R.color.c_cccccc));
+//                YCAppBar.setStatusBarColor(this,
+//                        ContextCompat.getColor(this,
+//                                R.color.c_cccccc));
 //                switchFragment(AppConstants.TYPE_MY);
                 break;
         }
@@ -284,7 +280,6 @@ public class MainActivity extends BaseActivity {
                 popupWindow.dismiss();
             }
         });
-
         mPopupTvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

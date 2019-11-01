@@ -16,6 +16,7 @@ import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.invite.TestPayToAffirmInfo;
 import com.administrator.yaya.bean.orderform.TestToOrderStock;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
@@ -62,9 +63,9 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     protected int getLayoutId() {
         return R.layout.activity_affirm_message;
     }
+
     @Override
     protected void initView() {
-
         String commodityAmount = getIntent().getStringExtra("commodityAmount");
         String payerName = getIntent().getStringExtra("bankName");
         String commodityPrice = getIntent().getStringExtra("commodityPrice");//应付款金额
@@ -73,20 +74,30 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
         if (userId!=null)mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK,Integer.parseInt(userId),commodityPrice,payerName,commodityAmount);
     }
 
+    @Override
+    protected void initData() {
+        super.initData();
+        //網絡請求  付款信息
+        String orderNumber = getIntent().getStringExtra("orderNumber");
+        if (orderNumber!=null){
+            mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO,orderNumber);
+        }else{
+            return;
+        }
+    }
+
     @OnClick({R.id.affirm_msg_back_iv, R.id.receiver_copy, R.id.bank_code_number_copy, R.id.bank_copy, R.id.bank_money, R.id.remark_btn_copy, R.id.affirm_msg_look_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.affirm_msg_back_iv:
                 finish();
                 break;
-
             case R.id.receiver_copy:
                 ClipboardManager name = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
                 if (receiverName!=null)name.setText(receiverName.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
-
             case R.id.bank_code_number_copy:
                 ClipboardManager number = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
@@ -113,7 +124,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                 if (mRemarkTv!=null)remark.setText(mRemarkTv.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
-
             case R.id.affirm_msg_look_btn:
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("affirm", 2);
@@ -121,11 +131,11 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                 break;
         }
     }
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
+
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
@@ -140,11 +150,8 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
         switch (whichApi) {
             case ApiConfig.TEXT_ORDER_STOCK:
                  TestToOrderStock testToOrderStock = (TestToOrderStock) t[0];
-
                 if (testToOrderStock.getCode()==0 && testToOrderStock.getData()!=null){
-
                     TestToOrderStock.DataBean data = testToOrderStock.getData();
-
                     String bankName = data.getBankName();
                     String payeeName = data.getPayeeName();//收款人姓名
                     int gaId = data.getGaId();
@@ -159,6 +166,31 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                     mRemarkTv.setText(remark);
                 }else{
                     ToastUtil.showShort(testToOrderStock.getMsg());
+                }
+                break;
+
+            case ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO://从库存付款信息跳到确认信息解析
+//                getTestPayToAffimInfo()
+                TestPayToAffirmInfo testPayToAffirmInfo = (TestPayToAffirmInfo) t[0];
+                if (testPayToAffirmInfo.getData()!=null && testPayToAffirmInfo.getCode()==0){
+                    TestPayToAffirmInfo.DataBean data = testPayToAffirmInfo.getData();
+//                    收款人姓名	payeeName
+                    String payeeName = data.getPayeeName();
+                    receiverName.setText(payeeName);
+//                    银行卡号	bankCard
+                    String bankCard = data.getBankCard();
+                    bankCodeNumber.setText(bankCard);
+//                    所属银行	bankName
+                    String bankName = data.getBankName();
+                    bankYinhang.setText(bankName);
+//                    金额		comMoney
+                    int comMoney = data.getComMoney();
+                    moneyTv.setText(comMoney+"");
+//                    备注信息	remark
+                    String remark = data.getRemark();
+                    mRemarkTv.setText(remark);
+                }else{
+                    ToastUtil.showShort(testPayToAffirmInfo.getMsg());
                 }
                 break;
         }
