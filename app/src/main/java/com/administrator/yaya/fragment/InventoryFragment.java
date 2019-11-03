@@ -33,7 +33,6 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     @BindView(R.id.inventory_stab_layou)
     TabLayout mTab;
 
-    Unbinder unbinder;
     @BindView(R.id.inventory_vp)
     ViewPager vp;
     private ArrayList<String> titles;

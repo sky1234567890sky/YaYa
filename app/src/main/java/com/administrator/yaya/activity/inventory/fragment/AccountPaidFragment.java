@@ -22,9 +22,7 @@ import butterknife.BindView;
  * A simple {@link Fragment} subclass.
  * 已付款
  */
-
 public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
-
     @BindView(R.id.yifu_orderNumber)
     TextView mYifuOrderNumber;
     @BindView(R.id.yifu_comImg)
@@ -39,7 +37,6 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
     TextView mYifuCommodityPrice;
     @BindView(R.id.yifu_up_btn)
     TextView mYifuUpBtn;
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
@@ -50,7 +47,6 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
 ////                    List<TestAccountPaid.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
 ////                    mYifuOrderNumber.setText("订单编号:"+);
 ////                    Glide.with(this).load(comImg).into(nowBuGamemoneyIv);
-//
 //                } else {
 //                    ToastUtil.showShort(testAccountPaid.getMsg());
 //                }

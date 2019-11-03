@@ -41,7 +41,6 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
     @BindView(R.id.daifu_cancel_orderform)
     TextView mDaifuCancelOrderform;
     @SuppressLint("SetTextI18n")
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
@@ -50,7 +49,6 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
 //                TestObligation testObligation = (TestObligation) t[0];
 //                if (testObligation.getCode() == 0 && testObligation.getData() != null) {
 ////                    TestObligation.DataBean data = testObligation.getData();
-//
 //                } else {
 //                    ToastUtil.showShort(testObligation.getMsg());
 //                }

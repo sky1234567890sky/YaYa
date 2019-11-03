@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -147,20 +148,31 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-
             @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String s1 = String.valueOf(s);
+                if (s1.isEmpty()){
+                    payMoney2.setText("0");
+                    return;
+                }
+
+                char c = s1.charAt(0);
+                Log.i("Taaaa", c + "");
                 int i = Integer.parseInt(String.valueOf(s));
+
                 if (s.length() <= 0 || s.equals("")) {
                     payMoney2.setText("0");
                     return;
                 }else{
                     payMoney2.setText(i * 123 + "");
                 }
-
+                int comPurchaseNumMax =10000;
                 if (comPurchaseNumMax>i){
-                    buyGamemoneyRemainingQuantity.setText(comPurchaseNumMax-i);
+                    buyGamemoneyRemainingQuantity.setText(comPurchaseNumMax-i+"");
+//                    if (comPurchaseNumMax-i<0){
+//                        buyGamemoneyRemainingQuantity.setText("0");
+//                    }
                 }else{
                     ToastUtil.showLong("已超过最大购买数");
                 }
