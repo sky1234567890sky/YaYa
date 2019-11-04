@@ -123,7 +123,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                     SharedPrefrenceUtils.saveString(LoginActivity.this,NormalConfig.USER_ID,String.valueOf(userId));
 
                     Intent intent = new Intent(this, MainActivity.class);
-
                     editorMain.putBoolean(NormalConfig.ISFIRST, true);//成功的记录第一次登录
                     editorMain.commit();
                     startActivity(intent);

@@ -38,8 +38,6 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.FragmentUtils;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
-import com.rx2androidnetworking.Rx2AndroidNetworking;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,13 +48,11 @@ import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-
 /**
  * A simple {@link Fragment} subclass.
  * 已付款
  */
 public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements ICommonView{
-
     @BindView(R.id.yifu_orderNumber)
     TextView mYifuOrderNumber;
     @BindView(R.id.yifu_comImg)
@@ -97,6 +93,7 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
 ////        accountpaidItem.mYifuGamemoney.setText("");
 //            mYifuOrderNumber.setText("订单编号：" + orderStockList.getOrderNumber());
 //        }
+
     }
     @Override
     protected void initListener() {
@@ -112,7 +109,6 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
 //            public void setonclik(int postion) {
 //            }
 //        });
-
     }
     @SuppressLint("SetTextI18n")
     @Override

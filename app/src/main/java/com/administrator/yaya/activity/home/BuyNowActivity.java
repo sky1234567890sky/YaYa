@@ -113,12 +113,10 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 break;
         }
     }
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_buy_now;
     }
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initListener() {

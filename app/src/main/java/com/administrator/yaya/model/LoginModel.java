@@ -8,7 +8,6 @@ import com.administrator.yaya.base.NetConfig;
 import com.administrator.yaya.base.NetManager;
 import com.administrator.yaya.bean.LoginInfo;
 import com.administrator.yaya.bean.VerifyCodeInfo;
-
 public class LoginModel implements ICommonModel {
     @Override
     public void getData(ICommonView view, int whichApi, Object[] t) {
@@ -21,7 +20,7 @@ public class LoginModel implements ICommonModel {
 
             case ApiConfig.TEXT_REGISTER://注册
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestRegister((String) t[0], (String) t[0], (String) t[0], (String) t[0]), view, whichApi);
+                        .getTestRegister((String) t[0], (String) t[1], (String) t[2], (String) t[3]), view, whichApi);
                 break;
 
             case ApiConfig.TEXT_INVITECODE://验证码
@@ -107,17 +106,17 @@ public class LoginModel implements ICommonModel {
             //售卖中
             case ApiConfig.TEST_ALL_ORDERSTOCK:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestAllOrderStock((int) t[0],(int) t[0]), view, whichApi);
+                        .getTestAllOrderStock((int) t[0],(int) t[1]), view, whichApi);
                 break;
             //已完成
             case ApiConfig.TEST_FINISH:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestFinish((int) t[0],(int) t[0]), view, whichApi);
+                        .getTestFinish((int) t[0],(int) t[1]), view, whichApi);
                 break;
             //已取消
             case ApiConfig.TEST_CANCEL:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestCancel((int) t[0],(int) t[0]), view, whichApi);
+                        .getTestCancel((int) t[0],(int) t[1]), view, whichApi);
                 break;
 
 //            确认收货
@@ -145,7 +144,7 @@ public class LoginModel implements ICommonModel {
                 //我的收益
             case ApiConfig.TEST_MY_EARNINGS:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestMyEarnings((int) t[0],(int) t[0]), view, whichApi);
+                        .getTestMyEarnings((int) t[0],(int) t[1]), view, whichApi);
                 break;
 
                 //TestPutawayAllOrderStock上架全部货物
@@ -157,17 +156,17 @@ public class LoginModel implements ICommonModel {
                 //返利
             case ApiConfig.TEST_REBATE:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestRebate((int) t[0],(int) t[0]), view, whichApi);
+                        .getTestRebate((int) t[0],(int) t[1]), view, whichApi);
                 break;
                 //支出
             case ApiConfig.TEST_EXPEND:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestExpend((int) t[0],(int) t[0]), view, whichApi);
+                        .getTestExpend((int) t[0],(int) t[1]), view, whichApi);
                 break;
                 //收入
             case ApiConfig.TEST_INCOME:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestIncome((int) t[0],(int) t[0]), view, whichApi);
+                        .getTestIncome((int) t[0],(int) t[1]), view, whichApi);
                 break;
 
 
