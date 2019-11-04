@@ -25,6 +25,7 @@ import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
 import com.administrator.yaya.bean.orderform.TestFinish;
+import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
@@ -77,59 +78,62 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     protected void initData() {
         super.initData();
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
-        if (userId!=null) {
+        if (userId != null) {
             mPresenter.getData(ApiConfig.TEST_FINISH, Integer.parseInt(userId), 2);
-        }else{
-            ToastUtil.showShort(R.string.networkerr+"");
+        } else {
+            ToastUtil.showShort(R.string.networkerr + "");
         }
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View inflate = inflater.inflate(R.layout.fragment_finish, container, false);
-        parentFragment = (OrderFormkFragment) getParentFragment();
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        View inflate = inflater.inflate(R.layout.fragment_finish, container, false);
+//        parentFragment = (OrderFormkFragment) getParentFragment();
+//        return inflate;
+//    }
 
+//    @Override
+//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+//
+//        super.onViewCreated(view, savedInstanceState);
+//    }
 
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if(isVisibleToUser){
+//
+//
+//            View view = parentFragment.getView();
+//          TextView  mInventory_money = view.findViewById(R.id.inventory_money);
+//
+//            mInventory_money.setText("weerrrtt");
+//
+//
+//
+//            Bundle arguments = getArguments();
+//            int finish =arguments.getInt("finish");
+//            Log.d("tag" ,"onCreateView: "+finish);
+//        }
+//
+//    }
 
-
-        return inflate;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
-
-
-            View view = parentFragment.getView();
-          TextView  mInventory_money = view.findViewById(R.id.inventory_money);
-
-            mInventory_money.setText("weerrrtt");
-
-
-
-            Bundle arguments = getArguments();
-            int finish =arguments.getInt("finish");
-            Log.d(TAG, "onCreateView: "+finish);
-        }
-
+//    @Override
+//    public void onError(int whichApi, Throwable e) {
+//
+//    }
     }
 
     @Override
     public void onError(int whichApi, Throwable e) {
 
     }
+
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEST_FINISH://已完成
                 TestFinish testFinish = (TestFinish) t[0];
-                Log.i("tag", "已完成: "+testFinish.toString());
-                if (testFinish.getCode()==0 && testFinish.getData()!=null && testFinish.getData().getOrderStockList()!=null){
+                Log.i("tag", "已完成: " + testFinish.toString());
+                if (testFinish.getCode() == 0 && testFinish.getData() != null && testFinish.getData().getOrderStockList() != null) {
                     TestFinish.DataBean data = testFinish.getData();
 //                    进货订单集合	orderSalesList
                     List<?> orderStockList = data.getOrderStockList();
@@ -153,7 +157,7 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
 //                            最大购买数量comPurchaseNumMax
 //                    今日收款数		amount
 //                    String amount = data.getAmount();
-                }else{
+                } else {
                     ToastUtil.showShort(testFinish.getMsg());
                 }
                 break;
