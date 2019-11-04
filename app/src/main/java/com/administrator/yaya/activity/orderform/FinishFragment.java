@@ -3,13 +3,17 @@ package com.administrator.yaya.activity.orderform;
 
 import android.os.Bundle;
 import android.security.AttestedKeyPair;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.orderform.adapter.FinishAdapter;
@@ -78,6 +82,41 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
         }else{
             ToastUtil.showShort(R.string.networkerr+"");
         }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View inflate = inflater.inflate(R.layout.fragment_finish, container, false);
+        parentFragment = (OrderFormkFragment) getParentFragment();
+
+
+
+
+        return inflate;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+
+
+            View view = parentFragment.getView();
+          TextView  mInventory_money = view.findViewById(R.id.inventory_money);
+
+            mInventory_money.setText("weerrrtt");
+
+
+
+            Bundle arguments = getArguments();
+            int finish =arguments.getInt("finish");
+            Log.d(TAG, "onCreateView: "+finish);
+        }
+
     }
 
     @Override

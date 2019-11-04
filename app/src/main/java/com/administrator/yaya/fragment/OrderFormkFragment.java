@@ -81,6 +81,21 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
         titles.add("已完成");
         titles.add("已取消");
 
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("selly",1);
+        sellFragment.setArguments(bundle);
+
+        Bundle bundle1 = new Bundle();
+        bundle1.putInt("finish",2);
+        finishFragment.setArguments(bundle1);
+
+
+        Bundle bundle2 = new Bundle();
+        bundle2.putInt("cancel",3);
+        cancelFragment.setArguments(bundle2);
+
+
         OrderFormAdapter orderFormAdapter = new OrderFormAdapter(getChildFragmentManager(),fragments,titles);
         vp.setAdapter(orderFormAdapter);
         tabLayout.setViewPager(vp);
@@ -88,7 +103,6 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
         vp.setCurrentItem(0);
         if (tabLayout.getTabCount()>1)tabLayout.setCurrentTab(0);
         orderFormAdapter.notifyDataSetChanged();
-
     }
 
     @Override

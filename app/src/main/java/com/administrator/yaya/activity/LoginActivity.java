@@ -88,7 +88,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //        MonitorNetWorkChange();
 //        SharedPreferences login = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE);
 //        boolean issave = login.getBoolean(NormalConfig.ISFIRSTRUN, false);
-//
 //        String username = login.getString(NormalConfig.USER_NAME, null);
 //        String password = login.getString(NormalConfig.PASS_WORD, null);
 //        //记住密码
@@ -170,13 +169,11 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd)) {
             String regex = "[A-Za-z0-9]{4,12}";
             if (AppValidationMgr.isPhone(name) && pwd.matches(regex)) {
-
                 mPresenter.getData(ApiConfig.TEXT_LOGIN, name, pwd);
 //                okLogin();
             } else ToastUtil.showShort("请输入正确的手机号");
         } else ToastUtil.showShort("请输入账号或密码");
     }
-
     private void okLogin() {
 //        Intent intent = new Intent(this, MainActivity.class);
 //                editorMain.putBoolean(NormalConfig.ISFIRST,true);
@@ -184,7 +181,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //                startActivity(intent);
 //                LoginActivity.this.finish();
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

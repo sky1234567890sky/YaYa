@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.orderform.adapter.SellAdapter;

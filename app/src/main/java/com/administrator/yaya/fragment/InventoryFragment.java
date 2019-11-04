@@ -44,11 +44,15 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     public boolean getUserVisibleHint() {
         return super.getUserVisibleHint();
     }
+
     @Override
     protected void initView(View inflate) {
+
+//        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.blue));
         titles = new ArrayList<>();
         titles.add("待付款");
         titles.add("已付款");
+
         fragments = new ArrayList<>();
         accountPaidFragment = new AccountPaidFragment();
         obligationFragment = new ObligationFragment();
@@ -148,6 +152,7 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     public void onError(int whichApi, Throwable e) {
 
     }
+
     @Override
     public void onResponse(int whichApi, Object[] t) {
         
