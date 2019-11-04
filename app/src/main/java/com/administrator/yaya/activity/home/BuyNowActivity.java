@@ -1,5 +1,4 @@
 package com.administrator.yaya.activity.home;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
@@ -23,9 +21,7 @@ import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
-
 import org.raphets.roundimageview.RoundImageView;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 /***
@@ -33,64 +29,49 @@ import butterknife.OnClick;
  * sky
  */
 public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements ICommonView, View.OnClickListener {
-
     @BindView(R.id.now_buy_iv)
     ImageView nowBuyIv;
-
     @BindView(R.id.buy_comName)
     TextView mComName;
     @BindView(R.id.buy_comPrice)
     TextView mComPrice;
-
     @BindView(R.id.now_bu_gamemoney_iv)
     RoundedImageView nowBuGamemoneyIv;
-
     @BindView(R.id.buy_gamemoney_number)
     EditText buyGamemoneyNumber;
-
-    @BindView(R.id.buy_gamemoney_remaining_quantity)
+    @BindView(R.id.buy_gamemoney_shengyu)
     TextView buyGamemoneyRemainingQuantity;
-
     @BindView(R.id.buy_min_gamemoney_remaining_quantity)
     TextView buyMinGamemoneyRemainingQuantity;
-
     @BindView(R.id.buy_max_gamemoney_remaining_quantity)
     TextView buyMaxGamemoneyRemainingQuantity;
-
     @BindView(R.id.pay_money)
     TextView payMoney;
     @BindView(R.id.pay_money2)
     TextView payMoney2;
-
     @BindView(R.id.pay_way)
     TextView payWay;
-
     @BindView(R.id.nowbuy_commit_btn)
     TextView nowbuyCommitBtn;
-
     @BindView(R.id.bank_name)
     EditText bankName;
-
     private int comPurchaseNumMax;
     private int comPurchaseNumMin;
     private int comPrice;
-
+    private int comInventory;
     @Override
     protected void initView() {
         super.initView();
     }
-
     @Override
     protected void initData() {
         super.initData();
 
         mPresenter.getData(ApiConfig.TEXT_BUY_COM);
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -112,10 +93,10 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 comPrice = testBuyCom.getData().getComPrice();
 
                 mComPrice.setText("游戏币单价:￥"+ comPrice);
+                //库存数量
+                comInventory = testBuyCom.getData().getComInventory();
 
-                int comInventory = testBuyCom.getData().getComInventory();//库存数量
-
-                buyGamemoneyRemainingQuantity.setText("剩余数量:￥"+comInventory);
+                buyGamemoneyRemainingQuantity.setText("剩余数量:￥"+ comInventory);
                 //最大购买量
                 comPurchaseNumMax = testBuyCom.getData().getComPurchaseNumMax();
 
@@ -146,37 +127,31 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
         buyGamemoneyNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
             @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String s1 = String.valueOf(s);
-                if (s1.isEmpty()){
+
+                String tv = String.valueOf(s);
+                if (tv.isEmpty()){
                     payMoney2.setText("0");
                     return;
                 }
-                char c = s1.charAt(0);
-//                Log.i("Taaaa", c + "");
-                if (c==0) {
-                    int i = Integer.parseInt(String.valueOf(s));
-                    if (s.length() <= 0 || s.equals("")) {
-                        payMoney2.setText("0");
-                        return;
-                    } else {
-                        payMoney2.setText(i * 123 + "");
-                    }
-                    int comPurchaseNumMax = 10000;
-                    if (comPurchaseNumMax > i) {
-                        buyGamemoneyRemainingQuantity.setText(comPurchaseNumMax - i + "");
-//                    if (comPurchaseNumMax-i<0){
-//                        buyGamemoneyRemainingQuantity.setText("0");
-//                    }
-                    } else {
-                        ToastUtil.showLong("已超过最大购买数");
-                    }
+                char tv_money = tv.charAt(0);
+
+                if (s.length() <= 0 || s.equals("")) {
+                    payMoney2.setText("0");
+                    return;
                 }else{
-                    ToastUtil.showLong("您输入的首位不能为0");
+                    int i = Integer.parseInt(String.valueOf(s));
+                    payMoney2.setText(i * comPrice + "");
+                }
+
+                int i = Integer.parseInt(String.valueOf(s));
+                if (comPurchaseNumMax>=i){
+                    buyGamemoneyRemainingQuantity.setText("剩余数量："+(comPurchaseNumMax-i));
+                }else{
+                    ToastUtil.showLong("已超过最大购买数");
                 }
             }
             @SuppressLint("SetTextI18n")
@@ -186,6 +161,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
             }
         });
     }
+
     @OnClick({R.id.now_buy_iv, R.id.nowbuy_commit_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -206,6 +182,8 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                             intent.putExtra("commodityAmount",s);
                             intent.putExtra("commodityPrice",paymoey);
                             startActivity(intent);
+                        }else{
+                            ToastUtil.showShort("请输入付款人姓名");
                         }
                     }else {
                         ToastUtil.showShort("请输入规定数量游戏币数量");

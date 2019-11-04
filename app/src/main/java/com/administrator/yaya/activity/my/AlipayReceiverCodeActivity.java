@@ -9,10 +9,15 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.my.TestAlipayReceiverCode;
+import com.administrator.yaya.bean.my.TestSmallBook;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
@@ -48,8 +53,34 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
     }
 
     @Override
-    protected void initListener() {
+    protected void initData() {
+        super.initData();
+//        参数:
+//        用户id		userId
+//        类型		type	1、微信 2、支付宝
+        String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        if (userId!=null) {
+//            mPresenter.getData(ApiConfig.ALIPAY_RECEIVER_CODE, Integer.parseInt(userId), 2);
+        }else{
 
+        }
+    }
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
+        switch (whichApi) {
+            case ApiConfig.TEST_SMALLBOOK:
+                TestAlipayReceiverCode testSmallBook = (TestAlipayReceiverCode) t[0];
+                if (testSmallBook!=null){
+
+                }else{
+//                    ToastUtil.showShort(testSmallBook.toString());
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void initListener() {
         twoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -78,10 +109,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 
     }
 
-    @Override
-    public void onResponse(int whichApi, Object[] t) {
 
-    }
 
     @OnClick({R.id.pay_receive_back_iv, R.id.two_switch})
     public void onViewClicked(View view) {

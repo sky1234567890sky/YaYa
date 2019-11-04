@@ -71,7 +71,6 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     protected void initView(View inflate) {
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.c_ffffff));
     }
-
     @Override
     protected void initListener() {
         super.initListener();
@@ -104,7 +103,6 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 //                ToastUtil.showShort("你点了第"+mPosition+"个文字");
 //        }
 //    });
-
     }
     @Override
     protected int getLayoutId() {
@@ -115,15 +113,16 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TestHomePageData data = (TestHomePageData) t[0];
-                databean = data.getData();
-                userInfo = databean.getUserInfo();
 
                 if (data.getCode() == 0 && userInfo != null && databean != null) {
+                    databean = data.getData();
+                    userInfo = databean.getUserInfo();
                     String userHeadImg = userInfo.getUserHeadImg();
                     RequestOptions requestOptions = new RequestOptions().centerCrop();
 //                    Glide.with(getContext()).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(iv);
                     tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
                     tvWechatUse.setText(userInfo.getWxEd() + "");//微信已使用额度
+
                 } else {
                     ToastUtil.showShort(data.getMsg());
                 }

@@ -6,8 +6,11 @@
     android:layout_height="match_parent"
     android:background="@color/c_ffffff"
     tools:context=".activity.inventory.fragment.AccountPaidFragment">
-<!--已付款-->
 
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/accountpaid_list" />-->
     <!--已付款-->
     <ImageView
         android:layout_width="@dimen/dp_312_5"
@@ -117,17 +120,15 @@
             android:textSize="@dimen/sp_14"
             android:text="上架"
             android:gravity="center"
-            android:textColor="#3399FF"
-            android:background="@drawable/inventory_tv_btn_selector"
-            tools:ignore="HardcodedText"
             android:layout_marginRight="@dimen/dp_12_5"
-            android:paddingRight="@dimen/dp_20"
-            android:paddingLeft="@dimen/dp_20"
+            android:paddingRight="@dimen/dp_25"
+            android:paddingLeft="@dimen/dp_25"
             android:paddingTop="@dimen/dp_3"
             android:paddingBottom="@dimen/dp_3"
             android:layout_marginTop="@dimen/dp_6"
+            android:background="@drawable/inventory_tv_btn_selector"
+            android:textColor="@drawable/btn_tvcolor_selector"
             />
 
     </RelativeLayout>
-
 </RelativeLayout>

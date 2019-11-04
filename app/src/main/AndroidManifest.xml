@@ -53,15 +53,14 @@
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
@@ -73,7 +72,8 @@
         <receiver
             android:name=".broadcast.NetStatusBroadCast"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            tools:ignore="ExportedReceiver" />
 
         <activity android:name=".activity.UpGameMoneyActivity" />
         <activity android:name=".ui.ImmediatelyBuyActivity" />
@@ -97,7 +97,6 @@
         android:name=".wxapi.WXEntryActivity"
         android:exported="true"
         />
-
         <!--android:screenOrientation="portrait"-->
         <!--android:theme="@style/NoTitleTranslucent80Theme"-->
         <!--写在style.xml文件里（windowAnimationStyle可以不添加，这里只是一个动画）：-->

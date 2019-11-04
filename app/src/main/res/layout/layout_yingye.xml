@@ -29,10 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_140"
-            android:text="2000"
+            android:text="xxx"
             android:textColor="#ffffffff"
             android:textSize="45sp" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

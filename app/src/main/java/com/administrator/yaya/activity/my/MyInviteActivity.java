@@ -1,13 +1,16 @@
 package com.administrator.yaya.activity.my;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,13 +23,19 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.my.adapter.MyLowerAdapter;
+import com.administrator.yaya.activity.my.adapter.MySuperiorAdapter;
+import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseActivity;
 import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
+import com.administrator.yaya.bean.my.TestMyInvite;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ChangTvSizeUtils;
 import com.administrator.yaya.utils.MyQrCode;
+import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.administrator.yaya.utils.WxShareUtils;
 import com.bumptech.glide.Glide;
@@ -37,6 +46,9 @@ import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,20 +77,22 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     RecyclerView mySuperiorRl;
     @BindView(R.id.my_lower_rl)
     RecyclerView myLowerRl;
+
     private PopupWindow popupWindow;
     private long exittime;
-
     private ImageView mMyinviteTwoDimentionCodeIv;
     private TextView mMyinviteTwoDimentionCodTv;
     private TextView mMyinviteShareWechatBtnTv;
     private ImageView mMyinviteCloneDissPopupIv;
-
-
     //TODO:注册你的wechatAppId
     //需要像微信注册我们申请的应用，在前面我们申请的应用审核完后的APP_ID 和APP_SECRET 就填写在这里：
 //    private static final String APP_ID = "";
 //    private static final String APP_SECRET = "123456";
     private IWXAPI api;
+    private MySuperiorAdapter mySuperiorAdapter;
+    private MyLowerAdapter myLowerAdapter;
+    private List<TestMyInvite.DataBean.UserInfoBean.JuniorUsersBean> juniorUsers;
+    private ArrayList<TestMyInvite.DataBean.UserInfoBean.JuniorUsersBean> myLowerList;
 
     @Override
     protected int getLayoutId() {
@@ -95,8 +109,70 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     protected void initView() {
 //        register(this);
         SpannableString getInventory = ChangTvSizeUtils.changTVsize("25.00");
-        getGamemoneyTv.setText(getInventory);
-        allGamemoneyTv.setText(getInventory);
+//        getGamemoneyTv.setText(getInventory);
+//        allGamemoneyTv.setText(getInventory);
+        mySuperiorRl.setLayoutManager(new LinearLayoutManager(this));
+        myLowerRl.setLayoutManager(new LinearLayoutManager(this));
+
+        mySuperiorAdapter = new MySuperiorAdapter();//上级无数据
+        myLowerList = new ArrayList<>();
+        myLowerAdapter = new MyLowerAdapter(myLowerList);//下級
+        mySuperiorRl.setAdapter(mySuperiorAdapter);
+        myLowerRl.setAdapter(myLowerAdapter);
+    }
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
+        switch (whichApi) {
+            case ApiConfig
+                    .TEST_MY_INVITE:
+                TestMyInvite testMyInvite = (TestMyInvite) t[0];
+            if (testMyInvite.getCode() == 0 && testMyInvite.getData()!=null){
+//                Log.i("tag", "数据: "+testMyInvite.getData().toString());
+                TestMyInvite.DataBean data = testMyInvite.getData();
+                TestMyInvite.DataBean.UserInfoBean userInfo = data.getUserInfo();///用户基本信息
+
+                int allUserContributeTotal = data.getAllUserContributeTotal();//縂返利
+//                parentUser			上级用户对象信息
+                Object parentUser = userInfo.getParentUser();
+//                userId			用户id
+//                userName		用户姓名
+//                juniorUsers			下级用户集合
+                juniorUsers = userInfo.getJuniorUsers();
+                myLowerList.addAll(juniorUsers);
+                myLowerAdapter.notifyDataSetChanged();
+//                userId			用户id
+//                userName		用户姓名
+//                junior			今日贡献
+//                userContributeTotal	总贡献
+//                userId				用户id
+                int userId = userInfo.getUserId();
+//                userName 			用户姓名
+                String userName = userInfo.getUserName();
+//                userNickName 		昵称
+                String userNickName = userInfo.getUserNickName();
+//                userEarningsTotal 	总收益
+                int userContributeTotal = userInfo.getUserContributeTotal();
+//                zfbEd 				支付宝已使用额度
+                int zfbEd = userInfo.getZfbEd();
+//                wxEd 				微信已使用额度
+                int wxEd = userInfo.getWxEd();
+
+                myNameTv.setText(userName);
+                myNameStateTv.setText("ID:"+userId);
+                tv3.setText("返利比例："+allUserContributeTotal+"%");
+//                getGamemoneyTv.setText();
+                allGamemoneyTv.setText(userContributeTotal+"");
+            }
+                break;
+        }
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_INVITE,Integer.parseInt(userId));
     }
     @Override
     protected void initListener() {
@@ -216,8 +292,5 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         ToastUtil.showShort(e.getMessage());
     }
 
-    @Override
-    public void onResponse(int whichApi, Object[] t) {
 
-    }
 }

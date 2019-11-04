@@ -148,24 +148,20 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TestHomePageData data = (TestHomePageData) t[0];
-                databean = data.getData();
-                userInfo = databean.getUserInfo();
-
-                if (data.getCode() == 0 && userInfo != null && databean != null) {
+                if (data.getCode() == 0 && data.getData()!=null && data.getData().getUserInfo() != null) {
+                    databean = data.getData();
+                    userInfo = databean.getUserInfo();
                     String userHeadImg = userInfo.getUserHeadImg();
                     //保存图片 跟 昵称  没网也能显示
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW, userHeadImg);
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_NICK, userInfo.getUserNickName());
-
 //                    String head_portrait = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW);
-
                     RequestOptions requestOptions = new RequestOptions().centerCrop();
-
                     Glide.with(getContext()).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(iv);
-
                     myNameTv.setText(userInfo.getUserName());
                     if (databean.getUserEarningsToday()==null){
-                    getGamemoneyTv.setText(0+ "");}else{
+                        getGamemoneyTv.setText(0+ "");
+                    }else{
                         getGamemoneyTv.setText(databean.getUserEarningsToday()+ "");
                     }//今日收益
                     allGamemoneyTv.setText(userInfo.getUserEarningsTotal() + "");//累计收益

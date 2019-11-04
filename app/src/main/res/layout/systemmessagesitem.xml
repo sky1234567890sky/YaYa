@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_70"
+        android:background="@drawable/systemmsg_shape_bg"
+        android:layout_marginLeft="@dimen/dp_12_5"
+        android:layout_marginRight="@dimen/dp_12_5"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:textSize="@dimen/sp_15"
+            android:text="订单消息"
+            android:layout_marginLeft="@dimen/dp_12_5"
+            android:layout_marginTop="@dimen/dp_10"
+            />
+
+        <TextView
+            android:id="@+id/system_msg_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="您的订单15222541255544133已完成"
+            android:textColor="#ff666666"
+            android:textSize="13sp"
+            android:layout_marginLeft="@dimen/dp_12_5"
+            android:layout_marginTop="@dimen/dp_10"
+            />
+    </LinearLayout>
+
+</RelativeLayout>
