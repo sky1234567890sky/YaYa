@@ -156,25 +156,27 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     payMoney2.setText("0");
                     return;
                 }
-
                 char c = s1.charAt(0);
-                Log.i("Taaaa", c + "");
-                int i = Integer.parseInt(String.valueOf(s));
-
-                if (s.length() <= 0 || s.equals("")) {
-                    payMoney2.setText("0");
-                    return;
-                }else{
-                    payMoney2.setText(i * 123 + "");
-                }
-                int comPurchaseNumMax =10000;
-                if (comPurchaseNumMax>i){
-                    buyGamemoneyRemainingQuantity.setText(comPurchaseNumMax-i+"");
+//                Log.i("Taaaa", c + "");
+                if (c==0) {
+                    int i = Integer.parseInt(String.valueOf(s));
+                    if (s.length() <= 0 || s.equals("")) {
+                        payMoney2.setText("0");
+                        return;
+                    } else {
+                        payMoney2.setText(i * 123 + "");
+                    }
+                    int comPurchaseNumMax = 10000;
+                    if (comPurchaseNumMax > i) {
+                        buyGamemoneyRemainingQuantity.setText(comPurchaseNumMax - i + "");
 //                    if (comPurchaseNumMax-i<0){
 //                        buyGamemoneyRemainingQuantity.setText("0");
 //                    }
+                    } else {
+                        ToastUtil.showLong("已超过最大购买数");
+                    }
                 }else{
-                    ToastUtil.showLong("已超过最大购买数");
+                    ToastUtil.showLong("您输入的首位不能为0");
                 }
             }
             @SuppressLint("SetTextI18n")
