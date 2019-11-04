@@ -74,7 +74,6 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 
                 }else{
 //                    ToastUtil.showShort(testSmallBook.toString());
-
                 }
                 break;
         }

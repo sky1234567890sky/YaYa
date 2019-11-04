@@ -124,7 +124,6 @@
                 android:numeric="integer"
                 android:maxLength="8"
                 android:digits="1234567890"
-                android:maxLength="8"
                 android:singleLine="true"
                 android:textStyle="normal"
                 android:textCursorDrawable="@drawable/edit_cursor_color"

@@ -161,6 +161,7 @@ public class MainActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
 //        registerNetWorkStatus();//监听网络状态
+        MonitorNetWorkChange();
     }
 
     @Override

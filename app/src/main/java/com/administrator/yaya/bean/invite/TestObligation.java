@@ -333,6 +333,56 @@ public class TestObligation {
 
             public static class ParamsBean {
             }
+
+            @Override
+            public String toString() {
+                return "OrderStockListBean{" +
+                        "searchValue=" + searchValue +
+                        ", createBy=" + createBy +
+                        ", createTime=" + createTime +
+                        ", updateBy=" + updateBy +
+                        ", updateTime=" + updateTime +
+                        ", remark=" + remark +
+                        ", params=" + params +
+                        ", stockId=" + stockId +
+                        ", orderNumber='" + orderNumber + '\'' +
+                        ", userId=" + userId +
+                        ", payeeName=" + payeeName +
+                        ", payeeBankCard=" + payeeBankCard +
+                        ", payeeBankName=" + payeeBankName +
+                        ", orderPayTpe=" + orderPayTpe +
+                        ", payerName='" + payerName + '\'' +
+                        ", commodityAmount=" + commodityAmount +
+                        ", commoditySurplusAmount=" + commoditySurplusAmount +
+                        ", commodityPrice=" + commodityPrice +
+                        ", orderStatus=" + orderStatus +
+                        ", orderRemark='" + orderRemark + '\'' +
+                        ", orderBuildTime='" + orderBuildTime + '\'' +
+                        ", orderAuditTime=" + orderAuditTime +
+                        ", orderBuildTimeEnd=" + orderBuildTimeEnd +
+                        ", orderAuditTimeEnd=" + orderAuditTimeEnd +
+                        ", userName='" + userName + '\'' +
+                        '}';
+            }
+
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "commodity=" + commodity +
+                    ", amount='" + amount + '\'' +
+                    ", orderStockList=" + orderStockList +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "TestObligation{" +
+                "msg='" + msg + '\'' +
+                ", code=" + code +
+                ", data=" + data +
+                '}';
     }
 }

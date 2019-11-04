@@ -83,6 +83,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     @Override
     protected void initData() {
         super.initData();
+
         mPresenter.getData(ApiConfig.TEXT_BUY_COM);
     }
     @Override
@@ -144,12 +145,17 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
         buyGamemoneyNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
             @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                String tv = String.valueOf(s);
+                if (tv.isEmpty()){
+                    payMoney2.setText("0");
+                    return;
+                }
+                char tv_money = tv.charAt(0);
 
                 if (s.length() <= 0 || s.equals("")) {
                     payMoney2.setText("0");
@@ -166,7 +172,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     ToastUtil.showLong("已超过最大购买数");
                 }
             }
-
             @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {

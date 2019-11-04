@@ -90,10 +90,10 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
         switch (whichApi) {
             case ApiConfig.TEST_WECHAT_RECEIVER_CODE:
                 TestWechatReceiverCode testWechatReceiverCode = (TestWechatReceiverCode) t[0];
-                if (testWechatReceiverCode!=null ){
+                if (testWechatReceiverCode.getStatus()==500){
 
                 }else{
-//                    ToastUtil.showShort(testSmallBook.toString());
+                    ToastUtil.showShort(testWechatReceiverCode.getError());
                 }
                 break;
         }

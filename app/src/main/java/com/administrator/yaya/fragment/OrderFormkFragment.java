@@ -72,6 +72,7 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
         sellFragment = new SellFragment();
         finishFragment = new FinishFragment();
         cancelFragment = new CancelFragment();
+
         fragments.add(sellFragment);
         fragments.add(finishFragment);
         fragments.add(cancelFragment);

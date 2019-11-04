@@ -30,4 +30,24 @@ public class ApiConfig {
     public static final int TEST_SMALLBOOK = 18;//我的小账本
     public static final int TEST_ALIPAY_RECEIVER_CODE = 19;//支付宝二维码
     public static final int TEST_WECHAT_RECEIVER_CODE = 20;//微信二维码
+
+    public static final int TEST_UPAWAY_SINGLE_GOODS = 21; //上架单个货物
+
+    //所有售卖订单
+    public static final int TEST_ALL_ORDERSTOCK = 22;
+    public static final int TEST_FINISH = 30;//已完成
+    public static final int TEST_CANCEL = 31;//已取消
+    public static final int TEST_CONFIRM_RECEIPT = 28;//确认收货
+    public static final int TEST_CANCEL_ORDER_SALES = 29;//取消售卖订单
+
+    public static final int TEST_MY_EARNINGS = 23;//我的收益
+
+    public static final int TEST_PUTAWAY_ALL_ORDERSTOCK = 24;//上架全部货物
+
+    //我的收益
+    public static final int TEST_REBATE = 25;//返利
+    public static final int TEST_EXPEND = 26;//支出
+    public static final int TEST_INCOME = 27;//收入
+
+
 }

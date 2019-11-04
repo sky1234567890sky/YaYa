@@ -4,10 +4,10 @@ package com.administrator.yaya.activity.inventory.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.home.AffirmMessageActivity;
 import com.administrator.yaya.base.ApiConfig;
@@ -26,7 +26,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
 /**
  * A simple {@link Fragment} subclass.
  * 待付款
@@ -61,12 +60,11 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
 //        mDaifuGcomName.setText(orderStockListBean.getPayerName());
 //        货物单价	comPrice
 //        货物图片	comImg
-//        库存数量	comInventory
+//        库存数量	comInvent  ory
 //        最小购买数量comPurchaseNumMin
 //                最大购买数量comPurchaseNumMax
 //        库存合计数量	amount
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -75,10 +73,13 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
                 //待付款
                 testObligation = (TestObligation) t[0];
                 if (testObligation.getCode() == 0 && testObligation.getData() != null) {
+//                    Log.i("tag", "待付款数据: "+testObligation.toString());
                     TestObligation.DataBean data = testObligation.getData();
                     orderStockList = data.getOrderStockList();
                     TestObligation.DataBean.OrderStockListBean orderStockListBean = orderStockList.get(1);
+
                     String amount = testObligation.getData().getAmount();
+
                     mDaifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
 //        进货订单集合	orderStockList
 //        订单编号	orderNumber
@@ -109,6 +110,7 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
         if (userId!=null)mPresenter.getData(ApiConfig.TEXT_GATHERING, Integer.parseInt(userId), 1);//待付款
     }
+
     @OnClick({R.id.daifu_getGathering_btn, R.id.daifu_cancel_orderform})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -126,7 +128,6 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
                 break;
         }
     }
-
     public ObligationFragment() {
         // Required empty public constructor
     }
@@ -134,20 +135,15 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
     protected int getLayoutId() {
         return R.layout.fragment_obligation;
     }
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
-        return getPresenter();
+        return new CommonPresenter();
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
-
     }
-
 }

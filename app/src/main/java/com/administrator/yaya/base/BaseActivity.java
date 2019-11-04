@@ -151,7 +151,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        IntentFilter filter = new IntentFilter();
 //        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 //        mNetStatusBroadCast = new NetStatusBroadCast();
-//        mNetStatusBroadCast.setNetStatusListener(this);
+//        mNetStatusBroadCast.setNetStatusListener();
 //        registerReceiver(mNetStatusBroadCast, filter);
 //    }
 

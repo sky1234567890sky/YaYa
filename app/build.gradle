@@ -32,11 +32,6 @@ android {
 //    }
 
 
-
-
-
-
-
 }
 
 repositories {
@@ -152,5 +147,8 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.google.zxing:core:3.3.0'
 //    implementation 'com.github.jwkj:LibZXing:v1.+'
+
+    //rxjava--AndroidNetworking
+    implementation 'com.amitshekhar.android:rx2-android-networking:1.0.0'
 
 }

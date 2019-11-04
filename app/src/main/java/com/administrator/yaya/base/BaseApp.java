@@ -9,6 +9,7 @@ import android.support.multidex.MultiDex;
 import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.local_utils.DeviceUuidFactory;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
+import com.androidnetworking.AndroidNetworking;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -35,15 +36,17 @@ public class BaseApp extends Application {
         initWechat();
         mUuid = DeviceUuidFactory.getInstance(getApplication()).getDeviceUuid();
         MultiDex.install(this);
-    }
 
+        //
+        AndroidNetworking.initialize(this);
+
+    }
     private void initWechat() {
         //TODO:你的appId
         // 三个参数分别是上下文、应用的appId、是否检查签名（默认为false）
 //        IWXAPI mWxApi = WXAPIFactory.createWXAPI(this,AppId, true);
 //// 注册
 //        mWxApi.registerApp(AppId);
-
     }
     public static Context getApplication(){
         return mBaseApp.getApplicationContext();

@@ -96,6 +96,80 @@ public class LoginModel implements ICommonModel {
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getWechatReceiverCode((int) t[0], (int) t[1]), view, whichApi);
                 break;
+            case ApiConfig.TEST_UPAWAY_SINGLE_GOODS://上架单个货物
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestUpawaySingleGoods((String) t[0]), view, whichApi);
+                break;
+
+
+                //所有售卖订单
+//            getTestAllOrderStock
+            //售卖中
+            case ApiConfig.TEST_ALL_ORDERSTOCK:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestAllOrderStock((int) t[0],(int) t[0]), view, whichApi);
+                break;
+            //已完成
+            case ApiConfig.TEST_FINISH:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestFinish((int) t[0],(int) t[0]), view, whichApi);
+                break;
+            //已取消
+            case ApiConfig.TEST_CANCEL:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestCancel((int) t[0],(int) t[0]), view, whichApi);
+                break;
+
+//            确认收货
+//            http://192.168.0.198:8080/yayaApp/comSell/confirmReceipt
+//            参数:
+//            订单id		salesId
+            case ApiConfig.TEST_CONFIRM_RECEIPT:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestConfirmReceipt((int) t[0]), view, whichApi);//salesId
+                break;
+//                    取消售卖订单
+//            http://192.168.0.198:8080/yayaApp/comSell/cancelOrderSales
+//            参数:
+//            订单编号	saleId
+            case ApiConfig.TEST_CANCEL_ORDER_SALES:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestCancelOrderSales((int) t[0]), view, whichApi);//salesId
+                break;
+
+
+
+
+
+
+                //我的收益
+            case ApiConfig.TEST_MY_EARNINGS:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestMyEarnings((int) t[0],(int) t[0]), view, whichApi);
+                break;
+
+                //TestPutawayAllOrderStock上架全部货物
+            case ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getPutawayAllOrderStock((int) t[0]), view, whichApi);
+                break;
+
+                //返利
+            case ApiConfig.TEST_REBATE:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestRebate((int) t[0],(int) t[0]), view, whichApi);
+                break;
+                //支出
+            case ApiConfig.TEST_EXPEND:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestExpend((int) t[0],(int) t[0]), view, whichApi);
+                break;
+                //收入
+            case ApiConfig.TEST_INCOME:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestIncome((int) t[0],(int) t[0]), view, whichApi);
+                break;
+
 
 
 //==================================================>

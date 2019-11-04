@@ -50,7 +50,6 @@ public class AccountPaidAdapter extends RecyclerView.Adapter<AccountPaidAdapter.
         this.list = list;
         AccountPaidAdapter.this.notifyDataSetChanged();
     }
-
     @NonNull
     @Override
     public AccountpaidItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

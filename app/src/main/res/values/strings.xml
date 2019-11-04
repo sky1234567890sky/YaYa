@@ -48,4 +48,5 @@
     <string name="affirm_msg">确认信息</string>
     <string name="look_stock_state">查看进货状态</string>
     <string name="go_up">去上架</string>
+    <string name="networkerr">网络请求有误!</string>
 </resources>

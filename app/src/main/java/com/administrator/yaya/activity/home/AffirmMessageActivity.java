@@ -63,7 +63,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     protected int getLayoutId() {
         return R.layout.activity_affirm_message;
     }
-
     @Override
     protected void initView() {
         String commodityAmount = getIntent().getStringExtra("commodityAmount");
@@ -71,9 +70,12 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
         String commodityPrice = getIntent().getStringExtra("commodityPrice");//应付款金额
 
         String userId = SharedPrefrenceUtils.getString(BaseApp.getApplication(), NormalConfig.USER_ID);
-        if (userId!=null)mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK,Integer.parseInt(userId),commodityPrice,payerName,commodityAmount);
+        if (userId!=null) {
+            mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK, Integer.parseInt(userId), commodityPrice, payerName, commodityAmount);
+        }else{
+            ToastUtil.showShort("网络请求有误");
+        }
     }
-
     @Override
     protected void initData() {
         super.initData();

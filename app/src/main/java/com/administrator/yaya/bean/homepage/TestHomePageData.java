@@ -1,14 +1,14 @@
 package com.administrator.yaya.bean.homepage;
 
 import java.io.Serializable;
-
+//我的
 public class TestHomePageData implements Serializable {
 
 
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":0,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":17,"userEarningsTotal":17,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"commodity":null,"userEarningsToday":null}
+     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":193,"userEarningsTotal":316,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"commodity":null,"userEarningsToday":"176"}
      */
 
     private String msg;
@@ -41,14 +41,14 @@ public class TestHomePageData implements Serializable {
 
     public static class DataBean {
         /**
-         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":0,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":17,"userEarningsTotal":17,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
+         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":193,"userEarningsTotal":316,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
          * commodity : null
-         * userEarningsToday : null
+         * userEarningsToday : 176
          */
 
         private UserInfoBean userInfo;
         private Object commodity;
-        private Object userEarningsToday;
+        private String userEarningsToday;
 
         public UserInfoBean getUserInfo() {
             return userInfo;
@@ -66,11 +66,11 @@ public class TestHomePageData implements Serializable {
             this.commodity = commodity;
         }
 
-        public Object getUserEarningsToday() {
+        public String getUserEarningsToday() {
             return userEarningsToday;
         }
 
-        public void setUserEarningsToday(Object userEarningsToday) {
+        public void setUserEarningsToday(String userEarningsToday) {
             this.userEarningsToday = userEarningsToday;
         }
 
@@ -89,12 +89,12 @@ public class TestHomePageData implements Serializable {
              * userHeadImg : http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg
              * userPhone : 17631365666
              * userPwd : 1234
-             * userProfit : 0
+             * userProfit : 8.0E-4
              * userStatus : 1
              * userInvitationCode : 6666
              * userParentId : 0
-             * userEarningsNow : 17
-             * userEarningsTotal : 17
+             * userEarningsNow : 193
+             * userEarningsTotal : 316
              * userContributeTotal : 0
              * zfbEd : 0
              * wxEd : 0
@@ -118,7 +118,7 @@ public class TestHomePageData implements Serializable {
             private String userHeadImg;
             private String userPhone;
             private String userPwd;
-            private int userProfit;
+            private double userProfit;
             private int userStatus;
             private String userInvitationCode;
             private int userParentId;
@@ -237,11 +237,11 @@ public class TestHomePageData implements Serializable {
                 this.userPwd = userPwd;
             }
 
-            public int getUserProfit() {
+            public double getUserProfit() {
                 return userProfit;
             }
 
-            public void setUserProfit(int userProfit) {
+            public void setUserProfit(double userProfit) {
                 this.userProfit = userProfit;
             }
 
