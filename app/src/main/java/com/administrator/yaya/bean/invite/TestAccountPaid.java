@@ -6,10 +6,11 @@ import java.util.List;
  * 已付款
  */
 public class TestAccountPaid {
+
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"commodity":null,"amount":"3020","orderStockList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":1,"orderNumber":"123213123","userId":1,"payeeName":"钱","payeeBankCard":"123213213123123","payeeBankName":"中国银行","orderPayTpe":1,"payerName":"小明","commodityAmount":1000,"commoditySurplusAmount":1000,"commodityPrice":10,"orderStatus":2,"orderRemark":"这是备注","orderBuildTime":"2019-10-24 00:00:00","orderAuditTime":"2019-10-30 10:47:49","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":2,"orderNumber":"123213124","userId":1,"payeeName":"qa","payeeBankCard":"123213213123123","payeeBankName":"中国银行","orderPayTpe":1,"payerName":"明","commodityAmount":2000,"commoditySurplusAmount":2000,"commodityPrice":20,"orderStatus":2,"orderRemark":null,"orderBuildTime":"2019-10-23 13:33:40","orderAuditTime":"2019-10-30 15:08:19","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":3,"orderNumber":"191031103523194","userId":1,"payeeName":null,"payeeBankCard":null,"payeeBankName":null,"orderPayTpe":1,"payerName":"苏克阳","commodityAmount":10,"commoditySurplusAmount":null,"commodityPrice":10000,"orderStatus":2,"orderRemark":"191031103539359","orderBuildTime":"2019-10-31 10:35:30","orderAuditTime":"2019-10-31 17:48:52","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":4,"orderNumber":"191031103548723","userId":1,"payeeName":null,"payeeBankCard":null,"payeeBankName":null,"orderPayTpe":1,"payerName":"苏克阳","commodityAmount":10,"commoditySurplusAmount":null,"commodityPrice":1000,"orderStatus":2,"orderRemark":"191031103527832","orderBuildTime":"2019-10-31 10:35:43","orderAuditTime":"2019-11-01 13:32:28","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"}]}
+     * data : {"commodity":null,"amount":"30","orderStockList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":5,"orderNumber":"191031103536063","userId":1,"payeeName":null,"payeeBankCard":null,"payeeBankName":null,"orderPayTpe":1,"payerName":"苏克阳","commodityAmount":10,"commoditySurplusAmount":null,"commodityPrice":10000,"orderStatus":2,"orderRemark":"191031103526146","orderBuildTime":"2019-10-31 10:35:48","orderAuditTime":"2019-11-01 14:30:18","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":4,"orderNumber":"191031103548723","userId":1,"payeeName":null,"payeeBankCard":null,"payeeBankName":null,"orderPayTpe":1,"payerName":"苏克阳","commodityAmount":10,"commoditySurplusAmount":null,"commodityPrice":1000,"orderStatus":2,"orderRemark":"191031103527832","orderBuildTime":"2019-10-31 10:35:43","orderAuditTime":"2019-11-01 13:32:28","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":3,"orderNumber":"191031103523194","userId":1,"payeeName":null,"payeeBankCard":null,"payeeBankName":null,"orderPayTpe":1,"payerName":"苏克阳","commodityAmount":10,"commoditySurplusAmount":null,"commodityPrice":10000,"orderStatus":2,"orderRemark":"191031103539359","orderBuildTime":"2019-10-31 10:35:30","orderAuditTime":"2019-10-31 17:48:52","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"}]}
      */
 
     private String msg;
@@ -43,8 +44,8 @@ public class TestAccountPaid {
     public static class DataBean {
         /**
          * commodity : null
-         * amount : 3020
-         * orderStockList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":1,"orderNumber":"123213123","userId":1,"payeeName":"钱","payeeBankCard":"123213213123123","payeeBankName":"中国银行","orderPayTpe":1,"payerName":"小明","commodityAmount":1000,"commoditySurplusAmount":1000,"commodityPrice":10,"orderStatus":2,"orderRemark":"这是备注","orderBuildTime":"2019-10-24 00:00:00","orderAuditTime":"2019-10-30 10:47:49","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":2,"orderNumber":"123213124","userId":1,"payeeName":"qa","payeeBankCard":"123213213123123","payeeBankName":"中国银行","orderPayTpe":1,"payerName":"明","commodityAmount":2000,"commoditySurplusAmount":2000,"commodityPrice":20,"orderStatus":2,"orderRemark":null,"orderBuildTime":"2019-10-23 13:33:40","orderAuditTime":"2019-10-30 15:08:19","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":3,"orderNumber":"191031103523194","userId":1,"payeeName":null,"payeeBankCard":null,"payeeBankName":null,"orderPayTpe":1,"payerName":"苏克阳","commodityAmount":10,"commoditySurplusAmount":null,"commodityPrice":10000,"orderStatus":2,"orderRemark":"191031103539359","orderBuildTime":"2019-10-31 10:35:30","orderAuditTime":"2019-10-31 17:48:52","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":4,"orderNumber":"191031103548723","userId":1,"payeeName":null,"payeeBankCard":null,"payeeBankName":null,"orderPayTpe":1,"payerName":"苏克阳","commodityAmount":10,"commoditySurplusAmount":null,"commodityPrice":1000,"orderStatus":2,"orderRemark":"191031103527832","orderBuildTime":"2019-10-31 10:35:43","orderAuditTime":"2019-11-01 13:32:28","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"}]
+         * amount : 30
+         * orderStockList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":5,"orderNumber":"191031103536063","userId":1,"payeeName":null,"payeeBankCard":null,"payeeBankName":null,"orderPayTpe":1,"payerName":"苏克阳","commodityAmount":10,"commoditySurplusAmount":null,"commodityPrice":10000,"orderStatus":2,"orderRemark":"191031103526146","orderBuildTime":"2019-10-31 10:35:48","orderAuditTime":"2019-11-01 14:30:18","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":4,"orderNumber":"191031103548723","userId":1,"payeeName":null,"payeeBankCard":null,"payeeBankName":null,"orderPayTpe":1,"payerName":"苏克阳","commodityAmount":10,"commoditySurplusAmount":null,"commodityPrice":1000,"orderStatus":2,"orderRemark":"191031103527832","orderBuildTime":"2019-10-31 10:35:43","orderAuditTime":"2019-11-01 13:32:28","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"stockId":3,"orderNumber":"191031103523194","userId":1,"payeeName":null,"payeeBankCard":null,"payeeBankName":null,"orderPayTpe":1,"payerName":"苏克阳","commodityAmount":10,"commoditySurplusAmount":null,"commodityPrice":10000,"orderStatus":2,"orderRemark":"191031103539359","orderBuildTime":"2019-10-31 10:35:30","orderAuditTime":"2019-10-31 17:48:52","orderBuildTimeEnd":null,"orderAuditTimeEnd":null,"userName":"钱浩龙"}]
          */
 
         private Object commodity;
@@ -84,21 +85,21 @@ public class TestAccountPaid {
              * updateTime : null
              * remark : null
              * params : {}
-             * stockId : 1
-             * orderNumber : 123213123
+             * stockId : 5
+             * orderNumber : 191031103536063
              * userId : 1
-             * payeeName : 钱
-             * payeeBankCard : 123213213123123
-             * payeeBankName : 中国银行
+             * payeeName : null
+             * payeeBankCard : null
+             * payeeBankName : null
              * orderPayTpe : 1
-             * payerName : 小明
-             * commodityAmount : 1000
-             * commoditySurplusAmount : 1000
-             * commodityPrice : 10
+             * payerName : 苏克阳
+             * commodityAmount : 10
+             * commoditySurplusAmount : null
+             * commodityPrice : 10000
              * orderStatus : 2
-             * orderRemark : 这是备注
-             * orderBuildTime : 2019-10-24 00:00:00
-             * orderAuditTime : 2019-10-30 10:47:49
+             * orderRemark : 191031103526146
+             * orderBuildTime : 2019-10-31 10:35:48
+             * orderAuditTime : 2019-11-01 14:30:18
              * orderBuildTimeEnd : null
              * orderAuditTimeEnd : null
              * userName : 钱浩龙
@@ -114,13 +115,13 @@ public class TestAccountPaid {
             private int stockId;
             private String orderNumber;
             private int userId;
-            private String payeeName;
-            private String payeeBankCard;
-            private String payeeBankName;
+            private Object payeeName;
+            private Object payeeBankCard;
+            private Object payeeBankName;
             private int orderPayTpe;
             private String payerName;
             private int commodityAmount;
-            private int commoditySurplusAmount;
+            private Object commoditySurplusAmount;
             private int commodityPrice;
             private int orderStatus;
             private String orderRemark;
@@ -210,27 +211,27 @@ public class TestAccountPaid {
                 this.userId = userId;
             }
 
-            public String getPayeeName() {
+            public Object getPayeeName() {
                 return payeeName;
             }
 
-            public void setPayeeName(String payeeName) {
+            public void setPayeeName(Object payeeName) {
                 this.payeeName = payeeName;
             }
 
-            public String getPayeeBankCard() {
+            public Object getPayeeBankCard() {
                 return payeeBankCard;
             }
 
-            public void setPayeeBankCard(String payeeBankCard) {
+            public void setPayeeBankCard(Object payeeBankCard) {
                 this.payeeBankCard = payeeBankCard;
             }
 
-            public String getPayeeBankName() {
+            public Object getPayeeBankName() {
                 return payeeBankName;
             }
 
-            public void setPayeeBankName(String payeeBankName) {
+            public void setPayeeBankName(Object payeeBankName) {
                 this.payeeBankName = payeeBankName;
             }
 
@@ -258,11 +259,11 @@ public class TestAccountPaid {
                 this.commodityAmount = commodityAmount;
             }
 
-            public int getCommoditySurplusAmount() {
+            public Object getCommoditySurplusAmount() {
                 return commoditySurplusAmount;
             }
 
-            public void setCommoditySurplusAmount(int commoditySurplusAmount) {
+            public void setCommoditySurplusAmount(Object commoditySurplusAmount) {
                 this.commoditySurplusAmount = commoditySurplusAmount;
             }
 
@@ -331,37 +332,6 @@ public class TestAccountPaid {
             }
 
             public static class ParamsBean {
-            }
-
-            @Override
-            public String toString() {
-                return "OrderStockListBean{" +
-                        "searchValue=" + searchValue +
-                        ", createBy=" + createBy +
-                        ", createTime=" + createTime +
-                        ", updateBy=" + updateBy +
-                        ", updateTime=" + updateTime +
-                        ", remark=" + remark +
-                        ", params=" + params +
-                        ", stockId=" + stockId +
-                        ", orderNumber='" + orderNumber + '\'' +
-                        ", userId=" + userId +
-                        ", payeeName='" + payeeName + '\'' +
-                        ", payeeBankCard='" + payeeBankCard + '\'' +
-                        ", payeeBankName='" + payeeBankName + '\'' +
-                        ", orderPayTpe=" + orderPayTpe +
-                        ", payerName='" + payerName + '\'' +
-                        ", commodityAmount=" + commodityAmount +
-                        ", commoditySurplusAmount=" + commoditySurplusAmount +
-                        ", commodityPrice=" + commodityPrice +
-                        ", orderStatus=" + orderStatus +
-                        ", orderRemark='" + orderRemark + '\'' +
-                        ", orderBuildTime='" + orderBuildTime + '\'' +
-                        ", orderAuditTime='" + orderAuditTime + '\'' +
-                        ", orderBuildTimeEnd=" + orderBuildTimeEnd +
-                        ", orderAuditTimeEnd=" + orderAuditTimeEnd +
-                        ", userName='" + userName + '\'' +
-                        '}';
             }
         }
 

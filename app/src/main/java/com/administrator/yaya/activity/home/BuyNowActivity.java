@@ -26,6 +26,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 /***
@@ -33,10 +35,8 @@ import butterknife.OnClick;
  * sky
  */
 public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements ICommonView, View.OnClickListener {
-
     @BindView(R.id.now_buy_iv)
     ImageView nowBuyIv;
-
     @BindView(R.id.buy_comName)
     TextView mComName;
     @BindView(R.id.buy_comPrice)
@@ -75,7 +75,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     private int comPurchaseNumMin;
     private int comPrice;
     private int comInventory;
-
     @Override
     protected void initView() {
         super.initView();
@@ -126,6 +125,8 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
                 buyMaxGamemoneyRemainingQuantity.setText("最大购买数量："+comPurchaseNumMax);
 
+                //传值
+                EventBus.getDefault().postSticky(comInventory);   //发送时间
             }else{
                 ToastUtil.showShort(testBuyCom.getMsg());
             }
@@ -137,7 +138,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     protected int getLayoutId() {
         return R.layout.activity_buy_now;
     }
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initListener() {
@@ -157,7 +157,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     return;
                 }
                 char tv_money = tv.charAt(0);
-
                 if (s.length() <= 0 || s.equals("")) {
                     payMoney2.setText("0");
                     return;

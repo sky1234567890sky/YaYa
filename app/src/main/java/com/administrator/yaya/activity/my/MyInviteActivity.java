@@ -36,6 +36,7 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ChangTvSizeUtils;
 import com.administrator.yaya.utils.MyQrCode;
 import com.administrator.yaya.utils.NormalConfig;
+import com.administrator.yaya.utils.SaveBitmapToPhotoUtils;
 import com.administrator.yaya.utils.ToastUtil;
 import com.administrator.yaya.utils.WxShareUtils;
 import com.bumptech.glide.Glide;
@@ -111,6 +112,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         SpannableString getInventory = ChangTvSizeUtils.changTVsize("25.00");
 //        getGamemoneyTv.setText(getInventory);
 //        allGamemoneyTv.setText(getInventory);
+
         mySuperiorRl.setLayoutManager(new LinearLayoutManager(this));
         myLowerRl.setLayoutManager(new LinearLayoutManager(this));
 
@@ -124,9 +126,9 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
-            case ApiConfig
-                    .TEST_MY_INVITE:
+            case ApiConfig.TEST_MY_INVITE:
                 TestMyInvite testMyInvite = (TestMyInvite) t[0];
+
             if (testMyInvite.getCode() == 0 && testMyInvite.getData()!=null){
 //                Log.i("tag", "数据: "+testMyInvite.getData().toString());
                 TestMyInvite.DataBean data = testMyInvite.getData();
@@ -167,7 +169,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 break;
         }
     }
-
     @Override
     protected void initData() {
         super.initData();
@@ -195,6 +196,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         mMyinviteTwoDimentionCodTv = inflate.findViewById(R.id.myinvite_two_dimention_cod_tv);//邀请码
         mMyinviteShareWechatBtnTv = inflate.findViewById(R.id.myinvite_share_wechat_btn_tv);//微信分享按钮
         mMyinviteCloneDissPopupIv = inflate.findViewById(R.id.myinvite_clone_diss_popup_iv);//关闭弹窗
+
         popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
         //手动设置 PopupWindow 响应返回键并关闭的问题
         popupWindow.setFocusable(true);
@@ -226,7 +228,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         mMyinviteShareWechatBtnTv.setOnClickListener(this);
         mMyinviteCloneDissPopupIv.setOnClickListener(this);
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -235,8 +236,10 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 break;
             case R.id.myinvite_share_wechat_btn_tv: //拉起微信去分享
                 //跳转微信
-                initShareIv();
-                popupWindow.dismiss();
+//                initShareIv();
+//                popupWindow.dismiss();
+                //修改了  将图片保存到本地
+                SaveBitmapToPhotoUtils.saveImageToGallery(this,mMyinviteTwoDimentionCodeIv,getString(R.string.app_name) + "" + System.currentTimeMillis()+".png");
                 break;
         }
     }
@@ -267,26 +270,20 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 //        req.scene = SendMessageToWX.Req.WXSceneSession;   //设置发送给朋友
 //        req.transaction = "设置一个tag";  //用于在回调中区分是哪个分享请求
 //        boolean successed = api.sendReq(req);   //如果调用成功微信,会返回true
-
-
         //方法二
-
     }
 
 //    private byte[] bmpToByteArray(Bitmap thumb, boolean b) {
 //        return new byte[0];
 //    }
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
         ToastUtil.showShort(e.getMessage());

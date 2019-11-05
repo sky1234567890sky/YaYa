@@ -10,11 +10,9 @@ public class TestToOrderStock {
      * code : 0
      * data : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":"191031185863021","params":{},"gaId":2,"payeeName":"钱浩1","bankCard":"6217000110016543210","bankName":"中国银行","bankStatus":1,"comMoney":12300}
      */
-
     private String msg;
     private int code;
     private DataBean data;
-
     public String getMsg() {
         return msg;
     }
@@ -34,7 +32,6 @@ public class TestToOrderStock {
     public DataBean getData() {
         return data;
     }
-
     public void setData(DataBean data) {
         this.data = data;
     }

@@ -1,5 +1,6 @@
 package com.administrator.yaya.fragment;
 
+import android.annotation.SuppressLint;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -14,8 +15,13 @@ import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.ToastUtil;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -39,15 +45,23 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     private ArrayList<Fragment> fragments;
     private AccountPaidFragment accountPaidFragment;
     private ObligationFragment obligationFragment;
-
+    private int mAmount;
+    private int mAccountAmount;
     @Override
     public boolean getUserVisibleHint() {
         return super.getUserVisibleHint();
     }
 
     @Override
-    protected void initView(View inflate) {
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()){
 
+        }
+    }
+
+    @Override
+    protected void initView(View inflate) {
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.blue));
         titles = new ArrayList<>();
         titles.add("待付款");
@@ -65,14 +79,41 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //        adapter.notifyDataSetChanged();
         mTab.setViewPager(vp);
         vp.setCurrentItem(0);
-        if (mTab.getTabCount() > 1) mTab.setCurrentTab(0);
+//        if (mTab.getTabCount() > 1) mTab.setCurrentTab(0);
         adapter.notifyDataSetChanged();
     }
 
+    //接收订阅的事件
+    @SuppressLint("SetTextI18n")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMsgEvent1(int amount){
+        mAmount = amount;
+//        inventoryMoney.setText("游戏币库存合计："+amount);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMsgEvent2(int accountAmount){
+        mAccountAmount = accountAmount;
+//        inventoryMoney.setText("游戏币库存合计："+accountAmount);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //注册
+        EventBus.getDefault().register(this);
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        //取消注册
+        EventBus.getDefault().unregister(this);
+    }
     @Override
     protected void initListener() {
         super.initListener();
         mTab.setOnTabSelectListener(new OnTabSelectListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTabSelect(int position) {
                 switch (position) {
@@ -80,13 +121,15 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //                        accountPaidFragment.setAccountpaidOnclikListener(new AccountPaidFragment.AccountpaidOnclikListener() {
 //                            @Override
 //                            public void setonclik(String amount) {
-                                inventoryMoney.setText("游戏币库存合计：");
+//                                inventoryMoney.setText("游戏币库存合计：");
 //                            }
 //                        });
-
+//                        ToastUtil.showShort(mAmount+"");
+                        inventoryMoney.setText("游戏币库存合计："+mAmount);
                         break;
                     case 1:
-                        inventoryMoney.setText("游戏币库存合计：");
+//                        ToastUtil.showShort(mAccountAmount+"");
+                        inventoryMoney.setText("游戏币库存合计："+mAccountAmount);
                         break;
                 }
             }
@@ -95,8 +138,8 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 
             }
         });
-    }
 
+    }
     //    }
 //    private void initlistener() {
 //        inventory_tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

@@ -35,7 +35,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     ImageView affirmMsgBackIv;
     @BindView(R.id.receiver_name)
     TextView receiverName;
-
     @BindView(R.id.receiver_copy)
     TextView receiverCopy;
     @BindView(R.id.bank_code_number)
@@ -58,7 +57,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     TextView bankMoney;
     @BindView(R.id.remark)
     TextView mRemark;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_affirm_message;
@@ -76,6 +74,7 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
             ToastUtil.showShort("网络请求有误");
         }
     }
+
     @Override
     protected void initData() {
         super.initData();
@@ -87,7 +86,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
             return;
         }
     }
-
     @OnClick({R.id.affirm_msg_back_iv, R.id.receiver_copy, R.id.bank_code_number_copy, R.id.bank_copy, R.id.bank_money, R.id.remark_btn_copy, R.id.affirm_msg_look_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -152,6 +150,7 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
         switch (whichApi) {
             case ApiConfig.TEXT_ORDER_STOCK:
                  TestToOrderStock testToOrderStock = (TestToOrderStock) t[0];
+
                 if (testToOrderStock.getCode()==0 && testToOrderStock.getData()!=null){
                     TestToOrderStock.DataBean data = testToOrderStock.getData();
                     String bankName = data.getBankName();
@@ -166,11 +165,11 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                     bankCodeNumber.setText(bankCard);
                     moneyTv.setText(comMoney+"");
                     mRemarkTv.setText(remark);
+
                 }else{
                     ToastUtil.showShort(testToOrderStock.getMsg());
                 }
                 break;
-
             case ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO://从库存付款信息跳到确认信息解析
 //                getTestPayToAffimInfo()
                 TestPayToAffirmInfo testPayToAffirmInfo = (TestPayToAffirmInfo) t[0];

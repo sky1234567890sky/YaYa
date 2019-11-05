@@ -1,127 +1,247 @@
 package com.administrator.yaya.bean.my;
+
+import java.util.List;
+
 //微信二维码
 public class TestWechatReceiverCode {
+
+
     /**
-     * timestamp : 2019-11-04 17:52:51
-     * status : 500
-     * error : Internal Server Error
-     * message : com.ruoyi.framework.shiro.session.OnlineSession cannot be cast to com.ruoyi.framework.shiro.session.OnlineSession
-     * trace : java.lang.ClassCastException: com.ruoyi.framework.shiro.session.OnlineSession cannot be cast to com.ruoyi.framework.shiro.session.OnlineSession
-     at com.ruoyi.framework.shiro.session.OnlineSessionDAO.doDelete(OnlineSessionDAO.java:109)
-     at org.apache.shiro.session.mgt.eis.CachingSessionDAO.delete(CachingSessionDAO.java:304)
-     at org.apache.shiro.session.mgt.DefaultSessionManager.delete(DefaultSessionManager.java:240)
-     at org.apache.shiro.session.mgt.DefaultSessionManager.afterExpired(DefaultSessionManager.java:207)
-     at org.apache.shiro.session.mgt.AbstractValidatingSessionManager.onExpiration(AbstractValidatingSessionManager.java:159)
-     at org.apache.shiro.web.session.mgt.DefaultWebSessionManager.onExpiration(DefaultWebSessionManager.java:284)
-     at org.apache.shiro.session.mgt.AbstractValidatingSessionManager.validate(AbstractValidatingSessionManager.java:145)
-     at org.apache.shiro.session.mgt.AbstractValidatingSessionManager.doGetSession(AbstractValidatingSessionManager.java:120)
-     at org.apache.shiro.session.mgt.AbstractNativeSessionManager.lookupSession(AbstractNativeSessionManager.java:148)
-     at org.apache.shiro.session.mgt.AbstractNativeSessionManager.getSession(AbstractNativeSessionManager.java:140)
-     at org.apache.shiro.mgt.SessionsSecurityManager.getSession(SessionsSecurityManager.java:156)
-     at org.apache.shiro.mgt.DefaultSecurityManager.resolveContextSession(DefaultSecurityManager.java:461)
-     at org.apache.shiro.mgt.DefaultSecurityManager.resolveSession(DefaultSecurityManager.java:447)
-     at org.apache.shiro.mgt.DefaultSecurityManager.createSubject(DefaultSecurityManager.java:343)
-     at org.apache.shiro.subject.Subject$Builder.buildSubject(Subject.java:845)
-     at org.apache.shiro.web.subject.WebSubject$Builder.buildWebSubject(WebSubject.java:148)
-     at org.apache.shiro.web.servlet.AbstractShiroFilter.createSubject(AbstractShiroFilter.java:292)
-     at org.apache.shiro.web.servlet.AbstractShiroFilter.doFilterInternal(AbstractShiroFilter.java:359)
-     at org.apache.shiro.web.servlet.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:125)
-     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-     at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:96)
-     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-     at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:124)
-     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-     at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
-     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-     at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92)
-     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-     at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
-     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-     at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
-     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-     at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199)
-     at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-     at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490)
-     at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
-     at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
-     at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-     at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
-     at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408)
-     at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-     at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:791)
-     at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1417)
-     at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-     at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-     at java.lang.Thread.run(Thread.java:748)
-
-     * path : /yayaApp/userCodeImg
+     * msg : 操作成功
+     * code : 0
+     * data : {"vxButtonStatus":2,"userCodeImgList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":3,"userId":1,"imgMoney":1000,"imgUrl":"http://localhost:8080/profile/upload/2019/11/05/14ccb618048e8c66c7ca3d817a5bfd45.jpg","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":2,"userId":1,"imgMoney":2000,"imgUrl":"http://localhost:8080/profile/upload/2019/11/05/59d439f34d89edcbcc4295053b6a3be1.png","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0}],"zfbButtonStatus":2}
      */
-    private String timestamp;
-    private int status;
-    private String error;
-    private String message;
-    private String trace;
-    private String path;
 
-    public String getTimestamp() {
-        return timestamp;
+    private String msg;
+    private int code;
+    private DataBean data;
+
+    public String getMsg() {
+        return msg;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public int getStatus() {
-        return status;
+    public int getCode() {
+        return code;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public String getError() {
-        return error;
+    public DataBean getData() {
+        return data;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setData(DataBean data) {
+        this.data = data;
     }
 
-    public String getMessage() {
-        return message;
-    }
+    public static class DataBean {
+        /**
+         * vxButtonStatus : 2
+         * userCodeImgList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":3,"userId":1,"imgMoney":1000,"imgUrl":"http://localhost:8080/profile/upload/2019/11/05/14ccb618048e8c66c7ca3d817a5bfd45.jpg","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":2,"userId":1,"imgMoney":2000,"imgUrl":"http://localhost:8080/profile/upload/2019/11/05/59d439f34d89edcbcc4295053b6a3be1.png","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0}]
+         * zfbButtonStatus : 2
+         */
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+        private int vxButtonStatus;
+        private int zfbButtonStatus;
+        private List<UserCodeImgListBean> userCodeImgList;
 
-    public String getTrace() {
-        return trace;
-    }
+        public int getVxButtonStatus() {
+            return vxButtonStatus;
+        }
 
-    public void setTrace(String trace) {
-        this.trace = trace;
-    }
+        public void setVxButtonStatus(int vxButtonStatus) {
+            this.vxButtonStatus = vxButtonStatus;
+        }
 
-    public String getPath() {
-        return path;
-    }
+        public int getZfbButtonStatus() {
+            return zfbButtonStatus;
+        }
 
-    public void setPath(String path) {
-        this.path = path;
+        public void setZfbButtonStatus(int zfbButtonStatus) {
+            this.zfbButtonStatus = zfbButtonStatus;
+        }
+
+        public List<UserCodeImgListBean> getUserCodeImgList() {
+            return userCodeImgList;
+        }
+
+        public void setUserCodeImgList(List<UserCodeImgListBean> userCodeImgList) {
+            this.userCodeImgList = userCodeImgList;
+        }
+
+        public static class UserCodeImgListBean {
+            /**
+             * searchValue : null
+             * createBy : null
+             * createTime : null
+             * updateBy : null
+             * updateTime : null
+             * remark : null
+             * params : {}
+             * imgId : 3
+             * userId : 1
+             * imgMoney : 1000
+             * imgUrl : http://localhost:8080/profile/upload/2019/11/05/14ccb618048e8c66c7ca3d817a5bfd45.jpg
+             * imgType : 1
+             * imgStatus : 2
+             * userName : 钱浩龙
+             * zfbEd : 0
+             * wxEd : 0
+             */
+
+            private Object searchValue;
+            private Object createBy;
+            private Object createTime;
+            private Object updateBy;
+            private Object updateTime;
+            private Object remark;
+            private ParamsBean params;
+            private int imgId;
+            private int userId;
+            private int imgMoney;
+            private String imgUrl;
+            private int imgType;
+            private int imgStatus;
+            private String userName;
+            private int zfbEd;
+            private int wxEd;
+
+            public Object getSearchValue() {
+                return searchValue;
+            }
+
+            public void setSearchValue(Object searchValue) {
+                this.searchValue = searchValue;
+            }
+
+            public Object getCreateBy() {
+                return createBy;
+            }
+
+            public void setCreateBy(Object createBy) {
+                this.createBy = createBy;
+            }
+
+            public Object getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(Object createTime) {
+                this.createTime = createTime;
+            }
+
+            public Object getUpdateBy() {
+                return updateBy;
+            }
+
+            public void setUpdateBy(Object updateBy) {
+                this.updateBy = updateBy;
+            }
+
+            public Object getUpdateTime() {
+                return updateTime;
+            }
+
+            public void setUpdateTime(Object updateTime) {
+                this.updateTime = updateTime;
+            }
+
+            public Object getRemark() {
+                return remark;
+            }
+
+            public void setRemark(Object remark) {
+                this.remark = remark;
+            }
+
+            public ParamsBean getParams() {
+                return params;
+            }
+
+            public void setParams(ParamsBean params) {
+                this.params = params;
+            }
+
+            public int getImgId() {
+                return imgId;
+            }
+
+            public void setImgId(int imgId) {
+                this.imgId = imgId;
+            }
+
+            public int getUserId() {
+                return userId;
+            }
+
+            public void setUserId(int userId) {
+                this.userId = userId;
+            }
+
+            public int getImgMoney() {
+                return imgMoney;
+            }
+
+            public void setImgMoney(int imgMoney) {
+                this.imgMoney = imgMoney;
+            }
+
+            public String getImgUrl() {
+                return imgUrl;
+            }
+
+            public void setImgUrl(String imgUrl) {
+                this.imgUrl = imgUrl;
+            }
+
+            public int getImgType() {
+                return imgType;
+            }
+
+            public void setImgType(int imgType) {
+                this.imgType = imgType;
+            }
+
+            public int getImgStatus() {
+                return imgStatus;
+            }
+
+            public void setImgStatus(int imgStatus) {
+                this.imgStatus = imgStatus;
+            }
+
+            public String getUserName() {
+                return userName;
+            }
+
+            public void setUserName(String userName) {
+                this.userName = userName;
+            }
+
+            public int getZfbEd() {
+                return zfbEd;
+            }
+
+            public void setZfbEd(int zfbEd) {
+                this.zfbEd = zfbEd;
+            }
+
+            public int getWxEd() {
+                return wxEd;
+            }
+
+            public void setWxEd(int wxEd) {
+                this.wxEd = wxEd;
+            }
+
+            public static class ParamsBean {
+            }
+        }
     }
 }

@@ -29,7 +29,10 @@ import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
+import com.administrator.yaya.utils.OkHttpUtils;
 import com.administrator.yaya.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +71,8 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
-        mList.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ArrayList<>();
+        mList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new FinishAdapter(list,getActivity());
         mList.setAdapter(adapter);
     }
@@ -77,12 +80,16 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     @Override
     protected void initData() {
         super.initData();
+
+
+
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
         if (userId != null) {
-            mPresenter.getData(ApiConfig.TEST_FINISH, Integer.parseInt(userId), 2);
+            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), 2);
         } else {
             ToastUtil.showShort(R.string.networkerr + "");
         }
+
 //    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        // Inflate the layout for this fragment
 //        View inflate = inflater.inflate(R.layout.fragment_finish, container, false);
@@ -126,19 +133,21 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     public void onError(int whichApi, Throwable e) {
 
     }
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
-            case ApiConfig.TEST_FINISH://已完成
-                TestFinish testFinish = (TestFinish) t[0];
+            case ApiConfig.TEST_ALL_ORDERSTOCK://已完成
+                TestAllOrderStock testFinish = (TestAllOrderStock) t[0];
                 Log.i("tag", "已完成: " + testFinish.toString());
                 if (testFinish.getCode() == 0 && testFinish.getData() != null && testFinish.getData().getOrderStockList() != null) {
-                    TestFinish.DataBean data = testFinish.getData();
+                    TestAllOrderStock.DataBean data = testFinish.getData();
 //                    进货订单集合	orderSalesList
-                    List<?> orderStockList = data.getOrderStockList();
-//                    list.addAll(orderStockList);
+                    String amount = data.getAmount();
+                    List<TestAllOrderStock.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
+                    list.addAll(orderStockList);
                     adapter.notifyDataSetChanged();
+
+                    EventBus.getDefault().postSticky(amount);
 //                    订单id		salesId
 //                    订单编号	orderNumber
 //                    下单时间	salesBuildTime

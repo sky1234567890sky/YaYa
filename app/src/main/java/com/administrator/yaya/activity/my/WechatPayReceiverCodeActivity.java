@@ -1,6 +1,7 @@
 package com.administrator.yaya.activity.my;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -19,6 +20,8 @@ import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,19 +65,17 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 //                SPUtils.getInstance().put(Constants.AUTO_PALY_IN_WIFI, isChecked);
                 if (isChecked) {
                     ToastUtil.showShort("onCheckedChanged: 开启" + isChecked);
+
                 } else {
                     ToastUtil.showShort( "onCheckedChanged: 关闭" + isChecked);
                 }
             }
         });
     }
-
     @Override
     protected void initView() {
 
-
     }
-
     @Override
     protected void initData() {
 //        参数:
@@ -82,23 +83,28 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 //        类型		type	1、微信 2、支付宝
         String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         if (userId!=null) {
-//            mPresenter.getData(ApiConfig.ALIPAY_RECEIVER_CODE, Integer.parseInt(userId), 1);
+            mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, Integer.parseInt(userId), 2);
+        }else{
+            ToastUtil.showShort(R.string.networkerr+"");
         }
     }
+
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEST_WECHAT_RECEIVER_CODE:
                 TestWechatReceiverCode testWechatReceiverCode = (TestWechatReceiverCode) t[0];
-                if (testWechatReceiverCode.getStatus()==500){
+                if (testWechatReceiverCode.getCode()==0 && testWechatReceiverCode.getData()!=null){
+                    Log.i("tag", "微信: "+testWechatReceiverCode.toString());
+                    TestWechatReceiverCode.DataBean data = testWechatReceiverCode.getData();
+                    List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList = data.getUserCodeImgList();
 
                 }else{
-                    ToastUtil.showShort(testWechatReceiverCode.getError());
+                    ToastUtil.showShort(testWechatReceiverCode.getMsg());
                 }
                 break;
         }
     }
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
@@ -121,6 +127,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                 WechatPayReceiverCodeActivity.this.finish();
                 break;
             case R.id.wechatpay_two_switch:
+
                 break;
         }
     }

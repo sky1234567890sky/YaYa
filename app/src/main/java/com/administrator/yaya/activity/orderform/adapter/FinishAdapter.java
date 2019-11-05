@@ -46,7 +46,7 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
         String orderNumber = orderStockListBean.getOrderNumber();
 //        下单时间	salesBuildTime
 //        数量		salesAmount
-        int commodityAmount = orderStockListBean.getCommodityAmount();
+//        Object commodityAmount = orderStockListBean.getCommodityAmount();
 //        应付金额	salesAmountMoney
 //        收款方式	orderPayTpe		0无  1微信  2支付宝
 //        状态		salesStatus		1售卖中 2 已完成 3已取消
@@ -61,7 +61,6 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 //                最大购买数量comPurchaseNumMax
 //        今日收款数		amount
 //        vh.mFinishCommodityPrice.setText();
-
         vh.mFinishOrderNumber.setText("订单编号："+orderNumber);
         vh.mFinishOrderBuildTime.setText("收货时间："+orderBuildTime);
     }

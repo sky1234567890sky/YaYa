@@ -37,7 +37,6 @@ public class SellAdapter extends RecyclerView.Adapter<SellAdapter.Vh>{
         View inflate = LayoutInflater.from(context).inflate(R.layout.sell_item, null);
         return new Vh(inflate);
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, @SuppressLint("RecyclerView") final int i) {
@@ -85,7 +84,6 @@ public class SellAdapter extends RecyclerView.Adapter<SellAdapter.Vh>{
     public int getItemCount() {
         return list != null ? list.size() : 0;
     }
-
     public class Vh extends RecyclerView.ViewHolder {
         @BindView(R.id.sell_orderNumber)
         TextView mSellOrderNumber;

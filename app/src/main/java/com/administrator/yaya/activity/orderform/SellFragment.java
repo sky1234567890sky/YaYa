@@ -25,6 +25,8 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +41,8 @@ public class SellFragment  extends BaseMvpFragment<LoginModel> implements ICommo
 
     @BindView(R.id.sell_lv)
     RecyclerView mList;
-
-    private List<TestAllOrderStock.DataBean.OrderStockListBean> list ;
+    private List<TestAllOrderStock.DataBean.OrderStockListBean> list=new ArrayList<>() ;
     private SellAdapter adapter;
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
@@ -65,13 +65,16 @@ public class SellFragment  extends BaseMvpFragment<LoginModel> implements ICommo
         switch (whichApi) {
             case ApiConfig.TEST_ALL_ORDERSTOCK:// //所有售卖订单
                 TestAllOrderStock testAllOrderStock = (TestAllOrderStock) t[0];
-                Log.i("tag", "售賣中: "+testAllOrderStock.toString());
+                Log.i("tag", "售卖中: "+testAllOrderStock.toString());
                 if (testAllOrderStock.getCode()==0 && testAllOrderStock.getData()!=null && testAllOrderStock.getData().getOrderStockList()!=null){
                     TestAllOrderStock.DataBean data = testAllOrderStock.getData();
+                    String amount1 = data.getAmount();
 //                    进货订单集合	orderSalesList
                     List<TestAllOrderStock.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
                     list.addAll(orderStockList);
                     adapter.notifyDataSetChanged();
+
+                    EventBus.getDefault().postSticky(amount1);
 //                    订单id		salesId
 //                    订单编号	orderNumber
 //                    下单时间	salesBuildTime
@@ -96,12 +99,10 @@ public class SellFragment  extends BaseMvpFragment<LoginModel> implements ICommo
                 break;
         }
     }
-
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
-        list = new ArrayList<>();
         adapter = new SellAdapter(list,getActivity());
         mList.setAdapter(adapter);
     }

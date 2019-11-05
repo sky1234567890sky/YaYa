@@ -47,6 +47,7 @@ import razerdp.design.SlideFromBottomPopup;
  * sky
  */
 public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick {
+
     @BindView(R.id.login_headler_iv)
     RoundedImageView loginHeadlerIv;
     @BindView(R.id.login_name_et)
@@ -102,6 +103,11 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //                return;
 //            }
 //        }
+
+        //从修改密码页面回来时传的值
+        String phone = getIntent().getStringExtra("phone");
+        if (phone!=null)mName.setText(phone);
+
     }
 
     @SuppressLint("ApplySharedPref")

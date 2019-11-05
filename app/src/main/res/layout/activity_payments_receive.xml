@@ -127,13 +127,14 @@
             />
 
         <TextView
+            android:id="@+id/receivable_tv2"
             android:layout_width="@dimen/dp_150"
             android:layout_height="wrap_content"
             android:layout_below="@id/two_ll"
             android:layout_marginTop="@dimen/dp_14"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_24"
-            android:text="1000元"
+            android:text="xxx元"
             android:textColor="@color/c_101010"
             android:textSize="@dimen/sp_15"
             tools:ignore="HardcodedText"
@@ -184,18 +185,20 @@
         android:layout_marginTop="@dimen/dp_14"
         >
     <TextView
+        android:id="@+id/receivable_tv3"
         android:layout_width="@dimen/dp_150"
         android:layout_height="wrap_content"
-        android:text="2000元"
+        android:text="xxx元"
         android:textColor="@color/c_101010"
         android:textSize="@dimen/sp_14"
         android:gravity="center"
         tools:ignore="HardcodedText,RtlHardcoded"
         />
         <TextView
+            android:id="@+id/receivable_tv4"
             android:layout_width="@dimen/dp_150"
             android:layout_height="wrap_content"
-            android:text="5000元"
+            android:text="xxx元"
             android:textColor="@color/c_101010"
             android:textSize="@dimen/sp_15"
             android:gravity="center"

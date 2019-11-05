@@ -24,6 +24,11 @@ import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.model.LoginModel;
 import com.flyco.tablayout.SlidingTabLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -34,25 +39,23 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  */
 public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
-
     @BindView(R.id.inventory_money)
     TextView mInventoryMoney;
     @BindView(R.id.tab_layout)
     SlidingTabLayout tabLayout;
     @BindView(R.id.orderform_vp)
     ViewPager vp;
-    Unbinder unbinder;
     private FragmentManager manager;
     private SellFragment sellFragment;
     private FinishFragment finishFragment;
     private CancelFragment cancelFragment;
     private ArrayList<Fragment> fragments;
     private ArrayList<String> titles;
+    private String mAmount;
 
     public OrderFormkFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
 
@@ -61,7 +64,6 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
     protected int getLayoutId() {
         return R.layout.fragment_order_formk;
     }
-
     @Override
     protected void initView(View view) {
         super.initView(view);
@@ -76,26 +78,18 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
         fragments.add(sellFragment);
         fragments.add(finishFragment);
         fragments.add(cancelFragment);
-
         titles.add("售卖中");
         titles.add("已完成");
         titles.add("已取消");
-
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("selly",1);
-        sellFragment.setArguments(bundle);
-
-        Bundle bundle1 = new Bundle();
-        bundle1.putInt("finish",2);
-        finishFragment.setArguments(bundle1);
-
-
-        Bundle bundle2 = new Bundle();
-        bundle2.putInt("cancel",3);
-        cancelFragment.setArguments(bundle2);
-
-
+//        Bundle bundle = new Bundle();
+//        bundle.putInt("selly",1);
+//        sellFragment.setArguments(bundle);/
+//        Bundle bundle1 = new Bundle();
+//        bundle1.putInt("finish",2);
+//        finishFragment.setArguments(bundle1);
+//        Bundle bundle2 = new Bundle();
+//        bundle2.putInt("cancel",3);
+//        cancelFragment.setArguments(bundle2);
         OrderFormAdapter orderFormAdapter = new OrderFormAdapter(getChildFragmentManager(),fragments,titles);
         vp.setAdapter(orderFormAdapter);
         tabLayout.setViewPager(vp);
@@ -120,5 +114,25 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
 
     }
 
+    //接收订阅的事件
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMsgEvent(String amount){
+        mAmount = amount;
+//        tv.setText(comInventory);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //注册
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //取消注册
+        EventBus.getDefault().unregister(this);
+    }
 
 }

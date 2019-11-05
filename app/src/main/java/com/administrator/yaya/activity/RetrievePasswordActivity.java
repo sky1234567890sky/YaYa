@@ -74,6 +74,7 @@ public class RetrievePasswordActivity extends BaseMvpActivity<LoginModel> implem
             case R.id.forget_getcode_btn://获取验证码
                 downTimerUtils.start();
                 ToastUtil.showLong("验证码已发送请注意验收");
+
                 break;
             case R.id.forget_ok_btn:
 

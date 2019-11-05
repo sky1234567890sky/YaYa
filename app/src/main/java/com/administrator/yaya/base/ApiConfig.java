@@ -18,8 +18,8 @@ public class ApiConfig {
     public static final int TEXT_BUY_COM = 9;//立即购买
     public static final int TEXT_ORDER_STOCK = 10;//提交订单
     public static final int TEXT_AllORDER_STOCK = 11;//查看进货状态 所有进货订单
-    public static final int TEXT_GATHERING = 12;//付款信息 已付款
-    public static final int TEXT_GATHERING2 = 13;//待付款
+    public static final int TEXT_GATHERING2 = 12;//付款信息 已付款
+    public static final int TEXT_GATHERING = 13;//待付款
     public static final int TEXT_PAYINFO_TO_AFFIRMINFO = 14;//从付款信息跳到确认信息
     public static final int TEST_CANCEL_ORDER_STOCK = 15;//取消进货订单
 
@@ -50,4 +50,8 @@ public class ApiConfig {
     public static final int TEST_INCOME = 27;//收入
 
 
+    public static final int TEST_UPDATEPASSWORD = 32;//修改密码
+    public static final int TEST_CHANGE_HEADLER = 33;//更换头像
+    //修改密码
+    public static final int TEST_VERIFICATIONCODE = 34;//获取验证码
 }

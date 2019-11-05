@@ -1,15 +1,11 @@
 package com.administrator.yaya.activity.my.fragment;
 
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.my.adapter.IncomeAdapter;
 import com.administrator.yaya.base.ApiConfig;
@@ -23,7 +19,6 @@ import com.administrator.yaya.model.LoginModel;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-
 /**
  * A simple {@link Fragment} subclass.
  * 收入记录
@@ -32,8 +27,7 @@ public class IncomeFragment extends BaseMvpFragment<LoginModel> implements IComm
     @BindView(R.id.income_lv)
     RecyclerView mList;
     private IncomeAdapter adapter;
-    private ArrayList<?> list;
-
+    private ArrayList<Object> list;
     public IncomeFragment() {
         // Required empty public constructor
     }
@@ -70,6 +64,7 @@ public class IncomeFragment extends BaseMvpFragment<LoginModel> implements IComm
                 TestIncome testIncome = (TestIncome) t[0];
                 if (testIncome.getCode()==0 && testIncome.getData()!=null) {
                     Log.i("tag", "收入: " + testIncome.toString());
+
                 }
           }
     }

@@ -20,7 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
         android:background="@drawable/title_bg_blue2">
-
         <TextView
             android:id="@+id/inventory_allgamemoneys"
             android:layout_width="wrap_content"
