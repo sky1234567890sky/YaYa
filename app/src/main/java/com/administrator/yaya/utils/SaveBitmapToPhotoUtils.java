@@ -23,7 +23,7 @@ public class SaveBitmapToPhotoUtils {
      * @param fileName 自定义图片名称  getString(R.string.app_name) + "" + System.currentTimeMillis()+".png"
      * @return true 成功 false失败
      */
-    public static boolean saveImageToGallery(Context context, ImageView bitmap, String fileName) {
+    public static boolean saveImageToGallery(Context context, Bitmap bitmap, String fileName) {
         // 保存图片至指定路径
         String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "qrcode";
         File appDir = new File(storePath);

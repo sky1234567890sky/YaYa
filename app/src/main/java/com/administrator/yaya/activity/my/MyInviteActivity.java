@@ -239,7 +239,8 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 //                initShareIv();
 //                popupWindow.dismiss();
                 //修改了  将图片保存到本地
-                SaveBitmapToPhotoUtils.saveImageToGallery(this,mMyinviteTwoDimentionCodeIv,getString(R.string.app_name) + "" + System.currentTimeMillis()+".png");
+                Bitmap headlerIvbitmap = ((BitmapDrawable) mMyinviteTwoDimentionCodeIv.getDrawable()).getBitmap();
+                SaveBitmapToPhotoUtils.saveImageToGallery(this,headlerIvbitmap,getString(R.string.app_name) + "" + System.currentTimeMillis()+".png");
                 break;
         }
     }
