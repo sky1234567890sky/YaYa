@@ -39,6 +39,12 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  * 已付款
@@ -91,6 +97,7 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
 ////        accountpaidItem.mYifuGamemoney.setText("");
 //            mYifuOrderNumber.setText("订单编号：" + orderStockList.getOrderNumber());
 //        }
+
 //        Log.i("tag", "已售卖=====>: "+list.toString());
 //        if (list.size()>0) {
 //            TestObligation.DataBean.OrderStockListBean orderStockListBean = list.get(1);

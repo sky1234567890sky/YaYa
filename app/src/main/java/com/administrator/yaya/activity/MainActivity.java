@@ -138,7 +138,6 @@ public class MainActivity extends BaseActivity {
             mOrderformBtn.setChecked(true);
         }
     }
-
     private void initFragment() {
         homePageFragment = new HomePageFragment();
         inventoryFragment = new InventoryFragment();

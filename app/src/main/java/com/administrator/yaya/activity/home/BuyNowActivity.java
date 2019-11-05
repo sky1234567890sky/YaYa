@@ -1,5 +1,4 @@
 package com.administrator.yaya.activity.home;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
@@ -11,8 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.administrator.yaya.BR;
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
@@ -28,6 +25,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import org.raphets.roundimageview.RoundImageView;
 import butterknife.BindView;
 import butterknife.OnClick;
 /***
@@ -35,8 +33,10 @@ import butterknife.OnClick;
  * sky
  */
 public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements ICommonView, View.OnClickListener {
+
     @BindView(R.id.now_buy_iv)
     ImageView nowBuyIv;
+
     @BindView(R.id.buy_comName)
     TextView mComName;
     @BindView(R.id.buy_comPrice)
@@ -67,10 +67,8 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
     @BindView(R.id.nowbuy_commit_btn)
     TextView nowbuyCommitBtn;
-
     @BindView(R.id.bank_name)
     EditText bankName;
-
     private int comPurchaseNumMax;
     private int comPurchaseNumMin;
     private int comPrice;
@@ -79,7 +77,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     protected void initView() {
         super.initView();
     }
-
     @Override
     protected void initData() {
         super.initData();
@@ -89,7 +86,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     @Override
     public void onError(int whichApi, Throwable e) {
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -133,7 +129,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 break;
         }
     }
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_buy_now;
