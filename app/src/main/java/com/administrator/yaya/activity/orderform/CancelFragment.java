@@ -3,6 +3,7 @@ package com.administrator.yaya.activity.orderform;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +39,7 @@ public class CancelFragment  extends BaseMvpFragment<LoginModel> implements ICom
     @BindView(R.id.cancel_lv)
     RecyclerView mList;
 
-    private List<TestCancel.DataBean.OrderStockListBean> list;
+    private List<TestCancel.DataBean.OrderSalesListBean> list;
     private CanaelAdapter adapter;
 
     public CancelFragment() {
@@ -58,11 +59,12 @@ public void onResponse(int whichApi, Object[] t) {
         case ApiConfig.TEST_CANCEL://已取消
             TestCancel testCancel = (TestCancel) t[0];
             Log.i("tag", "已取消: "+testCancel.toString());
-            if (testCancel.getCode()==0 && testCancel.getData()!=null && testCancel.getData().getOrderStockList()!=null){
+            if (testCancel.getCode()==0 && testCancel.getData()!=null && testCancel.getData().getOrderSalesList()!=null){
                 TestCancel.DataBean data = testCancel.getData();
 //                    进货订单集合	orderSalesList
-                List<TestCancel.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
+                List<TestCancel.DataBean.OrderSalesListBean> orderStockList = data.getOrderSalesList();
                 list.addAll(orderStockList);
+                adapter.setData(testCancel.getData());
                 adapter.notifyDataSetChanged();
 //                    订单id		salesId
 //                    订单编号	orderNumber
@@ -91,8 +93,7 @@ public void onResponse(int whichApi, Object[] t) {
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
-
-        list = new ArrayList<>();
+        mList.setLayoutManager(new LinearLayoutManager(getActivity()));
         list = new ArrayList<>();
         adapter = new CanaelAdapter(list,getActivity());
         mList.setAdapter(adapter);

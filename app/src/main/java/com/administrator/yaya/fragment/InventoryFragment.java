@@ -11,10 +11,14 @@ import com.administrator.yaya.R;
 import com.administrator.yaya.activity.inventory.adapter.InventoryAdapter;
 import com.administrator.yaya.activity.inventory.fragment.AccountPaidFragment;
 import com.administrator.yaya.activity.inventory.fragment.ObligationFragment;
+import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.invite.TestObligation;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -51,7 +55,6 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     public boolean getUserVisibleHint() {
         return super.getUserVisibleHint();
     }
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -61,12 +64,17 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     }
 
     @Override
+    protected void initData() {
+        super.initData();
+        String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
+        if (userId != null) mPresenter.getData(ApiConfig.TEXT_GATHERING, Integer.parseInt(userId), 1);//已付款
+    }
+    @Override
     protected void initView(View inflate) {
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.blue));
         titles = new ArrayList<>();
         titles.add("待付款");
         titles.add("已付款");
-
         fragments = new ArrayList<>();
         accountPaidFragment = new AccountPaidFragment();
         obligationFragment = new ObligationFragment();
@@ -82,21 +90,11 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //        if (mTab.getTabCount() > 1) mTab.setCurrentTab(0);
         adapter.notifyDataSetChanged();
     }
-
     //接收订阅的事件
     @SuppressLint("SetTextI18n")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMsgEvent1(int amount){
-        mAmount = amount;
-//        inventoryMoney.setText("游戏币库存合计："+amount);
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMsgEvent2(int accountAmount){
-        mAccountAmount = accountAmount;
-//        inventoryMoney.setText("游戏币库存合计："+accountAmount);
-    }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -125,11 +123,11 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //                            }
 //                        });
 //                        ToastUtil.showShort(mAmount+"");
-                        inventoryMoney.setText("游戏币库存合计："+mAmount);
+//                        inventoryMoney.setText("游戏币库存合计："+mAmount);
                         break;
                     case 1:
 //                        ToastUtil.showShort(mAccountAmount+"");
-                        inventoryMoney.setText("游戏币库存合计："+mAccountAmount);
+//                        inventoryMoney.setText("游戏币库存合计："+mAccountAmount);
                         break;
                 }
             }
@@ -190,14 +188,21 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
 
     }
-
+    @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
-        
+        switch (whichApi) {
+            case ApiConfig.TEXT_GATHERING:
+                TestObligation testObligation = (TestObligation) t[0];
+                if (testObligation.getCode() == 0 && testObligation.getData() != null) {
+                    String amount = testObligation.getData().getAmount();
+                    inventoryMoney.setText("游戏币库存合计："+amount);
+                }
+                break;
+                }
     }
 }

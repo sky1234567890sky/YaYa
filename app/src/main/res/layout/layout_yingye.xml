@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_140"
-            android:text="xxx"
+            android:text="---"
             android:textColor="#ffffffff"
             android:textSize="45sp" />
         <RelativeLayout

@@ -1,15 +1,13 @@
 package com.administrator.yaya.activity.my;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.administrator.yaya.BR;
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.activity.my.adapter.MyInviteFragmentAdapter;
@@ -30,12 +27,11 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
-import com.administrator.yaya.bean.my.TestMyEarnings;
+import com.administrator.yaya.bean.my.TestExpend;
 import com.administrator.yaya.bean.my.TestPutawayAllOrderStock;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ChangTvSizeUtils;
-import com.administrator.yaya.utils.FragmentUtils;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 
@@ -43,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 /**
  * TODO:我的收益（累计收益）界面
@@ -76,6 +71,9 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
     private ExpendFragment expendFragment;
     private RebateFragment rebateFragment;
 
+    private int userEarningsNow;
+    private int userContributeTotal;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_income;
@@ -83,11 +81,10 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
 
     @Override
     protected void initView() {
-        SpannableString getInventory = ChangTvSizeUtils.changTVsize("--");
-        SpannableString getInventory2 = ChangTvSizeUtils.changTVsize("--");
+        SpannableString getInventory = ChangTvSizeUtils.changTVsize("");
+        SpannableString getInventory2 = ChangTvSizeUtils.changTVsize("");
 
-        getGamemonyTv.setText(getInventory);
-        allGamemoneyTopTv.setText(getInventory2);
+
 //        tabLayout.addNewTab("收入记录");
 //        tabLayout.addNewTab("支出记录");
 //        tabLayout.addNewTab("返利记录");
@@ -119,9 +116,10 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
     @Override
     protected void initData() {
         super.initData();
+
         String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         if (userId!=null) {
-            mPresenter.getData(ApiConfig.TEST_MY_EARNINGS, Integer.parseInt(userId), 1);
+            mPresenter.getData(ApiConfig.TEST_EXPEND, Integer.parseInt(userId), 2);
         }else{
             ToastUtil.showShort(R.string.networkerr+"");
         }
@@ -177,7 +175,6 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
 //        });
 ////        vp.addOnPageChangeListener(new SlidingTabLayout(tabLayout));
     }
-
     @OnClick({R.id.myincome_back_iv, R.id.go_up,R.id.myincome_game_money_plain_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -201,7 +198,7 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
         TextView mPopupTvCancel = inflate.findViewById(R.id.popup_tv_cancel);
         TextView mPopupTvOk = inflate.findViewById(R.id.popup_tv_ok);
 
-        mPopupTvNumber.setText("");
+        mPopupTvNumber.setText(""+userEarningsNow);
 
         popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
         //手动设置 PopupWindow 响应返回键并关闭的问题
@@ -253,7 +250,6 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
                 }else{
                     ToastUtil.showShort(R.string.networkerr+"");
                 }
-
                 MainActivity mainActivity = new MainActivity();
                 Intent intent = new Intent(MyIncomeActivity.this, MainActivity.class);
                 intent.putExtra("upaway",3);
@@ -268,25 +264,44 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
 
     }
+    @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             //我的收益  收入
-            case ApiConfig.TEST_MY_EARNINGS:
-                TestMyEarnings testMyEarnings = (TestMyEarnings) t[0];
+            case ApiConfig.TEST_EXPEND:
+                TestExpend testMyEarnings = (TestExpend) t[0];
                 if (testMyEarnings.getData()!=null &&testMyEarnings.getCode()==0){
-                    TestMyEarnings.DataBean data = testMyEarnings.getData();
-                    Log.i("tag", "我的收益: "+data.toString());
+                    TestExpend.DataBean data = testMyEarnings.getData();
+//                    Log.i("tag", "我的收益: "+data.toString());
+                    List<?> userEarningsList = data.getUserEarningsList();
+                    TestExpend.DataBean.UserInfoBean userInfo = data.getUserInfo();
+//                    userName 用户姓名
+//                    userNickName 昵称
+//                    userEarningsTotal 总收益
+                    userContributeTotal = userInfo.getUserEarningsTotal();
+//                    zfbEd 支付宝已使用额度
+//                    wxEd 微信已使用额度
+//                    userEarningsNow	当前可用收益
+                    userEarningsNow = userInfo.getUserEarningsNow();
+                    //游戏币名字
+                    String commodityName = data.getCommodityName();
+
+                    getGamemoneyDownTv.setText("当前可用"+commodityName);
+
+                    allGamemoneyDownTv.setText("总收益"+commodityName);
+
+                    getGamemonyTv.setText(userEarningsNow+"");
+                    allGamemoneyTopTv.setText(userContributeTotal +"");
+//                    Log.i("tag", "我的收益: "+testMyEarnings.toString());
                 }else{
                     ToastUtil.showShort(testMyEarnings.getMsg());
                 }

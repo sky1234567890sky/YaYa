@@ -22,13 +22,21 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseActivity;
+import com.administrator.yaya.base.BaseMvpActivity;
+import com.administrator.yaya.base.CommonPresenter;
+import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.invite.TestObligation;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
 import com.administrator.yaya.fragment.HomePageFragment;
 import com.administrator.yaya.fragment.InventoryFragment;
 import com.administrator.yaya.fragment.MyFragment;
 import com.administrator.yaya.fragment.OrderFormkFragment;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
+import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.FragmentUtils;
+import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -37,7 +45,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
     //@BindView(R.id.title_tb)
 //    TextView mTitle;
 //    @BindView(R.id.toolbar)
@@ -70,15 +78,19 @@ public class MainActivity extends BaseActivity {
     private PopupWindow popupWindow;
     private TestLogin loginData;
     private Bundle bundle;
+    private TextView mPopupTvNumber;
+
     @Override
     protected int getLayoutId() {
 //        Utils.setStatusBar(this, false, false);
         return R.layout.activity_main;
     }
+
     @Override
     protected void initExit() {
         super.initExit();
     }
+
     @Override
     protected void initView() {
         super.initView();
@@ -138,6 +150,7 @@ public class MainActivity extends BaseActivity {
             mOrderformBtn.setChecked(true);
         }
     }
+
     private void initFragment() {
         homePageFragment = new HomePageFragment();
         inventoryFragment = new InventoryFragment();
@@ -154,35 +167,37 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
         super.initData();
+//        String userId = SharedPrefrenceUtils.getString(MainActivity.this, NormalConfig.USER_ID);
+//        if (userId != null) mPresenter.getData(ApiConfig.TEXT_GATHERING, Integer.parseInt(userId), 1);//已付款
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 //        registerNetWorkStatus();//监听网络状态
-        MonitorNetWorkChange();
+//        MonitorNetWorkChange();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
     }
+
     @OnClick({R.id.homepage, R.id.inventory_btn, R.id.dobusiness_btn, R.id.orderform_btn, R.id.mine_btn, R.id.dobusiness_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.homepage://首页
                 mHomepage.setChecked(true);
-                FragmentUtils.addFragment(manager, homePageFragment.getClass(), R.id.home_fragment,bundle);
-               //设置状态栏为白色
+                FragmentUtils.addFragment(manager, homePageFragment.getClass(), R.id.home_fragment, bundle);
+                //设置状态栏为白色
 //                YCAppBar.setStatusBarColor(this,
 //                        ContextCompat.getColor(this,
 //                                R.color.c_cccccc));
 //                switchFragment(AppConstants.TYPE_HOMEPAGER);
                 break;
-
             case R.id.inventory_btn://库存
                 FragmentUtils.addFragment(manager, inventoryFragment.getClass(), R.id.home_fragment, bundle);
-               //设置状态栏为浅蓝
+                //设置状态栏为浅蓝
 //                YCAppBar.setStatusBarColor(this,
 //                        ContextCompat.getColor(this,
 //                                R.color.light_blue));
@@ -196,11 +211,13 @@ public class MainActivity extends BaseActivity {
 
             case R.id.orderform_btn://订单
                 FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, bundle);
+
                 //设置状态栏为浅蓝
 //                YCAppBar.setStatusBarColor(this,
 //                        ContextCompat.getColor(this,
 //                                R.color.light_blue));
 //                switchFragment(AppConstants.TYPE_ORDERFORM);
+
                 break;
             case R.id.mine_btn://我的
                 FragmentUtils.addFragment(manager, myFragment.getClass(), R.id.home_fragment, bundle);
@@ -212,7 +229,9 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
+
     private int mLastType = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
@@ -233,11 +252,13 @@ public class MainActivity extends BaseActivity {
         }
         return false;
     }
+
     private void popupSelector() {
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_yingye, null);
         //显示营业游戏币数量
         ImageView cancel_iv = inflate.findViewById(R.id.cancel_pop_close_iv);
-        TextView mPopupTvNumber = inflate.findViewById(R.id.popup_tv_number);//上架数量
+        //上架数量
+        mPopupTvNumber = inflate.findViewById(R.id.popup_tv_number);
         TextView mPopupTvCancel = inflate.findViewById(R.id.popup_tv_cancel);
         TextView mPopupTvOk = inflate.findViewById(R.id.popup_tv_ok);
 
@@ -249,7 +270,7 @@ public class MainActivity extends BaseActivity {
         popupWindow.setBackgroundDrawable(new ColorDrawable());
 
         popupWindow.setAnimationStyle(R.style.PopupAnimation);
-        popupWindow.showAtLocation(inflate, Gravity.CENTER , 0, 0);
+        popupWindow.showAtLocation(inflate, Gravity.CENTER, 0, 0);
         // 设置背景颜色变暗
         WindowManager.LayoutParams lp = this.getWindow().getAttributes();
         lp.alpha = 0.5f;
@@ -273,7 +294,6 @@ public class MainActivity extends BaseActivity {
                 popupWindow.dismiss();
             }
         });
-
         mPopupTvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -302,7 +322,7 @@ public class MainActivity extends BaseActivity {
 //        });
     }
 
-//    @Override
+    //    @Override
 //    protected void setStatusBar() {
 //        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this,null);
 //    }
@@ -314,5 +334,33 @@ public class MainActivity extends BaseActivity {
 //        if (!= null) {
 //            outState.putInt(Utils.HOME_CURRENT_TAB_POSITION, bindingView.tabLayout.getCurrentTab());
 //        }
+    }
+
+    @Override
+    protected LoginModel getModel() {
+        return null;
+    }
+
+    @Override
+    protected CommonPresenter getPresenter() {
+        return null;
+    }
+
+    @Override
+    public void onError(int whichApi, Throwable e) {
+
+    }
+
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
+        switch (whichApi) {
+            case ApiConfig.TEXT_GATHERING:
+                TestObligation testObligation = (TestObligation) t[0];
+                if (testObligation.getCode() == 0 && testObligation.getData() != null) {
+                    String amount = testObligation.getData().getAmount();
+//                    mPopupTvNumber.setText(amount);
+                }
+                break;
+        }
     }
 }

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.my.UpdataPasswordActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.base.BaseMvpActivity;
@@ -166,7 +167,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 break;
 
             case R.id.tv_forgetPassword://忘记密码
-                startActivity(new Intent(this, RetrievePasswordActivity.class));
+                startActivity(new Intent(this, UpdataPasswordActivity.class));
                 break;
         }
     }

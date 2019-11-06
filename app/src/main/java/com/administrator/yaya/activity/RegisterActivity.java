@@ -283,7 +283,6 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
         if (!TextUtils.isEmpty(path)) {
             //记住头像
             SharedPrefrenceUtils.saveString(this,NormalConfig.HEADLER_IMAGEVIEW,path);
-
             ToastUtil.showShort("上传成功");
 //            showLoadingDialog();
 //            mPresenter.getData(ApiConfig.UPLOAD_IMAGE, path);
@@ -306,7 +305,6 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     public void takeCancel() {
 //        ToastUtil.showShort("cancel_get_image");
     }
-
     @Override
     public void smsCodeSend() {
 
@@ -316,7 +314,6 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     public void countryCodeOpen() {
 
     }
-
     /**
      * 获取短信验证
      */

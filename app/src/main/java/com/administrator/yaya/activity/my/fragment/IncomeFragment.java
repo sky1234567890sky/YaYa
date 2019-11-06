@@ -13,10 +13,14 @@ import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.my.TestIncome;
+import com.administrator.yaya.bean.my.TestMyEarnings;
 import com.administrator.yaya.bean.my.TestRebate;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.NormalConfig;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 /**
@@ -27,23 +31,29 @@ public class IncomeFragment extends BaseMvpFragment<LoginModel> implements IComm
     @BindView(R.id.income_lv)
     RecyclerView mList;
     private IncomeAdapter adapter;
-    private ArrayList<Object> list;
+    private ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list;
     public IncomeFragment() {
         // Required empty public constructor
     }
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
-        mList.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ArrayList<>();
+        mList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new IncomeAdapter(list);
         mList.setAdapter(adapter);
+
     }
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_income;
     }
-
+    @Override
+    protected void initData() {
+        super.initData();
+        String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
+        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),1);//收益类型--1收入-2支出-3返利
+    }
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
@@ -60,11 +70,14 @@ public class IncomeFragment extends BaseMvpFragment<LoginModel> implements IComm
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
-            case ApiConfig.TEST_REBATE://收入
-                TestIncome testIncome = (TestIncome) t[0];
-                if (testIncome.getCode()==0 && testIncome.getData()!=null) {
-                    Log.i("tag", "收入: " + testIncome.toString());
-
+            case ApiConfig.TEST_MY_EARNINGS://收入
+                TestMyEarnings testMyEarnings = (TestMyEarnings) t[0];
+                if (testMyEarnings.getCode()==0 && testMyEarnings.getData()!=null)  {
+//                    Log.i("tag", "收入: " + testMyEarnings.toString());
+                    TestMyEarnings.DataBean data = testMyEarnings.getData();
+                    List<TestMyEarnings.DataBean.UserEarningsListBean> userEarningsList = data.getUserEarningsList();
+                    list.addAll(userEarningsList);
+                    adapter.notifyDataSetChanged();
                 }
           }
     }

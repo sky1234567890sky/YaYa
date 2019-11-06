@@ -1,5 +1,6 @@
 package com.administrator.yaya.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
@@ -66,7 +68,6 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
         if (!TextUtils.isEmpty(userId))mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA,Integer.parseInt(userId));
         else{ToastUtil.showShort("网络请求有误");}
     }
-
     @Override
     protected void initView(View inflate) {
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.c_ffffff));
@@ -108,21 +109,26 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     protected int getLayoutId() {
         return R.layout.fragment_home_page;
     }
+    @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TestHomePageData data = (TestHomePageData) t[0];
-
+                databean = data.getData();
+                userInfo = databean.getUserInfo();
                 if (data.getCode() == 0 && userInfo != null && databean != null) {
-                    databean = data.getData();
-                    userInfo = databean.getUserInfo();
+                    TestHomePageData.DataBean.CommodityBean commodity = databean.getCommodity();
+                    String comName = commodity.getComName();
+                    String comImg = commodity.getComImg();
+                    int comPrice = commodity.getComPrice();
+                    homeGamemoneyName.setText(comName);
+                    homeGamemoneyPrice.setText("进货价￥："+comPrice);
+                    String userEarningsToday = databean.getUserEarningsToday();
                     String userHeadImg = userInfo.getUserHeadImg();
-                    RequestOptions requestOptions = new RequestOptions().centerCrop();
-//                    Glide.with(getContext()).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(iv);
+                    Glide.with(getContext()).load(comImg).placeholder(R.mipmap.icon).into(mHeadlerIv);
                     tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
                     tvWechatUse.setText(userInfo.getWxEd() + "");//微信已使用额度
-
                 } else {
                     ToastUtil.showShort(data.getMsg());
                 }

@@ -17,13 +17,17 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.my.TestMyEarnings;
 import com.administrator.yaya.bean.my.TestRebate;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -35,7 +39,7 @@ public class RebateFragment extends BaseMvpFragment<LoginModel> implements IComm
     @BindView(R.id.rebate_lv)
     RecyclerView mList;
     private RebateAdapter adapter;
-    private ArrayList<?> list;
+    private ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list;
 
     public RebateFragment() {
         // Required empty public constructor
@@ -52,6 +56,11 @@ public class RebateFragment extends BaseMvpFragment<LoginModel> implements IComm
         list = new ArrayList<>();
         adapter = new RebateAdapter(list);
         mList.setAdapter(adapter);
+    }
+    @Override
+    protected void initData() {
+        String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
+        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),1);//收益类型--1收入-2支出-3返利
     }
     @Override
     protected LoginModel getModel() {
@@ -71,19 +80,14 @@ public class RebateFragment extends BaseMvpFragment<LoginModel> implements IComm
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
-            case ApiConfig.TEST_REBATE://返利
-                TestRebate testRebate = (TestRebate) t[0];
-
-                if (testRebate.getCode()==0 && testRebate.getData()!=null){
-
-                    TestRebate.DataBean data = testRebate.getData();
-
-                    TestRebate.DataBean.UserInfoBean userInfo = data.getUserInfo();
-
-                    TestRebate.DataBean.UserInfoBean.ParamsBean params = userInfo.getParams();
-
-
-                    Log.i("tag", "返利: " + testRebate.toString());
+            case ApiConfig.TEST_MY_EARNINGS://返利
+                TestMyEarnings testMyEarnings = (TestMyEarnings) t[0];
+                if (testMyEarnings.getCode()==0 && testMyEarnings.getData()!=null)  {
+                    TestMyEarnings.DataBean data = testMyEarnings.getData();
+                    List<TestMyEarnings.DataBean.UserEarningsListBean> userEarningsList = data.getUserEarningsList();
+                    list.addAll(userEarningsList);
+                    adapter.notifyDataSetChanged();
+                    Log.i("tag", "返利: " + testMyEarnings.toString());
 //                    用户信息:userInfo
 //                    userName 用户姓名
 //                    userNickName 昵称
@@ -101,7 +105,7 @@ public class RebateFragment extends BaseMvpFragment<LoginModel> implements IComm
 //                    userId			用户id
 //                    userName		用户昵称
                 }else{
-                    ToastUtil.showShort(testRebate.getMsg());
+                    ToastUtil.showShort(testMyEarnings.getMsg());
                 }
                 break;
         }

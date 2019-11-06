@@ -132,7 +132,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
                 break;
         }
     }
-
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 //        ToastUtil.showShort(event.getKeyCode()+"");

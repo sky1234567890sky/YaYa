@@ -4,11 +4,10 @@ import java.io.Serializable;
 //我的
 public class TestHomePageData implements Serializable {
 
-
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":193,"userEarningsTotal":316,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"commodity":null,"userEarningsToday":"176"}
+     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":402,"userEarningsTotal":525,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":100,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9999876,"comPurchaseNumMin":100,"comPurchaseNumMax":10000,"comExplain":"这是个游戏币1"},"userEarningsToday":"48"}
      */
 
     private String msg;
@@ -41,13 +40,13 @@ public class TestHomePageData implements Serializable {
 
     public static class DataBean {
         /**
-         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":193,"userEarningsTotal":316,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
-         * commodity : null
-         * userEarningsToday : 176
+         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":402,"userEarningsTotal":525,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
+         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":100,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9999876,"comPurchaseNumMin":100,"comPurchaseNumMax":10000,"comExplain":"这是个游戏币1"}
+         * userEarningsToday : 48
          */
 
         private UserInfoBean userInfo;
-        private Object commodity;
+        private CommodityBean commodity;
         private String userEarningsToday;
 
         public UserInfoBean getUserInfo() {
@@ -58,11 +57,11 @@ public class TestHomePageData implements Serializable {
             this.userInfo = userInfo;
         }
 
-        public Object getCommodity() {
+        public CommodityBean getCommodity() {
             return commodity;
         }
 
-        public void setCommodity(Object commodity) {
+        public void setCommodity(CommodityBean commodity) {
             this.commodity = commodity;
         }
 
@@ -86,15 +85,15 @@ public class TestHomePageData implements Serializable {
              * userId : 1
              * userName : 钱浩龙
              * userNickName : qhl
-             * userHeadImg : http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg
+             * userHeadImg : http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png
              * userPhone : 17631365666
              * userPwd : 1234
              * userProfit : 8.0E-4
              * userStatus : 1
              * userInvitationCode : 6666
              * userParentId : 0
-             * userEarningsNow : 193
-             * userEarningsTotal : 316
+             * userEarningsNow : 402
+             * userEarningsTotal : 525
              * userContributeTotal : 0
              * zfbEd : 0
              * wxEd : 0
@@ -350,6 +349,165 @@ public class TestHomePageData implements Serializable {
             }
 
             public static class ParamsBean {
+            }
+        }
+
+        public static class CommodityBean {
+            /**
+             * searchValue : null
+             * createBy : null
+             * createTime : null
+             * updateBy : null
+             * updateTime : null
+             * remark : null
+             * params : {}
+             * comId : 1
+             * comName : 游戏币
+             * comPrice : 100
+             * comImg : https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg
+             * comInventory : 9999876
+             * comPurchaseNumMin : 100
+             * comPurchaseNumMax : 10000
+             * comExplain : 这是个游戏币1
+             */
+
+            private Object searchValue;
+            private Object createBy;
+            private Object createTime;
+            private Object updateBy;
+            private Object updateTime;
+            private Object remark;
+            private ParamsBeanX params;
+            private int comId;
+            private String comName;
+            private int comPrice;
+            private String comImg;
+            private int comInventory;
+            private int comPurchaseNumMin;
+            private int comPurchaseNumMax;
+            private String comExplain;
+
+            public Object getSearchValue() {
+                return searchValue;
+            }
+
+            public void setSearchValue(Object searchValue) {
+                this.searchValue = searchValue;
+            }
+
+            public Object getCreateBy() {
+                return createBy;
+            }
+
+            public void setCreateBy(Object createBy) {
+                this.createBy = createBy;
+            }
+
+            public Object getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(Object createTime) {
+                this.createTime = createTime;
+            }
+
+            public Object getUpdateBy() {
+                return updateBy;
+            }
+
+            public void setUpdateBy(Object updateBy) {
+                this.updateBy = updateBy;
+            }
+
+            public Object getUpdateTime() {
+                return updateTime;
+            }
+
+            public void setUpdateTime(Object updateTime) {
+                this.updateTime = updateTime;
+            }
+
+            public Object getRemark() {
+                return remark;
+            }
+
+            public void setRemark(Object remark) {
+                this.remark = remark;
+            }
+
+            public ParamsBeanX getParams() {
+                return params;
+            }
+
+            public void setParams(ParamsBeanX params) {
+                this.params = params;
+            }
+
+            public int getComId() {
+                return comId;
+            }
+
+            public void setComId(int comId) {
+                this.comId = comId;
+            }
+
+            public String getComName() {
+                return comName;
+            }
+
+            public void setComName(String comName) {
+                this.comName = comName;
+            }
+
+            public int getComPrice() {
+                return comPrice;
+            }
+
+            public void setComPrice(int comPrice) {
+                this.comPrice = comPrice;
+            }
+
+            public String getComImg() {
+                return comImg;
+            }
+
+            public void setComImg(String comImg) {
+                this.comImg = comImg;
+            }
+
+            public int getComInventory() {
+                return comInventory;
+            }
+
+            public void setComInventory(int comInventory) {
+                this.comInventory = comInventory;
+            }
+
+            public int getComPurchaseNumMin() {
+                return comPurchaseNumMin;
+            }
+
+            public void setComPurchaseNumMin(int comPurchaseNumMin) {
+                this.comPurchaseNumMin = comPurchaseNumMin;
+            }
+
+            public int getComPurchaseNumMax() {
+                return comPurchaseNumMax;
+            }
+
+            public void setComPurchaseNumMax(int comPurchaseNumMax) {
+                this.comPurchaseNumMax = comPurchaseNumMax;
+            }
+
+            public String getComExplain() {
+                return comExplain;
+            }
+
+            public void setComExplain(String comExplain) {
+                this.comExplain = comExplain;
+            }
+
+            public static class ParamsBeanX {
             }
         }
     }

@@ -122,7 +122,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 buyMaxGamemoneyRemainingQuantity.setText("最大购买数量："+comPurchaseNumMax);
 
                 //传值
-                EventBus.getDefault().postSticky(comInventory);   //发送时间
+//                EventBus.getDefault().postSticky(comInventory);   //发送时间
             }else{
                 ToastUtil.showShort(testBuyCom.getMsg());
             }

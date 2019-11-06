@@ -1,11 +1,13 @@
 package com.administrator.yaya.bean.my;
+
+import java.util.List;
+
 //我的收益  支出
 public class TestExpend {
-
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":0,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":17,"userEarningsTotal":17,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}}
+     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":370,"userEarningsTotal":493,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"userEarningsList":[],"commodityName":"游戏币"}
      */
 
     private String msg;
@@ -38,10 +40,14 @@ public class TestExpend {
 
     public static class DataBean {
         /**
-         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":0,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":17,"userEarningsTotal":17,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
+         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":370,"userEarningsTotal":493,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
+         * userEarningsList : []
+         * commodityName : 游戏币
          */
 
         private UserInfoBean userInfo;
+        private String commodityName;
+        private List<?> userEarningsList;
 
         public UserInfoBean getUserInfo() {
             return userInfo;
@@ -49,6 +55,22 @@ public class TestExpend {
 
         public void setUserInfo(UserInfoBean userInfo) {
             this.userInfo = userInfo;
+        }
+
+        public String getCommodityName() {
+            return commodityName;
+        }
+
+        public void setCommodityName(String commodityName) {
+            this.commodityName = commodityName;
+        }
+
+        public List<?> getUserEarningsList() {
+            return userEarningsList;
+        }
+
+        public void setUserEarningsList(List<?> userEarningsList) {
+            this.userEarningsList = userEarningsList;
         }
 
         public static class UserInfoBean {
@@ -63,15 +85,15 @@ public class TestExpend {
              * userId : 1
              * userName : 钱浩龙
              * userNickName : qhl
-             * userHeadImg : http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg
+             * userHeadImg : http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png
              * userPhone : 17631365666
              * userPwd : 1234
-             * userProfit : 0
+             * userProfit : 8.0E-4
              * userStatus : 1
              * userInvitationCode : 6666
              * userParentId : 0
-             * userEarningsNow : 17
-             * userEarningsTotal : 17
+             * userEarningsNow : 370
+             * userEarningsTotal : 493
              * userContributeTotal : 0
              * zfbEd : 0
              * wxEd : 0
@@ -95,7 +117,7 @@ public class TestExpend {
             private String userHeadImg;
             private String userPhone;
             private String userPwd;
-            private int userProfit;
+            private double userProfit;
             private int userStatus;
             private String userInvitationCode;
             private int userParentId;
@@ -214,11 +236,11 @@ public class TestExpend {
                 this.userPwd = userPwd;
             }
 
-            public int getUserProfit() {
+            public double getUserProfit() {
                 return userProfit;
             }
 
-            public void setUserProfit(int userProfit) {
+            public void setUserProfit(double userProfit) {
                 this.userProfit = userProfit;
             }
 
@@ -328,6 +350,57 @@ public class TestExpend {
 
             public static class ParamsBean {
             }
+
+            @Override
+            public String toString() {
+                return "UserInfoBean{" +
+                        "searchValue=" + searchValue +
+                        ", createBy=" + createBy +
+                        ", createTime=" + createTime +
+                        ", updateBy=" + updateBy +
+                        ", updateTime=" + updateTime +
+                        ", remark=" + remark +
+                        ", params=" + params +
+                        ", userId=" + userId +
+                        ", userName='" + userName + '\'' +
+                        ", userNickName='" + userNickName + '\'' +
+                        ", userHeadImg='" + userHeadImg + '\'' +
+                        ", userPhone='" + userPhone + '\'' +
+                        ", userPwd='" + userPwd + '\'' +
+                        ", userProfit=" + userProfit +
+                        ", userStatus=" + userStatus +
+                        ", userInvitationCode='" + userInvitationCode + '\'' +
+                        ", userParentId=" + userParentId +
+                        ", userEarningsNow=" + userEarningsNow +
+                        ", userEarningsTotal=" + userEarningsTotal +
+                        ", userContributeTotal=" + userContributeTotal +
+                        ", zfbEd=" + zfbEd +
+                        ", wxEd=" + wxEd +
+                        ", vxButtonStatus=" + vxButtonStatus +
+                        ", zfbButtonStatus=" + zfbButtonStatus +
+                        ", parentUser=" + parentUser +
+                        ", juniorUsers=" + juniorUsers +
+                        ", junior=" + junior +
+                        '}';
+            }
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "userInfo=" + userInfo +
+                    ", commodityName='" + commodityName + '\'' +
+                    ", userEarningsList=" + userEarningsList +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "TestExpend{" +
+                "msg='" + msg + '\'' +
+                ", code=" + code +
+                ", data=" + data +
+                '}';
     }
 }

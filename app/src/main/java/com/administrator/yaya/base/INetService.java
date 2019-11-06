@@ -12,6 +12,7 @@ import com.administrator.yaya.bean.invite.TestUpawaySingleGoods;
 import com.administrator.yaya.bean.login_register_bean.TestInviteCode;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
 import com.administrator.yaya.bean.login_register_bean.TestRegister;
+import com.administrator.yaya.bean.my.SwitchReceiveingQrCode;
 import com.administrator.yaya.bean.my.TestAlipayReceiverCode;
 import com.administrator.yaya.bean.my.TestExpend;
 import com.administrator.yaya.bean.my.TestGetEtVerificationCode;
@@ -20,6 +21,7 @@ import com.administrator.yaya.bean.my.TestMyEarnings;
 import com.administrator.yaya.bean.my.TestMyInvite;
 import com.administrator.yaya.bean.my.TestNotificationInfo;
 import com.administrator.yaya.bean.my.TestPutawayAllOrderStock;
+import com.administrator.yaya.bean.my.TestRebate;
 import com.administrator.yaya.bean.my.TestSmallBook;
 import com.administrator.yaya.bean.my.TestWechatReceiverCode;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
@@ -121,11 +123,13 @@ public interface INetService {
     @POST("getInfo")
     @FormUrlEncoded
     Observable<TestNotificationInfo> getTestNotificationInfo(@Field("userId") int userId);
+
     //我的邀请
 //    http://192.168.0.198:8080/yayaApp/getMyInvite
     @POST("getMyInvite")
     @FormUrlEncoded
     Observable<TestMyInvite> getTestMyInvite(@Field("userId") int userId);
+
     //    小账本
 //    http://192.168.0.198:8080/yayaApp/xiaoZhangBen
     @POST("xiaoZhangBen")
@@ -142,7 +146,7 @@ public interface INetService {
     Observable<TestAlipayReceiverCode> getAlipayReceiverCode(@Field("userId") int userId, @Field("type") int type);
 
     //微信
-    @POST("userCodeImg")
+    @POST("getUserCodeImg")
     @FormUrlEncoded
     Observable<TestWechatReceiverCode> getWechatReceiverCode(@Field("userId") int userId, @Field("type") int type);
 
@@ -210,7 +214,7 @@ public interface INetService {
     //返利
     @POST("myInfo")
     @FormUrlEncoded
-    Observable<TestRegister> getTestRebate(@Field("userId") int userId, @Field("earningsType") int earningsType);
+    Observable<TestRebate> getTestRebate(@Field("userId") int userId, @Field("earningsType") int earningsType);
 
     //支出
     @POST("myInfo")
@@ -258,6 +262,17 @@ public interface INetService {
     @POST("getPhoneCode")
     @FormUrlEncoded
     Observable<TestGetEtVerificationCode> getTestVerficationCode(@Field("phone") String phone);
+
+    //    开关收款码
+//            openButton
+//    参数：
+//    用户id userId
+//    类型 type 1微信  2支付宝
+//    状态 status 1开    2关
+    @POST("openButton")
+    @FormUrlEncoded
+    Observable<SwitchReceiveingQrCode> getTestSwitchReceiveingQrCode(@Field("userId") int userId,@Field("type") int type,@Field("status") int status);
+
 //    更换头像
 //    修改成功/修改失败
 //    结果:

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +13,9 @@
         android:layout_marginRight="@dimen/dp_12_5"
         android:layout_marginTop="@dimen/dp_15"
         android:paddingLeft="@dimen/dp_12_5"
-        android:paddingBottom="@dimen/dp_10">
+        android:paddingBottom="@dimen/dp_10"
+        android:layout_centerInParent="true"
+        >
 
         <TextView
             android:id="@+id/sell_orderNumber"
@@ -35,7 +38,7 @@
             tools:ignore="ContentDescription"
             />
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignTop="@id/sell_comImg"
             android:layout_alignBottom="@id/sell_comImg"
@@ -93,7 +96,7 @@
                 android:layout_height="@dimen/dp_0"
                 android:gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="售卖总价：￥xxx"
+                android:text="售卖总价￥:xxx"
                 android:textColor="#333333"
                 android:textSize="@dimen/sp_13"
                 tools:ignore="HardcodedText" />

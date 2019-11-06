@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.bean.my.TestMyEarnings;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -17,11 +19,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RebateAdapter extends RecyclerView.Adapter<RebateAdapter.Vh> {
-    private final ArrayList<?> list;
+    private final ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list;
 
     private Context context;
 
-    public RebateAdapter(ArrayList<?> list) {
+    public RebateAdapter(ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list) {
 
         this.list = list;
     }
@@ -36,7 +38,27 @@ public class RebateAdapter extends RecyclerView.Adapter<RebateAdapter.Vh> {
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
-        
+        //        orderId	订单编号
+//        salesAmount	售卖数量
+//        earningsAmount	收益数量
+//        earningsType	收益类型--1收入-2支出-3返利
+//        earningsTime	收益日期
+//        userId			用户id
+//        userName		用户昵称
+        TestMyEarnings.DataBean.UserEarningsListBean userEarningsListBean = list.get(i);
+        String orderId = userEarningsListBean.getOrderId();
+        int salesAmount = userEarningsListBean.getSalesAmount();
+        int earningsAmount = userEarningsListBean.getEarningsAmount();
+        int earningsType = userEarningsListBean.getEarningsType();
+        String createTime = userEarningsListBean.getEarningsTime();
+        int userId = userEarningsListBean.getUserId();
+        String userName = userEarningsListBean.getUserName();
+        if (earningsType==1){//返利记录
+            vh.mReabateUserNickName.setText("用户昵称(用户ID："+orderId+")");
+            vh.mRebateEarningsTime.setText(createTime);
+            vh.mRebateSalesAmount.setText("+"+salesAmount);
+//            Glide.with(context).load()
+        }
     }
     @Override
     public int getItemCount() {

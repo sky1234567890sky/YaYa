@@ -133,10 +133,12 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
         switch (whichApi) {
             case ApiConfig.TEXT_GATHERING:
                 TestObligation testObligation = (TestObligation) t[0];
+
                 if (testObligation.getCode() == 0 && testObligation.getData() != null) {
                     Log.i("tag", "已付款。。。: "+testObligation.toString());
                     TestObligation.DataBean data = testObligation.getData();
-                    amount = data.getAmount();
+//                    amount = data.getAmount();
+//                    EventBus.getDefault().postSticky(amount);
                     List<TestObligation.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
                     list.addAll(orderStockList);
                     adapter.notifyDataSetChanged();
@@ -147,7 +149,7 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
 //                    mYifuComPrice.setText("单价￥：" + orderStockListBean.getCommodityPrice());
 ////                      accountpaidItem.mYifuGamemoney.setText("");
 //                    mYifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
-                    EventBus.getDefault().postSticky(amount);
+//                    EventBus.getDefault().postSticky(amount);
                 }else{
                     ToastUtil.showShort(testObligation.getMsg());
                 }
@@ -155,7 +157,6 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
 //            case ApiConfig.TEXT_GATHERING2://已付款
 //                TestAccountPaid testAccountPaid = (TestAccountPaid) t[0];
 //                Log.i("tag", "已付款：: "+testAccountPaid.toString());
-//
 //                if (testAccountPaid.getCode() == 0 && testAccountPaid.getData()!= null) {
 //                    //库存合计数量	amount
 //                    String amount = testAccountPaid.getData().getAmount();
@@ -255,9 +256,7 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
         mPopupTvNumber = inflate.findViewById(R.id.popup_tv_number);
         mPopupTvCancel = inflate.findViewById(R.id.popup_tv_cancel);
         mPopupTvOk = inflate.findViewById(R.id.popup_tv_ok);
-
         mPopupTvNumber.setText(amount);
-
 //        if (orderStockList.size()>0) {
 //            mPopupTvNumber.setText(orderStockList.get(0).getCommodityAmount());//数量
 //        } else{

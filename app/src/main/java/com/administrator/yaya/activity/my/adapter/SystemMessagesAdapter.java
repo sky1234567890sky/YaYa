@@ -1,4 +1,4 @@
-package com.administrator.yaya.activity.my;
+package com.administrator.yaya.activity.my.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -37,7 +37,8 @@ public class SystemMessagesAdapter extends RecyclerView.Adapter<SystemMessagesAd
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
-        vh.systemMsgContent.setText(list.get(i).getUserName()+":"+list.get(i).getInfoContent());
+        vh.systemMsgContent.setText(list.get(i).getInfoContent());
+        //list.get(i).getUserName()+":"+
     }
 
     @Override

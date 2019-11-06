@@ -91,11 +91,13 @@ public class LoginModel implements ICommonModel {
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestSmallBook((int) t[0]), view, whichApi);
                 break;
+
             //支付宝二维码
             case ApiConfig.TEST_ALIPAY_RECEIVER_CODE:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getAlipayReceiverCode((int) t[0], (int) t[1]), view, whichApi);
                 break;
+
             //微信二维码
             case ApiConfig.TEST_WECHAT_RECEIVER_CODE:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
@@ -141,13 +143,7 @@ public class LoginModel implements ICommonModel {
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestCancelOrderSales((int) t[0]), view, whichApi);//salesId
                 break;
-
-
-
-
-
-
-                //我的收益
+            //我的收益
             case ApiConfig.TEST_MY_EARNINGS:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestMyEarnings((int) t[0],(int) t[1]), view, whichApi);
@@ -159,11 +155,13 @@ public class LoginModel implements ICommonModel {
                         .getPutawayAllOrderStock((int) t[0]), view, whichApi);
                 break;
 
+                //我的收益
                 //返利
             case ApiConfig.TEST_REBATE:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestRebate((int) t[0],(int) t[1]), view, whichApi);
                 break;
+
                 //支出
             case ApiConfig.TEST_EXPEND:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
@@ -191,10 +189,19 @@ public class LoginModel implements ICommonModel {
 ////                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
 ////                .getTestUpdateHeadImg(body,(int) t[0]), view, whichApi);
 //                break;
+            //验证码
             case ApiConfig.TEST_VERIFICATIONCODE:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestVerficationCode((String) t[0]), view, whichApi);
                 break;
+                //开关收款码
+            case ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestSwitchReceiveingQrCode((int) t[0],(int) t[0],(int) t[0]), view, whichApi);
+                break;
+
+
+
 //==================================================>
             case ApiConfig.GET_SMS_MJG:
 //                String phoneNum = (String) t[0];

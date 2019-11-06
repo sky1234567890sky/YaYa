@@ -1,35 +1,21 @@
 package com.administrator.yaya.activity.orderform;
 
-
-import android.os.Bundle;
-import android.security.AttestedKeyPair;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.orderform.adapter.FinishAdapter;
-import com.administrator.yaya.activity.orderform.adapter.SellAdapter;
 import com.administrator.yaya.base.ApiConfig;
-import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
-import com.administrator.yaya.bean.orderform.TestFinish;
-import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
-import com.administrator.yaya.utils.OkHttpUtils;
 import com.administrator.yaya.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -38,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-
 /**
  * A simple {@link Fragment} subclass.
  * 已完成
@@ -48,7 +33,7 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     RecyclerView mList;
 
     private FinishAdapter adapter;
-    private List<TestAllOrderStock.DataBean.OrderStockListBean> list;
+    private List<TestAllOrderStock.DataBean.OrderSalesListBean> list;
 
     public FinishFragment() {
         // Required empty public constructor
@@ -76,7 +61,6 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
         adapter = new FinishAdapter(list,getActivity());
         mList.setAdapter(adapter);
     }
-
     @Override
     protected void initData() {
         super.initData();
@@ -139,15 +123,15 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
             case ApiConfig.TEST_ALL_ORDERSTOCK://已完成
                 TestAllOrderStock testFinish = (TestAllOrderStock) t[0];
                 Log.i("tag", "已完成: " + testFinish.toString());
-                if (testFinish.getCode() == 0 && testFinish.getData() != null && testFinish.getData().getOrderStockList() != null) {
+                if (testFinish.getCode() == 0 && testFinish.getData() != null && testFinish.getData().getOrderSalesList() != null) {
                     TestAllOrderStock.DataBean data = testFinish.getData();
 //                    进货订单集合	orderSalesList
                     String amount = data.getAmount();
-                    List<TestAllOrderStock.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
+                    List<TestAllOrderStock.DataBean.OrderSalesListBean> orderStockList = data.getOrderSalesList();
                     list.addAll(orderStockList);
                     adapter.notifyDataSetChanged();
 
-                    EventBus.getDefault().postSticky(amount);
+//                    EventBus.getDefault().postSticky(amount);
 //                    订单id		salesId
 //                    订单编号	orderNumber
 //                    下单时间	salesBuildTime

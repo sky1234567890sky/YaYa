@@ -54,4 +54,6 @@ public class ApiConfig {
     public static final int TEST_CHANGE_HEADLER = 33;//更换头像
     //修改密码
     public static final int TEST_VERIFICATIONCODE = 34;//获取验证码
+
+    public static final int TEST_SWITCH_RECEIVEING_QRCODE = 35;//开关收款码
 }

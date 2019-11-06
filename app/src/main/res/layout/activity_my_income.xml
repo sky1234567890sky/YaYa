@@ -151,12 +151,7 @@
         <!--app:tl_textsize="@dimen/sp_14"-->
         <!--app:tl_tab_space_equal="true"-->
         <!--/>-->
-    <android.support.v4.view.ViewPager
-        android:id="@+id/myincome_vp"
-        android:layout_below="@id/iNventory_tab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+
     <TextView
         android:id="@+id/go_up"
         android:layout_width="match_parent"
@@ -167,5 +162,12 @@
         android:text="@string/go_up"
         android:gravity="center"
         android:textSize="@dimen/sp_16"
+        />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/myincome_vp"
+        android:layout_above="@id/go_up"
+        android:layout_below="@id/iNventory_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         />
 </RelativeLayout>

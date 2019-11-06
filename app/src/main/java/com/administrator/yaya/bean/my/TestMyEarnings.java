@@ -1,12 +1,14 @@
 package com.administrator.yaya.bean.my;
-//我的收益  收入
+//我的收益 页面
+
+import java.util.List;
 
 public class TestMyEarnings {
 
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":193,"userEarningsTotal":316,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}}
+     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":370,"userEarningsTotal":493,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"userEarningsList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":1,"userId":1,"orderId":"123213124","salesAmount":2000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-10-30 10:29:37","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":2,"userId":1,"orderId":"123213123","salesAmount":1000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-10-30 10:31:39","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":3,"userId":1,"orderId":"123213124","salesAmount":2000,"earningsAmount":1,"earningsType":1,"earningsTime":"2019-10-30 10:33:33","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":4,"userId":1,"orderId":"123213123","salesAmount":10000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-10-30 10:37:13","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":5,"userId":1,"orderId":"123213124","salesAmount":20000,"earningsAmount":16,"earningsType":1,"earningsTime":"2019-10-30 10:38:12","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":6,"userId":1,"orderId":"123213123","salesAmount":10000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-01 13:42:12","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":7,"userId":1,"orderId":"191031103536063","salesAmount":10,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:00:53","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":8,"userId":1,"orderId":"191031103523194","salesAmount":2000000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:32:20","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":9,"userId":1,"orderId":"191031103548723","salesAmount":10,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:48:09","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":10,"userId":1,"orderId":"191101155555923","salesAmount":123,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:49:48","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":11,"userId":1,"orderId":"191104104825434","salesAmount":200,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:50:52","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":12,"userId":1,"orderId":"191104104825434","salesAmount":200000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:52:05","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":13,"userId":1,"orderId":"191104104825434","salesAmount":200000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:53:53","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":14,"userId":1,"orderId":"191104104825434","salesAmount":200000,"earningsAmount":160,"earningsType":1,"earningsTime":"2019-11-04 14:56:54","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":15,"userId":1,"orderId":"191104104825434","salesAmount":20000,"earningsAmount":16,"earningsType":1,"earningsTime":"2019-11-04 14:58:26","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":16,"userId":1,"orderId":"191104104823123","salesAmount":0,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-05 14:45:29","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":17,"userId":1,"orderId":"191105150248403","salesAmount":100000,"earningsAmount":80,"earningsType":1,"earningsTime":"2019-11-05 15:03:26","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":18,"userId":1,"orderId":"191105144684486","salesAmount":100000,"earningsAmount":80,"earningsType":1,"earningsTime":"2019-11-05 15:04:16","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":19,"userId":1,"orderId":"191104155371064","salesAmount":0,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-05 15:11:38","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":20,"userId":1,"orderId":"123213123","salesAmount":1000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-05 15:12:56","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":21,"userId":1,"orderId":"123213124","salesAmount":2000,"earningsAmount":1,"earningsType":1,"earningsTime":"2019-11-05 15:13:01","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":22,"userId":1,"orderId":"191104104823432","salesAmount":20000,"earningsAmount":16,"earningsType":1,"earningsTime":"2019-11-06 09:35:46","userName":"钱浩龙"}]}
      */
 
     private String msg;
@@ -39,10 +41,12 @@ public class TestMyEarnings {
 
     public static class DataBean {
         /**
-         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":193,"userEarningsTotal":316,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
+         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":370,"userEarningsTotal":493,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
+         * userEarningsList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":1,"userId":1,"orderId":"123213124","salesAmount":2000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-10-30 10:29:37","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":2,"userId":1,"orderId":"123213123","salesAmount":1000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-10-30 10:31:39","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":3,"userId":1,"orderId":"123213124","salesAmount":2000,"earningsAmount":1,"earningsType":1,"earningsTime":"2019-10-30 10:33:33","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":4,"userId":1,"orderId":"123213123","salesAmount":10000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-10-30 10:37:13","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":5,"userId":1,"orderId":"123213124","salesAmount":20000,"earningsAmount":16,"earningsType":1,"earningsTime":"2019-10-30 10:38:12","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":6,"userId":1,"orderId":"123213123","salesAmount":10000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-01 13:42:12","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":7,"userId":1,"orderId":"191031103536063","salesAmount":10,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:00:53","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":8,"userId":1,"orderId":"191031103523194","salesAmount":2000000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:32:20","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":9,"userId":1,"orderId":"191031103548723","salesAmount":10,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:48:09","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":10,"userId":1,"orderId":"191101155555923","salesAmount":123,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:49:48","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":11,"userId":1,"orderId":"191104104825434","salesAmount":200,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:50:52","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":12,"userId":1,"orderId":"191104104825434","salesAmount":200000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:52:05","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":13,"userId":1,"orderId":"191104104825434","salesAmount":200000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-04 14:53:53","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":14,"userId":1,"orderId":"191104104825434","salesAmount":200000,"earningsAmount":160,"earningsType":1,"earningsTime":"2019-11-04 14:56:54","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":15,"userId":1,"orderId":"191104104825434","salesAmount":20000,"earningsAmount":16,"earningsType":1,"earningsTime":"2019-11-04 14:58:26","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":16,"userId":1,"orderId":"191104104823123","salesAmount":0,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-05 14:45:29","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":17,"userId":1,"orderId":"191105150248403","salesAmount":100000,"earningsAmount":80,"earningsType":1,"earningsTime":"2019-11-05 15:03:26","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":18,"userId":1,"orderId":"191105144684486","salesAmount":100000,"earningsAmount":80,"earningsType":1,"earningsTime":"2019-11-05 15:04:16","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":19,"userId":1,"orderId":"191104155371064","salesAmount":0,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-05 15:11:38","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":20,"userId":1,"orderId":"123213123","salesAmount":1000,"earningsAmount":0,"earningsType":1,"earningsTime":"2019-11-05 15:12:56","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":21,"userId":1,"orderId":"123213124","salesAmount":2000,"earningsAmount":1,"earningsType":1,"earningsTime":"2019-11-05 15:13:01","userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"earningsId":22,"userId":1,"orderId":"191104104823432","salesAmount":20000,"earningsAmount":16,"earningsType":1,"earningsTime":"2019-11-06 09:35:46","userName":"钱浩龙"}]
          */
 
         private UserInfoBean userInfo;
+        private List<UserEarningsListBean> userEarningsList;
 
         public UserInfoBean getUserInfo() {
             return userInfo;
@@ -50,6 +54,14 @@ public class TestMyEarnings {
 
         public void setUserInfo(UserInfoBean userInfo) {
             this.userInfo = userInfo;
+        }
+
+        public List<UserEarningsListBean> getUserEarningsList() {
+            return userEarningsList;
+        }
+
+        public void setUserEarningsList(List<UserEarningsListBean> userEarningsList) {
+            this.userEarningsList = userEarningsList;
         }
 
         public static class UserInfoBean {
@@ -64,15 +76,15 @@ public class TestMyEarnings {
              * userId : 1
              * userName : 钱浩龙
              * userNickName : qhl
-             * userHeadImg : http://pic22.nipic.com/20120711/1329689_115052549137_2.jpg
+             * userHeadImg : http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png
              * userPhone : 17631365666
              * userPwd : 1234
              * userProfit : 8.0E-4
              * userStatus : 1
              * userInvitationCode : 6666
              * userParentId : 0
-             * userEarningsNow : 193
-             * userEarningsTotal : 316
+             * userEarningsNow : 370
+             * userEarningsTotal : 493
              * userContributeTotal : 0
              * zfbEd : 0
              * wxEd : 0
@@ -330,5 +342,202 @@ public class TestMyEarnings {
             public static class ParamsBean {
             }
         }
+
+        public static class UserEarningsListBean {
+            /**
+             * searchValue : null
+             * createBy : null
+             * createTime : null
+             * updateBy : null
+             * updateTime : null
+             * remark : null
+             * params : {}
+             * earningsId : 1
+             * userId : 1
+             * orderId : 123213124
+             * salesAmount : 2000
+             * earningsAmount : 0
+             * earningsType : 1
+             * earningsTime : 2019-10-30 10:29:37
+             * userName : 钱浩龙
+             */
+
+            private Object searchValue;
+            private Object createBy;
+            private Object createTime;
+            private Object updateBy;
+            private Object updateTime;
+            private Object remark;
+            private ParamsBeanX params;
+            private int earningsId;
+            private int userId;
+            private String orderId;
+            private int salesAmount;
+            private int earningsAmount;
+            private int earningsType;
+            private String earningsTime;
+            private String userName;
+
+            public Object getSearchValue() {
+                return searchValue;
+            }
+
+            public void setSearchValue(Object searchValue) {
+                this.searchValue = searchValue;
+            }
+
+            public Object getCreateBy() {
+                return createBy;
+            }
+
+            public void setCreateBy(Object createBy) {
+                this.createBy = createBy;
+            }
+
+            public Object getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(Object createTime) {
+                this.createTime = createTime;
+            }
+
+            public Object getUpdateBy() {
+                return updateBy;
+            }
+
+            public void setUpdateBy(Object updateBy) {
+                this.updateBy = updateBy;
+            }
+
+            public Object getUpdateTime() {
+                return updateTime;
+            }
+
+            public void setUpdateTime(Object updateTime) {
+                this.updateTime = updateTime;
+            }
+
+            public Object getRemark() {
+                return remark;
+            }
+
+            public void setRemark(Object remark) {
+                this.remark = remark;
+            }
+
+            public ParamsBeanX getParams() {
+                return params;
+            }
+
+            public void setParams(ParamsBeanX params) {
+                this.params = params;
+            }
+
+            public int getEarningsId() {
+                return earningsId;
+            }
+
+            public void setEarningsId(int earningsId) {
+                this.earningsId = earningsId;
+            }
+
+            public int getUserId() {
+                return userId;
+            }
+
+            public void setUserId(int userId) {
+                this.userId = userId;
+            }
+
+            public String getOrderId() {
+                return orderId;
+            }
+
+            public void setOrderId(String orderId) {
+                this.orderId = orderId;
+            }
+
+            public int getSalesAmount() {
+                return salesAmount;
+            }
+
+            public void setSalesAmount(int salesAmount) {
+                this.salesAmount = salesAmount;
+            }
+
+            public int getEarningsAmount() {
+                return earningsAmount;
+            }
+
+            public void setEarningsAmount(int earningsAmount) {
+                this.earningsAmount = earningsAmount;
+            }
+
+            public int getEarningsType() {
+                return earningsType;
+            }
+
+            public void setEarningsType(int earningsType) {
+                this.earningsType = earningsType;
+            }
+
+            public String getEarningsTime() {
+                return earningsTime;
+            }
+
+            public void setEarningsTime(String earningsTime) {
+                this.earningsTime = earningsTime;
+            }
+
+            public String getUserName() {
+                return userName;
+            }
+
+            public void setUserName(String userName) {
+                this.userName = userName;
+            }
+
+            public static class ParamsBeanX {
+            }
+
+            @Override
+            public String toString() {
+                return "UserEarningsListBean{" +
+                        "searchValue=" + searchValue +
+                        ", createBy=" + createBy +
+                        ", createTime=" + createTime +
+                        ", updateBy=" + updateBy +
+                        ", updateTime=" + updateTime +
+                        ", remark=" + remark +
+                        ", params=" + params +
+                        ", earningsId=" + earningsId +
+                        ", userId=" + userId +
+                        ", orderId='" + orderId + '\'' +
+                        ", salesAmount=" + salesAmount +
+                        ", earningsAmount=" + earningsAmount +
+                        ", earningsType=" + earningsType +
+                        ", earningsTime='" + earningsTime + '\'' +
+                        ", userName='" + userName + '\'' +
+                        '}';
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "userInfo=" + userInfo +
+                    ", userEarningsList=" + userEarningsList +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "TestMyEarnings{" +
+                "msg='" + msg + '\'' +
+                ", code=" + code +
+                ", data=" + data +
+                '}';
     }
 }

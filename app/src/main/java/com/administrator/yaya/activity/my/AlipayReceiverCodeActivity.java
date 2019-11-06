@@ -15,6 +15,7 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.my.SwitchReceiveingQrCode;
 import com.administrator.yaya.bean.my.TestAlipayReceiverCode;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
@@ -33,6 +34,7 @@ import butterknife.OnClick;
  * 支付宝收款
  */
 public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
+
     @BindView(R.id.pay_receive_back_iv)
     ImageView payReceiveBackIv;
     @BindView(R.id.two_switch)
@@ -60,12 +62,10 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
     List<TestAlipayReceiverCode.DataBean.UserCodeImgListBean> list = new ArrayList<>();
     private int wechatCode;
     private TestAlipayReceiverCode testAlipayReceiverCode;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_payments_receive;
     }
-
     @Override
     protected void initData() {
         super.initData();
@@ -76,7 +76,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
         if (userId != null) {
             mPresenter.getData(ApiConfig.TEST_ALIPAY_RECEIVER_CODE, Integer.parseInt(userId), 2);
         } else {
-
+            ToastUtil.showShort(R.string.networkerr+"");
         }
     }
     @Override
@@ -85,17 +85,26 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
             case ApiConfig.TEST_ALIPAY_RECEIVER_CODE:
                 testAlipayReceiverCode = (TestAlipayReceiverCode) t[0];
                 if (testAlipayReceiverCode != null && testAlipayReceiverCode.getData() != null) {
-
                     TestAlipayReceiverCode.DataBean data = testAlipayReceiverCode.getData();
+                    Log.i("tag", "支付宝: "+ testAlipayReceiverCode.toString());
                     List<TestAlipayReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList = data.getUserCodeImgList();
                     int vxButtonStatus = data.getVxButtonStatus();
-                    wechatCode = vxButtonStatus;
                     int zfbButtonStatus = data.getZfbButtonStatus();
+                    wechatCode = vxButtonStatus;
                     list.addAll(userCodeImgList);
+
 //                    Log.i("tag", "list支付宝: "+list.toString());
 
                 } else {
                     ToastUtil.showShort(testAlipayReceiverCode.getMsg());
+                }
+                break;
+            case ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE:
+                SwitchReceiveingQrCode switchReceiveingQrCode = (SwitchReceiveingQrCode) t[0];
+                if (switchReceiveingQrCode.getCode()==0){
+                    ToastUtil.showShort(switchReceiveingQrCode.getMsg());
+                }else {
+                    ToastUtil.showShort(switchReceiveingQrCode.getMsg());
                 }
                 break;
         }
@@ -106,13 +115,15 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
             @SuppressLint("SetTextI18n")
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Log.i("tag", "支付宝: "+ testAlipayReceiverCode.toString());
+
 //                SPUtils.getInstance().put(Constants.AUTO_PALY_IN_WIFI, isChecked);
                 //微信按钮
 //                TestAlipayReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean = userCodeImgList.get(data.getVxButtonStatus());
 //                TestAlipayReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean = list.get(wechatCode);
 //                if (userCodeImgListBean.getImgType() == 2) {
                     if (isChecked) {
+                        String userId = SharedPrefrenceUtils.getString(AlipayReceiverCodeActivity.this, NormalConfig.USER_ID);
+                        if (userId!=null)mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE,Integer.parseInt(userId),2,1);
 //                        ToastUtil.showShort("onCheckedChanged: 开启" + isChecked);
 //                        if (list.get(0).getImgUrl()!=null)Glide.with(getApplication()).load(list.get(0).getImgUrl()).into(add1);
 //                        if (list.get(1).getImgUrl()!=null)Glide.with(getApplication()).load(list.get(1).getImgUrl()).into(add1);
@@ -121,13 +132,12 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 //                        mReceivableTv2.setText(list.get(0).getImgMoney()+"元");
 //                        mReceivableTv3.setText(list.get(1).getImgMoney()+"元");
 //                        mReceivableTv4.setText(list.get(0).getImgMoney()+"元");
-
                     } else {
+
 //                        ToastUtil.showShort( "onCheckedChanged: 关闭" + isChecked);
-                        mReceivableTv2.clearComposingText();
-                        mReceivableTv2.clearComposingText();
-                        Glide.with(getApplication()).load(R.mipmap.icon_chuantu).into(add1);
-                        Glide.with(getApplication()).load(R.mipmap.icon_chuantu).into(add2);
+
+                        String userId = SharedPrefrenceUtils.getString(AlipayReceiverCodeActivity.this, NormalConfig.USER_ID);
+                        if (userId!=null)mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE,Integer.parseInt(userId),2,2);
                     }
             }
         });

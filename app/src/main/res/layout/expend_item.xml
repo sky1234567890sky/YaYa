@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="@dimen/dp_70"
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginLeft="@dimen/dp_12"
-    android:layout_marginRight="@dimen/sp_13"
-    android:paddingLeft="@dimen/dp_16_5"
-    android:layout_marginTop="@dimen/dp_14_5"
-    android:layout_marginBottom="@dimen/dp_10"
-    android:paddingBottom="@dimen/dp_17"
-    android:paddingRight="@dimen/dp_12"
-    android:background="@drawable/myincome_item_bg"
-    tools:ignore="RtlHardcoded">
+    android:gravity="center"
+  tools:ignore="RtlHardcoded">
+    <RelativeLayout
+        android:layout_height="@dimen/dp_70"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginRight="@dimen/sp_13"
+        android:paddingLeft="@dimen/dp_16_5"
+        android:layout_marginTop="@dimen/dp_14_5"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_17"
+        android:paddingRight="@dimen/dp_12"
+        android:background="@drawable/myincome_item_bg"
+        >
     <TextView
         android:id="@+id/expend_orderId"
         android:layout_width="wrap_content"
@@ -61,4 +68,5 @@
         tools:ignore="HardcodedText"
         android:layout_marginTop="@dimen/dp_15"
         />
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

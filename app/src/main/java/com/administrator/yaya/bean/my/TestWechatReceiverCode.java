@@ -9,7 +9,7 @@ public class TestWechatReceiverCode {
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"vxButtonStatus":2,"userCodeImgList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":3,"userId":1,"imgMoney":1000,"imgUrl":"http://localhost:8080/profile/upload/2019/11/05/14ccb618048e8c66c7ca3d817a5bfd45.jpg","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":2,"userId":1,"imgMoney":2000,"imgUrl":"http://localhost:8080/profile/upload/2019/11/05/59d439f34d89edcbcc4295053b6a3be1.png","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0}],"zfbButtonStatus":2}
+     * data : {"vxButtonStatus":2,"userCodeImgList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":5,"userId":1,"imgMoney":1000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/06/cdad99334b1515d3fb553ac88b70d0ba.jpg","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":3,"userId":1,"imgMoney":1000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/06/451f01109fe01f56c89a31866c123722.jpg","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":2,"userId":1,"imgMoney":2000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/06/650289e36970f6ed1ecfe4edd3f9d876.png","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0}],"zfbButtonStatus":2}
      */
 
     private String msg;
@@ -43,7 +43,7 @@ public class TestWechatReceiverCode {
     public static class DataBean {
         /**
          * vxButtonStatus : 2
-         * userCodeImgList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":3,"userId":1,"imgMoney":1000,"imgUrl":"http://localhost:8080/profile/upload/2019/11/05/14ccb618048e8c66c7ca3d817a5bfd45.jpg","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":2,"userId":1,"imgMoney":2000,"imgUrl":"http://localhost:8080/profile/upload/2019/11/05/59d439f34d89edcbcc4295053b6a3be1.png","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0}]
+         * userCodeImgList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":5,"userId":1,"imgMoney":1000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/06/cdad99334b1515d3fb553ac88b70d0ba.jpg","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":3,"userId":1,"imgMoney":1000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/06/451f01109fe01f56c89a31866c123722.jpg","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":2,"userId":1,"imgMoney":2000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/06/650289e36970f6ed1ecfe4edd3f9d876.png","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0}]
          * zfbButtonStatus : 2
          */
 
@@ -84,10 +84,10 @@ public class TestWechatReceiverCode {
              * updateTime : null
              * remark : null
              * params : {}
-             * imgId : 3
+             * imgId : 5
              * userId : 1
              * imgMoney : 1000
-             * imgUrl : http://localhost:8080/profile/upload/2019/11/05/14ccb618048e8c66c7ca3d817a5bfd45.jpg
+             * imgUrl : http://192.168.0.198:8080/profile/upload/2019/11/06/cdad99334b1515d3fb553ac88b70d0ba.jpg
              * imgType : 1
              * imgStatus : 2
              * userName : 钱浩龙
@@ -242,6 +242,46 @@ public class TestWechatReceiverCode {
 
             public static class ParamsBean {
             }
+
+            @Override
+            public String toString() {
+                return "UserCodeImgListBean{" +
+                        "searchValue=" + searchValue +
+                        ", createBy=" + createBy +
+                        ", createTime=" + createTime +
+                        ", updateBy=" + updateBy +
+                        ", updateTime=" + updateTime +
+                        ", remark=" + remark +
+                        ", params=" + params +
+                        ", imgId=" + imgId +
+                        ", userId=" + userId +
+                        ", imgMoney=" + imgMoney +
+                        ", imgUrl='" + imgUrl + '\'' +
+                        ", imgType=" + imgType +
+                        ", imgStatus=" + imgStatus +
+                        ", userName='" + userName + '\'' +
+                        ", zfbEd=" + zfbEd +
+                        ", wxEd=" + wxEd +
+                        '}';
+            }
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "vxButtonStatus=" + vxButtonStatus +
+                    ", zfbButtonStatus=" + zfbButtonStatus +
+                    ", userCodeImgList=" + userCodeImgList +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "TestWechatReceiverCode{" +
+                "msg='" + msg + '\'' +
+                ", code=" + code +
+                ", data=" + data +
+                '}';
     }
 }

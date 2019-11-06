@@ -18,9 +18,14 @@ import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.my.TestExpend;
 import com.administrator.yaya.bean.my.TestIncome;
+import com.administrator.yaya.bean.my.TestMyEarnings;
+import com.administrator.yaya.bean.my.TestRebate;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.NormalConfig;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -29,20 +34,27 @@ import butterknife.BindView;
  * 支出
  */
 public class ExpendFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
-
     @BindView(R.id.expend_lv)
     RecyclerView mList;
     private ExpendAdapter adapter;
-    private ArrayList<?> list;
-
+    private ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list;
+    @Override
+    protected void initData() {
+        super.initData();
+        String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
+        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),1);//收益类型--1收入-2支出-3返利
+    }
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
-            case ApiConfig.TEST_EXPEND://支出
-                TestExpend testExpend = (TestExpend) t[0];
-                if (testExpend.getCode()==0 && testExpend.getData()!=null) {
-                    Log.i("tag", "支出: " + testExpend.toString());
-
+            case ApiConfig.TEST_MY_EARNINGS://支出
+                TestMyEarnings testMyEarnings = (TestMyEarnings) t[0];
+                if (testMyEarnings.getCode()==0 && testMyEarnings.getData()!=null)  {
+                    Log.i("tag", "支出: " + testMyEarnings.toString());
+                    TestMyEarnings.DataBean data = testMyEarnings.getData();
+                    List<TestMyEarnings.DataBean.UserEarningsListBean> userEarningsList = data.getUserEarningsList();
+                    list.addAll(userEarningsList);
+                    adapter.notifyDataSetChanged();
                 }
         }
     }

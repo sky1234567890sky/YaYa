@@ -1,12 +1,11 @@
 package com.administrator.yaya.activity.my;
 
-import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.administrator.yaya.BR;
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
@@ -19,7 +18,6 @@ import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -55,36 +53,38 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
     protected void initData() {
         super.initData();
         String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        if (userId!=null)mPresenter.getData(ApiConfig.TEST_SMALLBOOK,Integer.parseInt(userId));
+        if (userId != null) mPresenter.getData(ApiConfig.TEST_SMALLBOOK, Integer.parseInt(userId));
     }
+
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
+
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
+
     @Override
     public void onError(int whichApi, Throwable e) {
-
     }
+    @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEST_SMALLBOOK:
                 TestSmallBook testSmallBook = (TestSmallBook) t[0];
-                if (testSmallBook!=null && testSmallBook.getCode()==0){
+                if (testSmallBook != null && testSmallBook.getCode() == 0) {
                     TestSmallBook.DataBean data = testSmallBook.getData();
 //                    moneyToday		今日付款
                     int moneyToday = data.getMoneyToday();
 //                    moneyHistory	历史付款
                     int moneyHistory = data.getMoneyHistory();
+                    smallBookPayMoneyTv.setText(moneyToday + "");
+                    smallBookPayMoneyIv.setText(moneyHistory + "");
 
-                    smallBookPayMoneyTv.setText(moneyToday+"");
-                    smallBookPayMoneyIv.setText(moneyHistory+"");
-
-                }else{
+                } else {
                     ToastUtil.showShort(testSmallBook.getMsg());
                 }
                 break;

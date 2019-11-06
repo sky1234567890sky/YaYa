@@ -66,7 +66,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
         String commodityAmount = getIntent().getStringExtra("commodityAmount");
         String payerName = getIntent().getStringExtra("bankName");
         String commodityPrice = getIntent().getStringExtra("commodityPrice");//应付款金额
-
         String userId = SharedPrefrenceUtils.getString(BaseApp.getApplication(), NormalConfig.USER_ID);
         if (userId!=null) {
             mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK, Integer.parseInt(userId), commodityPrice, payerName, commodityAmount);
@@ -74,7 +73,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
             ToastUtil.showShort("网络请求有误");
         }
     }
-
     @Override
     protected void initData() {
         super.initData();
@@ -110,7 +108,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                 if (bankYinhang!=null)bank.setText(bankYinhang.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
-
             case R.id.bank_money:
                 ClipboardManager bankQian = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。

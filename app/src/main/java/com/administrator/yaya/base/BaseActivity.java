@@ -79,9 +79,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        YCAppBar.setStatusBarLightMode(this,true);
 
         //设置状态栏为黑色
-        YCAppBar.setStatusBarColor(this,
-                ContextCompat.getColor(this,
-                        R.color.c_000000));
+//        YCAppBar.setStatusBarColor(this,
+//                ContextCompat.getColor(this,
+//                        R.color.c_000000));
     }
 
     protected void initExit() {
@@ -137,12 +137,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             });
         }
     }
-
-    private void loadMore() {
+    public void loadMore() {
 
     }
-
-    private void refresh() {
+    public void refresh() {
 
     }
 

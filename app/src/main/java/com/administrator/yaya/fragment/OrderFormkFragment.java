@@ -1,44 +1,34 @@
 package com.administrator.yaya.fragment;
-import android.app.Activity;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
+import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.orderform.CancelFragment;
 import com.administrator.yaya.activity.orderform.FinishFragment;
 import com.administrator.yaya.activity.orderform.SellFragment;
 import com.administrator.yaya.adapter.home.OrderFormAdapter;
-import com.administrator.yaya.base.BaseMvpActivity;
+import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.orderform.TestAllOrderStock;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.NormalConfig;
 import com.flyco.tablayout.SlidingTabLayout;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
+
     @BindView(R.id.inventory_money)
     TextView mInventoryMoney;
     @BindView(R.id.tab_layout)
@@ -52,14 +42,31 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
     private ArrayList<Fragment> fragments;
     private ArrayList<String> titles;
     private String mAmount;
-
     public OrderFormkFragment() {
         // Required empty public constructor
     }
     @Override
-    public void onResponse(int whichApi, Object[] t) {
-
+    protected void initData() {
+        super.initData();
+        String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
+        if (userId!=null) {
+            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), 1);
+        }
     }
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
+        switch (whichApi) {
+            case ApiConfig.TEST_ALL_ORDERSTOCK://所有售卖订单
+                TestAllOrderStock testAllOrderStock = (TestAllOrderStock) t[0];
+                if (testAllOrderStock.getCode() == 0 && testAllOrderStock.getData() != null && testAllOrderStock.getData().getCommodity() != null) {
+                    String amount = testAllOrderStock.getData().getAmount();
+                    mInventoryMoney.setText("今日收款："+amount);
+                }
+                break;
+        }
+                }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_order_formk;
@@ -103,7 +110,6 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();

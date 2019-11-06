@@ -1,5 +1,7 @@
 package com.administrator.yaya.activity.orderform.adapter;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.bean.orderform.TestCancel;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -18,14 +21,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CanaelAdapter extends RecyclerView.Adapter<CanaelAdapter.Vh> {
-    private final List<TestCancel.DataBean.OrderStockListBean> list;
+    private final List<TestCancel.DataBean.OrderSalesListBean> list;
     private final FragmentActivity activity;
+    private TestCancel.DataBean data;
 
-
-    public CanaelAdapter(List<TestCancel.DataBean.OrderStockListBean> list, FragmentActivity activity) {
-
+    public CanaelAdapter(List<TestCancel.DataBean.OrderSalesListBean> list, FragmentActivity activity) {
         this.list = list;
         this.activity = activity;
+    }
+
+    public void setData(TestCancel.DataBean data) {
+
+        this.data = data;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -35,15 +43,16 @@ public class CanaelAdapter extends RecyclerView.Adapter<CanaelAdapter.Vh> {
         return new Vh(inflate);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
-        TestCancel.DataBean.OrderStockListBean orderStockListBean = list.get(i);
+        TestCancel.DataBean.OrderSalesListBean orderStockListBean = list.get(i);
+        TestCancel.DataBean.CommodityBean commodity = data.getCommodity();
 //        结果:
 //        进货订单集合	orderSalesList
 //        订单id		salesId
 //        订单编号	orderNumber
 //        下单时间	salesBuildTime
-        String orderBuildTime = orderStockListBean.getOrderBuildTime();
 //        数量		salesAmount
 //        应付金额	salesAmountMoney
 //        收款方式	orderPayTpe		0无  1微信  2支付宝
@@ -57,13 +66,30 @@ public class CanaelAdapter extends RecyclerView.Adapter<CanaelAdapter.Vh> {
 //        最小购买数量comPurchaseNumMin
 //                最大购买数量comPurchaseNumMax
 //        今日收款数		amoun
-        vh.mCancelOrderBuildTime.setText("取消时间："+orderBuildTime);
-//        vh.mCancelCommodityPrice.setText("售卖总价："+salesAmountMoney);
+        int salesStatus = orderStockListBean.getSalesStatus();
+        if (salesStatus ==3 ||  orderStockListBean!=null) {//1售卖中 2 已完成 3已取消
+            String salesUpdateTime = orderStockListBean.getSalesUpdateTime();
+            String orderNumber = orderStockListBean.getOrderNumber();
+            Object salesAmount = orderStockListBean.getSalesAmount();
+            vh.mCancelOrderBuildTime.setText("取消时间：" + salesUpdateTime);
+            int commodityPrice = orderStockListBean.getCommodityPrice();
+            int orderPayTpe = orderStockListBean.getOrderPayTpe();
+            int salesAmountMoney = orderStockListBean.getSalesAmountMoney();
+            String salesBuildTime = orderStockListBean.getSalesBuildTime();
+            vh.mCancelCommodityPrice.setText("售卖总价￥："+salesAmountMoney);
+            String amount = data.getAmount();
+            vh.mCancelGcomName.setText(amount);
+            String comImg = commodity.getComImg();
+            Glide.with(activity).load(comImg).into(vh.mCancelComImg);
+            int comInventory = commodity.getComInventory();
+
+        }
     }
     @Override
     public int getItemCount() {
         return list != null ? list.size() : 0;
     }
+
 
     public class Vh extends RecyclerView.ViewHolder{
         @BindView(R.id.cancel_right_iv)

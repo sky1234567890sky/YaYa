@@ -21,10 +21,10 @@ import butterknife.ButterKnife;
 //已完成adapter
 public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 
-    private List<TestAllOrderStock.DataBean.OrderStockListBean> list;
+    private List<TestAllOrderStock.DataBean.OrderSalesListBean> list;
     private FragmentActivity activity;
 
-    public FinishAdapter(List<TestAllOrderStock.DataBean.OrderStockListBean> list, FragmentActivity activity) {
+    public FinishAdapter(List<TestAllOrderStock.DataBean.OrderSalesListBean> list, FragmentActivity activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -39,7 +39,7 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
-        TestAllOrderStock.DataBean.OrderStockListBean orderStockListBean = list.get(i);
+        TestAllOrderStock.DataBean.OrderSalesListBean orderStockListBean = list.get(i);
 //        进货订单集合	orderSalesList
 //        订单id		salesId
 //        订单编号	orderNumber
@@ -51,7 +51,7 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 //        收款方式	orderPayTpe		0无  1微信  2支付宝
 //        状态		salesStatus		1售卖中 2 已完成 3已取消
 //        操作时间	salesUpdateTime
-        String orderBuildTime = orderStockListBean.getOrderBuildTime();
+        String orderBuildTime = orderStockListBean.getOrderNumber();
 //        货物信息对象	commodity
 //        货物名称	comName
 //        货物单价	comPrice
@@ -68,7 +68,6 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
     public int getItemCount() {
         return list!=null ? list.size() : 0;
     }
-
     public class Vh extends RecyclerView.ViewHolder {
         @BindView(R.id.finish_right_iv)
         ImageView mFinishRightIv;

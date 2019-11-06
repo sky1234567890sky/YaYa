@@ -46,13 +46,11 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
     protected int getLayoutId() {
         return R.layout.activity_updata_password;
     }
-
     @Override
     protected void initView() {
         //倒计时工具类
         mDownTimerUtils = new CountDownTimerUtils(updateBtvGetverificationCode, 60000, 1000);
     }
-
     @OnClick({R.id.update_back_iv, R.id.update_btv_getverificationCode, R.id.update_ok_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {

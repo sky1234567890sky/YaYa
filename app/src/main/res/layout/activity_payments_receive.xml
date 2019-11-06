@@ -70,6 +70,8 @@
             tools:ignore="RtlHardcoded" />
         <!--android:theme="@style/switch_color"-->
     </RelativeLayout>
+        <!--图片-->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -81,14 +83,15 @@
             android:background="#F8F8F8"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
                 android:id="@+id/add1"
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="@dimen/dp_48"
                 android:src="@mipmap/icon_chuantu"
+                android:background="@drawable/ripple_bg"
                 />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/two_ll"
             android:layout_width="@dimen/dp_150"
@@ -101,13 +104,13 @@
             android:gravity="center"
             android:orientation="vertical"
             tools:ignore="RtlHardcoded">
-
             <ImageView
                 android:id="@+id/add2"
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="@dimen/dp_48"
                 android:src="@mipmap/icon_chuantu"
                 tools:ignore="ContentDescription"
+                android:background="@drawable/ripple_bg"
                 />
         </LinearLayout>
 
@@ -134,7 +137,7 @@
             android:layout_marginTop="@dimen/dp_14"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_24"
-            android:text="xxx元"
+            android:text="---元"
             android:textColor="@color/c_101010"
             android:textSize="@dimen/sp_15"
             tools:ignore="HardcodedText"
@@ -156,7 +159,9 @@
                 android:id="@+id/add3"
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="@dimen/dp_48"
-                android:src="@mipmap/icon_chuantu" />
+                android:src="@mipmap/icon_chuantu"
+                android:background="@drawable/ripple_bg"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -174,7 +179,8 @@
                 android:id="@+id/add4"
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="@dimen/dp_48"
-                android:src="@mipmap/icon_chuantu" />
+                android:src="@mipmap/icon_chuantu"
+                android:background="@drawable/ripple_bg"/>
         </LinearLayout>
     </RelativeLayout>
     <RelativeLayout
@@ -188,7 +194,7 @@
         android:id="@+id/receivable_tv3"
         android:layout_width="@dimen/dp_150"
         android:layout_height="wrap_content"
-        android:text="xxx元"
+        android:text="---元"
         android:textColor="@color/c_101010"
         android:textSize="@dimen/sp_14"
         android:gravity="center"
@@ -198,7 +204,7 @@
             android:id="@+id/receivable_tv4"
             android:layout_width="@dimen/dp_150"
             android:layout_height="wrap_content"
-            android:text="xxx元"
+            android:text="---元"
             android:textColor="@color/c_101010"
             android:textSize="@dimen/sp_15"
             android:gravity="center"

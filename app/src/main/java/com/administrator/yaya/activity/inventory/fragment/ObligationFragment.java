@@ -61,7 +61,6 @@ RecyclerView mList;
 //                最大购买数量comPurchaseNumMax
 //        库存合计数量	amount
     }
-
     @Override
     protected void initListener() {
         super.initListener();
@@ -82,20 +81,12 @@ RecyclerView mList;
                 if (testObligation.getCode() == 0 && testObligation.getData() != null) {
 //                    Log.i("tag", "待付款数据: "+testObligation.toString());
                     TestObligation.DataBean data = testObligation.getData();
+                    String amount = data.getAmount();
                     List<TestObligation.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
                     list.addAll(orderStockList);
                     adapter.notifyDataSetChanged();
                 } else {
                     ToastUtil.showShort(testObligation.getMsg());
-                }
-                break;
-                //取消进货订单
-            case ApiConfig.TEST_CANCEL_ORDER_STOCK:
-                TestCancelOrderStock testCancelOrderStock = (TestCancelOrderStock) t[0];
-                if (testCancelOrderStock!=null && testCancelOrderStock.getCode() == 0){
-                    ToastUtil.showShort(testCancelOrderStock.getMsg());
-                }else{
-                    ToastUtil.showShort(testCancelOrderStock.getMsg());
                 }
                 break;
         }

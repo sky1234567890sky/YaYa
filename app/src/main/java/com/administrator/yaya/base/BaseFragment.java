@@ -35,7 +35,6 @@ public abstract class BaseFragment extends Fragment {
 
     private Unbinder bind;
     private LinearLayoutManager mManager;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,11 +45,8 @@ public abstract class BaseFragment extends Fragment {
         initData();
         initListener();
         return inflate;
-
     }
-
     protected abstract int getLayoutId();
-
     protected void initData() {
 
     }
@@ -58,12 +54,9 @@ public abstract class BaseFragment extends Fragment {
     protected void initListener() {
 
     }
-
-
     protected void initView(View inflate) {
 
     }
-
     protected void initMvp() {
 
     }
@@ -89,11 +82,11 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-    private void loadMore() {
+    public void loadMore() {
 
     }
 
-    private void refresh() {
+    public  void refresh() {
 
     }
 
