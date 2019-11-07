@@ -45,16 +45,20 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //    TabLayout mTab;
     @BindView(R.id.inventory_vp)
     ViewPager vp;
+
     private ArrayList<String> titles;
     private ArrayList<Fragment> fragments;
     private AccountPaidFragment accountPaidFragment;
     private ObligationFragment obligationFragment;
     private int mAmount;
     private int mAccountAmount;
+    private int num = 1;
+
     @Override
     public boolean getUserVisibleHint() {
         return super.getUserVisibleHint();
     }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -66,15 +70,18 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     @Override
     protected void initData() {
         super.initData();
+
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
-        if (userId != null) mPresenter.getData(ApiConfig.TEXT_GATHERING, Integer.parseInt(userId), 1);//已付款
+        if (userId != null) mPresenter.getData(ApiConfig.TEXT_GATHERING, Integer.parseInt(userId), num);//已付款
     }
     @Override
     protected void initView(View inflate) {
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.blue));
         titles = new ArrayList<>();
+
         titles.add("待付款");
         titles.add("已付款");
+
         fragments = new ArrayList<>();
         accountPaidFragment = new AccountPaidFragment();
         obligationFragment = new ObligationFragment();
@@ -95,6 +102,7 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMsgEvent1(int amount){
     }
+
     @Override
     public void onStart() {
         super.onStart();

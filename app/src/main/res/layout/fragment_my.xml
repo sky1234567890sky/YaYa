@@ -64,7 +64,9 @@
                 android:src="@mipmap/icon_xiaoxi"
                 android:background="@drawable/ripple_bg"
                 />
+
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/my_ll"
             android:layout_width="match_parent"
@@ -72,7 +74,7 @@
             android:layout_marginLeft="@dimen/dp_12_5"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_12_5"
-            android:background="@drawable/homepage_shape_bg"
+            android:background="@drawable/background_rl"
             android:paddingLeft="@dimen/dp_14">
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/iv"

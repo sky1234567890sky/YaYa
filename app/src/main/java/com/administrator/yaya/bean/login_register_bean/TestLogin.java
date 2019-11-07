@@ -3,14 +3,11 @@ package com.administrator.yaya.bean.login_register_bean;
 import java.io.Serializable;
 
 public class TestLogin implements Serializable {
-
-
     /**
      * msg : 操作成功
      * code : 0
      * data : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":13,"userName":null,"userNickName":null,"userHeadImg":null,"userPhone":"18898186027","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"W0VXY2","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":21,"parentUser":null,"juniorUsers":null,"junior":null}
      */
-
     private String msg;
     private int code;
     private DataBean data;
@@ -26,11 +23,9 @@ public class TestLogin implements Serializable {
     public int getCode() {
         return code;
     }
-
     public void setCode(int code) {
         this.code = code;
     }
-
     public DataBean getData() {
         return data;
     }
@@ -314,5 +309,48 @@ public class TestLogin implements Serializable {
 
         public static class ParamsBean {
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "searchValue=" + searchValue +
+                    ", createBy=" + createBy +
+                    ", createTime=" + createTime +
+                    ", updateBy=" + updateBy +
+                    ", updateTime=" + updateTime +
+                    ", remark=" + remark +
+                    ", params=" + params +
+                    ", userId=" + userId +
+                    ", userName=" + userName +
+                    ", userNickName=" + userNickName +
+                    ", userHeadImg=" + userHeadImg +
+                    ", userPhone='" + userPhone + '\'' +
+                    ", userPwd='" + userPwd + '\'' +
+                    ", userProfit=" + userProfit +
+                    ", userStatus=" + userStatus +
+                    ", userInvitationCode='" + userInvitationCode + '\'' +
+                    ", userParentId=" + userParentId +
+                    ", userEarningsNow=" + userEarningsNow +
+                    ", userEarningsTotal=" + userEarningsTotal +
+                    ", userContributeTotal=" + userContributeTotal +
+                    ", zfbEd=" + zfbEd +
+                    ", wxEd=" + wxEd +
+                    ", vxButtonStatus=" + vxButtonStatus +
+                    ", zfbButtonStatus=" + zfbButtonStatus +
+                    ", parentUser=" + parentUser +
+                    ", juniorUsers=" + juniorUsers +
+                    ", junior=" + junior +
+                    '}';
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        return "TestLogin{" +
+                "msg='" + msg + '\'' +
+                ", code=" + code +
+                ", data=" + data +
+                '}';
     }
 }

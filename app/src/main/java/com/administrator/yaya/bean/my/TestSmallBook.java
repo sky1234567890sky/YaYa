@@ -1,11 +1,10 @@
 package com.administrator.yaya.bean.my;
 //我的小账本
 public class TestSmallBook {
-
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userId":null,"moneyToday":26129,"moneyHistory":36159,"moneyWxToday":0,"moneyWxHistory":0,"moneyZfbToday":0,"moneyZfbHistory":0}
+     * data : {"userId":null,"moneyToday":0,"moneyHistory":26159,"moneyWxToday":0,"moneyWxHistory":0,"moneyZfbToday":0,"moneyZfbHistory":0}
      */
 
     private String msg;
@@ -39,8 +38,8 @@ public class TestSmallBook {
     public static class DataBean {
         /**
          * userId : null
-         * moneyToday : 26129
-         * moneyHistory : 36159
+         * moneyToday : 0
+         * moneyHistory : 26159
          * moneyWxToday : 0
          * moneyWxHistory : 0
          * moneyZfbToday : 0

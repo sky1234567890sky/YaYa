@@ -30,6 +30,7 @@ public class ExpendAdapter extends RecyclerView.Adapter<ExpendAdapter.Vh> {
         @SuppressLint("InflateParams") View inflate = LayoutInflater.from(context).inflate(R.layout.expend_item, null);
         return new Vh(inflate);
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {

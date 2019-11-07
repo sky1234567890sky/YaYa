@@ -25,32 +25,24 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
-import com.administrator.yaya.bean.invite.TestObligation;
+import com.administrator.yaya.bean.invite.TestAccountPaid;
 import com.administrator.yaya.bean.invite.TestUpawaySingleGoods;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
-
-import org.greenrobot.eventbus.EventBus;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  * 已付款
  */
 public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
-
 //    @BindView(R.id.yifu_orderNumber)
 //    TextView mYifuOrderNumber;
 //    @BindView(R.id.yifu_comImg)
@@ -68,62 +60,52 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
 
         @BindView(R.id.accountpaid_list)
         RecyclerView mList;
-    List<TestObligation.DataBean.OrderStockListBean> list ;
-    private AccountPaidAdapter adapter;
+        @BindView(R.id.account_refreshLayout)
+        SmartRefreshLayout accountRefreshLayout;
 
-    private ImageView mCancelPopCloseIv;
+        List<TestAccountPaid> list ;
+
+        private AccountPaidAdapter adapter;
+        private ImageView mCancelPopCloseIv;
     private TextView mPopupTvNumber;
     private TextView mPopupTvCancel;
     private TextView mPopupTvOk;
     private PopupWindow popupWindow;
 
     private String inventoryNumber;//库存数量
-    private String amount;
+
+    private int num = 2;
+    private TestAccountPaid.DataBean data;
+    private List<TestAccountPaid.DataBean.OrderStockListBean> orderStockList;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
         list = new ArrayList<>();
+        initRecycleView(mList,accountRefreshLayout);
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mList.setNestedScrollingEnabled(false);
-        adapter = new AccountPaidAdapter(list, getActivity());
+        adapter = new AccountPaidAdapter(list,getActivity());
         mList.setAdapter(adapter);
+    }
+    @Override
+    public void refresh() {
+        super.refresh();
 
-//        if (list==null){
-//            TestAccountPaid.DataBean.OrderStockListBean orderStockList = list.get(0);
-//            mYifuCommodityAmount.setText("数量：" + orderStockList.getCommodityAmount());
-//            mYifuCommodityPrice.setText("付款金额：" + orderStockList.getCommodityPrice());
-//            mYifuComPrice.setText("单价￥：" + orderStockList.getCommodityPrice());
-////        accountpaidItem.mYifuGamemoney.setText("");
-//            mYifuOrderNumber.setText("订单编号：" + orderStockList.getOrderNumber());
-//        }
-
-//        Log.i("tag", "已售卖=====>: "+list.toString());
-//        if (list.size()>0) {
-//            TestObligation.DataBean.OrderStockListBean orderStockListBean = list.get(1);
-//            mYifuCommodityAmount.setText("数量：" + orderStockListBean.getCommodityAmount());
-//            mYifuCommodityPrice.setText("付款金额：" + orderStockListBean.getCommodityPrice());
-//            mYifuComPrice.setText("单价￥：" + orderStockListBean.getCommodityPrice());
-////                      accountpaidItem.mYifuGamemoney.setText("");
-//            mYifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
-//        }
+    }
+    @Override
+    public void loadMore() {
+        super.loadMore();
     }
     @Override
     protected void initListener() {
         super.initListener();
-
-//        mYifuUpBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                putAway();
-//            }
-//        });
-
         adapter.setAccountpaidsetOnclikListener(new AccountPaidAdapter.AccountpaidsetOnclikListener() {
             @Override
             public void setonclik(int postion) {
-                TestObligation.DataBean.OrderStockListBean orderStockListBean = list.get(postion);
-                putAway(orderStockListBean);
+                String amount = data.getAmount();//库存数量
+                putAway();
             }
         });
     }
@@ -131,25 +113,15 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
-            case ApiConfig.TEXT_GATHERING:
-                TestObligation testObligation = (TestObligation) t[0];
-
+            case ApiConfig.TEXT_GATHERING2:
+                TestAccountPaid testObligation = (TestAccountPaid) t[0];
+                TestAccountPaid.DataBean data = testObligation.getData();
+                orderStockList = data.getOrderStockList();
                 if (testObligation.getCode() == 0 && testObligation.getData() != null) {
+
                     Log.i("tag", "已付款。。。: "+testObligation.toString());
-                    TestObligation.DataBean data = testObligation.getData();
-//                    amount = data.getAmount();
-//                    EventBus.getDefault().postSticky(amount);
-                    List<TestObligation.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
-                    list.addAll(orderStockList);
+//                    list.addAll(testObligation);
                     adapter.notifyDataSetChanged();
-//                    Log.i("tag", "已售卖1=====>: "+orderStockList.toString());
-//                    TestObligation.DataBean.OrderStockListBean orderStockListBean = orderStockList.get(1);
-//                    mYifuCommodityAmount.setText("数量：" + orderStockListBean.getCommodityAmount());
-//                    mYifuCommodityPrice.setText("付款金额：" + orderStockListBean.getCommodityPrice());
-//                    mYifuComPrice.setText("单价￥：" + orderStockListBean.getCommodityPrice());
-////                      accountpaidItem.mYifuGamemoney.setText("");
-//                    mYifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
-//                    EventBus.getDefault().postSticky(amount);
                 }else{
                     ToastUtil.showShort(testObligation.getMsg());
                 }
@@ -198,7 +170,7 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
     protected void initData() {
         super.initData();
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
-        if (userId != null) mPresenter.getData(ApiConfig.TEXT_GATHERING, Integer.parseInt(userId), 1);//已付款
+        if (userId != null) mPresenter.getData(ApiConfig.TEXT_GATHERING2, Integer.parseInt(userId),num);//已付款
 //        Rx2AndroidNetworking.post("http://192.168.0.198:8080/yayaApp/comBuy/allOrderStock?userId=1&orderStatus=2")
 //                .build()
 //                .getStringObservable()
@@ -247,16 +219,16 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
     public AccountPaidFragment() {
         // Required empty public constructor
     }
-
     @SuppressLint("SetTextI18n")
-    private void putAway(TestObligation.DataBean.OrderStockListBean orderStockListBean) {
+    private void putAway() {
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.layout_putaway, null);
         //显示营业游戏币数量
         mCancelPopCloseIv = inflate.findViewById(R.id.cancel_pop_close_iv);
         mPopupTvNumber = inflate.findViewById(R.id.popup_tv_number);
         mPopupTvCancel = inflate.findViewById(R.id.popup_tv_cancel);
         mPopupTvOk = inflate.findViewById(R.id.popup_tv_ok);
-        mPopupTvNumber.setText(amount);
+
+//        mPopupTvNumber.setText();//库存数量
 //        if (orderStockList.size()>0) {
 //            mPopupTvNumber.setText(orderStockList.get(0).getCommodityAmount());//数量
 //        } else{
@@ -302,8 +274,10 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
         mPopupTvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                String orderNumber = orderStockListBean.getOrderNumber();
+
                 //上架单个货物（请求网络数据）
-                mPresenter.getData(ApiConfig.TEST_UPAWAY_SINGLE_GOODS, "191104104823647");//传入订单编号
+                mPresenter.getData(ApiConfig.TEST_UPAWAY_SINGLE_GOODS,"");//传入订单编号
 //                直接营业
 //                FragmentTransaction fragmentTransaction = new FragmentManager().beginTransaction();
 //                FragmentUtils.addFragment(getChildFragmentManager(),new OrderFormkFragment().getClass(), R.id.home_fragment);

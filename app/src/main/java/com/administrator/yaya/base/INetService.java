@@ -54,7 +54,6 @@ public interface INetService {
     @POST("/v2/sms/send")
     @FormUrlEncoded
     Observable<VerifyCodeInfo> getVerify(@FieldMap Map<String, String> params, @HeaderMap Map<String, String> maps);
-
     @POST("/v2/sms/send")
     @Headers("Content-Type:application/json")
     Observable<VerifyCodeInfo> getVerify2(@Body RequestBody pBody);
@@ -105,7 +104,7 @@ public interface INetService {
     @POST("comBuy/allOrderStock")
     @FormUrlEncoded
 //已付款
-    Observable<TestAccountPaid> getTestAccountPaid(@Field("userId") int userId, @Field("orderNumber") int orderNumber);//订单编
+    Observable<TestAccountPaid> getTestAccountPaid(@Field("userId") int userId, @Field("orderStatus") int orderNumber);//订单编
 
     //付款信息 http://192.168.0.198:8080/yayaApp/comBuy/getGathering
     @POST("comBuy/getGathering")

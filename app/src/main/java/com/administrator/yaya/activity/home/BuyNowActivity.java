@@ -36,7 +36,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
     @BindView(R.id.now_buy_iv)
     ImageView nowBuyIv;
-
     @BindView(R.id.buy_comName)
     TextView mComName;
     @BindView(R.id.buy_comPrice)
@@ -71,31 +70,31 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     EditText bankName;
     private int comPurchaseNumMax;
     private int comPurchaseNumMin;
-    private int comPrice;
     private int comInventory;
+    private double comPrice;
+
     @Override
     protected void initView() {
         super.initView();
     }
+
     @Override
     protected void initData() {
         super.initData();
-
         mPresenter.getData(ApiConfig.TEXT_BUY_COM);
     }
     @Override
     public void onError(int whichApi, Throwable e) {
+
     }
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_BUY_COM:
-
                 TestBuyCom  testBuyCom= (TestBuyCom) t[0];
-
             if (testBuyCom.getCode()==0 && testBuyCom.getData()!=null){
-
+                Log.i("tag", "立即購買====》: "+testBuyCom.toString());
                 String comImg = testBuyCom.getData().getComImg();
 
                 Glide.with(this).load(comImg).apply(new RequestOptions().centerCrop()).into(nowBuGamemoneyIv);
@@ -129,6 +128,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 break;
         }
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_buy_now;
@@ -151,13 +151,14 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     payMoney2.setText("0");
                     return;
                 }
+
                 char tv_money = tv.charAt(0);
                 if (s.length() <= 0 || s.equals("")) {
                     payMoney2.setText("0");
                     return;
                 }else{
                     int i = Integer.parseInt(String.valueOf(s));
-                    payMoney2.setText(i * comPrice + "");
+                    payMoney2.setText(i*comPrice + "");
                 }
 
                 int i = Integer.parseInt(String.valueOf(s));
@@ -174,7 +175,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
             }
         });
     }
-
     @OnClick({R.id.now_buy_iv, R.id.nowbuy_commit_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {

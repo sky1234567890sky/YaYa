@@ -20,9 +20,11 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.MainActivity;
+import com.administrator.yaya.bean.invite.TestAccountPaid;
 import com.administrator.yaya.bean.invite.TestObligation;
 import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.utils.FragmentUtils;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -31,18 +33,18 @@ import butterknife.ButterKnife;
 
 public class AccountPaidAdapter extends RecyclerView.Adapter<AccountPaidAdapter.AccountpaidItem> {
 
-    private final List<TestObligation.DataBean.OrderStockListBean> list;
-    private final FragmentActivity fragmentActivity;
+    private List<TestAccountPaid.DataBean.OrderStockListBean> list;
+    private TestAccountPaid.DataBean data;
+    private FragmentActivity fragmentActivity;
     private Context context;
-    private PopupWindow popupWindow;
-    private ImageView mCancelPopCloseIv;
-    private TextView mPopupTvNumber;
-    private TextView mPopupTvCancel;
-    private TextView mPopupTvOk;
-
-    public AccountPaidAdapter(List<TestObligation.DataBean.OrderStockListBean> list, FragmentActivity activity) {
+    public AccountPaidAdapter(TestAccountPaid.DataBean data, List<TestAccountPaid.DataBean.OrderStockListBean> list, FragmentActivity activity) {
+        this.data = data;
         this.list = list;
-        fragmentActivity = activity;
+        this.fragmentActivity = activity;
+    }
+
+    public AccountPaidAdapter(List<TestAccountPaid> list, FragmentActivity activity) {
+
     }
 
     @NonNull
@@ -52,17 +54,20 @@ public class AccountPaidAdapter extends RecyclerView.Adapter<AccountPaidAdapter.
         View inflate = LayoutInflater.from(context).inflate(R.layout.accountpaid_item, null);
         return new AccountpaidItem(inflate);
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull AccountpaidItem accountpaidItem, @SuppressLint("RecyclerView") final int i) {
-        final TestObligation.DataBean.OrderStockListBean orderStockListBean = list.get(i);
+        TestAccountPaid.DataBean.OrderStockListBean orderStockListBean = list.get(i);
+        TestAccountPaid.DataBean.CommodityBean commodity = data.getCommodity();
+
         accountpaidItem.mYifuCommodityAmount.setText("数量："+ orderStockListBean.getCommodityAmount());
         accountpaidItem.mYifuCommodityPrice.setText("付款金额：" + orderStockListBean.getCommodityPrice());
-        accountpaidItem.mYifuComPrice.setText("单价￥：" + orderStockListBean.getCommodityPrice());
-//        accountpaidItem.mYifuGamemoney.setText("");
+        accountpaidItem.mYifuComPrice.setText("单价￥：" + commodity.getComPrice());
+        accountpaidItem.mYifuGamemoney.setText(commodity.getComName());
+
         accountpaidItem.mYifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
-//        Glide.with(context).load().into(accountpaidItem.mYifuComImg)
+
+        Glide.with(context).load(commodity.getComImg()).placeholder(R.mipmap.icon).into(accountpaidItem.mYifuComImg);
 
         accountpaidItem.mYifuUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +83,6 @@ public class AccountPaidAdapter extends RecyclerView.Adapter<AccountPaidAdapter.
     public int getItemCount() {
         return list != null ? list.size() : 0;
     }
-
     public class AccountpaidItem extends RecyclerView.ViewHolder {
         @BindView(R.id.yifu_orderNumber)
         TextView mYifuOrderNumber;

@@ -41,7 +41,7 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
     private CancelFragment cancelFragment;
     private ArrayList<Fragment> fragments;
     private ArrayList<String> titles;
-    private String mAmount;
+    private int num =1;
     public OrderFormkFragment() {
         // Required empty public constructor
     }
@@ -50,9 +50,10 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
         super.initData();
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
         if (userId!=null) {
-            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), 1);
+            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), num);
         }
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -65,7 +66,7 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
                 }
                 break;
         }
-                }
+     }
 
     @Override
     protected int getLayoutId() {
@@ -85,6 +86,7 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
         fragments.add(sellFragment);
         fragments.add(finishFragment);
         fragments.add(cancelFragment);
+
         titles.add("售卖中");
         titles.add("已完成");
         titles.add("已取消");
@@ -118,27 +120,6 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
     @Override
     public void onError(int whichApi, Throwable e) {
 
-    }
-
-    //接收订阅的事件
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMsgEvent(String amount){
-        mAmount = amount;
-//        tv.setText(comInventory);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        //注册
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        //取消注册
-        EventBus.getDefault().unregister(this);
     }
 
 }

@@ -14,6 +14,7 @@ import com.administrator.yaya.R;
 import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
+import com.administrator.yaya.base.NetConfig;
 import com.administrator.yaya.bean.my.TestLoadHeadlerIv;
 import com.administrator.yaya.design.SmsVerifyView;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
@@ -173,9 +174,8 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
 
                 .build();
         Request request = new Request.Builder()
-                .url("http://192.168.0.198:8080/yayaApp/updateHeadImg")
+                .url(NetConfig.BaseUrl+"updateHeadImg")
                 .post(body)
-
                 .build();
 
         Call call = okHttpClient.newCall(request);

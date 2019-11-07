@@ -57,6 +57,8 @@
 
     <RelativeLayout
     android:background="@drawable/background_rl"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_5"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:paddingLeft="@dimen/dp_14"
@@ -64,7 +66,6 @@
     android:layout_marginTop="@dimen/dp_15"
     android:layout_marginLeft="@dimen/dp_10"
     >
-
     <com.makeramen.roundedimageview.RoundedImageView
         app:riv_oval="true"
         android:layout_height="@dimen/dp_50"
@@ -80,7 +81,7 @@
         android:layout_marginLeft="@dimen/dp_25"
         android:textSize="@dimen/sp_16"
         android:textColor="#333333"
-        android:text="xxx"
+        android:text="---"
         android:layout_toRightOf="@id/myinvite_iv"
         android:layout_alignTop="@id/myinvite_iv"
         />
@@ -94,7 +95,7 @@
         android:textSize="@dimen/sp_14"
         android:textColor="#333333"
         android:textStyle="normal"
-        android:text="ID : xxx"
+        android:text="ID : ---"
         android:layout_toRightOf="@id/myinvite_iv"
         android:layout_alignBottom="@id/myinvite_iv"
         tools:ignore="HardcodedText,RtlHardcoded" />
@@ -106,7 +107,7 @@
         android:layout_marginTop="@dimen/dp_12"
         android:textSize="@dimen/sp_14"
         android:textColor="#000"
-        android:text="返利比例：xxx"
+        android:text="返利比例：2%"
         android:layout_toRightOf="@id/my_name_state_tv"
         android:layout_alignBottom="@id/my_name_state_tv"
         />
@@ -135,7 +136,7 @@
             android:layout_width="match_parent"
             android:textSize="@dimen/sp_26"
             android:textColor="@color/white"
-            android:text="xxx"
+            android:text="---"
             android:layout_toLeftOf="@id/wire"
             android:layout_marginTop="@dimen/dp_22"
             android:gravity="center"
@@ -147,12 +148,13 @@
             android:layout_toRightOf="@id/wire"
             android:gravity="center"
             android:textSize="@dimen/sp_26"
-            android:text="xxx"
+            android:text="---"
             android:textColor="@color/white"
             android:layout_marginTop="@dimen/dp_22"
             android:layout_alignParentRight="true"
             />
-        <TextView android:layout_height="wrap_content"
+        <TextView
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/dp_10"
             android:textSize="@dimen/sp_14"

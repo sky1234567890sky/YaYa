@@ -34,7 +34,6 @@ import butterknife.OnClick;
  * 支付宝收款
  */
 public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
-
     @BindView(R.id.pay_receive_back_iv)
     ImageView payReceiveBackIv;
     @BindView(R.id.two_switch)
@@ -133,9 +132,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 //                        mReceivableTv3.setText(list.get(1).getImgMoney()+"元");
 //                        mReceivableTv4.setText(list.get(0).getImgMoney()+"元");
                     } else {
-
 //                        ToastUtil.showShort( "onCheckedChanged: 关闭" + isChecked);
-
                         String userId = SharedPrefrenceUtils.getString(AlipayReceiverCodeActivity.this, NormalConfig.USER_ID);
                         if (userId!=null)mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE,Integer.parseInt(userId),2,2);
                     }

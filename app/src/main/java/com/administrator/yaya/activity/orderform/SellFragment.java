@@ -18,6 +18,7 @@ import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -30,12 +31,16 @@ import butterknife.BindView;
  * 售卖中
  */
 public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
-
     @BindView(R.id.sell_lv)
     RecyclerView mList;
+    @BindView(R.id.sell_refreshLayout)
+    SmartRefreshLayout sellResh;
+
     private List<TestAllOrderStock.DataBean.OrderSalesListBean> list = new ArrayList<>();
     private SellAdapter adapter;
     private TestAllOrderStock.DataBean data;
+    private int cancelIndex;
+    private int num = 1;
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
@@ -57,7 +62,7 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
-            case ApiConfig.TEST_ALL_ORDERSTOCK://所有售卖订单
+            case ApiConfig.TEST_ALL_ORDERSTOCK://售卖中
                 TestAllOrderStock testAllOrderStock = (TestAllOrderStock) t[0];
                 if (testAllOrderStock.getCode() == 0 && testAllOrderStock.getData() != null && testAllOrderStock.getData().getCommodity() != null) {
                     data = testAllOrderStock.getData();
@@ -95,10 +100,12 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
                 TestCancelOrderStock testCancelOrderStock = (TestCancelOrderStock) t[0];
                 if (testCancelOrderStock != null && testCancelOrderStock.getCode() == 0) {
                     ToastUtil.showShort(testCancelOrderStock.getMsg());
+                    list.get(cancelIndex);
                 } else {
                     ToastUtil.showShort(testCancelOrderStock.getMsg());
                 }
                 break;
+
             //确认收货
             case ApiConfig.TEST_CONFIRM_RECEIPT:
                 TestConfirmReceipt testConfirmReceipt = (TestConfirmReceipt) t[0];
@@ -110,7 +117,6 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
                 break;
         }
     }
-
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
@@ -122,12 +128,11 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
     @Override
     protected void initData() {
         super.initData();
-
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
         if (userId != null) {
-            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), 1);
+            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), num);
         } else {
-            ToastUtil.showShort(R.string.networkerr + "");
+
         }
     }
 
@@ -146,6 +151,7 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
         adapter.setCancelsetOnclikListener(new SellAdapter.CancelsetOnclikListener() {
             @Override
             public void setonclik(int postion) {
+                cancelIndex =  postion;
                 mPresenter.getData(ApiConfig.TEST_CANCEL_ORDER_STOCK, list.get(postion).getSalesId());
             }
         });

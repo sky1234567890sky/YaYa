@@ -32,7 +32,6 @@
                 <!--android:textStyle="normal" />-->
         <!--</RelativeLayout>-->
     <!--</android.support.v7.widget.Toolbar>-->
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,12 +41,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/rl_nav" />
+
+        <View
+            android:id="@+id/nihao"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0_5"
+            android:layout_above="@+id/rl_nav"
+            android:layout_below="@+id/home_fragment"
+            android:layout_marginBottom="@dimen/dp_0_5"
+            android:background="@color/c_cccccc"
+            />
+
         <RelativeLayout
             android:id="@+id/rl_nav"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_49"
             android:layout_alignParentBottom="true"
             >
+
+
+
             <RadioGroup
                 android:id="@+id/rg"
                 android:layout_width="match_parent"
@@ -55,7 +68,6 @@
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:background="@color/c_ffffff"
                 android:paddingTop="@dimen/dp_5"
                 >
                 <RadioButton
@@ -69,7 +81,6 @@
                     android:gravity="center"
                     android:text="@string/homepage"
                     android:textColor="@color/radiobutton_textcolor"
-                    android:background="@drawable/ripple_bg"
                     />
                 <RadioButton
                     android:id="@+id/inventory_btn"
@@ -82,7 +93,6 @@
                     android:gravity="center"
                     android:text="@string/inventory"
                     android:textColor="@color/radiobutton_textcolor"
-                    android:background="@drawable/ripple_bg"
                     />
                 <!--营业-->
                 <RadioButton
@@ -104,7 +114,6 @@
                     android:gravity="center"
                     android:text="@string/orderform"
                     android:textColor="@color/radiobutton_textcolor"
-                    android:background="@drawable/ripple_bg"
                     />
                 <RadioButton
                     android:id="@+id/mine_btn"
@@ -116,7 +125,6 @@
                     android:gravity="center"
                     android:text="@string/my"
                     android:textColor="@color/radiobutton_textcolor"
-                    android:background="@drawable/ripple_bg"
                     />
             </RadioGroup>
         </RelativeLayout>
@@ -127,8 +135,9 @@
             android:layout_height="@dimen/dp_82"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
-            android:layout_marginBottom="0dp"
+            android:layout_marginBottom="@dimen/dp_5"
             android:src="@mipmap/icon_yingye"
             />
+
     </RelativeLayout>
 </LinearLayout>

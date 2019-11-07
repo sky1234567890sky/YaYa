@@ -32,13 +32,13 @@ import butterknife.Unbinder;
 import static com.scwang.smartrefresh.layout.util.DensityUtil.px2dp;
 
 public abstract class BaseFragment extends Fragment {
-
     private Unbinder bind;
     private LinearLayoutManager mManager;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(getLayoutId(), null);
+
         bind = ButterKnife.bind(this, inflate);
         initMvp();
         initView(inflate);
@@ -60,7 +60,6 @@ public abstract class BaseFragment extends Fragment {
     protected void initMvp() {
 
     }
-
     public void initRecycleView(RecyclerView recyclerView, RefreshLayout refreshLayout) {
         mManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mManager);

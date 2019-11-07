@@ -22,7 +22,8 @@
         >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_44">
+            android:layout_height="@dimen/dp_44"
+            >
             <ImageView
                 android:id="@+id/wechatpay_receive_back_iv"
                 android:layout_width="@dimen/dp_39"
@@ -32,6 +33,7 @@
                 android:layout_centerVertical="true"
                 android:background="@drawable/ripple_bg"
                 android:src="@mipmap/icon_back"
+                tools:ignore="ContentDescription"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -69,7 +71,6 @@
             android:track="@drawable/switch_track_selector"
             tools:ignore="RtlHardcoded"
             />
-
     </RelativeLayout>
         <!--android:thumb="@style/switch_color"-->
 
@@ -90,7 +91,7 @@
                 android:layout_width="@dimen/dp_65"
                 android:layout_height="@dimen/dp_65"
                 android:src="@mipmap/icon_chuantu"
-                />
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <LinearLayout

@@ -151,6 +151,7 @@
     android:paddingLeft="@dimen/dp_12"
     android:paddingTop="@dimen/dp_3"
     android:paddingBottom="@dimen/dp_3"
+        android:visibility="gone"
     />
     </RelativeLayout>
 </RelativeLayout>

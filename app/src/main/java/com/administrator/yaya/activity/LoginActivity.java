@@ -1,6 +1,7 @@
 package com.administrator.yaya.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -8,36 +9,26 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.my.UpdataPasswordActivity;
 import com.administrator.yaya.base.ApiConfig;
-import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
 import com.administrator.yaya.design.SmsVerifyView;
-import com.administrator.yaya.jiajun.EncryptionByMD5;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.AppValidationMgr;
 import com.administrator.yaya.utils.NormalConfig;
-import com.administrator.yaya.utils.OkHttpUtils;
 import com.administrator.yaya.utils.ToastUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.haha.perflib.Main;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.model.TResult;
-import org.w3c.dom.Text;
-
-import java.util.prefs.Preferences;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -70,7 +61,16 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
     @SuppressLint("CommitPrefEdits")
     @Override
     protected void initExit() {
-        //在加载布局文件前判断是否登陆过
+        //从修改密码页面回来时传的值
+//        String phone = getIntent().getStringExtra("phone");
+//        if (phone!=null) {
+//            //清除UserId
+//            mName.setText(phone);
+////            SharedPreferences sp = getSharedPreferences("loginUser", Context.MODE_PRIVATE);
+////            Editor editor = sp.edit(); editor.clear(); editor.commit();
+//        }
+
+//          在加载布局文件前判断是否登陆过
         sprfMain = PreferenceManager.getDefaultSharedPreferences(this);
         editorMain = sprfMain.edit();
         //.getBoolean("main",false)；当找不到"main"所对应的键值是默认返回false
@@ -85,8 +85,10 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return R.layout.activity_login;
     }
+
     @Override
     protected void initView(){
+
 //        MonitorNetWorkChange();
 //        SharedPreferences login = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE);
 //        boolean issave = login.getBoolean(NormalConfig.ISFIRSTRUN, false);
@@ -105,21 +107,15 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //            }
 //        }
 
-        //从修改密码页面回来时传的值
-        String phone = getIntent().getStringExtra("phone");
-        if (phone!=null)mName.setText(phone);
-
     }
-
     @SuppressLint("ApplySharedPref")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_LOGIN:
                 TestLogin info = (TestLogin) t[0];
-
+                Log.i("tag", "登錄数据==>: "+info.toString());
                 if (info.getCode()==0 && info.getData()!=null) {
-
                     int userId = info.getData().getUserId();
 
                     ToastUtil.showShort(info.getMsg());
@@ -141,6 +137,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 break;
         }
     }
+
     @Override
     protected void initData() {
         super.initData();
@@ -153,6 +150,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
             case R.id.login_btn:
                 name = mName.getText().toString();
                 pwd = mPsw.getText().toString();
+
 //                Intent intent = new Intent(this, MainActivity.class);
 //                editorMain.putBoolean(NormalConfig.ISFIRST,true);
 //                editorMain.commit();
@@ -165,7 +163,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 Intent intent1 = new Intent(this, RegisterActivity.class);
                 startActivityForResult(intent1,99);
                 break;
-
             case R.id.tv_forgetPassword://忘记密码
                 startActivity(new Intent(this, UpdataPasswordActivity.class));
                 break;
@@ -187,6 +184,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //                startActivity(intent);
 //                LoginActivity.this.finish();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

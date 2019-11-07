@@ -24,6 +24,7 @@ import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,8 @@ public class CancelFragment  extends BaseMvpFragment<LoginModel> implements ICom
 
     @BindView(R.id.cancel_lv)
     RecyclerView mList;
+    @BindView(R.id.cancel_refreshLayout)
+    SmartRefreshLayout cacelRefreshLayout;
 
     private List<TestCancel.DataBean.OrderSalesListBean> list;
     private CanaelAdapter adapter;
