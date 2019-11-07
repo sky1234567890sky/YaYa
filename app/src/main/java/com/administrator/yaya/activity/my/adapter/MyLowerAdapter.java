@@ -43,7 +43,6 @@ public class MyLowerAdapter extends RecyclerView.Adapter<MyLowerAdapter.Vh> {
         int userId = juniorUsersBean.getUserId();
         vh.mId.setText("用户ID："+userId);
     }
-
     @Override
     public int getItemCount() {
         return list != null ? list.size() : 0;

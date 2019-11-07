@@ -18,6 +18,7 @@ import com.administrator.yaya.bean.my.TestRebate;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,9 @@ import butterknife.BindView;
 public class IncomeFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
     @BindView(R.id.income_lv)
     RecyclerView mList;
+    @BindView(R.id.income_refreshLayout)
+    SmartRefreshLayout incomeRefreshLayout;
+
     private IncomeAdapter adapter;
     private ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list;
     public IncomeFragment() {

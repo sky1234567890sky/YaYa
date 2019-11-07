@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.administrator.yaya.base.BaseActivity;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.invite.TestAccountPaid;
 import com.administrator.yaya.bean.invite.TestObligation;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
 import com.administrator.yaya.fragment.HomePageFragment;
@@ -64,9 +66,9 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
     RadioButton mMineBtn;
     @BindView(R.id.rg)
     RadioGroup mRg;
+
     @BindView(R.id.dobusiness_iv)
     ImageView mDobusinessIv;
-
     private FragmentManager manager;
     private ArrayList<Fragment> fragments;
     private ArrayList<Integer> titles;
@@ -78,19 +80,21 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
     private PopupWindow popupWindow;
     private TestLogin loginData;
     private Bundle bundle;
-    private TextView mPopupTvNumber;
+    private int userid;
+    private int num =2;
+    private int anInt;
+    private String amount;
 
     @Override
     protected int getLayoutId() {
 //        Utils.setStatusBar(this, false, false);
         return R.layout.activity_main;
     }
-
     @Override
     protected void initExit() {
+
         super.initExit();
     }
-
     @Override
     protected void initView() {
         super.initView();
@@ -130,7 +134,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
                     .commit();
             mInventoryBtn.setChecked(true);
         }
-
         int upaway = getIntent().getIntExtra("upaway", 0);
         if (upaway == 3) {
             getSupportFragmentManager()
@@ -140,6 +143,7 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
                     .commit();
             mOrderformBtn.setChecked(true);
         }
+
         int orderform = getIntent().getIntExtra("orderform", 0);
         if (orderform == 4) {
             getSupportFragmentManager()
@@ -150,25 +154,36 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
             mOrderformBtn.setChecked(true);
         }
     }
-
     private void initFragment() {
         homePageFragment = new HomePageFragment();
         inventoryFragment = new InventoryFragment();
         orderFormkFragment = new OrderFormkFragment();
         myFragment = new MyFragment();
-
         fragments = new ArrayList<Fragment>();
         fragments.add(homePageFragment);
         fragments.add(inventoryFragment);
         fragments.add(orderFormkFragment);
         fragments.add(myFragment);
     }
-
     @Override
     protected void initData() {
         super.initData();
-//        String userId = SharedPrefrenceUtils.getString(MainActivity.this, NormalConfig.USER_ID);
-//        if (userId != null) mPresenter.getData(ApiConfig.TEXT_GATHERING, Integer.parseInt(userId), 1);//已付款
+        String userId = SharedPrefrenceUtils.getString(getApplicationContext(), NormalConfig.USER_ID);
+        anInt = Integer.parseInt(userId);
+        if (userId!=null)mPresenter.getData(ApiConfig.TEXT_GATHERING, anInt, num);
+    }
+
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
+        switch (whichApi) {
+            case ApiConfig.TEXT_GATHERING:
+                TestObligation testObligation = (TestObligation) t[0];
+                if (testObligation.getCode() == 0 && testObligation.getData() != null) {
+                    Log.i("tag", "进货订单库存===>: "+testObligation.toString());
+                    amount = testObligation.getData().getAmount();
+                }
+                break;
+        }
     }
 
     @Override
@@ -177,7 +192,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 //        registerNetWorkStatus();//监听网络状态
 //        MonitorNetWorkChange();
     }
-
     @Override
     protected void initListener() {
         super.initListener();
@@ -208,34 +222,31 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 //            case R.id.dobusiness_btn:
                 popupSelector();//营业
                 break;
-
             case R.id.orderform_btn://订单
                 FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, bundle);
-
                 //设置状态栏为浅蓝
 //                YCAppBar.setStatusBarColor(this,
 //                        ContextCompat.getColor(this,
 //                                R.color.light_blue));
 //                switchFragment(AppConstants.TYPE_ORDERFORM);
-
                 break;
+
             case R.id.mine_btn://我的
                 FragmentUtils.addFragment(manager, myFragment.getClass(), R.id.home_fragment, bundle);
                 //设置状态栏为白色
 //                YCAppBar.setStatusBarColor(this,
-//                        ContextCompat.getColor(this,
-//                                R.color.c_cccccc));
+//                        ContextCompat.getColor(this,R.color.c_cccccc));
 //                switchFragment(AppConstants.TYPE_MY);
                 break;
         }
     }
-
     private int mLastType = 0;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
             //如果点击的是后退键  首先判断popupWindow是否能够后退   返回值是boolean类型的
+
             if (popupWindow != null) {
                 if (popupWindow.isShowing()) {
                     popupWindow.dismiss();
@@ -258,9 +269,11 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
         //显示营业游戏币数量
         ImageView cancel_iv = inflate.findViewById(R.id.cancel_pop_close_iv);
         //上架数量
-        mPopupTvNumber = inflate.findViewById(R.id.popup_tv_number);
+        TextView upAwayNumber = inflate.findViewById(R.id.popup_tv_number);
         TextView mPopupTvCancel = inflate.findViewById(R.id.popup_tv_cancel);
         TextView mPopupTvOk = inflate.findViewById(R.id.popup_tv_ok);
+
+        upAwayNumber.setText(amount);
 
         popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
         //手动设置 PopupWindow 响应返回键并关闭的问题
@@ -268,7 +281,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 //        popupWindow.setFocusableInTouchMode(true);  //为了保险起见加上这句
         popupWindow.setBackgroundDrawable(new BitmapDrawable()); // www.linuxidc.com响应返回键必须的语句
         popupWindow.setBackgroundDrawable(new ColorDrawable());
-
         popupWindow.setAnimationStyle(R.style.PopupAnimation);
         popupWindow.showAtLocation(inflate, Gravity.CENTER, 0, 0);
         // 设置背景颜色变暗
@@ -287,19 +299,20 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 //        mCancelPopCloseIv.setOnClickListener(this);
 //        mPopupTvCancel.setOnClickListener(this);
 //        mPopupTvOk.setOnClickListener(this);
-
         cancel_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
             }
         });
+
         mPopupTvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
             }
         });
+
         mPopupTvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -311,6 +324,7 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
             }
         });
         popupWindow.setOutsideTouchable(false);
+
 //        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
@@ -338,29 +352,16 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 
     @Override
     protected LoginModel getModel() {
-        return null;
+        return new LoginModel();
     }
 
     @Override
     protected CommonPresenter getPresenter() {
-        return null;
+        return new CommonPresenter();
     }
 
     @Override
     public void onError(int whichApi, Throwable e) {
 
-    }
-
-    @Override
-    public void onResponse(int whichApi, Object[] t) {
-        switch (whichApi) {
-            case ApiConfig.TEXT_GATHERING:
-                TestObligation testObligation = (TestObligation) t[0];
-                if (testObligation.getCode() == 0 && testObligation.getData() != null) {
-                    String amount = testObligation.getData().getAmount();
-//                    mPopupTvNumber.setText(amount);
-                }
-                break;
-        }
     }
 }

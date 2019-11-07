@@ -1,14 +1,21 @@
 package com.administrator.yaya.activity.my;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.base.BaseActivity;
 import com.administrator.yaya.base.BaseApp;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
+import com.administrator.yaya.utils.NormalConfig;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +39,7 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.my_wechat_code_rl)
     RelativeLayout myWechatCodeRl;
 
-    @OnClick({R.id.my_wechat_code_rl,R.id.setting_back_iv,R.id.my_invientory_rl, R.id.my_small_rl, R.id.my_pay_code_rl, R.id.my_update_password_rl, R.id.my_relation_service_rl})
+    @OnClick({R.id.my_wechat_code_rl,R.id.setting_back_iv,R.id.my_invientory_rl, R.id.my_small_rl, R.id.my_pay_code_rl, R.id.my_update_password_rl, R.id.my_relation_service_rl,R.id.log_out_ll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.my_wechat_code_rl://微信收款码
@@ -60,9 +67,36 @@ public class SettingActivity extends BaseActivity {
                 Intent upa = new Intent(this, UpdataPasswordActivity.class);
                 startActivity(upa);
                 break;
+
             case R.id.my_relation_service_rl://联系客服
                 Intent csa = new Intent(this, CustomerServiceActivity.class);
                 startActivity(csa);
+                break;
+
+            case R.id.log_out_ll:
+                //注銷登錄
+                new AlertDialog.Builder(this)
+                        .setTitle("确认退出登录？")
+                        .setNegativeButton("确认", new DialogInterface.OnClickListener() {
+                            @SuppressLint("ApplySharedPref")
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent login = new Intent(SettingActivity.this, LoginActivity.class);
+                                //清除数据
+                                SharedPreferences settings = getSharedPreferences(NormalConfig.USER_ID, MODE_PRIVATE);
+                                SharedPreferences.Editor edit = settings.edit();
+                                edit.clear();
+                                edit.commit();
+                                startActivity(login);
+                            }
+
+                        }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
                 break;
         }
     }

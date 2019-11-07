@@ -5,8 +5,9 @@ public class TestBuyCom {
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":123,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9999999,"comPurchaseNumMin":100,"comPurchaseNumMax":10000,"comExplain":"这是个游戏币1"}
+     * data : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":0.01,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9983650,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"}
      */
+
     private String msg;
     private int code;
     private DataBean data;
@@ -46,12 +47,12 @@ public class TestBuyCom {
          * params : {}
          * comId : 1
          * comName : 游戏币
-         * comPrice : 123
+         * comPrice : 0.01
          * comImg : https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg
-         * comInventory : 9999999
+         * comInventory : 9983650
          * comPurchaseNumMin : 100
-         * comPurchaseNumMax : 10000
-         * comExplain : 这是个游戏币1
+         * comPurchaseNumMax : 10000000
+         * comExplain : 这是个游戏币
          */
 
         private Object searchValue;
@@ -63,7 +64,7 @@ public class TestBuyCom {
         private ParamsBean params;
         private int comId;
         private String comName;
-        private int comPrice;
+        private double comPrice;
         private String comImg;
         private int comInventory;
         private int comPurchaseNumMin;
@@ -142,11 +143,11 @@ public class TestBuyCom {
             this.comName = comName;
         }
 
-        public int getComPrice() {
+        public double getComPrice() {
             return comPrice;
         }
 
-        public void setComPrice(int comPrice) {
+        public void setComPrice(double comPrice) {
             this.comPrice = comPrice;
         }
 
@@ -192,5 +193,35 @@ public class TestBuyCom {
 
         public static class ParamsBean {
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "searchValue=" + searchValue +
+                    ", createBy=" + createBy +
+                    ", createTime=" + createTime +
+                    ", updateBy=" + updateBy +
+                    ", updateTime=" + updateTime +
+                    ", remark=" + remark +
+                    ", params=" + params +
+                    ", comId=" + comId +
+                    ", comName='" + comName + '\'' +
+                    ", comPrice=" + comPrice +
+                    ", comImg='" + comImg + '\'' +
+                    ", comInventory=" + comInventory +
+                    ", comPurchaseNumMin=" + comPurchaseNumMin +
+                    ", comPurchaseNumMax=" + comPurchaseNumMax +
+                    ", comExplain='" + comExplain + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "TestBuyCom{" +
+                "msg='" + msg + '\'' +
+                ", code=" + code +
+                ", data=" + data +
+                '}';
     }
 }

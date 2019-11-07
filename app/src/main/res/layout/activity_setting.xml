@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -241,7 +242,8 @@
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_12"
-                android:background="@drawable/setting_shape_bg">
+                android:background="@drawable/setting_shape_bg"
+                >
 
                 <ImageView
                     android:id="@+id/iv_update"
@@ -269,6 +271,45 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dp_20"
                     android:src="@mipmap/icon_more" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/log_out_ll"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_12"
+                android:background="@drawable/setting_shape_bg"
+                >
+                <ImageView
+                    android:id="@+id/log_out_iv"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:src="@mipmap/icon"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+                <TextView
+                    android:id="@+id/log_out_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_19"
+                    android:layout_toRightOf="@id/log_out_iv"
+                    android:text="退出登录"
+                    android:textColor="@color/c_000000"
+                    android:textSize="@dimen/sp_15"
+                    tools:ignore="HardcodedText,RtlHardcoded"/>
+                <ImageView
+                    android:layout_width="@dimen/dp_9"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:src="@mipmap/icon_more"
+                    tools:ignore="RtlHardcoded"
+                    />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

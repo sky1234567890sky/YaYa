@@ -60,12 +60,10 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
     }
@@ -75,6 +73,7 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
         switch (whichApi) {
             case ApiConfig.TEST_SMALLBOOK:
                 TestSmallBook testSmallBook = (TestSmallBook) t[0];
+
                 if (testSmallBook != null && testSmallBook.getCode() == 0) {
                     TestSmallBook.DataBean data = testSmallBook.getData();
 //                    moneyToday		今日付款

@@ -68,6 +68,7 @@
             android:thumb="@drawable/switch_twocode"
             android:track="@drawable/switch_track_selector"
             tools:ignore="RtlHardcoded" />
+
         <!--android:theme="@style/switch_color"-->
     </RelativeLayout>
         <!--图片-->

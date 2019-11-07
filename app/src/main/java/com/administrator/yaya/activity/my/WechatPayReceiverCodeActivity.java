@@ -104,7 +104,6 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 
     @Override
     protected void initListener() {
-
         wechatpayTwoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -113,7 +112,6 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                     String userId = SharedPrefrenceUtils.getString(WechatPayReceiverCodeActivity.this, NormalConfig.USER_ID);
                     if (userId != null)
                         mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE, Integer.parseInt(userId), 1, 1);
-
 //                    List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList = data.getUserCodeImgList();
 //                    if (userCodeImgList.size()>0) {
 //                        String imgUrl1 = userCodeImgList.get(0).getImgUrl();
@@ -127,7 +125,6 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 //                        Glide.with(WechatPayReceiverCodeActivity.this).load(imgUrl1).into(payAdd1Iv);
 //                        Glide.with(WechatPayReceiverCodeActivity.this).load(imgUrl2).into(payAdd2Iv);
 ////                        Glide.with(WechatPayReceiverCodeActivity.this).load(imgUrl3).into(payAdd3Iv);
-//
 //                        mMoneyTv1.setText(imgMoney1+"元");
 //                        mMoneyTv2.setText(imgMoney2+"元");
 ////                        mMoneyTv3.setText(imgMoney3+"元");
@@ -136,19 +133,15 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                     String userId = SharedPrefrenceUtils.getString(WechatPayReceiverCodeActivity.this, NormalConfig.USER_ID);
                     if (userId != null)
                         mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE, Integer.parseInt(userId), 1, 2);
-//
 //                    ToastUtil.showShort( "onCheckedChanged: 关闭" + isChecked);
-
                 }
             }
         });
     }
-
     @Override
     protected void initView() {
         getPresenter();
     }
-
     @Override
     protected void initData() {
 //        参数:
@@ -170,21 +163,24 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                 if (testWechatReceiverCode.getCode() == 0 && testWechatReceiverCode.getData() != null) {
                     data = testWechatReceiverCode.getData();
                     Log.i("tag", "微信: " + testWechatReceiverCode.toString());
-
                 } else {
                     ToastUtil.showShort(testWechatReceiverCode.getMsg());
                 }
-
                 break;
-            //开关
+            //打开开关
             case ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE:
                 SwitchReceiveingQrCode switchReceiveingQrCode = (SwitchReceiveingQrCode) t[0];
                 if (switchReceiveingQrCode.getCode() == 0) {
-                    ToastUtil.showShort(switchReceiveingQrCode.getMsg());
+                    ToastUtil.showShort("打开"+switchReceiveingQrCode.getMsg());
                 } else {
-                    ToastUtil.showShort(switchReceiveingQrCode.getMsg());
+                    ToastUtil.showShort(""+switchReceiveingQrCode.getMsg());
                 }
                 break;
+//                关闭开关
+//            case ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE2:
+//
+//
+//                break;
         }
     }
 
@@ -242,7 +238,6 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                 break;
         }
     }
-
     /**
      * 点击相册选图
      */
@@ -250,11 +245,10 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     public void clickTop() {
         mTakePhoto = new TakePhotoImpl(this, this);
         mTakePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(1080).create(), true);
-        mTakePhoto.onPickFromCaptureWithCrop(getUri(),getOption());
+        mTakePhoto.onPickFromGalleryWithCrop(getUri(), getOption());
 //        mTakePhoto.onPickFromGallery();
         mPop.dismiss();
     }
-
     /**
      * 点击拍照
      */
@@ -264,7 +258,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
         //压缩图片
         mTakePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(1080).create(), true);
         //从相册获取并裁剪
-        mTakePhoto.onPickFromCapture(getUri());
+        mTakePhoto.onPickFromCaptureWithCrop(getUri(), getOption());
 //        mTakePhoto.onPickFromCapture(getUri());
         mPop.dismiss();
     }
@@ -283,8 +277,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     }
 
     private CropOptions getOption() {
-            return new CropOptions.Builder().setWithOwnCrop(false).create();
-
+        return new CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(false).create();
     }
 
     private Uri getUri() {
@@ -312,11 +305,9 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 //            showLoadingDialog();
 //            mPresenter.getData(ApiConfig.UPLOAD_IMAGE, path);
 //            Glide.with(this).load(path).into(registerHeadlerIv);
-
             File file = new File(path);
-
 //            SwitchIv(path);
-            Log.i("tag", "takeSuccess: " + path);
+//            Log.i("tag", "takeSuccess:"+path);
             uploadFile(file);
         }
     }
@@ -324,7 +315,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     private void uploadFile(File file) {
 
         String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        Log.i("tag", "路经: "+file+"......."+userId);
+//        Log.i("tag", "路经: "+file+"......."+userId);
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
@@ -339,7 +330,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 
                 .addFormDataPart("imgMoney", userId)
 
-                .addFormDataPart("imgType", "1")
+                .addFormDataPart("imgType", "1")//代表微信
 
                 .build();
 

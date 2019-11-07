@@ -17,6 +17,7 @@ import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -31,7 +32,8 @@ import butterknife.BindView;
 public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICommonView {
     @BindView(R.id.finish_lv)
     RecyclerView mList;
-
+    @BindView(R.id.finish_refreshLayout)
+    SmartRefreshLayout finishRefresh;
     private FinishAdapter adapter;
     private List<TestAllOrderStock.DataBean.OrderSalesListBean> list;
 
@@ -52,7 +54,6 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     protected int getLayoutId() {
         return R.layout.fragment_finish;
     }
-
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
@@ -64,9 +65,6 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     @Override
     protected void initData() {
         super.initData();
-
-
-
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
         if (userId != null) {
             mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), 2);

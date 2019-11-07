@@ -13,7 +13,6 @@ public class ApiConfig {
     public static final int TEXT_InviteCode = 6;
     public static final int TEXT_INVITECODE = 7;
 
-
     public static final int TEXT_HOMEPAGE_DATA = 8;//首页 我的
     public static final int TEXT_BUY_COM = 9;//立即购买
     public static final int TEXT_ORDER_STOCK = 10;//提交订单
@@ -49,11 +48,10 @@ public class ApiConfig {
     public static final int TEST_EXPEND = 26;//支出
     public static final int TEST_INCOME = 27;//收入
 
-
     public static final int TEST_UPDATEPASSWORD = 32;//修改密码
     public static final int TEST_CHANGE_HEADLER = 33;//更换头像
     //修改密码
     public static final int TEST_VERIFICATIONCODE = 34;//获取验证码
-
     public static final int TEST_SWITCH_RECEIVEING_QRCODE = 35;//开关收款码
+    public static final int TEST_SWITCH_RECEIVEING_QRCODE2 = 36;//关闭开关收款码
 }

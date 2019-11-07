@@ -23,6 +23,7 @@ import com.administrator.yaya.bean.my.TestRebate;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +37,11 @@ import butterknife.BindView;
 public class ExpendFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
     @BindView(R.id.expend_lv)
     RecyclerView mList;
+    @BindView(R.id.expend_refreshLayout)
+    SmartRefreshLayout expendRefreshLayout;
     private ExpendAdapter adapter;
     private ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list;
+
     @Override
     protected void initData() {
         super.initData();

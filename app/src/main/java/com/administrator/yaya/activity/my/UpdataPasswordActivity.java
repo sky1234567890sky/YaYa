@@ -93,7 +93,6 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
     }
     @Override
     public void onError(int whichApi, Throwable e) {
-
     }
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -110,6 +109,7 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
                 }else{
                     ToastUtil.showShort(testUpdatePwd.getMsg());
                 }
+
                 break;
                 //获取去验证码
             case ApiConfig.TEST_VERIFICATIONCODE:

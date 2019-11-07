@@ -40,6 +40,7 @@ import com.administrator.yaya.utils.SaveBitmapToPhotoUtils;
 import com.administrator.yaya.utils.ToastUtil;
 import com.administrator.yaya.utils.WxShareUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
@@ -58,9 +59,11 @@ import butterknife.OnClick;
  * 我的邀請
  */
 public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements View.OnClickListener {
-
     @BindView(R.id.myinvite_book_back_iv)
     ImageView smallBookBackIv;
+    @BindView(R.id.myinvite_iv)
+    ImageView mMyinviteIv;
+
     @BindView(R.id.myinvite_friend)
     TextView myinviteFriend;
     @BindView(R.id.my_name_tv)
@@ -94,6 +97,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     private MyLowerAdapter myLowerAdapter;
     private List<TestMyInvite.DataBean.UserInfoBean.JuniorUsersBean> juniorUsers;
     private ArrayList<TestMyInvite.DataBean.UserInfoBean.JuniorUsersBean> myLowerList;
+    private String userInvitationCode;
 
     @Override
     protected int getLayoutId() {
@@ -134,14 +138,22 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 TestMyInvite.DataBean data = testMyInvite.getData();
                 TestMyInvite.DataBean.UserInfoBean userInfo = data.getUserInfo();///用户基本信息
 
+                int userContributeTotalToday = data.getUserContributeTotalToday();//今日收益
+                getGamemoneyTv.setText(userContributeTotalToday+"");
                 int allUserContributeTotal = data.getAllUserContributeTotal();//縂返利
+                //邀請碼
+                userInvitationCode = userInfo.getUserInvitationCode();
+
+                String userHeadImg = userInfo.getUserHeadImg();
+                RequestOptions requestOptions = new RequestOptions().centerCrop();
+                Glide.with(this).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(mMyinviteIv);
 //                parentUser			上级用户对象信息
-                Object parentUser = userInfo.getParentUser();
 //                userId			用户id
 //                userName		用户姓名
 //                juniorUsers			下级用户集合
                 juniorUsers = userInfo.getJuniorUsers();
-                myLowerList.addAll(juniorUsers);
+
+                myLowerList.addAll(this.juniorUsers);
                 myLowerAdapter.notifyDataSetChanged();
 //                userId			用户id
 //                userName		用户姓名
@@ -162,7 +174,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 
                 myNameTv.setText(userName);
                 myNameStateTv.setText("ID:"+userId);
-                tv3.setText("返利比例："+allUserContributeTotal+"%");
+                tv3.setText("返利比例：2%");
 //                getGamemoneyTv.setText();
                 allGamemoneyTv.setText(userContributeTotal+"");
             }
@@ -197,6 +209,8 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         mMyinviteShareWechatBtnTv = inflate.findViewById(R.id.myinvite_share_wechat_btn_tv);//微信分享按钮
         mMyinviteCloneDissPopupIv = inflate.findViewById(R.id.myinvite_clone_diss_popup_iv);//关闭弹窗
 
+        mMyinviteTwoDimentionCodTv.setText("邀请码:"+userInvitationCode);
+
         popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
         //手动设置 PopupWindow 响应返回键并关闭的问题
         popupWindow.setFocusable(true);
@@ -217,11 +231,10 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 MyInviteActivity.this.getWindow().setAttributes(lp);
             }
         });
-
         //二維碼
         //Bitmap bitmap = MyQrCode.QRCode.createQRCode("我是苏克阳", 500);//不需要logo，传入分享链接和二维码图片大小
         //需要logo，传入分享链接,二维码大小以及logo图片
-          Bitmap bitmap = MyQrCode.QRCode.createQRCodeWithLogo("苏克阳", 500, BitmapFactory.decodeResource(getResources(),R.mipmap.icon));
+          Bitmap bitmap = MyQrCode.QRCode.createQRCodeWithLogo(userInvitationCode, 500, BitmapFactory.decodeResource(getResources(),R.mipmap.icon));
         mMyinviteTwoDimentionCodeIv.setImageBitmap(bitmap);
 
         //隐藏弹窗点击事件

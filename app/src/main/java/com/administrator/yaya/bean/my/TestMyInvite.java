@@ -1,13 +1,13 @@
 package com.administrator.yaya.bean.my;
 
 import java.util.List;
-
+//我的邀請
 public class TestMyInvite {
 
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":354,"userEarningsTotal":477,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":13,"userName":null,"userNickName":null,"userHeadImg":null,"userPhone":"18898186027","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"W0VXY2","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":6,"userName":"钱浩","userNickName":"123","userHeadImg":null,"userPhone":"17631365661","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"AP65X1","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}],"junior":null},"allUserContributeTotal":0}
+     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":418,"userEarningsTotal":541,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":1,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":13,"userName":null,"userNickName":null,"userHeadImg":null,"userPhone":"18898186027","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"W0VXY2","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":6,"userName":"钱浩","userNickName":"123","userHeadImg":null,"userPhone":"17631365661","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"AP65X1","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":"2000"}],"junior":null},"userContributeTotalToday":2000,"allUserContributeTotal":0}
      */
 
     private String msg;
@@ -40,11 +40,13 @@ public class TestMyInvite {
 
     public static class DataBean {
         /**
-         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":354,"userEarningsTotal":477,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":13,"userName":null,"userNickName":null,"userHeadImg":null,"userPhone":"18898186027","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"W0VXY2","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":6,"userName":"钱浩","userNickName":"123","userHeadImg":null,"userPhone":"17631365661","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"AP65X1","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}],"junior":null}
+         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":418,"userEarningsTotal":541,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":1,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":13,"userName":null,"userNickName":null,"userHeadImg":null,"userPhone":"18898186027","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"W0VXY2","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":6,"userName":"钱浩","userNickName":"123","userHeadImg":null,"userPhone":"17631365661","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"AP65X1","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":"2000"}],"junior":null}
+         * userContributeTotalToday : 2000
          * allUserContributeTotal : 0
          */
 
         private UserInfoBean userInfo;
+        private int userContributeTotalToday;
         private int allUserContributeTotal;
 
         public UserInfoBean getUserInfo() {
@@ -53,6 +55,14 @@ public class TestMyInvite {
 
         public void setUserInfo(UserInfoBean userInfo) {
             this.userInfo = userInfo;
+        }
+
+        public int getUserContributeTotalToday() {
+            return userContributeTotalToday;
+        }
+
+        public void setUserContributeTotalToday(int userContributeTotalToday) {
+            this.userContributeTotalToday = userContributeTotalToday;
         }
 
         public int getAllUserContributeTotal() {
@@ -82,15 +92,15 @@ public class TestMyInvite {
              * userStatus : 1
              * userInvitationCode : 6666
              * userParentId : 0
-             * userEarningsNow : 354
-             * userEarningsTotal : 477
+             * userEarningsNow : 418
+             * userEarningsTotal : 541
              * userContributeTotal : 0
              * zfbEd : 0
              * wxEd : 0
-             * vxButtonStatus : 2
+             * vxButtonStatus : 1
              * zfbButtonStatus : 2
              * parentUser : null
-             * juniorUsers : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":13,"userName":null,"userNickName":null,"userHeadImg":null,"userPhone":"18898186027","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"W0VXY2","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":6,"userName":"钱浩","userNickName":"123","userHeadImg":null,"userPhone":"17631365661","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"AP65X1","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}]
+             * juniorUsers : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":13,"userName":null,"userNickName":null,"userHeadImg":null,"userPhone":"18898186027","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"W0VXY2","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":6,"userName":"钱浩","userNickName":"123","userHeadImg":null,"userPhone":"17631365661","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"AP65X1","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":"2000"}]
              * junior : null
              */
 

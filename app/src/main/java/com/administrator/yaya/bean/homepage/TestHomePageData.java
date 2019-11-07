@@ -4,10 +4,11 @@ import java.io.Serializable;
 //我的
 public class TestHomePageData implements Serializable {
 
+
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":402,"userEarningsTotal":525,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":100,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9999876,"comPurchaseNumMin":100,"comPurchaseNumMax":10000,"comExplain":"这是个游戏币1"},"userEarningsToday":"48"}
+     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":2338,"userEarningsTotal":2461,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":1,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":0.01,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9983650,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"},"userEarningsToday":"1920"}
      */
 
     private String msg;
@@ -40,9 +41,9 @@ public class TestHomePageData implements Serializable {
 
     public static class DataBean {
         /**
-         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":402,"userEarningsTotal":525,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
-         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":100,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9999876,"comPurchaseNumMin":100,"comPurchaseNumMax":10000,"comExplain":"这是个游戏币1"}
-         * userEarningsToday : 48
+         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":2338,"userEarningsTotal":2461,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":1,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
+         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":0.01,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9983650,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"}
+         * userEarningsToday : 1920
          */
 
         private UserInfoBean userInfo;
@@ -92,12 +93,12 @@ public class TestHomePageData implements Serializable {
              * userStatus : 1
              * userInvitationCode : 6666
              * userParentId : 0
-             * userEarningsNow : 402
-             * userEarningsTotal : 525
+             * userEarningsNow : 2338
+             * userEarningsTotal : 2461
              * userContributeTotal : 0
              * zfbEd : 0
              * wxEd : 0
-             * vxButtonStatus : 2
+             * vxButtonStatus : 1
              * zfbButtonStatus : 2
              * parentUser : null
              * juniorUsers : null
@@ -363,12 +364,12 @@ public class TestHomePageData implements Serializable {
              * params : {}
              * comId : 1
              * comName : 游戏币
-             * comPrice : 100
+             * comPrice : 0.01
              * comImg : https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg
-             * comInventory : 9999876
+             * comInventory : 9983650
              * comPurchaseNumMin : 100
-             * comPurchaseNumMax : 10000
-             * comExplain : 这是个游戏币1
+             * comPurchaseNumMax : 10000000
+             * comExplain : 这是个游戏币
              */
 
             private Object searchValue;
@@ -380,7 +381,7 @@ public class TestHomePageData implements Serializable {
             private ParamsBeanX params;
             private int comId;
             private String comName;
-            private int comPrice;
+            private double comPrice;
             private String comImg;
             private int comInventory;
             private int comPurchaseNumMin;
@@ -459,11 +460,11 @@ public class TestHomePageData implements Serializable {
                 this.comName = comName;
             }
 
-            public int getComPrice() {
+            public double getComPrice() {
                 return comPrice;
             }
 
-            public void setComPrice(int comPrice) {
+            public void setComPrice(double comPrice) {
                 this.comPrice = comPrice;
             }
 

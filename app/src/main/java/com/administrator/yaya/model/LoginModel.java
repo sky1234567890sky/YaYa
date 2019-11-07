@@ -23,7 +23,6 @@ public class LoginModel implements ICommonModel {
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestLogin((String) t[0], (String) t[1]), view, whichApi);
                 break;
-
             case ApiConfig.TEXT_REGISTER://注册
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestRegister((String) t[0], (String) t[1], (String) t[2], (String) t[3]), view, whichApi);
@@ -33,6 +32,7 @@ public class LoginModel implements ICommonModel {
 //                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
 //                        .getTestInviteCode((String) t[0],(String) t[0],(String) t[0]),view,whichApi,1);
                 break;
+
             //首页-我的
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
@@ -55,16 +55,19 @@ public class LoginModel implements ICommonModel {
 //                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
 //                        .getTestAllOrderStock((int) t[0],(int) t[1]),view, whichApi);
 //                break;
-
             //付款信息 2已付款  1待付款
             case ApiConfig.TEXT_GATHERING://待付款
+                int a = (int) t[0];
+                int b = (int) t[1];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestOrderStock((int) t[0], (int) t[1]), view, whichApi);
+                        .getTestOrderStock(a,b), view, whichApi);
                 break;
+
             case ApiConfig.TEXT_GATHERING2://已付款
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestAccountPaid((int) t[0], (int) t[1]), view, whichApi);
                 break;
+
             case ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestPayToAffimInfo((String) t[0]), view, whichApi);
@@ -107,8 +110,6 @@ public class LoginModel implements ICommonModel {
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestUpawaySingleGoods((String) t[0]), view, whichApi);
                 break;
-
-
                 //所有售卖订单
 //            getTestAllOrderStock
             //售卖中

@@ -11,30 +11,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.home.AffirmMessageActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.bean.invite.TestObligation;
-
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh>{
     private final List<TestObligation.DataBean.OrderStockListBean> list;
     private final FragmentActivity activity;
     private Context context;
-
-    public ObligationAdapter(List<TestObligation.DataBean.OrderStockListBean> list, FragmentActivity activity) {
-
+    public ObligationAdapter( List<TestObligation.DataBean.OrderStockListBean> list, FragmentActivity activity) {
         this.list = list;
         this.activity = activity;
     }
-
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -42,11 +36,9 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
         View inflate = LayoutInflater.from(context).inflate(R.layout.obligation_item, null);
         return new Vh(inflate);
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, final int i) {
-
         TestObligation.DataBean.OrderStockListBean orderStockListBean = list.get(i);
         vh.mDaifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
 //        进货订单集合	orderStockList
@@ -57,7 +49,6 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
         vh.mDaifuCommodityAmount.setText("数量：" + orderStockListBean.getCommodityAmount());
 //        应付金额	commodityPrice
         vh.mDaifuCommodityPrice.setText("应付金额：" + orderStockListBean.getCommodityPrice());
-
         vh.mDaifuGetGatheringBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +57,6 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
                 activity.startActivity(intent);
             }
         });
-
         vh.mDaifuCancelOrderform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +97,7 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
             ButterKnife.bind(this,itemView);
         }
     }
+
     private AccountpaidsetOnclikListener accountpaidsetOnclikListener;
 
     public interface AccountpaidsetOnclikListener {
