@@ -54,4 +54,8 @@ public class ApiConfig {
     public static final int TEST_VERIFICATIONCODE = 34;//获取验证码
     public static final int TEST_SWITCH_RECEIVEING_QRCODE = 35;//开关收款码
     public static final int TEST_SWITCH_RECEIVEING_QRCODE2 = 36;//关闭开关收款码
+
+    public static final int request_open_album_code = 666;
+
+
 }

@@ -73,7 +73,8 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
                 String verificationCode = forgetEtVerificationCode.getText().toString().trim();
                 String psw = updatePasswordEt.getText().toString().trim();
                 if (!TextUtils.isEmpty(phoneCode) && !TextUtils.isEmpty(verificationCode)&& !TextUtils.isEmpty(psw)) {
-                    String regex = "[A-Za-z0-9]{4,12}";
+                    //6-16位数字字母混合,不能全为数字,不能全为字母,首位不能为数字
+                    String regex = "^(?![0-9])(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{4,12}$";
                     if (AppValidationMgr.isPhone(phoneCode) && psw.matches(regex)) {
                         mPresenter.getData(ApiConfig.TEST_UPDATEPASSWORD, phoneCode, verificationCode,psw);
 //                      okLogin();
@@ -82,6 +83,7 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
                 break;
         }
     }
+
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
@@ -102,6 +104,7 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
                 if (testUpdatePwd.getCode()==0){
                     String phone = updateEtCode.getText().toString().trim();
                     ToastUtil.showShort(testUpdatePwd.getMsg());
+
                     Intent intent = new Intent(UpdataPasswordActivity.this, LoginActivity.class);
                     intent.putExtra("username",phone);
                     startActivity(intent);
@@ -116,8 +119,11 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
                 TestGetEtVerificationCode testGetEtVerificationCode = (TestGetEtVerificationCode)t[0];
                 if (testGetEtVerificationCode.getCode() == 0 && testGetEtVerificationCode.getMsg()!=null){
                     String verificationCode = testGetEtVerificationCode.getMsg();//验证码
+
                     forgetEtVerificationCode.setText(verificationCode);//自动粘贴
+
                     ToastUtil.showShort(testGetEtVerificationCode.getMsg());
+
                 }else{
                     ToastUtil.showShort(testGetEtVerificationCode.getMsg());
                 }

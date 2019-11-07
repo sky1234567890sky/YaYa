@@ -43,18 +43,25 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
 
     @BindView(R.id.abligation_refreshLayout)
     SmartRefreshLayout abligationRefreshLayout;
+
     List<TestObligation.DataBean.OrderStockListBean> list ;
+
     private ObligationAdapter adapter;
     private int num = 1;
+
     private int anInt;
+
     private BaseApp app;
+
     private TestObligation.DataBean data;
+    private int index;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
         list = new ArrayList<>();
+        abligationRefreshLayout.setEnableLoadMore(false);
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new ObligationAdapter(list, getActivity());
         mList.setAdapter(adapter);
@@ -68,10 +75,10 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
 //                最大购买数量comPurchaseNumMax
 //        库存合计数量	amount
     }
-
     @Override
     public void refresh() {
         super.refresh();
+        initData();
     }
     @Override
     protected void initListener() {
@@ -79,28 +86,24 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
         adapter.setAccountpaidsetOnclikListener(new ObligationAdapter.AccountpaidsetOnclikListener() {
             @Override
             public void setonclik(int postion) {
+                index = postion;
                 //取消订单
-//                mPresenter.getData(ApiConfig.TEST_CANCEL_ORDER_STOCK, list.get(postion).getStockId());
-
+                mPresenter.getData(ApiConfig.TEST_CANCEL_ORDER_STOCK, list.get(postion).getStockId());
             }
         });
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_GATHERING:
+                if (list!=null&& !list.isEmpty())list.clear();
                 //待付款
                 TestObligation testObligation = (TestObligation) t[0];
-
                 if (testObligation.getCode() == 0 && testObligation.getData() != null) {
-
                     Log.i("tag", "待付款数据: "+testObligation.toString());
 
                     data = testObligation.getData();
-
-                    String amount = data.getAmount();
 
                     List<TestObligation.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
 
@@ -113,8 +116,19 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
                 }
                 break;//
             //取消订单
-
+            case ApiConfig.TEST_CANCEL_ORDER_STOCK:
+                TestCancelOrderStock testCancelOrderStock = (TestCancelOrderStock) t[0];
+                if (testCancelOrderStock.getCode()==0){
+                    ToastUtil.showLong(testCancelOrderStock.getMsg());
+                    //清空条目
+                    list.remove(index);
+                    adapter.notifyItemRemoved(index);
+                }else{
+                    ToastUtil.showLong(testCancelOrderStock.getMsg());
+                }
+                break;
         }
+        abligationRefreshLayout.finishRefresh(2000);
     }
     @Override
     protected void initData() {
@@ -124,6 +138,7 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
             mPresenter.getData(ApiConfig.TEXT_GATHERING, anInt, num);//待付款
         }
        }
+
     public ObligationFragment() {
         // Required empty public constructor
     }

@@ -90,7 +90,8 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     }
     @Override
     protected void initData() {
-        getPermission();//权限
+//        getPermission();//权限
+
         String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
         if (!TextUtils.isEmpty(userId))
             mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId));

@@ -70,21 +70,21 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     @Override
     protected void initData() {
         super.initData();
-
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
         if (userId != null) mPresenter.getData(ApiConfig.TEXT_GATHERING, Integer.parseInt(userId), num);//已付款
     }
+
     @Override
     protected void initView(View inflate) {
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.blue));
         titles = new ArrayList<>();
-
         titles.add("待付款");
         titles.add("已付款");
-
         fragments = new ArrayList<>();
+
         accountPaidFragment = new AccountPaidFragment();
         obligationFragment = new ObligationFragment();
+
         fragments.add(obligationFragment);
         fragments.add(accountPaidFragment);
 
