@@ -34,10 +34,15 @@ import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoImpl;
 import org.devio.takephoto.compress.CompressConfig;
 import org.devio.takephoto.model.CropOptions;
+import org.devio.takephoto.model.MultipleCrop;
+import org.devio.takephoto.model.TException;
+import org.devio.takephoto.model.TImage;
 import org.devio.takephoto.model.TResult;
+import org.devio.takephoto.uitl.TImageFiles;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -151,7 +156,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 //        类型		type	1、微信 2、支付宝
         String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         if (userId != null) {
-            mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, Integer.parseInt(userId), 1);//1、微信 2、支付宝
+//            mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, Integer.parseInt(userId), 1);//1、微信 2、支付宝
         } else {
             ToastUtil.showShort(R.string.networkerr + "");
         }
@@ -245,7 +250,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     public void clickTop() {
         mTakePhoto = new TakePhotoImpl(this, this);
         mTakePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(1080).create(), true);
-        mTakePhoto.onPickFromGalleryWithCrop(getUri(), getOption());
+        mTakePhoto.onPickFromCaptureWithCrop(getUri(),getOption());
 //        mTakePhoto.onPickFromGallery();
         mPop.dismiss();
     }
@@ -259,15 +264,13 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
         //压缩图片
         mTakePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(1080).create(), true);
         //从相册获取并裁剪
-        mTakePhoto.onPickFromCaptureWithCrop(getUri(), getOption());
+        mTakePhoto.onPickFromCapture(getUri());
 //        mTakePhoto.onPickFromCapture(getUri());
         mPop.dismiss();
     }
-
     /**
      * 取消popupwindow
      */
-
     @Override
     public void clickBottom() {
         mPop.dismiss();
@@ -280,7 +283,8 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     }
 
     private CropOptions getOption() {
-        return new CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(false).create();
+            return new CropOptions.Builder().setWithOwnCrop(false).create();
+
     }
 
     private Uri getUri() {
@@ -312,7 +316,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
             File file = new File(path);
 
 //            SwitchIv(path);
-//            Log.i("tag", "takeSuccess: " + path);
+            Log.i("tag", "takeSuccess: " + path);
             uploadFile(file);
         }
     }
@@ -320,7 +324,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     private void uploadFile(File file) {
 
         String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-//        Log.i("tag", "路经: "+file+"......."+userId);
+        Log.i("tag", "路经: "+file+"......."+userId);
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
