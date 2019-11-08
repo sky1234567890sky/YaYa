@@ -27,6 +27,7 @@ import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.invite.TestAccountPaid;
 import com.administrator.yaya.bean.invite.TestUpawaySingleGoods;
+import com.administrator.yaya.fragment.InventoryFragment;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
@@ -62,8 +63,8 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
         RecyclerView mList;
         @BindView(R.id.account_refreshLayout)
         SmartRefreshLayout accountRefreshLayout;
-
-        List<TestAccountPaid> list ;
+        List<TestAccountPaid.DataBean.OrderStockListBean> list ;
+        List<TestAccountPaid.DataBean.CommodityBean> commodityBean;
 
         private AccountPaidAdapter adapter;
         private ImageView mCancelPopCloseIv;
@@ -76,36 +77,49 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
 
     private int num = 2;
     private TestAccountPaid.DataBean data;
-    private List<TestAccountPaid.DataBean.OrderStockListBean> orderStockList;
-
+    private int index;
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
         list = new ArrayList<>();
+        commodityBean = new ArrayList<>();
         initRecycleView(mList,accountRefreshLayout);
+        accountRefreshLayout.setEnableLoadMore(false);
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mList.setNestedScrollingEnabled(false);
-        adapter = new AccountPaidAdapter(list,getActivity());
+        adapter = new AccountPaidAdapter(commodityBean,list,getActivity());
         mList.setAdapter(adapter);
     }
     @Override
     public void refresh() {
         super.refresh();
-
+//        InventoryFragment ben = new InventoryFragment();
+//        ben.initData();
+        List<Fragment> fragments = (List<Fragment>)AccountPaidFragment.this.getFragmentManager().getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment!=null && fragment instanceof InventoryFragment){
+                ((InventoryFragment)fragment).initData();
+                break;
+            }
+        }
+        initData();
     }
     @Override
     public void loadMore() {
         super.loadMore();
     }
+
     @Override
     protected void initListener() {
         super.initListener();
+
         adapter.setAccountpaidsetOnclikListener(new AccountPaidAdapter.AccountpaidsetOnclikListener() {
             @Override
             public void setonclik(int postion) {
+                index = postion;
                 String amount = data.getAmount();//库存数量
-                putAway();
+                putAway(amount);
             }
         });
     }
@@ -114,47 +128,19 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_GATHERING2:
+                list.clear();
                 TestAccountPaid testObligation = (TestAccountPaid) t[0];
-                TestAccountPaid.DataBean data = testObligation.getData();
-                orderStockList = data.getOrderStockList();
+                data = testObligation.getData();
+                List<TestAccountPaid.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
                 if (testObligation.getCode() == 0 && testObligation.getData() != null) {
-
                     Log.i("tag", "已付款。。。: "+testObligation.toString());
-//                    list.addAll(testObligation);
+                    commodityBean.add(testObligation.getData().getCommodity());
+                    list.addAll(testObligation.getData().getOrderStockList());
                     adapter.notifyDataSetChanged();
                 }else{
                     ToastUtil.showShort(testObligation.getMsg());
                 }
                 break;
-//            case ApiConfig.TEXT_GATHERING2://已付款
-//                TestAccountPaid testAccountPaid = (TestAccountPaid) t[0];
-//                Log.i("tag", "已付款：: "+testAccountPaid.toString());
-//                if (testAccountPaid.getCode() == 0 && testAccountPaid.getData()!= null) {
-//                    //库存合计数量	amount
-//                    String amount = testAccountPaid.getData().getAmount();
-//                    inventoryNumber = amount;
-//                    TestAccountPaid.DataBean data = testAccountPaid.getData();
-//                    List<TestAccountPaid.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
-//                    list.addAll(orderStockList);
-//                    if (orderStockList .size()>0){
-//                        TestAccountPaid.DataBean.OrderStockListBean orderStockListBean = orderStockList.get(0);
-//                        mYifuCommodityAmount.setText("数量：" + orderStockListBean.getCommodityAmount());
-//                        mYifuCommodityPrice.setText("付款金额：" + orderStockListBean.getCommodityPrice());
-//                        mYifuComPrice.setText("单价￥：" + orderStockListBean.getCommodityPrice());
-////                      accountpaidItem.mYifuGamemoney.setText("");
-//                        mYifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
-//                    }else{
-//                        return;
-//                    }
-////                    adapter.notifyDataSetChanged();
-////                    adapter.setData(orderStockList);
-////                    adapter.notifyDataSetChanged();
-////                    mYifuOrderNumber.setText("订单编号:"+);
-////                    Glide.with(this).load(comImg).into(nowBuGamemoneyIv);
-//                } else {
-//                    ToastUtil.showShort(testAccountPaid.getMsg());
-//                }
-//                break;
             case ApiConfig.TEST_UPAWAY_SINGLE_GOODS://上架单个货物
                 TestUpawaySingleGoods testUpawaySingleGoods = (TestUpawaySingleGoods) t[0];
                 if (testUpawaySingleGoods.getCode() == 0 && testUpawaySingleGoods.getMsg() != null) {
@@ -164,71 +150,44 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
                 }
                 break;
         }
+        accountRefreshLayout.finishRefresh(2000);
     }
+
     @SuppressLint("CheckResult")
     @Override
     protected void initData() {
         super.initData();
-        String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
-        if (userId != null) mPresenter.getData(ApiConfig.TEXT_GATHERING2, Integer.parseInt(userId),num);//已付款
-//        Rx2AndroidNetworking.post("http://192.168.0.198:8080/yayaApp/comBuy/allOrderStock?userId=1&orderStatus=2")
-//                .build()
-//                .getStringObservable()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<String>() {
-//                    @Override
-//                    public void accept(String s) throws Exception {
-//
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(Throwable throwable) throws Exception {
-//
-//                    }
-//                });
-    }
 
-    //    private AccountpaidOnclikListener accountpaidOnclikListener;
-//    public interface  AccountpaidOnclikListener{
-//        void setonclik(String amount);
-//    }
-//    public void setAccountpaidOnclikListener(AccountpaidOnclikListener accountpaidOnclikListener) {
-//        this.accountpaidOnclikListener = accountpaidOnclikListener;
-//    }
+        String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
+        mPresenter.getData(ApiConfig.TEXT_GATHERING2, Integer.parseInt(userId), num);//已付款
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_account_paid;
     }
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
-
     }
-
     public AccountPaidFragment() {
-        // Required empty public constructor
     }
     @SuppressLint("SetTextI18n")
-    private void putAway() {
+    private void putAway(String amount) {
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.layout_putaway, null);
         //显示营业游戏币数量
         mCancelPopCloseIv = inflate.findViewById(R.id.cancel_pop_close_iv);
         mPopupTvNumber = inflate.findViewById(R.id.popup_tv_number);
         mPopupTvCancel = inflate.findViewById(R.id.popup_tv_cancel);
         mPopupTvOk = inflate.findViewById(R.id.popup_tv_ok);
+        mPopupTvNumber.setText(amount+"");//库存数量
 
-//        mPopupTvNumber.setText();//库存数量
 //        if (orderStockList.size()>0) {
 //            mPopupTvNumber.setText(orderStockList.get(0).getCommodityAmount());//数量
 //        } else{
@@ -275,9 +234,8 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
             @Override
             public void onClick(View v) {
 //                String orderNumber = orderStockListBean.getOrderNumber();
-
                 //上架单个货物（请求网络数据）
-                mPresenter.getData(ApiConfig.TEST_UPAWAY_SINGLE_GOODS,"");//传入订单编号
+                mPresenter.getData(ApiConfig.TEST_UPAWAY_SINGLE_GOODS,list.get(index).getOrderNumber());//传入订单编号
 //                直接营业
 //                FragmentTransaction fragmentTransaction = new FragmentManager().beginTransaction();
 //                FragmentUtils.addFragment(getChildFragmentManager(),new OrderFormkFragment().getClass(), R.id.home_fragment);

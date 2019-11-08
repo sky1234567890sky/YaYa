@@ -88,6 +88,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     private TextView mMyinviteTwoDimentionCodTv;
     private TextView mMyinviteShareWechatBtnTv;
     private ImageView mMyinviteCloneDissPopupIv;
+
     //TODO:注册你的wechatAppId
     //需要像微信注册我们申请的应用，在前面我们申请的应用审核完后的APP_ID 和APP_SECRET 就填写在这里：
 //    private static final String APP_ID = "";
@@ -147,6 +148,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 String userHeadImg = userInfo.getUserHeadImg();
                 RequestOptions requestOptions = new RequestOptions().centerCrop();
                 Glide.with(this).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(mMyinviteIv);
+
 //                parentUser			上级用户对象信息
 //                userId			用户id
 //                userName		用户姓名
@@ -208,7 +210,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         mMyinviteTwoDimentionCodTv = inflate.findViewById(R.id.myinvite_two_dimention_cod_tv);//邀请码
         mMyinviteShareWechatBtnTv = inflate.findViewById(R.id.myinvite_share_wechat_btn_tv);//微信分享按钮
         mMyinviteCloneDissPopupIv = inflate.findViewById(R.id.myinvite_clone_diss_popup_iv);//关闭弹窗
-
         mMyinviteTwoDimentionCodTv.setText("邀请码:"+userInvitationCode);
 
         popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
@@ -234,9 +235,8 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         //二維碼
         //Bitmap bitmap = MyQrCode.QRCode.createQRCode("我是苏克阳", 500);//不需要logo，传入分享链接和二维码图片大小
         //需要logo，传入分享链接,二维码大小以及logo图片
-          Bitmap bitmap = MyQrCode.QRCode.createQRCodeWithLogo(userInvitationCode, 500, BitmapFactory.decodeResource(getResources(),R.mipmap.icon));
+          Bitmap bitmap = MyQrCode.QRCode.createQRCodeWithLogo(userInvitationCode, 1000, BitmapFactory.decodeResource(getResources(),R.mipmap.icon));
         mMyinviteTwoDimentionCodeIv.setImageBitmap(bitmap);
-
         //隐藏弹窗点击事件
         mMyinviteShareWechatBtnTv.setOnClickListener(this);
         mMyinviteCloneDissPopupIv.setOnClickListener(this);

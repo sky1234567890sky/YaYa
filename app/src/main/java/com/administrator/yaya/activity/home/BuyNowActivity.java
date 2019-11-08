@@ -182,7 +182,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 finish();
                 break;
             case R.id.nowbuy_commit_btn:
-                String s = buyGamemoneyNumber.getText().toString();//货物数量
+                String s = buyGamemoneyNumber.getText().toString().trim();//货物数量
                 String paymoey = payMoney2.getText().toString().trim();//付款金额
                 if (!s.isEmpty()) {
                     int i = Integer.parseInt(s);

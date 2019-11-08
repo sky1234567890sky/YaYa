@@ -91,6 +91,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
                     Glide.with(getContext()).load(comImg).placeholder(R.mipmap.icon).into(mHeadlerIv);
 //                    comPrice 商品价格
                     double comPrice1 = commodity.getComPrice();
+
                     homeGamemoneyPrice.setText("进货价￥："+comPrice1);
 //                    zfbEd 支付宝已使用额度
                     tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
@@ -98,10 +99,10 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
                     tvWechatUse.setText(userInfo.getWxEd() + "");//微信已使用额度
 
                     String tvday = tvDay.getText().toString();
-                    tvSheng.setText(Integer.parseInt(tvday)+"");
+                    tvSheng.setText((Integer.parseInt(tvday)-userInfo.getZfbEd())+"");//支付宝剩余额度
 //                    userEarningsToday 今日收益
                     String tvwechatday = tvWechatDay.getText().toString();
-                    tvWechatSheng.setText(Integer.parseInt(tvwechatday)+"");
+                    tvWechatSheng.setText((Integer.parseInt(tvwechatday)-userInfo.getWxEd())+"");//微信剩余额度
 //                    userInfo: 用户基本信息
 //                    userName 用户姓名
 //                    userNickName 昵称

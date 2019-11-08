@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.my.UpdataPasswordActivity;
 import com.administrator.yaya.base.ApiConfig;
+import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
@@ -71,24 +72,28 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //        }
 
 //          在加载布局文件前判断是否登陆过
-        sprfMain = PreferenceManager.getDefaultSharedPreferences(this);
-        editorMain = sprfMain.edit();
-        //.getBoolean("main",false)；当找不到"main"所对应的键值是默认返回false
-        if(sprfMain.getBoolean(NormalConfig.ISFIRST,false)){
-            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-            startActivity(intent);
-            LoginActivity.this.finish();
-        }
     }
     @Override
     protected int getLayoutId() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return R.layout.activity_login;
     }
 
     @Override
     protected void initView(){
-
+        int userId =  mApplication.userid;
+        if (userId==0){
+            return;
+        }else {
+//            sprfMain = PreferenceManager.getDefaultSharedPreferences(this);
+//            editorMain = sprfMain.edit();
+            //.getBoolean("main",false)；当找不到"main"所对应的键值是默认返回false
+//            if (sprfMain.getBoolean(NormalConfig.ISFIRST, false)) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            LoginActivity.this.finish();
+//            }
+        }
 //        MonitorNetWorkChange();
 //        SharedPreferences login = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE);
 //        boolean issave = login.getBoolean(NormalConfig.ISFIRSTRUN, false);
@@ -106,7 +111,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //                return;
 //            }
 //        }
-
     }
     @SuppressLint("ApplySharedPref")
     @Override
@@ -114,9 +118,10 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
         switch (whichApi) {
             case ApiConfig.TEXT_LOGIN:
                 TestLogin info = (TestLogin) t[0];
-                Log.i("tag", "登錄数据==>: "+info.toString());
+//                Log.i("tag", "登錄数据==>: "+info.toString());
                 if (info.getCode()==0 && info.getData()!=null) {
                     int userId = info.getData().getUserId();
+                    mApplication.userid = userId;
 
                     ToastUtil.showShort(info.getMsg());
                     //登录成功保存头像 手机号 密码
@@ -126,10 +131,9 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                     SharedPrefrenceUtils.saveString(LoginActivity.this,NormalConfig.USER_ID,String.valueOf(userId));
 
                     Intent intent = new Intent(this, MainActivity.class);
-                    editorMain.putBoolean(NormalConfig.ISFIRST, true);//成功的记录第一次登录
-                    editorMain.commit();
+//                    editorMain.putBoolean(NormalConfig.ISFIRST, true);//成功的记录第一次登录
+//                    editorMain.commit();//记录
                     startActivity(intent);
-
                     LoginActivity.this.finish();
                 }else{
                     ToastUtil.showShort(info.getMsg());
@@ -137,20 +141,21 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 break;
         }
     }
-
     @Override
     protected void initData() {
         super.initData();
+
         String name = mName.getText().toString().trim();
         String psw = mPsw.getText().toString().trim();
+
     }
+
     @OnClick({R.id.login_btn, R.id.tv_registered, R.id.tv_forgetPassword})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login_btn:
                 name = mName.getText().toString();
                 pwd = mPsw.getText().toString();
-
 //                Intent intent = new Intent(this, MainActivity.class);
 //                editorMain.putBoolean(NormalConfig.ISFIRST,true);
 //                editorMain.commit();
@@ -159,10 +164,12 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 //解析數據
                 login();
                 break;
+
             case R.id.tv_registered://回传值
                 Intent intent1 = new Intent(this, RegisterActivity.class);
                 startActivityForResult(intent1,99);
                 break;
+
             case R.id.tv_forgetPassword://忘记密码
                 startActivity(new Intent(this, UpdataPasswordActivity.class));
                 break;
@@ -193,6 +200,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
             String name = data.getStringExtra(NormalConfig.USER_NAME);
             String psw = data.getStringExtra(NormalConfig.PASS_WORD);
 //            ToastUtil.showShort(name+"\n"+psw);
+
         }
     }
     @Override

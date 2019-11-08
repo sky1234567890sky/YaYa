@@ -28,6 +28,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.Unbinder;
@@ -66,14 +67,12 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 
         }
     }
-
     @Override
-    protected void initData() {
+    public void initData() {
         super.initData();
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
         if (userId != null) mPresenter.getData(ApiConfig.TEXT_GATHERING, Integer.parseInt(userId), num);//已付款
     }
-
     @Override
     protected void initView(View inflate) {
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.blue));
@@ -87,7 +86,6 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 
         fragments.add(obligationFragment);
         fragments.add(accountPaidFragment);
-
         InventoryAdapter adapter = new InventoryAdapter(getChildFragmentManager(), fragments, titles);
         vp.setAdapter(adapter);
 //        mTab.setupWithViewPager(vp);
@@ -132,10 +130,27 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //                        });
 //                        ToastUtil.showShort(mAmount+"");
 //                        inventoryMoney.setText("游戏币库存合计："+mAmount);
+                        //父类调用子
+                        //点击刷新Fragment
+                        List<Fragment> fragments = (List<Fragment>)InventoryFragment.this.getFragmentManager().getFragments();
+                        for (Fragment fragment : fragments) {
+                            if (fragment!=null && fragment instanceof AccountPaidFragment){
+                                ((InventoryFragment)fragment).refresh();
+                                break;
+                            }
+                        }
                         break;
                     case 1:
 //                        ToastUtil.showShort(mAccountAmount+"");
 //                        inventoryMoney.setText("游戏币库存合计："+mAccountAmount);
+                        //点击刷新Fragment
+                        List<Fragment> fragments1 = InventoryFragment.this.getFragmentManager().getFragments();
+                        for (Fragment fragment : fragments1) {
+                            if (fragment!=null && fragment instanceof AccountPaidFragment){
+                                ((InventoryFragment)fragment).refresh();
+                                break;
+                            }
+                        }
                         break;
                 }
             }
@@ -209,6 +224,7 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
                 if (testObligation.getCode() == 0 && testObligation.getData() != null) {
                     String amount = testObligation.getData().getAmount();
                     inventoryMoney.setText("游戏币库存合计："+amount);
+//                    else inventoryMoney.setText("游戏币库存合计：0");
                 }
                 break;
                 }

@@ -1,6 +1,7 @@
 package com.administrator.yaya.activity.orderform.adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -9,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.administrator.yaya.R;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -21,10 +22,12 @@ import butterknife.ButterKnife;
 //已完成adapter
 public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 
+    private final List<TestAllOrderStock.DataBean.CommodityBean> listCommodityBean;
     private List<TestAllOrderStock.DataBean.OrderSalesListBean> list;
     private FragmentActivity activity;
 
-    public FinishAdapter(List<TestAllOrderStock.DataBean.OrderSalesListBean> list, FragmentActivity activity) {
+    public FinishAdapter(List<TestAllOrderStock.DataBean.CommodityBean> listCommodityBean, List<TestAllOrderStock.DataBean.OrderSalesListBean> list, FragmentActivity activity) {
+        this.listCommodityBean = listCommodityBean;
         this.list = list;
         this.activity = activity;
     }
@@ -45,6 +48,7 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 //        订单编号	orderNumber
         String orderNumber = orderStockListBean.getOrderNumber();
 //        下单时间	salesBuildTime
+//        Object salesAmount = orderStockListBean.getSalesAmount();
 //        数量		salesAmount
 //        Object commodityAmount = orderStockListBean.getCommodityAmount();
 //        应付金额	salesAmountMoney
@@ -52,6 +56,8 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 //        状态		salesStatus		1售卖中 2 已完成 3已取消
 //        操作时间	salesUpdateTime
         String orderBuildTime = orderStockListBean.getOrderNumber();
+        int commodityPrice = orderStockListBean.getCommodityPrice();
+
 //        货物信息对象	commodity
 //        货物名称	comName
 //        货物单价	comPrice
@@ -61,9 +67,20 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 //                最大购买数量comPurchaseNumMax
 //        今日收款数		amount
 //        vh.mFinishCommodityPrice.setText();
-        vh.mFinishOrderNumber.setText("订单编号："+orderNumber);
+
+        vh.mFinishOrderNumber.setText("【微信】订单编号："+orderNumber);
         vh.mFinishOrderBuildTime.setText("收货时间："+orderBuildTime);
+        TestAllOrderStock.DataBean.CommodityBean commodityBean = listCommodityBean.get(0);
+        String comImg = commodityBean.getComImg();
+        String comName = commodityBean.getComName();
+        Double comPrice = commodityBean.getComPrice();
+        int comInventory = commodityBean.getComInventory();
+        vh.mFinishCommodityPrice.setText("售卖总价：￥"+commodityPrice);
+        vh.mFinishOrderNumber.setText("售卖数量："+comInventory);
+        vh.mFinishGcomName.setText(commodityBean.getComName());
+        Glide.with(activity).load(comImg).placeholder(R.mipmap.icon).into(vh.mFinishComImg);
     }
+
     @Override
     public int getItemCount() {
         return list!=null ? list.size() : 0;

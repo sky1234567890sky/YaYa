@@ -53,13 +53,13 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     TextView tvUse;
     @BindView(R.id.tv_sheng)
     TextView tvSheng;
-    @BindView(R.id.tv_day)
+    @BindView(R.id.my_tv_day)//支付宝  每日限度
     TextView tvDay;
     @BindView(R.id.tv_wechat_use)
     TextView tvWechatUse;
     @BindView(R.id.tv_wechat_sheng)
     TextView tvWechatSheng;
-    @BindView(R.id.tv_wechat_day)
+    @BindView(R.id.my_tv_wechat_day)
     TextView tvWechatDay;
     @BindView(R.id.my_ll)
     RelativeLayout myLl;
@@ -149,7 +149,8 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 if (data.getCode() == 0 && data.getData()!=null && data.getData().getUserInfo() != null) {
                     databean = data.getData();
                     userInfo = databean.getUserInfo();
-
+//                    tvDay.setText(""+);//每日限額
+//                    tvWechatDay.setText(""+);
 //                    commodity:  货物信息
                     TestHomePageData.DataBean.CommodityBean commodity = databean.getCommodity();
 //                    comName 货物名称
@@ -159,10 +160,10 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 //                    comImg 商品图片
                     String comImg = commodity.getComImg();
 
-
 //                    userInfo: 用户基本信息
 //                    userName 用户姓名
                     String userHeadImg = userInfo.getUserHeadImg();
+
 //                    userNickName 昵称
                     String userNickName = userInfo.getUserNickName();
 //                    userEarningsTotal 总收益
@@ -170,18 +171,34 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     allGamemoneyTv.setText(userInfo.getUserEarningsTotal() + "");//總收益
 //                    zfbEd 支付宝已使用额度
 //                    wxEd 微信已使用额度
+
 //                    userEarningsToday 今日收益
-                    getGamemoneyTv.setText(databean.getUserEarningsToday()+ "");//今日收益
+                    String userEarningsToday = databean.getUserEarningsToday();
+                    if (userEarningsToday==null)
+                    getGamemoneyTv.setText("0");//今日收益
+                    else getGamemoneyTv.setText(userEarningsToday);
+
                     //保存图片 跟 昵称
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW,userHeadImg);
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_NICK, userNickName);
-
                     myNameTv.setText(userNickName);
+
                     tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
                     tvWechatUse.setText(userInfo.getWxEd() + "");//微信已使用额度
+
+                    String alipay_residue = tvDay.getText().toString().trim();//获取支付宝额度
+                    int alipayInt = Integer.parseInt(alipay_residue);
+                    String wechat_residue = tvWechatSheng.getText().toString().trim();//获取微信额度
+                    int wechatInt = Integer.parseInt(alipay_residue);
+
+                    //剩余额度
+                    if (alipayInt>=userInfo.getZfbEd())tvSheng.setText((alipayInt-userInfo.getZfbEd())+"");
+                    else ToastUtil.showShort("已达到每日限度");
+                    if (wechatInt>=userInfo.getWxEd())tvWechatSheng.setText((wechatInt-userInfo.getWxEd())+"");
+                    else ToastUtil.showShort("已达到每日限度");
                     RequestOptions requestOptions = new RequestOptions().centerCrop();
                     Glide.with(getContext()).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(iv);
-//                    Object userName = userInfo.getUserName();
+
 //                    myNameTv.setText();
                 } else {
                     ToastUtil.showShort(data.getMsg());

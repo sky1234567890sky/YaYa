@@ -40,8 +40,7 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout myRelationServiceRl;
     @BindView(R.id.my_wechat_code_rl)
     RelativeLayout myWechatCodeRl;
-
-    @OnClick({R.id.my_wechat_code_rl,R.id.setting_back_iv,R.id.my_invientory_rl, R.id.my_small_rl, R.id.my_pay_code_rl, R.id.my_update_password_rl, R.id.my_relation_service_rl,R.id.log_out_ll})
+    @OnClick({R.id.my_wechat_code_rl,R.id.setting_back_iv,R.id.my_invientory_rl, R.id.my_small_rl, R.id.my_pay_code_rl, R.id.my_update_password_rl, R.id.my_relation_service_rl,R.id.setting_back_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.my_wechat_code_rl://微信收款码
@@ -74,7 +73,7 @@ public class SettingActivity extends BaseActivity {
                 Intent csa = new Intent(this, CustomerServiceActivity.class);
                 startActivity(csa);
                 break;
-            case R.id.log_out_ll:
+            case R.id.setting_back_login:
                 //注銷登錄
                 new AlertDialog.Builder(this)
                         .setTitle("确认退出登录？")
@@ -85,13 +84,15 @@ public class SettingActivity extends BaseActivity {
 
                                 Intent login = new Intent(SettingActivity.this, LoginActivity.class);
                                 //清除数据
-                                SharedPreferences settings = getSharedPreferences("config", MODE_PRIVATE);
-                                SharedPreferences.Editor edit = settings.edit();
-                                edit.putString(NormalConfig.USER_ID,"");
-                                edit.putBoolean(NormalConfig.ISFIRST,false);
-                                edit.commit();
-                                startActivity(login);
 
+//                                SharedPreferences settings = getSharedPreferences("config", MODE_PRIVATE);
+////                                SharedPreferences.Editor edit = settings.edit();
+////                                edit.putString(NormalConfig.USER_ID,"");
+//////                                edit.putBoolean(NormalConfig.ISFIRST,false);
+////                                edit.commit();
+                                SharedPrefrenceUtils.saveString(SettingActivity.this,NormalConfig.USER_ID,"");
+                                mApplication.userid =0;
+                                startActivity(login);
                                 finish();
                             }
 

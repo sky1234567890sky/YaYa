@@ -60,10 +60,10 @@ public class MyQrCode {
          * @param mBitmap logo文件
          * @return bitmap
          */
-        private static int IMAGE_HALFWIDTH = 50;//宽度值，影响中间图片大小
+        private static int IMAGE_HALFWIDTH = 100;//宽度值，影响中间图片大小
 
         public static Bitmap createQRCodeWithLogo(String url, Bitmap mBitmap) {
-            return createQRCodeWithLogo(url,500,mBitmap);
+            return createQRCodeWithLogo(url,1000,mBitmap);
         }
         public static Bitmap createQRCodeWithLogo(String url, int size, Bitmap mBitmap) {
             try {

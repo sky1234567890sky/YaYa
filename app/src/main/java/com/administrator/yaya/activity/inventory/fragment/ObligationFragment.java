@@ -24,14 +24,9 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
-import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  * 待付款
@@ -50,20 +45,24 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
     private int num = 1;
 
     private int anInt;
-
     private BaseApp app;
 
     private TestObligation.DataBean data;
+
     private int index;
+    private List<TestObligation.DataBean.OrderStockListBean> orderStockList;
+    private List<TestObligation.DataBean.CommodityBean> arrayList;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
         list = new ArrayList<>();
+        arrayList = new ArrayList<>();
+        initRecycleView(mList,abligationRefreshLayout);
         abligationRefreshLayout.setEnableLoadMore(false);
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new ObligationAdapter(list, getActivity());
+        adapter = new ObligationAdapter(arrayList,list, getActivity());
         mList.setAdapter(adapter);
 //        mList.addItemDecoration(adapter);
 //        货物名称	comName  爲空
@@ -83,15 +82,18 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
     @Override
     protected void initListener() {
         super.initListener();
+
         adapter.setAccountpaidsetOnclikListener(new ObligationAdapter.AccountpaidsetOnclikListener() {
             @Override
             public void setonclik(int postion) {
                 index = postion;
-                //取消订单
-                mPresenter.getData(ApiConfig.TEST_CANCEL_ORDER_STOCK, list.get(postion).getStockId());
+                int stockId = list.get(postion).getStockId();
+                //订单-取消售卖订单  無
+                mPresenter.getData(ApiConfig.TEST_CANCEL_ORDER_SALES, stockId);
             }
         });
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -100,29 +102,36 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
                 if (list!=null&& !list.isEmpty())list.clear();
                 //待付款
                 TestObligation testObligation = (TestObligation) t[0];
+//                Log.i("tag", "待付款数据: "+testObligation.toString());
                 if (testObligation.getCode() == 0 && testObligation.getData() != null) {
-                    Log.i("tag", "待付款数据: "+testObligation.toString());
+                    TestObligation.DataBean dataBean = testObligation.getData();
+//                    TestObligation.DataBean.CommodityBean commodity = dataBean.getCommodity();
+//                    data = dataBean;
+//                    commodity = dataBean.getCommodity();
+                    TestObligation.DataBean.CommodityBean commodity = testObligation.getData().getCommodity();
 
-                    data = testObligation.getData();
-
-                    List<TestObligation.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
+                    arrayList.add(commodity);
+                    orderStockList = dataBean.getOrderStockList();
 
                     list.addAll(orderStockList);
 
                     adapter.notifyDataSetChanged();
 
                 } else {
-                    ToastUtil.showShort(testObligation.getMsg());
+//                    ToastUtil.showShort(testObligation.getMsg());
                 }
                 break;//
-            //取消订单
-            case ApiConfig.TEST_CANCEL_ORDER_STOCK:
+            //取消售卖订单
+            case ApiConfig.TEST_CANCEL_ORDER_SALES:
                 TestCancelOrderStock testCancelOrderStock = (TestCancelOrderStock) t[0];
+
                 if (testCancelOrderStock.getCode()==0){
+
                     ToastUtil.showLong(testCancelOrderStock.getMsg());
                     //清空条目
                     list.remove(index);
                     adapter.notifyItemRemoved(index);
+
                 }else{
                     ToastUtil.showLong(testCancelOrderStock.getMsg());
                 }
@@ -137,12 +146,10 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
         if (userId!=null) {
             mPresenter.getData(ApiConfig.TEXT_GATHERING, anInt, num);//待付款
         }
-       }
-
+     }
     public ObligationFragment() {
-        // Required empty public constructor
-    }
 
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_obligation;
@@ -157,5 +164,6 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
     }
     @Override
     public void onError(int whichApi, Throwable e) {
+
     }
 }

@@ -64,13 +64,17 @@
         <!--android:layout_height="wrap_content"-->
         <!--/>-->
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_35"
+            android:layout_marginLeft="@dimen/dp_35"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_gravity="center_horizontal"
+            >
     <LinearLayout
-        android:layout_marginRight="@dimen/dp_35"
-        android:layout_marginLeft="@dimen/dp_35"
-        android:layout_marginTop="@dimen/dp_15"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:background="@drawable/login_register_up_et_shape"
         android:layout_height="@dimen/dp_44"
         >
         <ImageView
@@ -99,11 +103,17 @@
             android:textCursorDrawable="@drawable/edit_cursor_color"
             />
     </LinearLayout>
+        </android.support.v7.widget.CardView>
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_35"
+            android:layout_marginLeft="@dimen/dp_35"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_gravity="center_horizontal"
+            ></android.support.v7.widget.CardView>
     <LinearLayout
-        android:layout_marginRight="@dimen/dp_35"
-        android:layout_marginLeft="@dimen/dp_35"
-        android:layout_marginTop="@dimen/dp_25"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:background="@drawable/login_register_up_et_shape"
@@ -151,6 +161,14 @@
             />
         </RelativeLayout>
     </LinearLayout>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_35"
+            android:layout_marginLeft="@dimen/dp_35"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_gravity="center_horizontal"
+            ></android.support.v7.widget.CardView>
 
     <LinearLayout
         android:layout_marginRight="@dimen/dp_35"

@@ -33,18 +33,14 @@ import butterknife.ButterKnife;
 
 public class AccountPaidAdapter extends RecyclerView.Adapter<AccountPaidAdapter.AccountpaidItem> {
 
-    private List<TestAccountPaid.DataBean.OrderStockListBean> list;
-    private TestAccountPaid.DataBean data;
-    private FragmentActivity fragmentActivity;
+    private final List<TestAccountPaid.DataBean.CommodityBean> commodity;
+    private final List<TestAccountPaid.DataBean.OrderStockListBean> list;
+    private final FragmentActivity activity;
     private Context context;
-    public AccountPaidAdapter(TestAccountPaid.DataBean data, List<TestAccountPaid.DataBean.OrderStockListBean> list, FragmentActivity activity) {
-        this.data = data;
+    public AccountPaidAdapter(List<TestAccountPaid.DataBean.CommodityBean> commodity, List<TestAccountPaid.DataBean.OrderStockListBean> list, FragmentActivity activity) {
+        this.commodity = commodity;
         this.list = list;
-        this.fragmentActivity = activity;
-    }
-
-    public AccountPaidAdapter(List<TestAccountPaid> list, FragmentActivity activity) {
-
+        this.activity = activity;
     }
 
     @NonNull
@@ -58,16 +54,15 @@ public class AccountPaidAdapter extends RecyclerView.Adapter<AccountPaidAdapter.
     @Override
     public void onBindViewHolder(@NonNull AccountpaidItem accountpaidItem, @SuppressLint("RecyclerView") final int i) {
         TestAccountPaid.DataBean.OrderStockListBean orderStockListBean = list.get(i);
-        TestAccountPaid.DataBean.CommodityBean commodity = data.getCommodity();
 
         accountpaidItem.mYifuCommodityAmount.setText("数量："+ orderStockListBean.getCommodityAmount());
         accountpaidItem.mYifuCommodityPrice.setText("付款金额：" + orderStockListBean.getCommodityPrice());
-        accountpaidItem.mYifuComPrice.setText("单价￥：" + commodity.getComPrice());
-        accountpaidItem.mYifuGamemoney.setText(commodity.getComName());
-
         accountpaidItem.mYifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
 
-        Glide.with(context).load(commodity.getComImg()).placeholder(R.mipmap.icon).into(accountpaidItem.mYifuComImg);
+        TestAccountPaid.DataBean.CommodityBean commodityBean = commodity.get(0);
+        accountpaidItem.mYifuComPrice.setText("单价￥：" + commodityBean.getComPrice());
+        accountpaidItem.mYifuGamemoney.setText(commodityBean.getComName());
+        Glide.with(context).load(commodityBean.getComImg()).placeholder(R.mipmap.icon).into(accountpaidItem.mYifuComImg);
 
         accountpaidItem.mYifuUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +72,6 @@ public class AccountPaidAdapter extends RecyclerView.Adapter<AccountPaidAdapter.
                 }
             }
         });
-
     }
     @Override
     public int getItemCount() {

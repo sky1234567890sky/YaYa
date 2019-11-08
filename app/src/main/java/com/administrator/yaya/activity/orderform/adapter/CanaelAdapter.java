@@ -21,19 +21,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CanaelAdapter extends RecyclerView.Adapter<CanaelAdapter.Vh> {
+    private final List<TestCancel.DataBean.CommodityBean> listCommodity;
     private final List<TestCancel.DataBean.OrderSalesListBean> list;
     private final FragmentActivity activity;
-    private TestCancel.DataBean data;
 
-    public CanaelAdapter(List<TestCancel.DataBean.OrderSalesListBean> list, FragmentActivity activity) {
+    public CanaelAdapter(List<TestCancel.DataBean.CommodityBean> listCommodity, List<TestCancel.DataBean.OrderSalesListBean> list, FragmentActivity activity) {
+        this.listCommodity = listCommodity;
         this.list = list;
         this.activity = activity;
-    }
-
-    public void setData(TestCancel.DataBean data) {
-
-        this.data = data;
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -47,7 +42,7 @@ public class CanaelAdapter extends RecyclerView.Adapter<CanaelAdapter.Vh> {
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
         TestCancel.DataBean.OrderSalesListBean orderStockListBean = list.get(i);
-        TestCancel.DataBean.CommodityBean commodity = data.getCommodity();
+        TestCancel.DataBean.CommodityBean commodityBean = listCommodity.get(0);
 //        结果:
 //        进货订单集合	orderSalesList
 //        订单id		salesId
@@ -72,16 +67,15 @@ public class CanaelAdapter extends RecyclerView.Adapter<CanaelAdapter.Vh> {
             String orderNumber = orderStockListBean.getOrderNumber();
             Object salesAmount = orderStockListBean.getSalesAmount();
             vh.mCancelOrderBuildTime.setText("取消时间：" + salesUpdateTime);
-            int commodityPrice = orderStockListBean.getCommodityPrice();
             int orderPayTpe = orderStockListBean.getOrderPayTpe();
             int salesAmountMoney = orderStockListBean.getSalesAmountMoney();
             String salesBuildTime = orderStockListBean.getSalesBuildTime();
             vh.mCancelCommodityPrice.setText("售卖总价￥："+salesAmountMoney);
-            String amount = data.getAmount();
-            vh.mCancelGcomName.setText(amount);
-            String comImg = commodity.getComImg();
+            vh.mCancelGcomName.setText(commodityBean.getComName());
+            String comImg = commodityBean.getComImg();
             Glide.with(activity).load(comImg).into(vh.mCancelComImg);
-            int comInventory = commodity.getComInventory();
+            int comInventory = commodityBean.getComInventory();
+            vh.mCancelOrderBuildTime.setText("售卖数量："+comInventory);
 
         }
     }

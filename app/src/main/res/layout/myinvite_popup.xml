@@ -36,6 +36,7 @@
         android:layout_below="@id/invite_fridment"
         android:layout_marginTop="@dimen/dp_46_5"
         />
+
     <TextView
         android:id="@+id/myinvite_two_dimention_cod_tv"
         android:layout_marginTop="@dimen/dp_15"

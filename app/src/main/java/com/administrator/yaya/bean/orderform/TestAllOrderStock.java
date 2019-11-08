@@ -3,11 +3,10 @@ package com.administrator.yaya.bean.orderform;
 import java.util.List;
 //所有售賣訂單  售卖中
 public class TestAllOrderStock {
-
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":100,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9999876,"comPurchaseNumMin":100,"comPurchaseNumMax":10000,"comExplain":"这是个游戏币1"},"amount":"20000","orderSalesList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":31,"userId":1,"orderNumber":"191105150586311","commodityPrice":0,"salesAmount":null,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-06 10:38:52","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":3,"userId":1,"orderNumber":"191104101381399","commodityPrice":0,"salesAmount":20000,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-04 10:15:11","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙"}]}
+     * data : {"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币1","comPrice":0.01,"comImg":"http://localhost:8082/profile/upload/2019/11/08/ec5f5e6db7d4c29b0f218f6a2ac915e2.jpg","comInventory":9881278,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"},"amount":"220000","orderSalesList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":53,"userId":1,"orderNumber":"191108202991770","commodityPrice":0,"salesAmount":109,"salesAmountMoney":1.09,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 20:35:33","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":52,"userId":1,"orderNumber":"191108193672908","commodityPrice":0,"salesAmount":8888,"salesAmountMoney":88.88,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 19:37:16","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":51,"userId":1,"orderNumber":"191108192860954","commodityPrice":0,"salesAmount":1333,"salesAmountMoney":13.33,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 19:35:46","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":50,"userId":1,"orderNumber":"191108160114808","commodityPrice":0,"salesAmount":8888,"salesAmountMoney":88.88,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 18:49:30","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":49,"userId":1,"orderNumber":"191108160462573","commodityPrice":0,"salesAmount":7777,"salesAmountMoney":77.77,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 18:42:50","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":48,"userId":1,"orderNumber":"191108160462573","commodityPrice":0,"salesAmount":7777,"salesAmountMoney":77.77,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 16:44:46","salesUpdateTime":"2019-11-08 16:52:18","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":47,"userId":1,"orderNumber":"191108134881586","commodityPrice":0,"salesAmount":1000,"salesAmountMoney":10,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 14:44:40","salesUpdateTime":"2019-11-08 15:30:41","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":46,"userId":1,"orderNumber":"1231","commodityPrice":0,"salesAmount":2000000,"salesAmountMoney":20000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 11:46:17","salesUpdateTime":"2019-11-08 15:35:23","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":45,"userId":1,"orderNumber":"191107190485029","commodityPrice":0,"salesAmount":10000,"salesAmountMoney":100,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 11:05:32","salesUpdateTime":"2019-11-08 16:41:20","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":44,"userId":1,"orderNumber":"191107194036035","commodityPrice":0.01,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":1,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-07 19:40:52","salesUpdateTime":"2019-11-08 17:38:06","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":43,"userId":1,"orderNumber":"191107193344087","commodityPrice":0.01,"salesAmount":200000,"salesAmountMoney":2000,"parentSalesId":1,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-07 19:33:06","salesUpdateTime":"2019-11-08 17:38:12","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"}]}
      */
 
     private String msg;
@@ -40,9 +39,9 @@ public class TestAllOrderStock {
 
     public static class DataBean {
         /**
-         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":100,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9999876,"comPurchaseNumMin":100,"comPurchaseNumMax":10000,"comExplain":"这是个游戏币1"}
-         * amount : 20000
-         * orderSalesList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":31,"userId":1,"orderNumber":"191105150586311","commodityPrice":0,"salesAmount":null,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-06 10:38:52","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":3,"userId":1,"orderNumber":"191104101381399","commodityPrice":0,"salesAmount":20000,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-04 10:15:11","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙"}]
+         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币1","comPrice":0.01,"comImg":"http://localhost:8082/profile/upload/2019/11/08/ec5f5e6db7d4c29b0f218f6a2ac915e2.jpg","comInventory":9881278,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"}
+         * amount : 220000
+         * orderSalesList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":53,"userId":1,"orderNumber":"191108202991770","commodityPrice":0,"salesAmount":109,"salesAmountMoney":1.09,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 20:35:33","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":52,"userId":1,"orderNumber":"191108193672908","commodityPrice":0,"salesAmount":8888,"salesAmountMoney":88.88,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 19:37:16","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":51,"userId":1,"orderNumber":"191108192860954","commodityPrice":0,"salesAmount":1333,"salesAmountMoney":13.33,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 19:35:46","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":50,"userId":1,"orderNumber":"191108160114808","commodityPrice":0,"salesAmount":8888,"salesAmountMoney":88.88,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 18:49:30","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":49,"userId":1,"orderNumber":"191108160462573","commodityPrice":0,"salesAmount":7777,"salesAmountMoney":77.77,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 18:42:50","salesUpdateTime":null,"salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":48,"userId":1,"orderNumber":"191108160462573","commodityPrice":0,"salesAmount":7777,"salesAmountMoney":77.77,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 16:44:46","salesUpdateTime":"2019-11-08 16:52:18","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":47,"userId":1,"orderNumber":"191108134881586","commodityPrice":0,"salesAmount":1000,"salesAmountMoney":10,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 14:44:40","salesUpdateTime":"2019-11-08 15:30:41","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":46,"userId":1,"orderNumber":"1231","commodityPrice":0,"salesAmount":2000000,"salesAmountMoney":20000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 11:46:17","salesUpdateTime":"2019-11-08 15:35:23","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":45,"userId":1,"orderNumber":"191107190485029","commodityPrice":0,"salesAmount":10000,"salesAmountMoney":100,"parentSalesId":0,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-08 11:05:32","salesUpdateTime":"2019-11-08 16:41:20","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":44,"userId":1,"orderNumber":"191107194036035","commodityPrice":0.01,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":1,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-07 19:40:52","salesUpdateTime":"2019-11-08 17:38:06","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":43,"userId":1,"orderNumber":"191107193344087","commodityPrice":0.01,"salesAmount":200000,"salesAmountMoney":2000,"parentSalesId":1,"orderPayTpe":0,"salesStatus":1,"salesBuildTime":"2019-11-07 19:33:06","salesUpdateTime":"2019-11-08 17:38:12","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"}]
          */
 
         private CommodityBean commodity;
@@ -83,13 +82,13 @@ public class TestAllOrderStock {
              * remark : null
              * params : {}
              * comId : 1
-             * comName : 游戏币
-             * comPrice : 100
-             * comImg : https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg
-             * comInventory : 9999876
+             * comName : 游戏币1
+             * comPrice : 0.01
+             * comImg : http://localhost:8082/profile/upload/2019/11/08/ec5f5e6db7d4c29b0f218f6a2ac915e2.jpg
+             * comInventory : 9881278
              * comPurchaseNumMin : 100
-             * comPurchaseNumMax : 10000
-             * comExplain : 这是个游戏币1
+             * comPurchaseNumMax : 10000000
+             * comExplain : 这是个游戏币
              */
 
             private Object searchValue;
@@ -101,7 +100,7 @@ public class TestAllOrderStock {
             private ParamsBean params;
             private int comId;
             private String comName;
-            private int comPrice;
+            private double comPrice;
             private String comImg;
             private int comInventory;
             private int comPurchaseNumMin;
@@ -180,11 +179,11 @@ public class TestAllOrderStock {
                 this.comName = comName;
             }
 
-            public int getComPrice() {
+            public double getComPrice() {
                 return comPrice;
             }
 
-            public void setComPrice(int comPrice) {
+            public void setComPrice(double comPrice) {
                 this.comPrice = comPrice;
             }
 
@@ -241,19 +240,20 @@ public class TestAllOrderStock {
              * updateTime : null
              * remark : null
              * params : {}
-             * salesId : 31
+             * salesId : 53
              * userId : 1
-             * orderNumber : 191105150586311
+             * orderNumber : 191108202991770
              * commodityPrice : 0
-             * salesAmount : null
-             * salesAmountMoney : 0
+             * salesAmount : 109
+             * salesAmountMoney : 1.09
              * parentSalesId : 0
              * orderPayTpe : 0
              * salesStatus : 1
-             * salesBuildTime : 2019-11-06 10:38:52
+             * salesBuildTime : 2019-11-08 20:35:33
              * salesUpdateTime : null
              * salesBuildTimeEnd : null
              * userName : 钱浩龙
+             * userPhone : 17631365666
              */
 
             private Object searchValue;
@@ -267,8 +267,8 @@ public class TestAllOrderStock {
             private int userId;
             private String orderNumber;
             private int commodityPrice;
-            private Object salesAmount;
-            private int salesAmountMoney;
+            private int salesAmount;
+            private double salesAmountMoney;
             private int parentSalesId;
             private int orderPayTpe;
             private int salesStatus;
@@ -276,6 +276,7 @@ public class TestAllOrderStock {
             private Object salesUpdateTime;
             private Object salesBuildTimeEnd;
             private String userName;
+            private String userPhone;
 
             public Object getSearchValue() {
                 return searchValue;
@@ -365,19 +366,19 @@ public class TestAllOrderStock {
                 this.commodityPrice = commodityPrice;
             }
 
-            public Object getSalesAmount() {
+            public int getSalesAmount() {
                 return salesAmount;
             }
 
-            public void setSalesAmount(Object salesAmount) {
+            public void setSalesAmount(int salesAmount) {
                 this.salesAmount = salesAmount;
             }
 
-            public int getSalesAmountMoney() {
+            public double getSalesAmountMoney() {
                 return salesAmountMoney;
             }
 
-            public void setSalesAmountMoney(int salesAmountMoney) {
+            public void setSalesAmountMoney(double salesAmountMoney) {
                 this.salesAmountMoney = salesAmountMoney;
             }
 
@@ -437,52 +438,16 @@ public class TestAllOrderStock {
                 this.userName = userName;
             }
 
+            public String getUserPhone() {
+                return userPhone;
+            }
+
+            public void setUserPhone(String userPhone) {
+                this.userPhone = userPhone;
+            }
+
             public static class ParamsBeanX {
             }
-
-            @Override
-            public String toString() {
-                return "OrderSalesListBean{" +
-                        "searchValue=" + searchValue +
-                        ", createBy=" + createBy +
-                        ", createTime=" + createTime +
-                        ", updateBy=" + updateBy +
-                        ", updateTime=" + updateTime +
-                        ", remark=" + remark +
-                        ", params=" + params +
-                        ", salesId=" + salesId +
-                        ", userId=" + userId +
-                        ", orderNumber='" + orderNumber + '\'' +
-                        ", commodityPrice=" + commodityPrice +
-                        ", salesAmount=" + salesAmount +
-                        ", salesAmountMoney=" + salesAmountMoney +
-                        ", parentSalesId=" + parentSalesId +
-                        ", orderPayTpe=" + orderPayTpe +
-                        ", salesStatus=" + salesStatus +
-                        ", salesBuildTime='" + salesBuildTime + '\'' +
-                        ", salesUpdateTime=" + salesUpdateTime +
-                        ", salesBuildTimeEnd=" + salesBuildTimeEnd +
-                        ", userName='" + userName + '\'' +
-                        '}';
-            }
         }
-
-        @Override
-        public String toString() {
-            return "DataBean{" +
-                    "commodity=" + commodity +
-                    ", amount='" + amount + '\'' +
-                    ", orderSalesList=" + orderSalesList +
-                    '}';
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "TestAllOrderStock{" +
-                "msg='" + msg + '\'' +
-                ", code=" + code +
-                ", data=" + data +
-                '}';
     }
 }

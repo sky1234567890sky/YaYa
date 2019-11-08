@@ -8,7 +8,7 @@ public class TestCancel {
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":100,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9999876,"comPurchaseNumMin":100,"comPurchaseNumMax":10000,"comExplain":"这是个游戏币1"},"amount":"20000","orderSalesList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":27,"userId":1,"orderNumber":"191104104823647","commodityPrice":0,"salesAmount":null,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-05 10:36:37","salesUpdateTime":"2019-11-05 10:57:35","salesBuildTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":26,"userId":1,"orderNumber":"191104104823647","commodityPrice":0,"salesAmount":null,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-04 16:52:12","salesUpdateTime":"2019-11-05 10:57:33","salesBuildTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":25,"userId":1,"orderNumber":"191104104823647","commodityPrice":0,"salesAmount":null,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-04 16:41:51","salesUpdateTime":"2019-11-05 10:57:30","salesBuildTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":11,"userId":1,"orderNumber":"191104104826456","commodityPrice":0,"salesAmount":20000,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-04 11:55:42","salesUpdateTime":"2019-11-04 14:49:15","salesBuildTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":7,"userId":1,"orderNumber":"191104104821234","commodityPrice":0,"salesAmount":20000,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-04 11:00:31","salesUpdateTime":"2019-11-05 15:13:21","salesBuildTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":5,"userId":1,"orderNumber":"191104104823123","commodityPrice":0,"salesAmount":0,"salesAmountMoney":-2000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-04 10:56:05","salesUpdateTime":"2019-11-05 15:44:43","salesBuildTimeEnd":null,"userName":"钱浩龙"}]}
+     * data : {"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币1","comPrice":0.01,"comImg":"http://localhost:8082/profile/upload/2019/11/08/ec5f5e6db7d4c29b0f218f6a2ac915e2.jpg","comInventory":9939354,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"},"amount":null,"orderSalesList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":1,"userId":1,"orderNumber":"213213","commodityPrice":0.01,"salesAmount":19000000,"salesAmountMoney":190000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-07 13:24:16","salesUpdateTime":"2019-11-08 10:46:34","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"}]}
      */
 
     private String msg;
@@ -41,13 +41,13 @@ public class TestCancel {
 
     public static class DataBean {
         /**
-         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":100,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9999876,"comPurchaseNumMin":100,"comPurchaseNumMax":10000,"comExplain":"这是个游戏币1"}
-         * amount : 20000
-         * orderSalesList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":27,"userId":1,"orderNumber":"191104104823647","commodityPrice":0,"salesAmount":null,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-05 10:36:37","salesUpdateTime":"2019-11-05 10:57:35","salesBuildTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":26,"userId":1,"orderNumber":"191104104823647","commodityPrice":0,"salesAmount":null,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-04 16:52:12","salesUpdateTime":"2019-11-05 10:57:33","salesBuildTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":25,"userId":1,"orderNumber":"191104104823647","commodityPrice":0,"salesAmount":null,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-04 16:41:51","salesUpdateTime":"2019-11-05 10:57:30","salesBuildTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":11,"userId":1,"orderNumber":"191104104826456","commodityPrice":0,"salesAmount":20000,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-04 11:55:42","salesUpdateTime":"2019-11-04 14:49:15","salesBuildTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":7,"userId":1,"orderNumber":"191104104821234","commodityPrice":0,"salesAmount":20000,"salesAmountMoney":0,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-04 11:00:31","salesUpdateTime":"2019-11-05 15:13:21","salesBuildTimeEnd":null,"userName":"钱浩龙"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":5,"userId":1,"orderNumber":"191104104823123","commodityPrice":0,"salesAmount":0,"salesAmountMoney":-2000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-04 10:56:05","salesUpdateTime":"2019-11-05 15:44:43","salesBuildTimeEnd":null,"userName":"钱浩龙"}]
+         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币1","comPrice":0.01,"comImg":"http://localhost:8082/profile/upload/2019/11/08/ec5f5e6db7d4c29b0f218f6a2ac915e2.jpg","comInventory":9939354,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"}
+         * amount : null
+         * orderSalesList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":1,"userId":1,"orderNumber":"213213","commodityPrice":0.01,"salesAmount":19000000,"salesAmountMoney":190000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-07 13:24:16","salesUpdateTime":"2019-11-08 10:46:34","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"}]
          */
 
         private CommodityBean commodity;
-        private String amount;
+        private Object amount;
         private List<OrderSalesListBean> orderSalesList;
 
         public CommodityBean getCommodity() {
@@ -58,11 +58,11 @@ public class TestCancel {
             this.commodity = commodity;
         }
 
-        public String getAmount() {
+        public Object getAmount() {
             return amount;
         }
 
-        public void setAmount(String amount) {
+        public void setAmount(Object amount) {
             this.amount = amount;
         }
 
@@ -84,13 +84,13 @@ public class TestCancel {
              * remark : null
              * params : {}
              * comId : 1
-             * comName : 游戏币
-             * comPrice : 100
-             * comImg : https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg
-             * comInventory : 9999876
+             * comName : 游戏币1
+             * comPrice : 0.01
+             * comImg : http://localhost:8082/profile/upload/2019/11/08/ec5f5e6db7d4c29b0f218f6a2ac915e2.jpg
+             * comInventory : 9939354
              * comPurchaseNumMin : 100
-             * comPurchaseNumMax : 10000
-             * comExplain : 这是个游戏币1
+             * comPurchaseNumMax : 10000000
+             * comExplain : 这是个游戏币
              */
 
             private Object searchValue;
@@ -102,7 +102,7 @@ public class TestCancel {
             private ParamsBean params;
             private int comId;
             private String comName;
-            private int comPrice;
+            private double comPrice;
             private String comImg;
             private int comInventory;
             private int comPurchaseNumMin;
@@ -181,11 +181,11 @@ public class TestCancel {
                 this.comName = comName;
             }
 
-            public int getComPrice() {
+            public double getComPrice() {
                 return comPrice;
             }
 
-            public void setComPrice(int comPrice) {
+            public void setComPrice(double comPrice) {
                 this.comPrice = comPrice;
             }
 
@@ -242,19 +242,20 @@ public class TestCancel {
              * updateTime : null
              * remark : null
              * params : {}
-             * salesId : 27
+             * salesId : 1
              * userId : 1
-             * orderNumber : 191104104823647
-             * commodityPrice : 0
-             * salesAmount : null
-             * salesAmountMoney : 0
+             * orderNumber : 213213
+             * commodityPrice : 0.01
+             * salesAmount : 19000000
+             * salesAmountMoney : 190000
              * parentSalesId : 0
              * orderPayTpe : 0
              * salesStatus : 3
-             * salesBuildTime : 2019-11-05 10:36:37
-             * salesUpdateTime : 2019-11-05 10:57:35
+             * salesBuildTime : 2019-11-07 13:24:16
+             * salesUpdateTime : 2019-11-08 10:46:34
              * salesBuildTimeEnd : null
              * userName : 钱浩龙
+             * userPhone : 17631365666
              */
 
             private Object searchValue;
@@ -267,8 +268,8 @@ public class TestCancel {
             private int salesId;
             private int userId;
             private String orderNumber;
-            private int commodityPrice;
-            private Object salesAmount;
+            private double commodityPrice;
+            private int salesAmount;
             private int salesAmountMoney;
             private int parentSalesId;
             private int orderPayTpe;
@@ -277,6 +278,7 @@ public class TestCancel {
             private String salesUpdateTime;
             private Object salesBuildTimeEnd;
             private String userName;
+            private String userPhone;
 
             public Object getSearchValue() {
                 return searchValue;
@@ -358,19 +360,19 @@ public class TestCancel {
                 this.orderNumber = orderNumber;
             }
 
-            public int getCommodityPrice() {
+            public double getCommodityPrice() {
                 return commodityPrice;
             }
 
-            public void setCommodityPrice(int commodityPrice) {
+            public void setCommodityPrice(double commodityPrice) {
                 this.commodityPrice = commodityPrice;
             }
 
-            public Object getSalesAmount() {
+            public int getSalesAmount() {
                 return salesAmount;
             }
 
-            public void setSalesAmount(Object salesAmount) {
+            public void setSalesAmount(int salesAmount) {
                 this.salesAmount = salesAmount;
             }
 
@@ -436,6 +438,14 @@ public class TestCancel {
 
             public void setUserName(String userName) {
                 this.userName = userName;
+            }
+
+            public String getUserPhone() {
+                return userPhone;
+            }
+
+            public void setUserPhone(String userPhone) {
+                this.userPhone = userPhone;
             }
 
             public static class ParamsBeanX {

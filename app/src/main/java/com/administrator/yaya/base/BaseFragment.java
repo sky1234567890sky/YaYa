@@ -46,6 +46,7 @@ public abstract class BaseFragment extends Fragment {
         initListener();
         return inflate;
     }
+
     protected abstract int getLayoutId();
     protected void initData() {
 

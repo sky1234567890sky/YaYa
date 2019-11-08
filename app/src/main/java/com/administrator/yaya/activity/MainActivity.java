@@ -172,7 +172,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
         anInt = Integer.parseInt(userId);
         if (userId!=null)mPresenter.getData(ApiConfig.TEXT_GATHERING, anInt, num);
     }
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {

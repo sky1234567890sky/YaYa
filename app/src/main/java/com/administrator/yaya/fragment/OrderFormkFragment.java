@@ -26,9 +26,10 @@ import java.util.ArrayList;
 import butterknife.BindView;
 /**
  * A simple {@link Fragment} subclass.
+ * 订单
  */
-public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
 
+public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
     @BindView(R.id.inventory_money)
     TextView mInventoryMoney;
     @BindView(R.id.tab_layout)
@@ -42,8 +43,8 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
     private ArrayList<Fragment> fragments;
     private ArrayList<String> titles;
     private int num =1;
-    public OrderFormkFragment() {
-        // Required empty public constructor
+    public OrderFormkFragment(){
+
     }
     @Override
     protected void initData() {
@@ -53,7 +54,6 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
             mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), num);
         }
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -62,12 +62,12 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
                 TestAllOrderStock testAllOrderStock = (TestAllOrderStock) t[0];
                 if (testAllOrderStock.getCode() == 0 && testAllOrderStock.getData() != null && testAllOrderStock.getData().getCommodity() != null) {
                     String amount = testAllOrderStock.getData().getAmount();
-                    mInventoryMoney.setText("今日收款："+amount);
+                    if (amount!=null) mInventoryMoney.setText("今日收款："+amount);
+                    else mInventoryMoney.setText("今日收款：0");
                 }
                 break;
         }
      }
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_order_formk;
@@ -86,7 +86,6 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
         fragments.add(sellFragment);
         fragments.add(finishFragment);
         fragments.add(cancelFragment);
-
         titles.add("售卖中");
         titles.add("已完成");
         titles.add("已取消");
@@ -107,7 +106,6 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
         if (tabLayout.getTabCount()>1)tabLayout.setCurrentTab(0);
         orderFormAdapter.notifyDataSetChanged();
     }
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();

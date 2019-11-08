@@ -47,9 +47,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-
-public interface INetService {
-
+public interface INetService{
     //获取验证码
     @POST("/v2/sms/send")
     @FormUrlEncoded
@@ -57,24 +55,20 @@ public interface INetService {
     @POST("/v2/sms/send")
     @Headers("Content-Type:application/json")
     Observable<VerifyCodeInfo> getVerify2(@Body RequestBody pBody);
-
     //====================================?
-
     //    登录
     @POST("appLogin")
     @FormUrlEncoded
     //@Headers({"Content-Type:application/x-www-form-urlencoded","Authorization:Basic ZG1kOjEyMzQ1Ng=="})
     Observable<TestLogin> getTestLogin(@Field("userPhone") String userPhone, @Field("userPwd") String userPwd);
-
     //    注册
     @POST("appRegister")
     @FormUrlEncoded
-    Observable<TestRegister> getTestRegister(@Field("userPhone") String userPhone, @Field("userPwd") String userPwd, @Field("userInvitationCode") String userInvitationCode, @Field("codename") String codename);
-
-    //验证码
-    @POST("appInvite")
+    Observable<TestRegister> getTestRegister(@Field("userPhone") String userPhone, @Field("userPwd") String userPwd, @Field("userInvitationCode") String userInvitationCode, @Field("codeName") String codeName);
+    //手机验证码
+    @POST("getPhoneCode")
     @FormUrlEncoded
-    Observable<TestInviteCode> getTestInviteCode(String s, String s1, String s2);
+    Observable<TestInviteCode> getTestInviteCode(@Field("phone") String phone);
 
     //首页
     @POST("index")
@@ -99,7 +93,7 @@ public interface INetService {
 //    Observable<TestAllOrderStock> getTestAllOrderStock(@Field("userId") int userId, @Field("orderStatus") int orderStatus);
     @POST("comBuy/allOrderStock") //待付款
     @FormUrlEncoded
-    Observable<TestObligation> getTestOrderStock(@Field("userId") int userId, @Field("orderStatus") int orderStatus);
+    Observable<TestObligation> getTestObateligation(@Field("userId") int userId, @Field("orderStatus") int orderStatus);
 
     @POST("comBuy/allOrderStock")
     @FormUrlEncoded
@@ -111,7 +105,7 @@ public interface INetService {
     @FormUrlEncoded
     Observable<TestPayToAffirmInfo> getTestPayToAffimInfo(@Field("orderNumber") String orderNumber);
 
-    //取消进货订单
+    //取消售货订单
     //http://192.168.0.198:8080/yayaApp/comBuy/cancelOrderStock
     @POST("comBuy/cancelOrderStock")
     @FormUrlEncoded

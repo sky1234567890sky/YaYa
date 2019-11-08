@@ -36,6 +36,7 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     SmartRefreshLayout finishRefresh;
     private FinishAdapter adapter;
     private List<TestAllOrderStock.DataBean.OrderSalesListBean> list;
+    private List<TestAllOrderStock.DataBean.CommodityBean> listCommodityBean;
 
     public FinishFragment() {
         // Required empty public constructor
@@ -58,57 +59,30 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     protected void initView(View inflate) {
         super.initView(inflate);
         list = new ArrayList<>();
+        listCommodityBean = new ArrayList<>();
+        initRecycleView(mList,finishRefresh);
+        finishRefresh.setEnableLoadMore(false);
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new FinishAdapter(list,getActivity());
+        adapter = new FinishAdapter(listCommodityBean,list,getActivity());
         mList.setAdapter(adapter);
     }
+
     @Override
     protected void initData() {
         super.initData();
+        //已完成
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
         if (userId != null) {
             mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), 2);
         } else {
             ToastUtil.showShort(R.string.networkerr + "");
         }
+    }
 
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        View inflate = inflater.inflate(R.layout.fragment_finish, container, false);
-//        parentFragment = (OrderFormkFragment) getParentFragment();
-//        return inflate;
-//    }
-
-//    @Override
-//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//
-//        super.onViewCreated(view, savedInstanceState);
-//    }
-
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//        if(isVisibleToUser){
-//
-//
-//            View view = parentFragment.getView();
-//          TextView  mInventory_money = view.findViewById(R.id.inventory_money);
-//
-//            mInventory_money.setText("weerrrtt");
-//
-//
-//
-//            Bundle arguments = getArguments();
-//            int finish =arguments.getInt("finish");
-//            Log.d("tag" ,"onCreateView: "+finish);
-//        }
-//
-//    }
-
-//    @Override
-//    public void onError(int whichApi, Throwable e) {
-//
-//    }
+    @Override
+    public void refresh() {
+        super.refresh();
+        initData();
     }
 
     @Override
@@ -119,6 +93,8 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEST_ALL_ORDERSTOCK://已完成
+                if (list!=null&& !list.isEmpty())list.clear();
+
                 TestAllOrderStock testFinish = (TestAllOrderStock) t[0];
                 Log.i("tag", "已完成: " + testFinish.toString());
                 if (testFinish.getCode() == 0 && testFinish.getData() != null && testFinish.getData().getOrderSalesList() != null) {
@@ -126,9 +102,9 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
 //                    进货订单集合	orderSalesList
                     String amount = data.getAmount();
                     List<TestAllOrderStock.DataBean.OrderSalesListBean> orderStockList = data.getOrderSalesList();
+                    listCommodityBean.add(data.getCommodity());
                     list.addAll(orderStockList);
                     adapter.notifyDataSetChanged();
-
 //                    EventBus.getDefault().postSticky(amount);
 //                    订单id		salesId
 //                    订单编号	orderNumber
@@ -153,5 +129,6 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
                 }
                 break;
         }
+        finishRefresh.finishRefresh(2000);
     }
 }

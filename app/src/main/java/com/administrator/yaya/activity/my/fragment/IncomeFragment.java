@@ -33,7 +33,6 @@ public class IncomeFragment extends BaseMvpFragment<LoginModel> implements IComm
     RecyclerView mList;
     @BindView(R.id.income_refreshLayout)
     SmartRefreshLayout incomeRefreshLayout;
-
     private IncomeAdapter adapter;
     private ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list;
     public IncomeFragment() {
@@ -46,7 +45,6 @@ public class IncomeFragment extends BaseMvpFragment<LoginModel> implements IComm
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new IncomeAdapter(list);
         mList.setAdapter(adapter);
-
     }
     @Override
     protected int getLayoutId() {
@@ -67,7 +65,6 @@ public class IncomeFragment extends BaseMvpFragment<LoginModel> implements IComm
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
     }

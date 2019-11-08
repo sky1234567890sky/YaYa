@@ -83,8 +83,6 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
     protected void initView() {
         SpannableString getInventory = ChangTvSizeUtils.changTVsize("");
         SpannableString getInventory2 = ChangTvSizeUtils.changTVsize("");
-
-
 //        tabLayout.addNewTab("收入记录");
 //        tabLayout.addNewTab("支出记录");
 //        tabLayout.addNewTab("返利记录");

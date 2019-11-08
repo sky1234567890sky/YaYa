@@ -6,7 +6,6 @@ public class TestCancelOrderStock {
      * msg : 运单取消成功
      * code : 0
      */
-
     private String msg;
     private int code;
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.ClipboardManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -57,31 +58,32 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     TextView bankMoney;
     @BindView(R.id.remark)
     TextView mRemark;
+    private String commodityAmount;
+    private String payerName;
+    private String commodityPrice;
+    private String userId;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_affirm_message;
     }
     @Override
     protected void initView() {
-        String commodityAmount = getIntent().getStringExtra("commodityAmount");
-        String payerName = getIntent().getStringExtra("bankName");
-        String commodityPrice = getIntent().getStringExtra("commodityPrice");//应付款金额
-        String userId = SharedPrefrenceUtils.getString(BaseApp.getApplication(), NormalConfig.USER_ID);
-        if (userId!=null) {
-            mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK, Integer.parseInt(userId), commodityPrice, payerName, commodityAmount);
-        }else{
-            ToastUtil.showShort("网络请求有误");
+        userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        commodityAmount = getIntent().getStringExtra("commodityAmount");
+        payerName = getIntent().getStringExtra("bankName");
+        //应付款金额
+        commodityPrice = getIntent().getStringExtra("commodityPrice");
         }
-    }
     @Override
     protected void initData() {
-        super.initData();
+        Log.i("tag", "data======》: "+commodityAmount+payerName+commodityPrice+userId);
+        int i = Integer.parseInt(userId);
+        mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK, i, commodityPrice, payerName, commodityAmount);
+
         //網絡請求  付款信息
-        String orderNumber = getIntent().getStringExtra("orderNumber");
-        if (orderNumber!=null){
-            mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO,orderNumber);
-        }else{
-            return;
+        String OrderNumber = getIntent().getStringExtra("OrderNumber");
+        if (OrderNumber!=null){
+            mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO,OrderNumber);
         }
     }
     @OnClick({R.id.affirm_msg_back_iv, R.id.receiver_copy, R.id.bank_code_number_copy, R.id.bank_copy, R.id.bank_money, R.id.remark_btn_copy, R.id.affirm_msg_look_btn})
@@ -132,41 +134,45 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
     @Override
     public void onError(int whichApi, Throwable e) {
-
+//        String message = e.getMessage();
+//        Log.e("aaaaaa",message);
     }
-    @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_ORDER_STOCK:
                  TestToOrderStock testToOrderStock = (TestToOrderStock) t[0];
 
+                Log.i("tag", "确认信息: "+testToOrderStock.toString());
+
                 if (testToOrderStock.getCode()==0 && testToOrderStock.getData()!=null){
+
                     TestToOrderStock.DataBean data = testToOrderStock.getData();
+
                     String bankName = data.getBankName();
                     String payeeName = data.getPayeeName();//收款人姓名
+
                     int gaId = data.getGaId();
                     String bankCard = data.getBankCard();//银行卡号
-                    int comMoney = data.getComMoney();//金额
                     String remark = data.getRemark();//备注信息
 
-                    bankYinhang.setText(bankName);
-                    receiverName.setText(payeeName);
-                    bankCodeNumber.setText(bankCard);
-                    moneyTv.setText(comMoney+"");
-                    mRemarkTv.setText(remark);
-
+                    bankYinhang.setText(bankName+"");
+                    receiverName.setText(payeeName+"");
+                    bankCodeNumber.setText(bankCard+"");
+                    moneyTv.setText(data.getComMoney());
+                    mRemarkTv.setText(remark+"");
                 }else{
-                    ToastUtil.showShort(testToOrderStock.getMsg());
+//                    ToastUtil.showShort(testToOrderStock.getMsg());
                 }
                 break;
+                //付款信息
+
             case ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO://从库存付款信息跳到确认信息解析
 //                getTestPayToAffimInfo()
                 TestPayToAffirmInfo testPayToAffirmInfo = (TestPayToAffirmInfo) t[0];
@@ -188,7 +194,7 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                     String remark = data.getRemark();
                     mRemarkTv.setText(remark);
                 }else{
-                    ToastUtil.showShort(testPayToAffirmInfo.getMsg());
+//                    ToastUtil.showShort(testPayToAffirmInfo.getMsg());
                 }
                 break;
         }

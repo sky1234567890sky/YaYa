@@ -43,6 +43,8 @@ public class CancelFragment  extends BaseMvpFragment<LoginModel> implements ICom
     SmartRefreshLayout cacelRefreshLayout;
 
     private List<TestCancel.DataBean.OrderSalesListBean> list;
+    private List<TestCancel.DataBean.CommodityBean> listCommodity;
+
     private CanaelAdapter adapter;
 
     public CancelFragment() {
@@ -60,6 +62,8 @@ public class CancelFragment  extends BaseMvpFragment<LoginModel> implements ICom
 public void onResponse(int whichApi, Object[] t) {
     switch (whichApi) {
         case ApiConfig.TEST_CANCEL://已取消
+            if (list!=null&& !list.isEmpty())list.clear();
+
             TestCancel testCancel = (TestCancel) t[0];
             Log.i("tag", "已取消: "+testCancel.toString());
             if (testCancel.getCode()==0 && testCancel.getData()!=null && testCancel.getData().getOrderSalesList()!=null){
@@ -67,7 +71,7 @@ public void onResponse(int whichApi, Object[] t) {
 //                    进货订单集合	orderSalesList
                 List<TestCancel.DataBean.OrderSalesListBean> orderStockList = data.getOrderSalesList();
                 list.addAll(orderStockList);
-                adapter.setData(testCancel.getData());
+                listCommodity.add(data.getCommodity());
                 adapter.notifyDataSetChanged();
 //                    订单id		salesId
 //                    订单编号	orderNumber
@@ -92,16 +96,19 @@ public void onResponse(int whichApi, Object[] t) {
             }
             break;
     }
+    cacelRefreshLayout.finishRefresh(2000);
 }
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        initRecycleView(mList,cacelRefreshLayout);
         list = new ArrayList<>();
-        adapter = new CanaelAdapter(list,getActivity());
+        listCommodity = new ArrayList<>();
+        adapter = new CanaelAdapter(listCommodity,list,getActivity());
+        cacelRefreshLayout.setEnableLoadMore(false);
         mList.setAdapter(adapter);
     }
-
     @Override
     protected void initData() {
         super.initData();
@@ -111,6 +118,16 @@ public void onResponse(int whichApi, Object[] t) {
         }else{
             ToastUtil.showShort(R.string.networkerr+"");
         }
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        initData();//刷新
+    }
+    @Override
+    public void loadMore() {
+        super.loadMore();
     }
 
     @Override

@@ -47,9 +47,7 @@ public class BaseApp extends Application {
         initWechat();
         mUuid = DeviceUuidFactory.getInstance(getApplication()).getDeviceUuid();
         MultiDex.install(this);
-        //
 //        AndroidNetworking.initialize(this);
-        SharedPrefrenceUtils.saveString(this,NormalConfig.USER_ID,String.valueOf(1));
     }
 
     //static 代码段可以防止内存泄露
@@ -71,7 +69,6 @@ public class BaseApp extends Application {
             }
         });
     }
-
     private void initWechat() {
         //TODO:你的appId
         // 三个参数分别是上下文、应用的appId、是否检查签名（默认为false）

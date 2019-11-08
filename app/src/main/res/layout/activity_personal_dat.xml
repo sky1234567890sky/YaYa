@@ -41,14 +41,21 @@
                 android:textSize="@dimen/dp_18"
                 tools:ignore="SpUsage" />
         </RelativeLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginRight="@dimen/dp_12"
+            android:layout_gravity="center_horizontal"
+            >
     <RelativeLayout
         android:background="@drawable/persinal_shape_bg"
         android:id="@+id/persional_ll"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginLeft="@dimen/dp_12"
-        android:layout_marginRight="@dimen/dp_12"
+        android:gravity="center"
         >
         <TextView
             android:layout_centerVertical="true"
@@ -79,14 +86,23 @@
             android:src="@mipmap/icon_more"
             />
     </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
+
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginRight="@dimen/dp_12"
+            android:layout_gravity="center_horizontal"
+            >
     <RelativeLayout
         android:background="@drawable/persinal_shape_bg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_12"
-        android:layout_marginRight="@dimen/dp_12"
         >
         <TextView
             android:layout_centerVertical="true"
@@ -104,21 +120,28 @@
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="xxx"
+            android:text="---"
             android:textColor="@color/c_000000"
             android:textSize="@dimen/sp_15"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_20"
             />
     </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginRight="@dimen/dp_12"
+            android:layout_gravity="center_horizontal"
+            >
     <RelativeLayout
         android:background="@drawable/persinal_shape_bg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_12"
-        android:layout_marginRight="@dimen/dp_12"
         >
         <TextView
             android:layout_centerVertical="true"
@@ -136,14 +159,14 @@
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="xxx"
+            android:text="---"
             android:textColor="@color/c_000000"
             android:textSize="@dimen/sp_15"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_20"
             tools:ignore="HardcodedText,RtlHardcoded" />
     </RelativeLayout>
-
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 
 </RelativeLayout>

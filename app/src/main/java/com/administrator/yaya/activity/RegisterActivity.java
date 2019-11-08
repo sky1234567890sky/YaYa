@@ -78,6 +78,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     TextView registerRegisterBtn;
 //    @BindView(R.id.sms_verify_view)
 //    SmsVerifyView mView;
+
     private SlideFromBottomPopup mPop;
     private TakePhotoImpl mTakePhoto;
     private CountDownTimerUtils mDownTimerUtils;
@@ -113,39 +114,43 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
                 TestRegister register = (TestRegister) t[0];
                 if (register.getCode()==500){
                     ToastUtil.showShort(register.getMsg());
-
                     Intent intent = new Intent();
                     intent.putExtra(NormalConfig.USER_NAME,registerEtUname.getText().toString());
                     intent.putExtra(NormalConfig.PASS_WORD,etRegisterPw.getText().toString());
                     setResult(100,intent);
                     finish();
-                };
-            case ApiConfig.TEXT_InviteCode://邀请码
+                }
+
+            case ApiConfig.TEXT_INVITECODE://验证码   6666
                 //获取验证码前判断手机号是否被注册
                 TestInviteCode invitecode = (TestInviteCode) t[0];
+                if (invitecode.getCode()==0){
+                    ToastUtil.showShort(invitecode.getMsg());
+                }else{
+                    ToastUtil.showShort(invitecode.getMsg());
+                }
                 break;
-            case ApiConfig.GET_SMS_MJG://获取验证码
-                VerifyCodeInfo verifyCodeInfos = (VerifyCodeInfo) t[0];
-                if (verifyCodeInfos != null)
-                    ToastUtil.showShort("短信发送成功注意验收"+verifyCodeInfos.getVerify_token());
-                break;
-            case ApiConfig.GET_SMS:
-                VerifyCodeInfo info = (VerifyCodeInfo) t[0];
-//                mView.setVerifyCode(info.verify_token);
-                break;
-
-            case ApiConfig.LOGIN_ACC:
-                //获取的是唯一用户ID，用来确认身份
-                LoginInfo loginInfo = (LoginInfo) t[0];
-//                ToastUtil.showShort(loginInfo.msg);
-                //将这两个保存，并传给application
-//                mApplication.mToken = loginInfo.token;
-//                mApplication.mUserPhoto  = loginInfo.nick;//传给Application用来给聊天界面
-                //将token保存到本地
-//                SharedPrefrenceUtils.saveString(this,NormalConfig.TOKEN,loginInfo.token);
-//                SharedPrefrenceUtils.saveString(this,NormalConfig.USER_NICK,loginInfo.nick);
-//                loginIm();//聊天登录
-                break;
+//            case ApiConfig.GET_SMS_MJG://获取验证码
+//                VerifyCodeInfo verifyCodeInfos = (VerifyCodeInfo) t[0];
+//                if (verifyCodeInfos != null) ToastUtil.showShort("短信发送成功注意验收"+verifyCodeInfos.getVerify_token());
+//
+//                break;
+//            case ApiConfig.GET_SMS:
+//                VerifyCodeInfo info = (VerifyCodeInfo) t[0];
+////                mView.setVerifyCode(info.verify_token);
+//                break;
+//            case ApiConfig.LOGIN_ACC:
+//                //获取的是唯一用户ID，用来确认身份
+//                LoginInfo loginInfo = (LoginInfo) t[0];
+////                ToastUtil.showShort(loginInfo.msg);
+//                //将这两个保存，并传给application
+////                mApplication.mToken = loginInfo.token;
+////                mApplication.mUserPhoto  = loginInfo.nick;//传给Application用来给聊天界面
+//                //将token保存到本地
+////                SharedPrefrenceUtils.saveString(this,NormalConfig.TOKEN,loginInfo.token);
+////                SharedPrefrenceUtils.saveString(this,NormalConfig.USER_NICK,loginInfo.nick);
+////                loginIm();//聊天登录
+//                break;
         }
     }
     private void loginIm() {
@@ -175,8 +180,11 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
                 break;
             case R.id.btn_register_phonecode://验证码
                 mDownTimerUtils.start();
-//                mPresenter.getData(ApiConfig.TEXT_INVITECODE,0);
-                ToastUtil.showShort("验证码已发送请注意查收");
+//              mPresenter.getData(ApiConfig.TEXT_INVITECODE,0);
+//              ToastUtil.showShort("验证码已发送请注意查收");//验证码获取网络解析
+                String phoneCode = registerEtUname.getText().toString().trim();
+//                if (phoneCode!=null && AppValidationMgr.isPhone(phoneCode))
+                    mPresenter.getData(ApiConfig.TEXT_INVITECODE,phoneCode);
                 break;
             case R.id.register_register_btn://注册
                 //MD5加密解密
@@ -184,7 +192,6 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
                 break;
         }
     }
-
     @SuppressLint("NewApi")
     private void register() {
 
@@ -200,7 +207,6 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
             if (AppValidationMgr.isPhone(number1) && password1.matches(regex) ){
                 //邀请码与验证码验证
                 mPresenter.getData(ApiConfig.TEXT_REGISTER,number1,password1,VerificationCode,inviteCode);
-
 //                Intent intent = new Intent();
 //                intent.putExtra(NormalConfig.USER_NAME,registerEtUname.getText().toString());
 //                intent.putExtra(NormalConfig.PASS_WORD,etRegisterPw.getText().toString());

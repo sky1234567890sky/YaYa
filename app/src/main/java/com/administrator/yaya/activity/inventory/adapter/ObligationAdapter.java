@@ -15,6 +15,8 @@ import com.administrator.yaya.R;
 import com.administrator.yaya.activity.home.AffirmMessageActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.bean.invite.TestObligation;
+import com.bumptech.glide.Glide;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
@@ -22,13 +24,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh>{
-    private final List<TestObligation.DataBean.OrderStockListBean> list;
-    private final FragmentActivity activity;
+    private List<TestObligation.DataBean.CommodityBean> commodity;
     private Context context;
-    public ObligationAdapter( List<TestObligation.DataBean.OrderStockListBean> list, FragmentActivity activity) {
+    private List<TestObligation.DataBean.OrderStockListBean> list;
+    private final FragmentActivity activity;
+
+
+    public ObligationAdapter(List<TestObligation.DataBean.CommodityBean> commodity, List<TestObligation.DataBean.OrderStockListBean> list, FragmentActivity activity) {
+        this.commodity = commodity;
         this.list = list;
         this.activity = activity;
     }
+
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -36,10 +43,22 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
         View inflate = LayoutInflater.from(context).inflate(R.layout.obligation_item, null);
         return new Vh(inflate);
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, final int i) {
+//        list = data.getOrderStockList();
         TestObligation.DataBean.OrderStockListBean orderStockListBean = list.get(i);
+        TestObligation.DataBean.CommodityBean commodityBean = commodity.get(0);
+
+        String comImg = commodityBean.getComImg();
+        String comName = commodityBean.getComName();
+        double comPrice = commodityBean.getComPrice();
+//
+        Glide.with(context).load(comImg).placeholder(R.mipmap.icon).into(vh.mDaifuComImg);
+        vh.mDaifuPirce.setText("单价￥："+comPrice);
+        vh.mDaifuGcomName.setText(comName);
+
         vh.mDaifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
 //        进货订单集合	orderStockList
 //        订单编号	orderNumber
@@ -49,14 +68,16 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
         vh.mDaifuCommodityAmount.setText("数量：" + orderStockListBean.getCommodityAmount());
 //        应付金额	commodityPrice
         vh.mDaifuCommodityPrice.setText("应付金额：" + orderStockListBean.getCommodityPrice());
+
         vh.mDaifuGetGatheringBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, AffirmMessageActivity.class);
-                intent.putExtra("orderNumber",list.get(i).getOrderNumber());
+                intent.putExtra("OrderNumber",list.get(i).getOrderNumber());
                 activity.startActivity(intent);
             }
         });
+
         vh.mDaifuCancelOrderform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,9 +93,8 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
     public int getItemCount() {
         return list != null ? list.size() : 0;
     }
-
     public class Vh extends RecyclerView.ViewHolder {
-        @BindView(R.id.daifu_orderNumber)
+    @BindView(R.id.daifu_orderNumber)
         TextView mDaifuOrderNumber;
     @BindView(R.id.daifu_comImg)
     ImageView mDaifuComImg;

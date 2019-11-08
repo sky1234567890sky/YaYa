@@ -8,11 +8,13 @@ public class TestToOrderStock {
     /**
      * msg : gathering
      * code : 0
-     * data : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":"191031185863021","params":{},"gaId":2,"payeeName":"钱浩1","bankCard":"6217000110016543210","bankName":"中国银行","bankStatus":1,"comMoney":12300}
+     * data : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":"Y36USV","params":{},"gaId":1,"payeeName":"丫丫官方","bankCard":"6217000110016543210","bankName":"中国银行","bankStatus":1,"comMoney":100}
      */
+
     private String msg;
     private int code;
     private DataBean data;
+
     public String getMsg() {
         return msg;
     }
@@ -32,6 +34,7 @@ public class TestToOrderStock {
     public DataBean getData() {
         return data;
     }
+
     public void setData(DataBean data) {
         this.data = data;
     }
@@ -43,14 +46,14 @@ public class TestToOrderStock {
          * createTime : null
          * updateBy : null
          * updateTime : null
-         * remark : 191031185863021
+         * remark : Y36USV
          * params : {}
-         * gaId : 2
-         * payeeName : 钱浩1
+         * gaId : 1
+         * payeeName : 丫丫官方
          * bankCard : 6217000110016543210
          * bankName : 中国银行
          * bankStatus : 1
-         * comMoney : 12300
+         * comMoney : 100
          */
 
         private Object searchValue;
@@ -65,7 +68,7 @@ public class TestToOrderStock {
         private String bankCard;
         private String bankName;
         private int bankStatus;
-        private int comMoney;
+        private String comMoney;
 
         public Object getSearchValue() {
             return searchValue;
@@ -163,11 +166,11 @@ public class TestToOrderStock {
             this.bankStatus = bankStatus;
         }
 
-        public int getComMoney() {
+        public String getComMoney() {
             return comMoney;
         }
 
-        public void setComMoney(int comMoney) {
+        public void setComMoney(String comMoney) {
             this.comMoney = comMoney;
         }
 

@@ -282,7 +282,7 @@ public class TestAccountPaid {
             private String payerName;
             private int commodityAmount;
             private Object commoditySurplusAmount;
-            private int commodityPrice;
+            private Double commodityPrice;
             private int orderStatus;
             private String orderRemark;
             private String orderBuildTime;
@@ -427,11 +427,11 @@ public class TestAccountPaid {
                 this.commoditySurplusAmount = commoditySurplusAmount;
             }
 
-            public int getCommodityPrice() {
+            public Double getCommodityPrice() {
                 return commodityPrice;
             }
 
-            public void setCommodityPrice(int commodityPrice) {
+            public void setCommodityPrice(Double commodityPrice) {
                 this.commodityPrice = commodityPrice;
             }
 

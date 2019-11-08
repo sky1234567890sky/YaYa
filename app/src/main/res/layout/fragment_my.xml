@@ -286,18 +286,18 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/tv_day"
+                        android:id="@+id/my_tv_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="--"
+                        android:text="5000"
                         android:textColor="@color/c_000000"
                         android:textSize="@dimen/sp_25" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_day"
+                        android:layout_below="@id/my_tv_day"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/dp_10"
                         android:text="每日限度"
@@ -372,10 +372,6 @@
                         android:textSize="@dimen/sp_14" />
 
                 </RelativeLayout>
-
-
-                -
-
                 <RelativeLayout
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
@@ -411,18 +407,18 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/tv_wechat_day"
+                        android:id="@+id/my_tv_wechat_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="--"
+                        android:text="5000"
                         android:textColor="@color/c_000000"
                         android:textSize="@dimen/sp_25" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_wechat_day"
+                        android:layout_below="@id/my_tv_wechat_day"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/dp_10"
                         android:text="每日限度"
