@@ -29,7 +29,7 @@ public class MultipleCrop {
         return new MultipleCrop(uris, outUris, fromType);
     }
 
-    private MultipleCrop(ArrayList<Uri> uris, Activity activity, TImage.FromType fromType) throws TException {
+    public MultipleCrop(ArrayList<Uri> uris, Activity activity, TImage.FromType fromType) throws TException {
         this.uris = uris;
         ArrayList<Uri> outUris = new ArrayList<>();
         for (Uri uri : uris) {

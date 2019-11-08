@@ -1,6 +1,7 @@
 package com.administrator.yaya.activity.my;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.base.BaseActivity;
 import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
+import com.administrator.yaya.utils.AppConstants;
 import com.administrator.yaya.utils.NormalConfig;
 
 import butterknife.BindView;
@@ -72,7 +74,6 @@ public class SettingActivity extends BaseActivity {
                 Intent csa = new Intent(this, CustomerServiceActivity.class);
                 startActivity(csa);
                 break;
-
             case R.id.log_out_ll:
                 //注銷登錄
                 new AlertDialog.Builder(this)
@@ -84,11 +85,14 @@ public class SettingActivity extends BaseActivity {
 
                                 Intent login = new Intent(SettingActivity.this, LoginActivity.class);
                                 //清除数据
-                                SharedPreferences settings = getSharedPreferences(NormalConfig.USER_ID, MODE_PRIVATE);
+                                SharedPreferences settings = getSharedPreferences("config", MODE_PRIVATE);
                                 SharedPreferences.Editor edit = settings.edit();
-                                edit.clear();
+                                edit.putString(NormalConfig.USER_ID,"");
+                                edit.putBoolean(NormalConfig.ISFIRST,false);
                                 edit.commit();
                                 startActivity(login);
+
+                                finish();
                             }
 
                         }).setPositiveButton("取消", new DialogInterface.OnClickListener() {

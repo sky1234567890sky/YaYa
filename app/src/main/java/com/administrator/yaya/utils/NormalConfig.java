@@ -23,4 +23,5 @@ public class NormalConfig {
     public static final String NEWS_DETAIL = "news_detail";
     public static final String NET_HAS_CONNECTED = "netHasConnected";
 
+
 }

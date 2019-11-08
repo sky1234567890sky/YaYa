@@ -8,10 +8,11 @@ import android.content.Intent;
 import android.support.multidex.MultiDex;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.local_utils.DeviceUuidFactory;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
-import com.androidnetworking.AndroidNetworking;
+import com.administrator.yaya.utils.NormalConfig;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -47,8 +48,10 @@ public class BaseApp extends Application {
         mUuid = DeviceUuidFactory.getInstance(getApplication()).getDeviceUuid();
         MultiDex.install(this);
         //
-        AndroidNetworking.initialize(this);
+//        AndroidNetworking.initialize(this);
+        SharedPrefrenceUtils.saveString(this,NormalConfig.USER_ID,String.valueOf(1));
     }
+
     //static 代码段可以防止内存泄露
     static {
         //设置全局的Header构建器

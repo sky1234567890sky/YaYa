@@ -95,24 +95,5 @@ public abstract class BaseFragment extends Fragment {
         if (bind != null) bind.unbind();
     }
 
-    public void getPermission() {//是否打开询问开启权限
-        XXPermissions.with(getActivity())
-//                .constantRequest()//可设置被拒绝后继续申请，直到用户授权或者永久拒绝
-//                .constantRequest(Permission.SYSTEM_ALERT_WINDOW, Permission.REQUEST_INSTALL_PACKAGES)//支持请求 6.0 悬浮窗权限 8.0 请求安装权限
-                .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .request(new OnPermission() {
-                    @Override
-                    public void hasPermission(List<String> granted, boolean isAll) {
 
-                    }
-                    @Override
-                    public void noPermission(List<String> denied, boolean quick) {
-                        if (denied.size() != 0) ToastUtil.showLong("拒绝权限影响您正常使用");
-                    }
-                });
-//        跳转到设置页面
-//        if (XXPermissions.isHasPermission(getContext(), Permission.Group.STORAGE)) {
-//            XXPermissions.gotoPermissionSettings(getContext());//跳转到权限设置页面
-//        }
-    }
 }

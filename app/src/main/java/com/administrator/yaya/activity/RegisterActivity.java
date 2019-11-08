@@ -157,7 +157,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
         super.initData();
 
         //给权限
-        getPermission();
+//        getPermission();
     }
     @OnClick({R.id.register_back_iv, R.id.register_headleriv, R.id.btn_register_phonecode, R.id.register_register_btn})
     public void onViewClicked(View view) {

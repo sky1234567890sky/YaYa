@@ -61,7 +61,33 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
         initData();
         initListener();
+        getPermission();
     }
+    private void getPermission() {//是否打开询问开启权限
+        XXPermissions.with(this)
+//                .constantRequest()//可设置被拒绝后继续申请，直到用户授权或者永久拒绝
+//                .constantRequest(Permission.SYSTEM_ALERT_WINDOW, Permission.REQUEST_INSTALL_PACKAGES)//支持请求 6.0 悬浮窗权限 8.0 请求安装权限
+                .permission(Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.ACCESS_WIFI_STATE
+                )
+                .request(new OnPermission() {
+                    @Override
+                    public void hasPermission(List<String> granted, boolean isAll) {
+
+                    }
+                    @Override
+                    public void noPermission(List<String> denied, boolean quick) {
+                        if (denied.size() != 0) ToastUtil.showLong("拒绝权限影响您正常使用");
+                    }
+                });
+//        跳转到设置页面
+//        if (XXPermissions.isHasPermission(getContext(), Permission.Group.STORAGE)) {
+//            XXPermissions.gotoPermissionSettings(getContext());//跳转到权限设置页面
+//        }
+    }
+
 
     protected void setStatusBar() {
 //        StatusBarUtil.setColor(this, getResources().getColor(R.color.c_000000));
@@ -154,9 +180,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 //    }
 
     protected int getLoadType(Object[] t) {
-
         return (int) ((Object[]) t[1])[0];
     }
+
     @Override
     public void finish() {
         super.finish();
@@ -183,27 +209,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         long timeD = time - lastClickTime;
         lastClickTime = time;
         return timeD <= 300;
-    }
-
-    public void getPermission() {
-        XXPermissions.with(this)
-                .constantRequest()//可设置被拒绝后继续申请，直到用户授权或者永久拒绝
-//                .constantRequest(Permission.SYSTEM_ALERT_WINDOW, Permission.REQUEST_INSTALL_PACKAGES)//支持请求 6.0 悬浮窗权限 8.0 请求安装权限
-                .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .request(new OnPermission() {
-                    @Override
-                    public void hasPermission(List<String> granted, boolean isAll) {
-
-                    }
-                    @Override
-                    public void noPermission(List<String> denied, boolean quick) {
-                        if (denied.size() != 0) ToastUtil.showLong("拒绝权限影响您正常使用");
-                    }
-                });
-//        跳转到设置页面
-//        if (XXPermissions.isHasPermission(this, Permission.Group.STORAGE)) {
-//            XXPermissions.gotoPermissionSettings(getContext());//跳转到权限设置页面
-//        }
     }
 
     /**

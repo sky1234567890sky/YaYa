@@ -73,7 +73,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 //        类型		type	1、微信 2、支付宝
         String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         if (userId != null) {
-            mPresenter.getData(ApiConfig.TEST_ALIPAY_RECEIVER_CODE, Integer.parseInt(userId), 2);
+//            mPresenter.getData(ApiConfig.TEST_ALIPAY_RECEIVER_CODE, Integer.parseInt(userId), 2);
         } else {
             ToastUtil.showShort(R.string.networkerr+"");
         }
@@ -114,7 +114,6 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
             @SuppressLint("SetTextI18n")
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
 //                SPUtils.getInstance().put(Constants.AUTO_PALY_IN_WIFI, isChecked);
                 //微信按钮
 //                TestAlipayReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean = userCodeImgList.get(data.getVxButtonStatus());

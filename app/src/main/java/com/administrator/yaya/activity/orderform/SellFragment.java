@@ -38,7 +38,7 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
 
     private List<TestAllOrderStock.DataBean.OrderSalesListBean> list = new ArrayList<>();
     private SellAdapter adapter;
-    private TestAllOrderStock.DataBean data;
+    private TestAllOrderStock.DataBean data1 = null;
     private int cancelIndex;
     private int num = 1;
     @Override
@@ -65,11 +65,12 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
             case ApiConfig.TEST_ALL_ORDERSTOCK://售卖中
                 TestAllOrderStock testAllOrderStock = (TestAllOrderStock) t[0];
                 if (testAllOrderStock.getCode() == 0 && testAllOrderStock.getData() != null && testAllOrderStock.getData().getCommodity() != null) {
-                    data = testAllOrderStock.getData();
+                    TestAllOrderStock.DataBean data = testAllOrderStock.getData();
+                    data1 = data;
 //                    Log.i("tag", "售卖中Data==>: "+data.toString());
                     String amount1 = data.getAmount();
 //                    进货订单集合	orderSalesList
-                    List<TestAllOrderStock.DataBean.OrderSalesListBean> orderSalesList = data.getOrderSalesList();
+                    List<TestAllOrderStock.DataBean.OrderSalesListBean> orderSalesList =data.getOrderSalesList();
                     list.addAll(orderSalesList);
                     adapter.setData(testAllOrderStock.getData());
                     adapter.notifyDataSetChanged();
@@ -121,7 +122,7 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
     protected void initView(View inflate) {
         super.initView(inflate);
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new SellAdapter(data, list, getActivity());
+        adapter = new SellAdapter(data1, list, getActivity());
         mList.setAdapter(adapter);
     }
 
