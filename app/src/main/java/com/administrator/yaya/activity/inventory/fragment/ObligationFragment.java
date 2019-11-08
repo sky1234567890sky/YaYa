@@ -80,12 +80,10 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
             @Override
             public void setonclik(int postion) {
                 //取消订单
-//                mPresenter.getData(ApiConfig.TEST_CANCEL_ORDER_STOCK, list.get(postion).getStockId());
-
+                mPresenter.getData(ApiConfig.TEST_CANCEL_ORDER_STOCK, list.get(postion).getStockId());
             }
         });
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -113,7 +111,7 @@ public class ObligationFragment extends BaseMvpFragment<LoginModel> implements I
                 }
                 break;//
             //取消订单
-
+                
         }
     }
     @Override
