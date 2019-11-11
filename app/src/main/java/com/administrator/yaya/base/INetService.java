@@ -9,7 +9,7 @@ import com.administrator.yaya.bean.invite.TestObligation;
 import com.administrator.yaya.bean.invite.TestPayToAffirmInfo;
 import com.administrator.yaya.bean.invite.TestUpawayAllSingleGoods;
 import com.administrator.yaya.bean.invite.TestUpawaySingleGoods;
-import com.administrator.yaya.bean.login_register_bean.TestInviteCode;
+import com.administrator.yaya.bean.login_register_bean.TestVersitionCode;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
 import com.administrator.yaya.bean.login_register_bean.TestRegister;
 import com.administrator.yaya.bean.my.SwitchReceiveingQrCode;
@@ -28,7 +28,6 @@ import com.administrator.yaya.bean.orderform.TestAllOrderStock;
 import com.administrator.yaya.bean.orderform.TestCancel;
 import com.administrator.yaya.bean.orderform.TestConfirmReceipt;
 import com.administrator.yaya.bean.orderform.TestFinish;
-import com.administrator.yaya.bean.orderform.TestGathering;
 import com.administrator.yaya.bean.orderform.TestToOrderStock;
 import com.administrator.yaya.bean.orderform.TestUpdatePwd;
 
@@ -36,17 +35,14 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
+
 public interface INetService{
     //获取验证码
     @POST("/v2/sms/send")
@@ -65,10 +61,11 @@ public interface INetService{
     @POST("appRegister")
     @FormUrlEncoded
     Observable<TestRegister> getTestRegister(@Field("userPhone") String userPhone, @Field("userPwd") String userPwd, @Field("userInvitationCode") String userInvitationCode, @Field("codeName") String codeName);
-    //手机验证码
+
+    //手机验证码(注册 和 修改)
     @POST("getPhoneCode")
     @FormUrlEncoded
-    Observable<TestInviteCode> getTestInviteCode(@Field("phone") String phone);
+    Observable<TestRegister> getTestInviteCode(@Field("phone") String phone);
 
     //首页
     @POST("index")
@@ -274,10 +271,9 @@ public interface INetService{
 //    参数：
 //    http://192.168.0.198:8080/yayaApp/updateHeadImg
 
-//    @POST("updateHeadImg")
-//    @FormUrlEncoded
-//    Observable<> getTestUpdateHeadImg(@Body RequestBody body, @Field("userId") int userId);
-
+    @POST("updateHeadImg")
+    @FormUrlEncoded
+    Observable<RequestBody> getTestUpdateHeadImg(@Body RequestBody body, @Field("userId") int userId);
 //    @Multipart
 //    @POST("services.php?apicall=profileImage")
 //    Call<ResponseBody> postImage(@Part("file") RequestBody image, @Part("id") String id);

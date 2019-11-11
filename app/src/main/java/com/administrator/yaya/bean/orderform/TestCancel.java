@@ -47,7 +47,7 @@ public class TestCancel {
          */
 
         private CommodityBean commodity;
-        private Object amount;
+        private String amount;
         private List<OrderSalesListBean> orderSalesList;
 
         public CommodityBean getCommodity() {
@@ -58,11 +58,11 @@ public class TestCancel {
             this.commodity = commodity;
         }
 
-        public Object getAmount() {
+        public String getAmount() {
             return amount;
         }
 
-        public void setAmount(Object amount) {
+        public void setAmount(String amount) {
             this.amount = amount;
         }
 

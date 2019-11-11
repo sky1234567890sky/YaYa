@@ -22,6 +22,7 @@ public class LoginModel implements ICommonModel {
                         .getTestLogin((String) t[0], (String) t[1]), view, whichApi);
                 break;
             case ApiConfig.TEXT_REGISTER://注册
+
                 String s1 = (String) t[0];
                 String s2 = (String) t[1];
                 String s3 = (String) t[2];
@@ -34,7 +35,9 @@ public class LoginModel implements ICommonModel {
                 String phoneCode = (String) t[0];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestInviteCode(phoneCode),view,whichApi);
+
                 break;
+
             //首页-我的
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
@@ -185,16 +188,18 @@ public class LoginModel implements ICommonModel {
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestUpdatePwd((String) t[0],(String) t[1],(String) t[2]), view, whichApi);
                 break;
+
                 //更换头像
 //            case ApiConfig.TEST_CHANGE_HEADLER:
-//                File file = new File((String) t[0]);
+//                String  header= (String) t[0];
+//                File file = new File(header);
 //                RequestBody body = new MultipartBody.Builder()
 //                        .setType(MultipartBody.FORM)
 //                        .addFormDataPart("key", "")
 //                        .addFormDataPart("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), file ))
 //                        .build();
-////                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-////                .getTestUpdateHeadImg(body,(int) t[0]), view, whichApi);
+//                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+//                .getTestUpdateHeadImg(body,(int) t[0]), view, whichApi);
 //                break;
             //验证码
             case ApiConfig.TEST_VERIFICATIONCODE:
@@ -204,7 +209,7 @@ public class LoginModel implements ICommonModel {
                 //开关收款码
             case ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestSwitchReceiveingQrCode((int) t[0],(int) t[0],(int) t[0]), view, whichApi);
+                        .getTestSwitchReceiveingQrCode((int) t[0],(int) t[1],(int) t[2]), view, whichApi);
                 break;
 
 

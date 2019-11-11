@@ -21,6 +21,7 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.base.NetConfig;
 import com.administrator.yaya.bean.TestUpLoadCodeIv;
 import com.administrator.yaya.bean.my.SwitchReceiveingQrCode;
 import com.administrator.yaya.bean.my.TestLoadHeadlerIv;
@@ -58,11 +59,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import razerdp.design.SlideFromBottomPopup;
-
 /**
  * 微信收款码
  */
 public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> implements ICommonView, TakePhoto.TakeResultListener, SlideFromBottomPopup.BottomPopClick {
+
     @BindView(R.id.wechatpay_receive_back_iv)
     ImageView wechatpayReceiveBackIv;
 
@@ -242,7 +243,6 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
         intent.setType("image/*");
         startActivityForResult(intent,ApiConfig.request_open_album_code);
     }
-
     /**
      * 点击相册选图
      */
@@ -335,7 +335,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 
         Request request = new Request.Builder()
 
-                .url("http://192.168.0.198:8080/yayaApp/uploadCodeImg")
+                .url(NetConfig.BaseUrl+"yayaApp/uploadCodeImg")
 
                 .post(body)
 

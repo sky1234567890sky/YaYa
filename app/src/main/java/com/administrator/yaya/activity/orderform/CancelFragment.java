@@ -1,14 +1,17 @@
 package com.administrator.yaya.activity.orderform;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.orderform.adapter.CanaelAdapter;
@@ -20,11 +23,15 @@ import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
 import com.administrator.yaya.bean.orderform.TestCancel;
+import com.administrator.yaya.fragment.InventoryFragment;
+import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +53,34 @@ public class CancelFragment  extends BaseMvpFragment<LoginModel> implements ICom
     private List<TestCancel.DataBean.CommodityBean> listCommodity;
 
     private CanaelAdapter adapter;
+    private OrderFormkFragment parentFragment1;
+    private TestCancel.DataBean data;
 
     public CancelFragment() {
         // Required empty public constructor
     }
 
-
+    //判断是否展示—与ViewPager连用，进行左右切换
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser ==true){//当前处于可见状态
+            Fragment parentFragment = getParentFragment();
+            if (parentFragment instanceof OrderFormkFragment) {
+                parentFragment1 = (OrderFormkFragment) parentFragment;//父 Fragment
+                // 父 TestView
+                if (parentFragment1.getView().findViewById(R.id.orderform_inventory_money) != null) {
+                    TextView tvObligation = parentFragment1.getView().findViewById(R.id.orderform_inventory_money);
+                    if (TextUtils.isEmpty(data.getAmount())) {
+                        tvObligation.setText("今日所收游戏币：库存");//库存  父 Fragment 顶部赋值
+                    } else {
+                        tvObligation.setText("今日所收游戏币：" +data.getAmount());//库存  父 Fragment 顶部赋值
+                    }
+                }
+            }
+        }
+    }
 //    @Override
 //    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 //                             Bundle savedInstanceState) {
@@ -67,12 +96,17 @@ public void onResponse(int whichApi, Object[] t) {
             TestCancel testCancel = (TestCancel) t[0];
             Log.i("tag", "已取消: "+testCancel.toString());
             if (testCancel.getCode()==0 && testCancel.getData()!=null && testCancel.getData().getOrderSalesList()!=null){
-                TestCancel.DataBean data = testCancel.getData();
+                data = testCancel.getData();
 //                    进货订单集合	orderSalesList
                 List<TestCancel.DataBean.OrderSalesListBean> orderStockList = data.getOrderSalesList();
                 list.addAll(orderStockList);
                 listCommodity.add(data.getCommodity());
                 adapter.notifyDataSetChanged();
+
+//                if(data.getAmount()!=null) {
+//                    EventBus.getDefault().postSticky(data.getAmount());
+//                }
+
 //                    订单id		salesId
 //                    订单编号	orderNumber
 //                    下单时间	salesBuildTime
@@ -149,6 +183,22 @@ public void onResponse(int whichApi, Object[] t) {
     public void onError(int whichApi, Throwable e) {
 
     }
-
+    //获取焦点时刷新
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isRefresh) {
+            if (!list.isEmpty()){
+                list.clear();
+            }
+            refresh();
+            isRefresh = false;
+        }
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!isRefresh) isRefresh = true;
+    }
 
 }

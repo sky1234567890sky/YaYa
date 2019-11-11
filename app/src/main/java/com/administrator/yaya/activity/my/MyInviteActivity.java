@@ -133,7 +133,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         switch (whichApi) {
             case ApiConfig.TEST_MY_INVITE:
                 TestMyInvite testMyInvite = (TestMyInvite) t[0];
-
             if (testMyInvite.getCode() == 0 && testMyInvite.getData()!=null){
 //                Log.i("tag", "数据: "+testMyInvite.getData().toString());
                 TestMyInvite.DataBean data = testMyInvite.getData();

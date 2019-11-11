@@ -8,7 +8,6 @@
     android:orientation="vertical"
     android:background="@color/white"
     tools:context=".activity.MainActivity">
-
     <!--<android.support.v7.widget.Toolbar-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
@@ -32,10 +31,12 @@
                 <!--android:textStyle="normal" />-->
         <!--</RelativeLayout>-->
     <!--</android.support.v7.widget.Toolbar>-->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="UselessParent">
+
         <FrameLayout
             android:id="@+id/home_fragment"
             android:layout_width="match_parent"
@@ -58,9 +59,6 @@
             android:layout_height="@dimen/dp_49"
             android:layout_alignParentBottom="true"
             >
-
-
-
             <RadioGroup
                 android:id="@+id/rg"
                 android:layout_width="match_parent"
@@ -138,6 +136,5 @@
             android:layout_marginBottom="@dimen/dp_5"
             android:src="@mipmap/icon_yingye"
             />
-
     </RelativeLayout>
 </LinearLayout>

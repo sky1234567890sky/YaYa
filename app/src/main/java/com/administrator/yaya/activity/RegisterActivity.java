@@ -1,29 +1,22 @@
 package com.administrator.yaya.activity;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
-import com.administrator.yaya.bean.LoginInfo;
-import com.administrator.yaya.bean.VerifyCodeInfo;
-import com.administrator.yaya.bean.login_register_bean.TestInviteCode;
+import com.administrator.yaya.bean.login_register_bean.TestVersitionCode;
 import com.administrator.yaya.bean.login_register_bean.TestRegister;
 import com.administrator.yaya.design.SmsVerifyView;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
@@ -33,18 +26,15 @@ import com.administrator.yaya.utils.CountDownTimerUtils;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
-import com.hjq.permissions.OnPermission;
-import com.hjq.permissions.Permission;
-import com.hjq.permissions.XXPermissions;
+
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoImpl;
 import org.devio.takephoto.compress.CompressConfig;
 import org.devio.takephoto.model.CropOptions;
 import org.devio.takephoto.model.TResult;
-import org.w3c.dom.Text;
 
 import java.io.File;
-import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import razerdp.design.SlideFromBottomPopup;
@@ -60,25 +50,24 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     ImageView registerHeadlerIv;
 
     @BindView(R.id.register_et_uname)
-    EditText registerEtUname;
+    EditText registerEtUname;//手机号
 
     @BindView(R.id.et_register_verificationcode)
-    EditText etRegisterVerificationcode;
+    EditText etRegisterVerificationcode;//输入邀请码
 
-    @BindView(R.id.btn_register_phonecode)//手機驗證碼
+    @BindView(R.id.btn_register_phonecode)//获取手机验证码
     TextView mInvitecode;
 
     @BindView(R.id.et_register_pw)
-    EditText etRegisterPw;
+    EditText etRegisterPw;//输入密码
 
     @BindView(R.id.et_getcode)
-    EditText etGetcode;
+    EditText etGetcode;//输入验证码
 
     @BindView(R.id.register_register_btn)
     TextView registerRegisterBtn;
 //    @BindView(R.id.sms_verify_view)
 //    SmsVerifyView mView;
-
     private SlideFromBottomPopup mPop;
     private TakePhotoImpl mTakePhoto;
     private CountDownTimerUtils mDownTimerUtils;
@@ -94,6 +83,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
+
     @Override
     protected void initView() {
         //设置此界面为竖屏
@@ -106,34 +96,33 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
 //        mView.reset();
 //        ToastUtil.showShort(e.getMessage());
     }
+
     @Override
     public void onResponse(int whichApi, Object[] t) {
-        //TODO:隐藏进度条
         switch (whichApi) {
             case ApiConfig.TEXT_REGISTER://注册
                 TestRegister register = (TestRegister) t[0];
-                if (register.getCode()==500){
+                int code = register.getCode();
+                if (code==0){//为0注册成功
                     ToastUtil.showShort(register.getMsg());
-                    Intent intent = new Intent();
-                    intent.putExtra(NormalConfig.USER_NAME,registerEtUname.getText().toString());
-                    intent.putExtra(NormalConfig.PASS_WORD,etRegisterPw.getText().toString());
-                    setResult(100,intent);
+//                    new Intent(this,)
                     finish();
+                }else{
+                    ToastUtil.showLong(register.getMsg());
+                }
+            case ApiConfig.TEXT_INVITECODE://注册获取验证码  验证码   666666
+                //获取验证码前判断手机号是否被注册
+                TestRegister testInviteCode = (TestRegister) t[0];
+                if (testInviteCode.getCode() == 0){
+                    ToastUtil.showLong(testInviteCode.getMsg());
+                }else{
+                    ToastUtil.showLong(testInviteCode.getMsg());
                 }
 
-            case ApiConfig.TEXT_INVITECODE://验证码   6666
-                //获取验证码前判断手机号是否被注册
-                TestInviteCode invitecode = (TestInviteCode) t[0];
-                if (invitecode.getCode()==0){
-                    ToastUtil.showShort(invitecode.getMsg());
-                }else{
-                    ToastUtil.showShort(invitecode.getMsg());
-                }
                 break;
 //            case ApiConfig.GET_SMS_MJG://获取验证码
 //                VerifyCodeInfo verifyCodeInfos = (VerifyCodeInfo) t[0];
 //                if (verifyCodeInfos != null) ToastUtil.showShort("短信发送成功注意验收"+verifyCodeInfos.getVerify_token());
-//
 //                break;
 //            case ApiConfig.GET_SMS:
 //                VerifyCodeInfo info = (VerifyCodeInfo) t[0];
@@ -179,12 +168,16 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
                 mPop.showPopupWindow();
                 break;
             case R.id.btn_register_phonecode://验证码
-                mDownTimerUtils.start();
 //              mPresenter.getData(ApiConfig.TEXT_INVITECODE,0);
 //              ToastUtil.showShort("验证码已发送请注意查收");//验证码获取网络解析
                 String phoneCode = registerEtUname.getText().toString().trim();
-//                if (phoneCode!=null && AppValidationMgr.isPhone(phoneCode))
-                    mPresenter.getData(ApiConfig.TEXT_INVITECODE,phoneCode);
+//&& AppValidationMgr.isPhone(phoneCode)
+                if (!phoneCode.isEmpty()) {
+                    mDownTimerUtils.start();
+                    mPresenter.getData(ApiConfig.TEXT_INVITECODE, phoneCode);
+                }else{
+                    ToastUtil.showLong("请输入手机号");
+                }
                 break;
             case R.id.register_register_btn://注册
                 //MD5加密解密
@@ -195,29 +188,29 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     @SuppressLint("NewApi")
     private void register() {
 
-        String number1 = registerEtUname.getText().toString().trim();
-        String password1 = etRegisterPw.getText().toString().trim();
-        String VerificationCode = etRegisterVerificationcode.getText().toString().trim();
-        String inviteCode = etGetcode.getText().toString().trim();
+        String userPhone = registerEtUname.getText().toString().trim();
+        String userPwd = etRegisterPw.getText().toString().trim();
+        String userInvitationCode = etRegisterVerificationcode.getText().toString().trim();
+        String codeName = etGetcode.getText().toString().trim();
 
-        if (number1.isEmpty() || number1 == null || password1.isEmpty() || password1 == null || VerificationCode.isEmpty() ||VerificationCode==null || inviteCode.isEmpty()||inviteCode==null) {
+        if (userPhone.isEmpty() || userPwd.isEmpty()  || userInvitationCode.isEmpty() || codeName.isEmpty()) {
             ToastUtil.showShort("请输入完整信息");
         }else{
+
             String regex = "[A-Za-z0-9]{4,12}";
-            if (AppValidationMgr.isPhone(number1) && password1.matches(regex) ){
-                //邀请码与验证码验证
-                mPresenter.getData(ApiConfig.TEXT_REGISTER,number1,password1,VerificationCode,inviteCode);
+
+            if (AppValidationMgr.isPhone(userPhone) && userPwd.matches(regex) ){
+                //邀请码与验证码验证   @Field("userPhone") String userPhone, @Field("userPwd") String userPwd, @Field("userInvitationCode") String userInvitationCode, @Field("codeName") String codeName
+                mPresenter.getData(ApiConfig.TEXT_REGISTER,userPhone,userPwd,userInvitationCode,codeName);
 //                Intent intent = new Intent();
 //                intent.putExtra(NormalConfig.USER_NAME,registerEtUname.getText().toString());
 //                intent.putExtra(NormalConfig.PASS_WORD,etRegisterPw.getText().toString());
 //                setResult(100,intent);
 //                finish();
+
             } else ToastUtil.showShort("请输入正确的格式");
         }
     }
-
-
-
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 //        ToastUtil.showShort(event.getKeyCode()+"");

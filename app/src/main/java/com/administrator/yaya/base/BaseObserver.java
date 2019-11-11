@@ -21,13 +21,10 @@ public abstract class BaseObserver implements Observer {
     public void onNext(Object o) {
         onSuccess(o);
         disPos();
-
     }
-
     private void disPos() {
         if (!mDisposable.isDisposed())mDisposable.dispose();
     }
-
     @Override
     public void onError(Throwable e) {
         onFailed(e);

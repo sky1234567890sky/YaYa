@@ -41,14 +41,23 @@
                 tools:ignore="SpUsage" />
         </RelativeLayout>
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/upaway_game_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+
+        android:layout_below="@id/upgame_rl"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_10"
+        >
+
     <LinearLayout
         android:id="@+id/upgame_ll"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_150"
-        android:layout_below="@id/upgame_rl"
-        android:layout_marginLeft="@dimen/dp_12"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/background_rl"
+
         android:gravity="center_vertical"
         android:orientation="vertical">
 
@@ -181,12 +190,13 @@
             </RadioGroup>
         </LinearLayout>
     </LinearLayout>
+    </android.support.v7.widget.CardView>
 
     <Button
         android:id="@+id/up_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/upgame_ll"
+        android:layout_below="@+id/upaway_game_money"
         android:layout_marginLeft="@dimen/dp_35"
         android:layout_marginTop="@dimen/dp_85"
         android:layout_marginRight="@dimen/dp_35"

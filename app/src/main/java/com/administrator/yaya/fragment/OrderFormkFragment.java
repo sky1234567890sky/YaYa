@@ -1,16 +1,24 @@
 package com.administrator.yaya.fragment;
+
 import android.annotation.SuppressLint;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.inventory.adapter.ObligationAdapter;
 import com.administrator.yaya.activity.orderform.CancelFragment;
 import com.administrator.yaya.activity.orderform.FinishFragment;
 import com.administrator.yaya.activity.orderform.SellFragment;
 import com.administrator.yaya.adapter.home.OrderFormAdapter;
 import com.administrator.yaya.base.ApiConfig;
+import com.administrator.yaya.base.BaseFragment;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
@@ -19,55 +27,73 @@ import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.listener.OnTabSelectListener;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
+
 import butterknife.BindView;
+
 /**
  * A simple {@link Fragment} subclass.
  * 订单
  */
+public class OrderFormkFragment extends BaseFragment {
 
-public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
-    @BindView(R.id.inventory_money)
+    @BindView(R.id.orderform_inventory_money)
     TextView mInventoryMoney;
-    @BindView(R.id.tab_layout)
+    @BindView(R.id.orderform_stab)
     SlidingTabLayout tabLayout;
     @BindView(R.id.orderform_vp)
     ViewPager vp;
+
     private FragmentManager manager;
     private SellFragment sellFragment;
     private FinishFragment finishFragment;
     private CancelFragment cancelFragment;
     private ArrayList<Fragment> fragments;
     private ArrayList<String> titles;
-    private int num =1;
-    public OrderFormkFragment(){
-
+    private FragmentTransaction transaction;
+    public OrderFormkFragment() {
     }
     @Override
     protected void initData() {
         super.initData();
-        String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
-        if (userId!=null) {
-            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), num);
-        }
+        transaction = getFragmentManager().beginTransaction();
     }
-    @SuppressLint("SetTextI18n")
+//    //接收订阅的事件
+//    @SuppressLint("SetTextI18n")
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onMsgEvent(String amount) {
+//        if (mInventoryMoney != null) {
+//            if (amount != null) {
+//                mInventoryMoney.setText("今日所收游戏币：" + amount);
+//            } else {
+//                mInventoryMoney.setText("今日所收游戏币：0");
+//            }
+//        }
+//    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        //注册
+//        EventBus.getDefault().register(this);
+//    }
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        //取消注册
+//        EventBus.getDefault().unregister(this);
+//    }
+
     @Override
-    public void onResponse(int whichApi, Object[] t) {
-        switch (whichApi) {
-            case ApiConfig.TEST_ALL_ORDERSTOCK://所有售卖订单
-                TestAllOrderStock testAllOrderStock = (TestAllOrderStock) t[0];
-                if (testAllOrderStock.getCode() == 0 && testAllOrderStock.getData() != null && testAllOrderStock.getData().getCommodity() != null) {
-                    String amount = testAllOrderStock.getData().getAmount();
-                    if (amount!=null) mInventoryMoney.setText("今日收款："+amount);
-                    else mInventoryMoney.setText("今日收款：0");
-                }
-                break;
-        }
-     }
+    protected void initListener() {
+        super.initListener();
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_order_formk;
@@ -75,20 +101,24 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
     @Override
     protected void initView(View view) {
         super.initView(view);
-//        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.blue));
+
         fragments = new ArrayList<>();
         titles = new ArrayList<>();
-
         sellFragment = new SellFragment();
         finishFragment = new FinishFragment();
         cancelFragment = new CancelFragment();
-
         fragments.add(sellFragment);
         fragments.add(finishFragment);
         fragments.add(cancelFragment);
         titles.add("售卖中");
         titles.add("已完成");
         titles.add("已取消");
+
+//        tabLayout.addTab(tabLayout.newTab().setText(titles.get(0)));
+//        tabLayout.addTab(tabLayout.newTab().setText(titles.get(1)));
+//        tabLayout.addTab(tabLayout.newTab().setText(titles.get(2)));
+//        tabLayout.getTabAt(0).select();
+//        initTab();
 //        Bundle bundle = new Bundle();
 //        bundle.putInt("selly",1);
 //        sellFragment.setArguments(bundle);/
@@ -98,26 +128,53 @@ public class OrderFormkFragment extends BaseMvpFragment<LoginModel> implements I
 //        Bundle bundle2 = new Bundle();
 //        bundle2.putInt("cancel",3);
 //        cancelFragment.setArguments(bundle2);
-        OrderFormAdapter orderFormAdapter = new OrderFormAdapter(getChildFragmentManager(),fragments,titles);
+        OrderFormAdapter orderFormAdapter = new OrderFormAdapter(getChildFragmentManager(), fragments, titles);
         vp.setAdapter(orderFormAdapter);
         tabLayout.setViewPager(vp);
 //        tabLayout.setDistributeEvenly(true);
         vp.setCurrentItem(0);
-        if (tabLayout.getTabCount()>1)tabLayout.setCurrentTab(0);
+//        if (tabLayout.getTabCount()>1)tabLayout.setCurrentTab(0);
         orderFormAdapter.notifyDataSetChanged();
-    }
-    @Override
-    protected LoginModel getModel() {
-        return new LoginModel();
-    }
-    @Override
-    protected CommonPresenter getPresenter() {
-        return new CommonPresenter();
-    }
-
-    @Override
-    public void onError(int whichApi, Throwable e) {
 
     }
 
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (hidden==false) {
+//            Log.i("tag", "onHiddenChanged: ========>");
+//            getFragmentManager().beginTransaction().replace(R.id.orderform_vp, sellFragment).commit();
+//        }
+//    }
+    private void initTab() {
+//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                switch (tab.getPosition()) {
+//                    case 0:
+//                        getFragmentManager().beginTransaction().replace(R.id.orderform_vp, sellFragment).commit();
+//                        break;
+//                    case 1:
+//                        getFragmentManager().beginTransaction().replace(R.id.orderform_vp, finishFragment).commit();
+//                        break;
+//                    case 2:
+//                        getFragmentManager().beginTransaction().replace(R.id.orderform_vp, cancelFragment).commit();
+//                        break;
+//                }
+//            }
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//            }
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//            }
+//        });
+    }
+    private OrderFormsetOnclikListener orderFormsetOnclikListener;
+    public interface OrderFormsetOnclikListener {
+        void setonclik(String mInventoryMoney);
+    }
+    public void OrderFormsetOnclikListener(OrderFormsetOnclikListener orderFormsetOnclikListener) {
+        this.orderFormsetOnclikListener = orderFormsetOnclikListener;
+    }
 }

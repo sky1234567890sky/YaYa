@@ -26,6 +26,7 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.AppValidationMgr;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
+import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.devio.takephoto.app.TakePhoto;
@@ -40,7 +41,6 @@ import razerdp.design.SlideFromBottomPopup;
  * sky
  */
 public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick {
-
     @BindView(R.id.login_headler_iv)
     RoundedImageView loginHeadlerIv;
     @BindView(R.id.login_name_et)
@@ -55,9 +55,10 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
     TextView tvForgetPassword;
     private String name;
     private String pwd;
-
     private SharedPreferences sprfMain;
     private SharedPreferences.Editor editorMain;
+
+    ///从进入登录界面的地方onCreate()方法判断id 跟 token是否为空
 
     @SuppressLint("CommitPrefEdits")
     @Override
@@ -72,6 +73,18 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //        }
 
 //          在加载布局文件前判断是否登陆过
+        String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        if (userId.isEmpty() || userId == null || userId.equals("")) {
+            return;
+        } else {
+//            sprfMain=PreferenceManager.getDefaultSharedPreferences(this);
+//            editorMain= sprfMain.edit();
+            //.getBoolean("main",false)；当找不到"main"所对应的键值是默认返回false
+//            if (sprfMain.getBoolean(NormalConfig.ISFIRST, false)) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            LoginActivity.this.finish();
+        }
     }
     @Override
     protected int getLayoutId() {
@@ -80,26 +93,18 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
     }
 
     @Override
-    protected void initView(){
-        int userId =  mApplication.userid;
-        if (userId==0){
-            return;
-        }else {
-//            sprfMain = PreferenceManager.getDefaultSharedPreferences(this);
-//            editorMain = sprfMain.edit();
-            //.getBoolean("main",false)；当找不到"main"所对应的键值是默认返回false
-//            if (sprfMain.getBoolean(NormalConfig.ISFIRST, false)) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            LoginActivity.this.finish();
-//            }
-        }
+    protected void initView() {
+        //进入页面先判断用户是否已经登录
+//        int userId =  mApplication.userid;
+//        String s = String.valueOf(userId);
+
 //        MonitorNetWorkChange();
+
 //        SharedPreferences login = getSharedPreferences(NormalConfig.ISFIRST, MODE_PRIVATE);
-//        boolean issave = login.getBoolean(NormalConfig.ISFIRSTRUN, false);
+//        boolean issave = login.getBoolean(NormalConfig.ISFIRSTRUN, false);//
 //        String username = login.getString(NormalConfig.USER_NAME, null);
 //        String password = login.getString(NormalConfig.PASS_WORD, null);
-//        //记住密码
+////        记住密码
 //        if (username.isEmpty() && password.isEmpty()) {
 //            return;
 //        } else {
@@ -111,36 +116,43 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
 //                return;
 //            }
 //        }
+
     }
+
     @SuppressLint("ApplySharedPref")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_LOGIN:
                 TestLogin info = (TestLogin) t[0];
-//                Log.i("tag", "登錄数据==>: "+info.toString());
-                if (info.getCode()==0 && info.getData()!=null) {
-                    int userId = info.getData().getUserId();
-                    mApplication.userid = userId;
+                int code = info.getCode();
+                TestLogin.DataBean data = info.getData();
+                if (code == 0) {
+//                    Gson gson = new Gson();
+//                    TestLogin testLogin = gson.fromJson(msg, TestLogin.class);
 
+//                    int userId = info.getData().getUserId();
+                    int userId = data.getUserInfo().getUserId();
+                    mApplication.userid = userId;
                     ToastUtil.showShort(info.getMsg());
                     //登录成功保存头像 手机号 密码
-                    SharedPrefrenceUtils.saveString(LoginActivity.this,NormalConfig.USER_NAME, name);
-                    SharedPrefrenceUtils.saveString(LoginActivity.this,NormalConfig.PASS_WORD, pwd);
+                    SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.USER_NAME, name);
+                    SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.PASS_WORD, pwd);
                     //保存id
-                    SharedPrefrenceUtils.saveString(LoginActivity.this,NormalConfig.USER_ID,String.valueOf(userId));
+                    SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.USER_ID, String.valueOf(userId));
 
                     Intent intent = new Intent(this, MainActivity.class);
 //                    editorMain.putBoolean(NormalConfig.ISFIRST, true);//成功的记录第一次登录
 //                    editorMain.commit();//记录
                     startActivity(intent);
-                    LoginActivity.this.finish();
-                }else{
+                    finish();
+                } else {
                     ToastUtil.showShort(info.getMsg());
                 }
                 break;
         }
     }
+
     @Override
     protected void initData() {
         super.initData();
@@ -164,17 +176,16 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 //解析數據
                 login();
                 break;
-
             case R.id.tv_registered://回传值
                 Intent intent1 = new Intent(this, RegisterActivity.class);
-                startActivityForResult(intent1,99);
+                startActivityForResult(intent1, 99);
                 break;
-
             case R.id.tv_forgetPassword://忘记密码
                 startActivity(new Intent(this, UpdataPasswordActivity.class));
                 break;
         }
     }
+
     private void login() {
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd)) {
             String regex = "[A-Za-z0-9]{4,12}";
@@ -184,6 +195,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
             } else ToastUtil.showShort("请输入正确的手机号");
         } else ToastUtil.showShort("请输入账号或密码");
     }
+
     private void okLogin() {
 //        Intent intent = new Intent(this, MainActivity.class);
 //                editorMain.putBoolean(NormalConfig.ISFIRST,true);
@@ -195,14 +207,16 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==99 && resultCode==100){
+        if (requestCode == 99 && resultCode == 100) {//注册
             //回传的手机号密码
             String name = data.getStringExtra(NormalConfig.USER_NAME);
             String psw = data.getStringExtra(NormalConfig.PASS_WORD);
 //            ToastUtil.showShort(name+"\n"+psw);
-
+            mName.setText(name);
+            mPsw.setText(psw);
         }
     }
+
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
@@ -216,6 +230,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
     @Override
     public void onError(int whichApi, Throwable e) {
     }
+
     @Override
     public void takeSuccess(TResult result) {
 

@@ -40,25 +40,21 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
-        View inflate = LayoutInflater.from(context).inflate(R.layout.obligation_item, null);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.obligation_item, viewGroup,false);
         return new Vh(inflate);
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, final int i) {
-//        list = data.getOrderStockList();
+//      list = data.getOrderStockList();
         TestObligation.DataBean.OrderStockListBean orderStockListBean = list.get(i);
         TestObligation.DataBean.CommodityBean commodityBean = commodity.get(0);
-
         String comImg = commodityBean.getComImg();
         String comName = commodityBean.getComName();
         double comPrice = commodityBean.getComPrice();
-//
         Glide.with(context).load(comImg).placeholder(R.mipmap.icon).into(vh.mDaifuComImg);
         vh.mDaifuPirce.setText("单价￥："+comPrice);
         vh.mDaifuGcomName.setText(comName);
-
         vh.mDaifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
 //        进货订单集合	orderStockList
 //        订单编号	orderNumber
@@ -68,25 +64,27 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
         vh.mDaifuCommodityAmount.setText("数量：" + orderStockListBean.getCommodityAmount());
 //        应付金额	commodityPrice
         vh.mDaifuCommodityPrice.setText("应付金额：" + orderStockListBean.getCommodityPrice());
-
+        //跳转确认信息
         vh.mDaifuGetGatheringBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, AffirmMessageActivity.class);
-                intent.putExtra("OrderNumber",list.get(i).getOrderNumber());
-                activity.startActivity(intent);
-            }
-        });
-
-        vh.mDaifuCancelOrderform.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //取消进货订单
-                if (accountpaidsetOnclikListener!=null){
-                    accountpaidsetOnclikListener.setonclik(i);
+                if (accountpaidTosetOnclikListener!=null){
+                    accountpaidTosetOnclikListener.setonclik(i);
                 }
+//                    Intent intent = new Intent(context, AffirmMessageActivity.class);
+//                    intent.putExtra("OrderNumber",list.get(i).getOrderNumber());
+//                    context.startActivity(intent);
             }
         });
+//        vh.mDaifuCancelOrderform.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //取消进货订单
+////                if (accountpaidsetOnclikListener!=null){
+////                    accountpaidsetOnclikListener.setonclik(i);
+////                }
+//            }
+//        });
 //        EventBus.getDefault().postSticky(amount);
     }
     @Override
@@ -117,13 +115,21 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
             ButterKnife.bind(this,itemView);
         }
     }
-
     private AccountpaidsetOnclikListener accountpaidsetOnclikListener;
-
     public interface AccountpaidsetOnclikListener {
         void setonclik(int postion);
     }
     public void setAccountpaidsetOnclikListener(AccountpaidsetOnclikListener accountpaidsetOnclikListener) {
         this.accountpaidsetOnclikListener = accountpaidsetOnclikListener;
+    }
+    //跳转确认信息接口回调
+    private AccountpaidTosetOnclikListener accountpaidTosetOnclikListener;
+
+    public interface AccountpaidTosetOnclikListener{
+        void  setonclik(int index);
+    }
+
+    public void setAccountpaidTosetOnclikListener(AccountpaidTosetOnclikListener accountpaidTosetOnclikListener) {
+        this.accountpaidTosetOnclikListener = accountpaidTosetOnclikListener;
     }
 }

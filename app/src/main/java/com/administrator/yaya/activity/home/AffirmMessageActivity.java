@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.ClipboardManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.base.ApiConfig;
-import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
@@ -26,6 +26,7 @@ import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 
 /**
  * 确认信息
@@ -58,125 +59,156 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     TextView bankMoney;
     @BindView(R.id.remark)
     TextView mRemark;
-    private String commodityAmount;
-    private String payerName;
-    private String commodityPrice;
     private String userId;
+    private String orderNumber;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_affirm_message;
     }
+
     @Override
     protected void initView() {
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        commodityAmount = getIntent().getStringExtra("commodityAmount");
-        payerName = getIntent().getStringExtra("bankName");
-        //应付款金额
-        commodityPrice = getIntent().getStringExtra("commodityPrice");
-        }
+    }
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initData() {
-        Log.i("tag", "data======》: "+commodityAmount+payerName+commodityPrice+userId);
-        int i = Integer.parseInt(userId);
-        mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK, i, commodityPrice, payerName, commodityAmount);
-
-        //網絡請求  付款信息
-        String OrderNumber = getIntent().getStringExtra("OrderNumber");
-        if (OrderNumber!=null){
-            mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO,OrderNumber);
+        //提交订单传过来的数据
+//        intent.putExtra("bankName",bankName1);//银行
+//        intent.putExtra("payeeName",payeeName);//收款人姓名
+//        intent.putExtra("comMoney",comMoney);//收款金额
+//        intent.putExtra("bankCard",bankCard);//
+//        intent.putExtra("remark",remark);//备注
+        if (getIntent() != null) {
+            //網絡請求  付款信息
+            orderNumber = getIntent().getStringExtra("OrderNumber");
+            //
+            //应付款金额
+            String payeeName = getIntent().getStringExtra("payeeName");
+            String bankName = getIntent().getStringExtra("bankName");
+            String comMoney = getIntent().getStringExtra("comMoney");
+            String bankCard = getIntent().getStringExtra("bankCard");
+            String remark = getIntent().getStringExtra("remark");
+            if (!TextUtils.isEmpty(payeeName)||!TextUtils.isEmpty(bankName)||!TextUtils.isEmpty(comMoney)
+                    ||!TextUtils.isEmpty(bankCard)||!TextUtils.isEmpty(remark) ){
+                bankYinhang.setText(bankName + "");
+                receiverName.setText(payeeName + "");
+                bankCodeNumber.setText(bankCard + "");
+                moneyTv.setText(comMoney+"");
+                mRemarkTv.setText(remark + "");
+            }else{
+              ToastUtil.showLong("暂无数据");
+            }
         }
+//        Log.i("tag", "data======》: " + commodityAmount + payerName + commodityPrice + userId);
+        int i = Integer.parseInt(userId);
+        //用户第一次进入时  立即购买展示的数据
+//        if (commodityAmount.isEmpty() ){
+        //提交订单
+//        if (TextUtils.isEmpty(orderNumber)){
+//            mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK, i, commodityPrice, payerName, commodityAmount);
+//        } else{
+        //库存的
+        //查看详情
+        if (!TextUtils.isEmpty(orderNumber))mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO, orderNumber);
     }
+    //}
+    //待付款跳转此页面 时 的展示 数据
+//}
     @OnClick({R.id.affirm_msg_back_iv, R.id.receiver_copy, R.id.bank_code_number_copy, R.id.bank_copy, R.id.bank_money, R.id.remark_btn_copy, R.id.affirm_msg_look_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.affirm_msg_back_iv:
-                finish();
+                AffirmMessageActivity.this.finish();
                 break;
             case R.id.receiver_copy:
                 ClipboardManager name = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
-                if (receiverName!=null)name.setText(receiverName.getText());
+                if (receiverName != null) name.setText(receiverName.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
             case R.id.bank_code_number_copy:
                 ClipboardManager number = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
-                if (bankCodeNumber!=null)number.setText(bankCodeNumber.getText());
+                if (bankCodeNumber != null) number.setText(bankCodeNumber.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
             case R.id.bank_copy:
                 ClipboardManager bank = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
-                if (bankYinhang!=null)bank.setText(bankYinhang.getText());
-                ToastUtil.showShort("已复制至粘贴栏");
-                break;
-            case R.id.bank_money:
-                ClipboardManager bankQian = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                // 将文本内容放到系统剪贴板里。
-                if (bankMoney!=null)bankQian.setText(bankMoney.getText());
+                if (bankYinhang != null) bank.setText(bankYinhang.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
 
+            case R.id.bank_money:
+                ClipboardManager bankQian = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                // 将文本内容放到系统剪贴板里。
+                if (bankMoney != null) bankQian.setText(bankMoney.getText());
+                ToastUtil.showShort("已复制至粘贴栏");
+                break;
             case R.id.remark_btn_copy:
                 ClipboardManager remark = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
-                if (mRemarkTv!=null)remark.setText(mRemarkTv.getText());
+                if (mRemarkTv != null) remark.setText(mRemarkTv.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
             case R.id.affirm_msg_look_btn:
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("affirm", 2);
                 startActivity(intent);
+                finish();
+//              AffirmMessageActivity.this.finish();
                 break;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
+
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
+
     @Override
     public void onError(int whichApi, Throwable e) {
 //        String message = e.getMessage();
 //        Log.e("aaaaaa",message);
     }
+    @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
-            case ApiConfig.TEXT_ORDER_STOCK:
-                 TestToOrderStock testToOrderStock = (TestToOrderStock) t[0];
-
-                Log.i("tag", "确认信息: "+testToOrderStock.toString());
-
-                if (testToOrderStock.getCode()==0 && testToOrderStock.getData()!=null){
-
-                    TestToOrderStock.DataBean data = testToOrderStock.getData();
-
-                    String bankName = data.getBankName();
-                    String payeeName = data.getPayeeName();//收款人姓名
-
-                    int gaId = data.getGaId();
-                    String bankCard = data.getBankCard();//银行卡号
-                    String remark = data.getRemark();//备注信息
-
-                    bankYinhang.setText(bankName+"");
-                    receiverName.setText(payeeName+"");
-                    bankCodeNumber.setText(bankCard+"");
-                    moneyTv.setText(data.getComMoney());
-                    mRemarkTv.setText(remark+"");
-                }else{
-//                    ToastUtil.showShort(testToOrderStock.getMsg());
-                }
-                break;
-                //付款信息
-
+//            case ApiConfig.TEXT_ORDER_STOCK:
+//                TestToOrderStock testToOrderStock = (TestToOrderStock) t[0];
+//                Log.i("tag", "确认信息: " + testToOrderStock.toString());
+//                if (testToOrderStock.getCode() == 0 && testToOrderStock.getData() != null) {
+//                    TestToOrderStock.DataBean data = testToOrderStock.getData();
+//                    String bankName = data.getBankName();
+//                    String payeeName = data.getPayeeName();//收款人姓名
+//                    int gaId = data.getGaId();
+//                    String bankCard = data.getBankCard();//银行卡号
+//                    String remark = data.getRemark();//备注信息
+//                    bankYinhang.setText(bankName + "");
+//                    receiverName.setText(payeeName + "");
+//                    bankCodeNumber.setText(bankCard + "");
+//                    moneyTv.setText(data.getComMoney());
+//                    mRemarkTv.setText(remark + "");
+//                }
+//                break;
+            //付款信息
             case ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO://从库存付款信息跳到确认信息解析
 //                getTestPayToAffimInfo()
                 TestPayToAffirmInfo testPayToAffirmInfo = (TestPayToAffirmInfo) t[0];
-                if (testPayToAffirmInfo.getData()!=null && testPayToAffirmInfo.getCode()==0){
+                if (testPayToAffirmInfo.getData() != null && testPayToAffirmInfo.getCode() == 0) {
                     TestPayToAffirmInfo.DataBean data = testPayToAffirmInfo.getData();
 //                    收款人姓名	payeeName
                     String payeeName = data.getPayeeName();
@@ -189,12 +221,10 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                     bankYinhang.setText(bankName);
 //                    金额		comMoney
                     int comMoney = data.getComMoney();
-                    moneyTv.setText(comMoney+"");
+                    moneyTv.setText(comMoney + "");
 //                    备注信息	remark
                     String remark = data.getRemark();
                     mRemarkTv.setText(remark);
-                }else{
-//                    ToastUtil.showShort(testPayToAffirmInfo.getMsg());
                 }
                 break;
         }

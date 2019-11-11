@@ -16,6 +16,7 @@ import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +28,14 @@ import butterknife.OnClick;
  * 系统消息
  */
 public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
+
     @BindView(R.id.system_msg_back_iv)
     ImageView systemMsgBackIv;
+
     @BindView(R.id.system_msg_recyclerView)
     RecyclerView mList;
+    @BindView(R.id.system_msg_refreshLayout)
+    SmartRefreshLayout mRefresh;
 
 //    @BindView(R.id.system_msg_refreshLayout)
 //    SmartRefreshLayout systemMsgRefreshLayout;
@@ -57,28 +62,41 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
     public void onError(int whichApi, Throwable e) {
 
     }
-
-
     @Override
     protected void initView() {
         super.initView();
         list = new ArrayList<>();
+        initRecycleView(mList,mRefresh);//
         mList.setLayoutManager(new LinearLayoutManager(this));
+        //禁止加载
+        mRefresh.setEnableLoadMore(false);
         adapter = new SystemMessagesAdapter(list);
         mList.setAdapter(adapter);
     }
 
+    @Override
+    public void refresh() {
+        super.refresh();
+        //走一遍数据加载
+        initData();
+    }
     @Override
     protected void initData() {
         super.initData();
         String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         if (userId!=null)mPresenter.getData(ApiConfig.TEST_NOTIFICATION_INFO,Integer.parseInt(userId));
     }
+
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
-            case ApiConfig
-                    .TEST_NOTIFICATION_INFO:
+            case ApiConfig.TEST_NOTIFICATION_INFO:
+
+                if(!list.isEmpty() || list!=null){
+                    list.clear();
+                }
+
+
                 TestNotificationInfo testNotificationInfos  = (TestNotificationInfo) t[0];
             if (testNotificationInfos.getCode()==0 && testNotificationInfos.getData()!=null){
 //                Log.i("tag", "通知消息: "+testNotificationInfos.getData().toString());
@@ -90,6 +108,8 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
             }
                 break;
         }
+        mRefresh.finishRefresh();
+
     }
     @OnClick({R.id.system_msg_back_iv})
     public void onViewClicked(View view) {

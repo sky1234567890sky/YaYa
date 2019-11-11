@@ -95,11 +95,9 @@ public class SettingActivity extends BaseActivity {
                                 startActivity(login);
                                 finish();
                             }
-
                         }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 }).show();
                 break;

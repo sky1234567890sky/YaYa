@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,9 @@ import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.homepage.TestBuyCom;
+import com.administrator.yaya.bean.orderform.TestToOrderStock;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -32,7 +35,7 @@ import butterknife.OnClick;
  * 立即购买
  * sky
  */
-public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements ICommonView, View.OnClickListener {
+public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
 
     @BindView(R.id.now_buy_iv)
     ImageView nowBuyIv;
@@ -72,6 +75,11 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     private int comPurchaseNumMin;
     private int comInventory;
     private double comPrice;
+    private String bankName1;
+    private String payeeName;
+    private String bankCard;
+    private String remark;
+    private String comMoney;
 
     @Override
     protected void initView() {
@@ -83,6 +91,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
         super.initData();
         mPresenter.getData(ApiConfig.TEXT_BUY_COM);
     }
+
     @Override
     public void onError(int whichApi, Throwable e) {
 
@@ -96,39 +105,64 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
             if (testBuyCom.getCode()==0 && testBuyCom.getData()!=null){
                 Log.i("tag", "立即購買====》: "+testBuyCom.toString());
                 String comImg = testBuyCom.getData().getComImg();
-
                 Glide.with(this).load(comImg).apply(new RequestOptions().centerCrop()).into(nowBuGamemoneyIv);
-
                 String comName = testBuyCom.getData().getComName();//货物名称
-
                 mComName.setText(comName);
                 //货物单价
                 comPrice = testBuyCom.getData().getComPrice();
-
                 mComPrice.setText("游戏币单价:￥"+ comPrice);
                 //库存数量
                 comInventory = testBuyCom.getData().getComInventory();
-
                 buyGamemoneyRemainingQuantity.setText("剩余数量:￥"+ comInventory);
                 //最大购买量
                 comPurchaseNumMax = testBuyCom.getData().getComPurchaseNumMax();
-
                 //最小购买量
                 comPurchaseNumMin = testBuyCom.getData().getComPurchaseNumMin();
-
                 buyMinGamemoneyRemainingQuantity.setText("最小购买数量："+comPurchaseNumMin);
-
                 buyMaxGamemoneyRemainingQuantity.setText("最大购买数量："+comPurchaseNumMax);
-
                 //传值
 //                EventBus.getDefault().postSticky(comInventory);   //发送时间
             }else{
                 ToastUtil.showShort(testBuyCom.getMsg());
             }
                 break;
+            //提交信息
+            case ApiConfig.TEXT_ORDER_STOCK:
+                TestToOrderStock testToOrderStock = (TestToOrderStock) t[0];
+                //查看信息   非提交订单
+                if (testToOrderStock.getCode() == 0 && testToOrderStock.getData() != null) {
+                    TestToOrderStock.DataBean data = testToOrderStock.getData();
+                    //银行
+                    bankName1 = data.getBankName();
+                    //收款人姓名
+                    payeeName = data.getPayeeName();
+                    //货物数量
+                    int gaId = data.getGaId();
+                    //金额
+                    comMoney = data.getComMoney();
+                    //银行卡号
+                    bankCard = data.getBankCard();
+                    //备注信息
+                    remark = data.getRemark();
+//                    bankYinhang.setText(bankName + "");
+//                    receiverName.setText(payeeName + "");
+//                    bankCodeNumber.setText(bankCard + "");
+//                    moneyTv.setText(data.getComMoney());
+//                    mRemarkTv.setText(remark + "");
+                    Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
+                    if (!TextUtils.isEmpty(payeeName)||!TextUtils.isEmpty(bankName1)||!TextUtils.isEmpty(comMoney)
+                            ||!TextUtils.isEmpty(bankCard)||!TextUtils.isEmpty(remark) ) {
+                        intent.putExtra("bankName", bankName1);//银行
+                        intent.putExtra("payeeName", payeeName);//收款人姓名
+                        intent.putExtra("comMoney", comMoney);//收款金额
+                        intent.putExtra("bankCard", bankCard);//
+                        intent.putExtra("remark", remark);//备注
+                        startActivity(intent);
+                    }
+                }
+                break;
         }
     }
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_buy_now;
@@ -136,11 +170,10 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initListener() {
-        nowBuyIv.setOnClickListener(this);
-
         buyGamemoneyNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
             @SuppressLint("SetTextI18n")
             @Override
@@ -151,7 +184,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     payMoney2.setText("0");
                     return;
                 }
-
                 char tv_money = tv.charAt(0);
                 if (s.length() <= 0 || s.equals("")) {
                     payMoney2.setText("0");
@@ -160,7 +192,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     int i = Integer.parseInt(String.valueOf(s));
                     payMoney2.setText(i*comPrice + "");
                 }
-
                 int i = Integer.parseInt(String.valueOf(s));
                 if (comPurchaseNumMax>=i){
                     buyGamemoneyRemainingQuantity.setText("剩余数量："+(comPurchaseNumMax-i));
@@ -175,6 +206,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
             }
         });
     }
+
     @OnClick({R.id.now_buy_iv, R.id.nowbuy_commit_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -190,11 +222,9 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                         //付款人姓名上传对照
                         String name = bankName.getText().toString().trim();
                         if (!name.isEmpty()) {
-                            Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
-                            intent.putExtra("bankName",name);
-                            intent.putExtra("commodityAmount",s);
-                            intent.putExtra("commodityPrice",paymoey);
-                            startActivity(intent);
+                            //在此请求网络数据 传到  确认付款 页面(在此解析讲数据船只)（提交数据的  不是 查看详情的）
+                            mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK, i, paymoey, name, s);
+                            //==================================================》
                         }else{
                             ToastUtil.showShort("请输入付款人姓名");
                         }
@@ -211,17 +241,9 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.now_buy_iv:
-                finish();
-                break;
-        }
-    }
+
 }

@@ -8,12 +8,12 @@
     android:orientation="vertical"
     tools:context=".fragment.InventoryFragment">
 
-    <!--<ImageView-->
-        <!--android:layout_width="@dimen/dp_312_5"-->
-        <!--android:layout_height="@dimen/dp_127_5"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:src="@mipmap/logo"-->
-        <!--tools:ignore="ContentDescription" />-->
+    <ImageView
+        android:layout_width="@dimen/dp_312_5"
+        android:layout_height="@dimen/dp_127_5"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/logo"
+        tools:ignore="ContentDescription" />
 
     <RelativeLayout
         android:id="@+id/invite_rl"
@@ -34,7 +34,7 @@
     </RelativeLayout>
 
     <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/inventory_stab_layou"
+        android:id="@+id/inventory_stab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
         android:layout_below="@id/invite_rl"
@@ -51,7 +51,15 @@
         />
 
     <!--<android.support.design.widget.TabLayout-->
-    <!--android:id="@+id/inventory_stab_layou"-->
+        <!--android:id="@+id/inventory_tablayou"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp_44"-->
+        <!--android:layout_below="@id/invite_rl"-->
+        <!--app:tabIndicatorColor="@color/blue"-->
+        <!--&gt;</android.support.design.widget.TabLayout>-->
+
+    <!--<android.support.design.widget.TabLayout-->
+    <!--android:id="@+id/inventory_tablayou"-->
     <!--android:layout_below="@id/invite_rl"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="@dimen/dp_40"-->
@@ -62,11 +70,17 @@
     <!--tools:ignore="RtlHardcoded" />-->
 
     <android.support.v4.view.ViewPager
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/inventory_vp"
-    android:layout_below="@+id/inventory_stab_layou"
-    />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/inventory_vp"
+        android:layout_below="@+id/inventory_stab" />
+
+    <!--<FrameLayout-->
+    <!--android:layout_width="match_parent"-->
+        <!--android:layout_below="@+id/inventory_tablayou"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/inventory_fragment"-->
+    <!--/>-->
 
 
     <!--<android.support.v7.widget.CardView-->

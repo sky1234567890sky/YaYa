@@ -26,10 +26,8 @@ import com.bumptech.glide.request.RequestOptions;
 import butterknife.BindView;
 import butterknife.OnClick;
 public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
-
     @BindView(R.id.title_tb)
     TextView titleTb;
-
     @BindView(R.id.headler_iv)
     ImageView mHeadlerIv;
     @BindView(R.id.home_gamemoney_name)
@@ -52,10 +50,6 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     TextView tvWechatDay;
     private TestHomePageData.DataBean databean;
     private TestHomePageData.DataBean.UserInfoBean userInfo;
-    //@BindView(R.id.marqueeView)
-//    MarqueeView mMarqueeView;
-//    @BindView(R.id.marquee)
-//    SimpleMarqueeView mMarquee;
     @Override
     protected void initData() {
         super.initData();
@@ -79,7 +73,6 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
                 databean = data.getData();
                 userInfo = databean.getUserInfo();
                 if (data.getCode() == 0 && userInfo != null && databean != null) {
-
                     Log.i("tag", "首頁==》: "+data.toString());
 //                    commodity:  货物信息
                     TestHomePageData.DataBean.CommodityBean commodity = databean.getCommodity();
@@ -91,13 +84,11 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
                     Glide.with(getContext()).load(comImg).placeholder(R.mipmap.icon).into(mHeadlerIv);
 //                    comPrice 商品价格
                     double comPrice1 = commodity.getComPrice();
-
                     homeGamemoneyPrice.setText("进货价￥："+comPrice1);
 //                    zfbEd 支付宝已使用额度
                     tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
 //                    wxEd 微信已使用额度
                     tvWechatUse.setText(userInfo.getWxEd() + "");//微信已使用额度
-
                     String tvday = tvDay.getText().toString();
                     tvSheng.setText((Integer.parseInt(tvday)-userInfo.getZfbEd())+"");//支付宝剩余额度
 //                    userEarningsToday 今日收益
@@ -107,9 +98,6 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 //                    userName 用户姓名
 //                    userNickName 昵称
 //                    userEarningsTotal 总收益
-
-                } else {
-                    ToastUtil.showShort(data.getMsg());
                 }
                 break;
         }

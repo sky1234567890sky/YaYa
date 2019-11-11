@@ -1,6 +1,7 @@
 package com.administrator.yaya.base;
 
 public abstract class BaseMvpFragment<M> extends BaseFragment implements ICommonView{
+
     public CommonPresenter mPresenter;
     public M mModel;
     @Override
@@ -23,4 +24,6 @@ public abstract class BaseMvpFragment<M> extends BaseFragment implements ICommon
         super.onDestroy();
         mPresenter.detach();
     }
+
+
 }

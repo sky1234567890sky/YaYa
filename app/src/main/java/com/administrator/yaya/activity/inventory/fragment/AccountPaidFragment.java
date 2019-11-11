@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
 import com.administrator.yaya.bean.invite.TestAccountPaid;
 import com.administrator.yaya.bean.invite.TestUpawaySingleGoods;
 import com.administrator.yaya.fragment.InventoryFragment;
@@ -33,6 +35,8 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,66 +47,61 @@ import butterknife.BindView;
  * A simple {@link Fragment} subclass.
  * 已付款
  */
-public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
-//    @BindView(R.id.yifu_orderNumber)
-//    TextView mYifuOrderNumber;
-//    @BindView(R.id.yifu_comImg)
-//    ImageView mYifuComImg;
-//    @BindView(R.id.yifu_gamemoney)
-//    TextView mYifuGamemoney;
-//    @BindView(R.id.yifu_comPrice)
-//    TextView mYifuComPrice;
-//    @BindView(R.id.yifu_commodityAmount)
-//    TextView mYifuCommodityAmount;
-//    @BindView(R.id.yifu_commodityPrice)
-//    TextView mYifuCommodityPrice;
-//    @BindView(R.id.yifu_up_btn)
-//    TextView mYifuUpBtn;
-
-        @BindView(R.id.accountpaid_list)
-        RecyclerView mList;
-        @BindView(R.id.account_refreshLayout)
-        SmartRefreshLayout accountRefreshLayout;
-        List<TestAccountPaid.DataBean.OrderStockListBean> list ;
-        List<TestAccountPaid.DataBean.CommodityBean> commodityBean;
-
-        private AccountPaidAdapter adapter;
-        private ImageView mCancelPopCloseIv;
+public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implements ICommonView {
+    @BindView(R.id.accountpaid_list)
+    RecyclerView mList;
+    @BindView(R.id.account_refreshLayout)
+    SmartRefreshLayout accountRefreshLayout;
+    List<TestAccountPaid.DataBean.OrderStockListBean> list;
+    List<TestAccountPaid.DataBean.CommodityBean> commodityBean;
+    private AccountPaidAdapter adapter;
+    private ImageView mCancelPopCloseIv;
     private TextView mPopupTvNumber;
     private TextView mPopupTvCancel;
     private TextView mPopupTvOk;
     private PopupWindow popupWindow;
-
-    private String inventoryNumber;//库存数量
-
     private int num = 2;
     private TestAccountPaid.DataBean data;
     private int index;
+    private InventoryFragment parentFragment1;
+    private String amount;
+    private TextView inventory_allgamemoneys;
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser==true){
+             inventory_allgamemoneys = ((InventoryFragment) getParentFragment()).getView().findViewById(R.id.inventory_allgamemoneys);
+            if (TextUtils.isEmpty(amount) ) {
+                inventory_allgamemoneys.setText("游戏币库存合计：0");//库存  父 Fragment 顶部赋值
+            } else {
+                inventory_allgamemoneys.setText("游戏币库存合计：" + amount);//库存  父 Fragment 顶部赋值
+            }
+        }
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_account_paid;
+    }
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
+//        inventoryFragment = new InventoryFragment();
         list = new ArrayList<>();
         commodityBean = new ArrayList<>();
-        initRecycleView(mList,accountRefreshLayout);
+        initRecycleView(mList, accountRefreshLayout);
         accountRefreshLayout.setEnableLoadMore(false);
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mList.setNestedScrollingEnabled(false);
-        adapter = new AccountPaidAdapter(commodityBean,list,getActivity());
+        adapter = new AccountPaidAdapter(commodityBean, list, getActivity());
         mList.setAdapter(adapter);
     }
+
     @Override
     public void refresh() {
         super.refresh();
-//        InventoryFragment ben = new InventoryFragment();
-//        ben.initData();
-        List<Fragment> fragments = (List<Fragment>)AccountPaidFragment.this.getFragmentManager().getFragments();
-        for (Fragment fragment : fragments) {
-            if (fragment!=null && fragment instanceof InventoryFragment){
-                ((InventoryFragment)fragment).initData();
-                break;
-            }
-        }
+        accountRefreshLayout.autoLoadMore();
         initData();
     }
     @Override
@@ -110,10 +109,18 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
         super.loadMore();
     }
 
+    @SuppressLint("CheckResult")
+    @Override
+    protected void initData() {
+        super.initData();
+        String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
+        mPresenter.getData(ApiConfig.TEXT_GATHERING2, Integer.parseInt(userId), num);//已付款
+    }
+
     @Override
     protected void initListener() {
         super.initListener();
-
+        //上架
         adapter.setAccountpaidsetOnclikListener(new AccountPaidAdapter.AccountpaidsetOnclikListener() {
             @Override
             public void setonclik(int postion) {
@@ -123,24 +130,50 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
             }
         });
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_GATHERING2:
-                list.clear();
+                if (!list.isEmpty() || list != null) {
+                    list.clear();
+                }
+
                 TestAccountPaid testObligation = (TestAccountPaid) t[0];
+                //获取父Fragment控件
+//                TextView tv_money = parentFragment1.getView().findViewById(R.id.inventory_allgamemoneys);
                 data = testObligation.getData();
-                List<TestAccountPaid.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
+                amount = data.getAmount();
+
+//                if(data.getAmount()!=null) {
+////                    inventoryFragment.updater(data.getAmount());
+//                    EventBus.getDefault().postSticky(amount);
+//                }
+
+              /*  if(accountPaidsetOnclikListener!=null) {
+                    accountPaidsetOnclikListener.setonclik(amount);
+                }*/
+//                if(data.getAmount()==null) {
+//                    tv_money.setText("游戏币库存合计：0");
+//                }else{
+//                    tv_money.setText("游戏币库存合计：" + data.getAmount());
+//                }
                 if (testObligation.getCode() == 0 && testObligation.getData() != null) {
-                    Log.i("tag", "已付款。。。: "+testObligation.toString());
+//                    Log.i("tag", "已付款。。。: "+testObligation.toString());
+//                    if (amount==null) {
+//                        inventory_allgamemoneys.setText("游戏币库存合计：0");//库存  父 Fragment 顶部赋值
+//                    } else {
+//                        inventory_allgamemoneys.setText("游戏币库存合计：" + amount);//库存  父 Fragment 顶部赋值
+//                    }
                     commodityBean.add(testObligation.getData().getCommodity());
                     list.addAll(testObligation.getData().getOrderStockList());
                     adapter.notifyDataSetChanged();
-                }else{
+                } else {
                     ToastUtil.showShort(testObligation.getMsg());
                 }
                 break;
+
             case ApiConfig.TEST_UPAWAY_SINGLE_GOODS://上架单个货物
                 TestUpawaySingleGoods testUpawaySingleGoods = (TestUpawaySingleGoods) t[0];
                 if (testUpawaySingleGoods.getCode() == 0 && testUpawaySingleGoods.getMsg() != null) {
@@ -150,34 +183,26 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
                 }
                 break;
         }
-        accountRefreshLayout.finishRefresh(2000);
+        accountRefreshLayout.finishRefresh();//网络请求玩才计时
     }
 
-    @SuppressLint("CheckResult")
     @Override
-    protected void initData() {
-        super.initData();
+    public void onError(int whichApi, Throwable e) {
+    }
 
-        String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
-        mPresenter.getData(ApiConfig.TEXT_GATHERING2, Integer.parseInt(userId), num);//已付款
-    }
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_account_paid;
-    }
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
+
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
-    @Override
-    public void onError(int whichApi, Throwable e) {
-    }
+
     public AccountPaidFragment() {
     }
+
     @SuppressLint("SetTextI18n")
     private void putAway(String amount) {
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.layout_putaway, null);
@@ -186,7 +211,7 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
         mPopupTvNumber = inflate.findViewById(R.id.popup_tv_number);
         mPopupTvCancel = inflate.findViewById(R.id.popup_tv_cancel);
         mPopupTvOk = inflate.findViewById(R.id.popup_tv_ok);
-        mPopupTvNumber.setText(amount+"");//库存数量
+        mPopupTvNumber.setText(amount + "");//库存数量
 
 //        if (orderStockList.size()>0) {
 //            mPopupTvNumber.setText(orderStockList.get(0).getCommodityAmount());//数量
@@ -215,6 +240,7 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
                 getActivity().getWindow().setAttributes(lp);
             }
         });
+
 //        mCancelPopCloseIv.setOnClickListener(this);
 //        mPopupTvCancel.setOnClickListener(this);
 //        mPopupTvOk.setOnClickListener(this);
@@ -235,7 +261,7 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
             public void onClick(View v) {
 //                String orderNumber = orderStockListBean.getOrderNumber();
                 //上架单个货物（请求网络数据）
-                mPresenter.getData(ApiConfig.TEST_UPAWAY_SINGLE_GOODS,list.get(index).getOrderNumber());//传入订单编号
+                mPresenter.getData(ApiConfig.TEST_UPAWAY_SINGLE_GOODS, list.get(index).getOrderNumber());//传入订单编号
 //                直接营业
 //                FragmentTransaction fragmentTransaction = new FragmentManager().beginTransaction();
 //                FragmentUtils.addFragment(getChildFragmentManager(),new OrderFormkFragment().getClass(), R.id.home_fragment);
@@ -249,4 +275,46 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
         popupWindow.setOutsideTouchable(false);
     }
 
+    //获取焦点时刷新
+    @Override
+    public void onResume() {
+        super.onResume();
+//        if(accountPaidsetOnclikListener!=null) {
+//            accountPaidsetOnclikListener.setonclik(amount);
+//        }
+        if (isRefresh) {
+            if (!list.isEmpty()) {
+                list.clear();
+            }
+            refresh();
+            isRefresh = false;
+        }
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!isRefresh) isRefresh = true;
+    }
+
+    //接口回调
+    private AccountPaidsetOnclikListener accountPaidsetOnclikListener;
+
+    //重写懒加载方法
+    @Override
+    public void fetchData() {
+//        initData();
+    }
+
+    public interface AccountPaidsetOnclikListener {
+        void setonclik(String amount);
+    }
+
+    public void setAccountPaidsetOnclikListener(AccountPaidsetOnclikListener accountPaidsetOnclikListener) {
+        this.accountPaidsetOnclikListener = accountPaidsetOnclikListener;
+    }
+    /* public void setAccountPaidsetOnclikListener(AccountPaidsetOnclikListener accountPaidsetOnclikListener) {
+        this.accountPaidsetOnclikListener = accountPaidsetOnclikListener;
+    }*/
 }

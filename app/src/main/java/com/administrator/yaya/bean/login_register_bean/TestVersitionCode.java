@@ -1,10 +1,12 @@
 package com.administrator.yaya.bean.login_register_bean;
 //获取验证码
-public class TestInviteCode {
+public class TestVersitionCode {
+
     /**
      * msg : 获取成功
      * code : 0
      */
+
     private String msg;
     private int code;
 

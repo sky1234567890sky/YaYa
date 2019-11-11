@@ -35,7 +35,6 @@
     <uses-feature android:name="android.hardware.camera" />
     <!-- 使用照相机权限 -->
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
     <uses-permission android:name="android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
@@ -48,14 +47,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute"
+        >
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" >
-
         </activity>
-
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
@@ -71,19 +69,16 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
-        
         <activity
             android:name=".activity.RetrievePasswordActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
-
         <receiver
             android:name=".broadcast.NetStatusBroadCast"
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedReceiver"/>
-
         <activity android:name=".activity.UpGameMoneyActivity" />
         <activity android:name=".ui.ImmediatelyBuyActivity" />
         <activity android:name=".activity.SplashActivity" />
@@ -113,7 +108,6 @@
         <!--android:screenOrientation="portrait"-->
         <!--android:theme="@style/NoTitleTranslucent80Theme"-->
         <!--写在style.xml文件里（windowAnimationStyle可以不添加，这里只是一个动画）：-->
-
         <!--// 下面两行代码可有可无-->
         <!--// 指定一个主题，这里是无标题、半透明的主题-->
 

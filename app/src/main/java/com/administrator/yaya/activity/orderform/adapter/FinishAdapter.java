@@ -57,6 +57,7 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 //        操作时间	salesUpdateTime
         String orderBuildTime = orderStockListBean.getOrderNumber();
         int commodityPrice = orderStockListBean.getCommodityPrice();
+        int salesAmount = orderStockListBean.getSalesAmount();
 
 //        货物信息对象	commodity
 //        货物名称	comName
@@ -67,7 +68,6 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 //                最大购买数量comPurchaseNumMax
 //        今日收款数		amount
 //        vh.mFinishCommodityPrice.setText();
-
         vh.mFinishOrderNumber.setText("【微信】订单编号："+orderNumber);
         vh.mFinishOrderBuildTime.setText("收货时间："+orderBuildTime);
         TestAllOrderStock.DataBean.CommodityBean commodityBean = listCommodityBean.get(0);
@@ -76,11 +76,10 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
         Double comPrice = commodityBean.getComPrice();
         int comInventory = commodityBean.getComInventory();
         vh.mFinishCommodityPrice.setText("售卖总价：￥"+commodityPrice);
-        vh.mFinishOrderNumber.setText("售卖数量："+comInventory);
+        vh.mFinishOrderNumber.setText("售卖数量："+salesAmount);
         vh.mFinishGcomName.setText(commodityBean.getComName());
         Glide.with(activity).load(comImg).placeholder(R.mipmap.icon).into(vh.mFinishComImg);
     }
-
     @Override
     public int getItemCount() {
         return list!=null ? list.size() : 0;

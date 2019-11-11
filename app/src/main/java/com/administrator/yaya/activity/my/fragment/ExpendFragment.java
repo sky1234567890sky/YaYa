@@ -1,25 +1,17 @@
 package com.administrator.yaya.activity.my.fragment;
-
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.my.adapter.ExpendAdapter;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
-import com.administrator.yaya.bean.my.TestExpend;
-import com.administrator.yaya.bean.my.TestIncome;
 import com.administrator.yaya.bean.my.TestMyEarnings;
-import com.administrator.yaya.bean.my.TestRebate;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
@@ -29,10 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-
 /**
  * A simple {@link Fragment} subclass.
- * 支出
+ * 支出    2
  */
 public class ExpendFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
     @BindView(R.id.expend_lv)
@@ -46,7 +37,7 @@ public class ExpendFragment extends BaseMvpFragment<LoginModel> implements IComm
     protected void initData() {
         super.initData();
         String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
-        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),1);//收益类型--1收入-2支出-3返利
+        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),2);//收益类型--1收入-2支出-3返利
     }
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -91,5 +82,22 @@ public class ExpendFragment extends BaseMvpFragment<LoginModel> implements IComm
     @Override
     public void onError(int whichApi, Throwable e) {
 
+    }
+    //获取焦点时刷新
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isRefresh) {
+            if (!list.isEmpty()){
+                list.clear();
+            }
+            refresh();
+            isRefresh = false;
+        }
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!isRefresh) isRefresh = true;
     }
 }

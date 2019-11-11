@@ -69,16 +69,13 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     LinearLayout myRightLl;
     private TestHomePageData.DataBean.UserInfoBean userInfo;
     private TestHomePageData.DataBean databean;
-
     public MyFragment() {
         // Required empty public constructor
     }
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_my;
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
@@ -91,18 +88,16 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     @Override
     protected void initData() {
 //        getPermission();//权限
-
         String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
-        if (!TextUtils.isEmpty(userId))
-            mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId));
-        else {
-            ToastUtil.showShort("网络请求有误");
-        }
-    }
 
+        if (!TextUtils.isEmpty(userId)) mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId));
+
+    }
     @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_right_ll})
     public void onViewClicked(View view) {
+
         switch (view.getId()) {
+
             case R.id.system_msg_iv://系統消息
                 Intent intent = new Intent(getActivity(), SystemMessagesActivity.class);
                 startActivity(intent);
@@ -111,7 +106,6 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 Intent sa = new Intent(getActivity(), SettingActivity.class);
                 startActivity(sa);
                 break;
-
             case R.id.my_ll:
                 Intent pd = new Intent(getActivity(), PersonalDatActivity.class);
                 pd.putExtra("headlerIv",userInfo.getUserHeadImg());

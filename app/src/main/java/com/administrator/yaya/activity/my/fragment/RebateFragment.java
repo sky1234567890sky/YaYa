@@ -34,7 +34,7 @@ import butterknife.BindView;
 
 /**
  * A simple {@link Fragment} subclass.
- * 返利
+ * 返利   3
  */
 public class RebateFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
     @BindView(R.id.rebate_lv)
@@ -43,7 +43,6 @@ public class RebateFragment extends BaseMvpFragment<LoginModel> implements IComm
     SmartRefreshLayout rebateRefreshLayout;
     private RebateAdapter adapter;
     private ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list;
-
     public RebateFragment() {
         // Required empty public constructor
     }
@@ -51,7 +50,6 @@ public class RebateFragment extends BaseMvpFragment<LoginModel> implements IComm
     protected int getLayoutId() {
         return R.layout.fragment_rebate;
     }
-
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
@@ -63,13 +61,12 @@ public class RebateFragment extends BaseMvpFragment<LoginModel> implements IComm
     @Override
     protected void initData() {
         String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
-        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),1);//收益类型--1收入-2支出-3返利
+        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),3);//收益类型--1收入-2支出-3返利
     }
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
@@ -79,7 +76,6 @@ public class RebateFragment extends BaseMvpFragment<LoginModel> implements IComm
     public void onError(int whichApi, Throwable e) {
 
     }
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
@@ -112,5 +108,22 @@ public class RebateFragment extends BaseMvpFragment<LoginModel> implements IComm
                 }
                 break;
         }
+    }
+    //获取焦点时刷新
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isRefresh) {
+            if (!list.isEmpty()){
+                list.clear();
+            }
+            refresh();
+            isRefresh = false;
+        }
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!isRefresh) isRefresh = true;
     }
 }
