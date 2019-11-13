@@ -7,6 +7,7 @@
     android:background="@color/c_ffffff"
     android:layout_height="match_parent"
     tools:context=".activity.my.AlipayReceiverCodeActivity">
+
     <ImageView
         android:layout_width="@dimen/dp_312_5"
         android:layout_height="@dimen/dp_127_5"
@@ -115,7 +116,6 @@
             android:layout_height="match_parent"
             android:id="@+id/alipay_qr"
             android:layout_marginTop="@dimen/dp_10"/>
-
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"

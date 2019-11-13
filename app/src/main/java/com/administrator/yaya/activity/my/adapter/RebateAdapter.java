@@ -47,14 +47,14 @@ public class RebateAdapter extends RecyclerView.Adapter<RebateAdapter.Vh> {
 //        userName		用户昵称
         TestMyEarnings.DataBean.UserEarningsListBean userEarningsListBean = list.get(i);
         String orderId = userEarningsListBean.getOrderId();
-        int salesAmount = userEarningsListBean.getSalesAmount();
+        double salesAmount = userEarningsListBean.getSalesAmount();
         int earningsAmount = userEarningsListBean.getEarningsAmount();
         int earningsType = userEarningsListBean.getEarningsType();
         String createTime = userEarningsListBean.getEarningsTime();
         int userId = userEarningsListBean.getUserId();
         String userName = userEarningsListBean.getUserName();
-        if (earningsType==1){//返利记录
-            vh.mReabateUserNickName.setText("用户昵称(用户ID："+orderId+")");
+        if (earningsType==3){//返利记录
+            vh.mReabateUserNickName.setText("用户昵称(用户ID："+userId+")");
             vh.mRebateEarningsTime.setText(createTime);
             vh.mRebateSalesAmount.setText("+"+salesAmount);
 //            Glide.with(context).load()

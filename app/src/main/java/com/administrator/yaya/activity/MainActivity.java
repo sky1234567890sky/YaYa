@@ -8,12 +8,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +28,7 @@ import com.administrator.yaya.R;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseActivity;
 import com.administrator.yaya.base.BaseMvpActivity;
+import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.invite.TestAccountPaid;
@@ -51,7 +54,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommonView {
     //@BindView(R.id.title_tb)
 //    TextView mTitle;
 //    @BindView(R.id.toolbar)
@@ -83,36 +86,30 @@ public class MainActivity extends BaseActivity {
     private MyFragment myFragment;
     private long exittime;
     private PopupWindow popupWindow;
-    private String position;
+    private String position = "0";
+    private String userId;
+    private int num = 2;
+    private String amount;
 
     @Override
     protected int getLayoutId() {
-//        Utils.setStatusBar(this, false, false);
         return R.layout.activity_main;
     }
     @Override
     protected void initView() {
-        super.initView();
-//        mToolbar.setTitle("");
-//        mTitle.setText(R.string.homepage);
-//        setSupportActionBar(mToolbar);//支持Toolbar
         mHomepage.setChecked(true);
-//        if (mHomepage.isChecked()){
-//            //设置状态栏为白色
-//            YCAppBar.setStatusBarColor(this,
-//                    ContextCompat.getColor(this,
-//                            R.color.c_cccccc));
-//        }
         titles = new ArrayList<Integer>();
         titles.add(R.string.homepage);
         titles.add(R.string.inventory);
         titles.add(R.string.orderform);
         titles.add(R.string.my);
+
         //初始化页面管理类
         manager = getSupportFragmentManager();
         initFragment();
         addHomeFragment();
     }
+
     private void addHomeFragment() {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.home_fragment, fragments.get(0));
@@ -127,6 +124,7 @@ public class MainActivity extends BaseActivity {
                     .commit();
             mInventoryBtn.setChecked(true);
         }
+
         int upaway = getIntent().getIntExtra("upaway", 0);
         if (upaway == 3) {
             getSupportFragmentManager()
@@ -157,90 +155,54 @@ public class MainActivity extends BaseActivity {
         fragments.add(orderFormkFragment);
         fragments.add(myFragment);
     }
-    //接收订阅的事件
-    @SuppressLint("SetTextI18n")
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onData(String amount) {
-            if (amount != null) {
-                position = amount;
-            }
+    @Override
+    protected void initData() {
+        super.initData();
+        userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        mPresenter.getData(ApiConfig.TEXT_GATHERING2, Integer.parseInt(userId), num);//已付款
+    }
+    @Override
+    public void onError(int whichApi, Throwable e) {
+
+    }
+    @Override
+    public void onResponse(int whichApi, Object[] t) {
+        //已付款
+        switch (whichApi) {
+            case ApiConfig.TEXT_GATHERING2:
+                TestAccountPaid testObligation = (TestAccountPaid) t[0];
+                if (testObligation.getData().getAmount()!=null){
+                    amount = testObligation.getData().getAmount();
+                }
+                break;
+        }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        //注册
-        EventBus.getDefault().register(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        //取消注册
-        EventBus.getDefault().unregister(this);
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-//        registerNetWorkStatus();//监听网络状态
-//        MonitorNetWorkChange();
-    }
-    @Override
-    protected void initListener() {
-        super.initListener();
-    }
     @OnClick({R.id.homepage, R.id.inventory_btn, R.id.dobusiness_btn, R.id.orderform_btn, R.id.mine_btn, R.id.dobusiness_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.homepage://首页
                 mHomepage.setChecked(true);
-
                 FragmentUtils.addFragment(manager, homePageFragment.getClass(), R.id.home_fragment, null);
-                //设置状态栏为白色
-//                YCAppBar.setStatusBarColor(this,
-//                        ContextCompat.getColor(this,
-//                                R.color.c_cccccc));
-//                switchFragment(AppConstants.TYPE_HOMEPAGER);
                 break;
             case R.id.inventory_btn://库存
                 FragmentUtils.addFragment(manager, inventoryFragment.getClass(), R.id.home_fragment, null);
-                //设置状态栏为浅蓝
-//                YCAppBar.setStatusBarColor(this,
-//                        ContextCompat.getColor(this,
-//                                R.color.light_blue));
-//                mToolbar.setVisibility(View.GONE);
-//                switchFragment(AppConstants.TYPE_INVENTORY);
                 break;
             case R.id.dobusiness_iv:
-//            case R.id.dobusiness_btn:
-
-                if (position==null){
+                if (amount==null || amount.equals("") || amount.isEmpty()|| TextUtils.isEmpty(amount)){//为空
                     ToastUtil.showLong("当前没有库存，不能营业哦！");
                 }else{
                     popupSelector();//营业
                 }
-
                 break;
             case R.id.orderform_btn://订单
                 FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, null);
-                //设置状态栏为浅蓝
-//                YCAppBar.setStatusBarColor(this,
-//                        ContextCompat.getColor(this,
-//                                R.color.light_blue));
-//                switchFragment(AppConstants.TYPE_ORDERFORM);
-
                 break;
             case R.id.mine_btn://我的
                 FragmentUtils.addFragment(manager, myFragment.getClass(), R.id.home_fragment, null);
-                //设置状态栏为白色
-//                YCAppBar.setStatusBarColor(this,
-//                        ContextCompat.getColor(this,R.color.c_cccccc));
-//                switchFragment(AppConstants.TYPE_MY);
                 break;
         }
     }
-    private int mLastType = 0;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
@@ -250,11 +212,10 @@ public class MainActivity extends BaseActivity {
                     popupWindow.dismiss();
                 }
             }
-
             if ((System.currentTimeMillis() - exittime) > 2000) {  //如果两次连续点击的时间>2s，就不执行操作
                 ToastUtil.showShort("再按一次退出丫丫");
                 exittime = System.currentTimeMillis();
-            } else {
+            }else{
                 finish();
                 System.exit(0);
             }
@@ -270,11 +231,9 @@ public class MainActivity extends BaseActivity {
         TextView upAwayNumber = inflate.findViewById(R.id.popup_tv_number);
         TextView mPopupTvCancel = inflate.findViewById(R.id.popup_tv_cancel);
         TextView mPopupTvOk = inflate.findViewById(R.id.popup_tv_ok);
-        if (position==null){
-            upAwayNumber.setText("0");
-        }else {
-            upAwayNumber.setText(position);
-        }
+
+        if (!amount.isEmpty()) upAwayNumber.setText(amount);
+
         popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
         //手动设置 PopupWindow 响应返回键并关闭的问题
         popupWindow.setFocusable(true);
@@ -287,7 +246,6 @@ public class MainActivity extends BaseActivity {
         WindowManager.LayoutParams lp = this.getWindow().getAttributes();
         lp.alpha = 0.5f;
         this.getWindow().setAttributes(lp);
-
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -296,23 +254,18 @@ public class MainActivity extends BaseActivity {
                 MainActivity.this.getWindow().setAttributes(lp);
             }
         });
-//        mCancelPopCloseIv.setOnClickListener(this);
-//        mPopupTvCancel.setOnClickListener(this);
-//        mPopupTvOk.setOnClickListener(this);
         cancel_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
             }
         });
-
         mPopupTvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
             }
         });
-
         mPopupTvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -324,27 +277,14 @@ public class MainActivity extends BaseActivity {
             }
         });
         popupWindow.setOutsideTouchable(false);
-//        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (event.getY()>=0){//PopupWindow内部的事件
-//                    return false;
-//                }
-//                return true;
-//            }
-//        });
     }
-    //    @Override
-//    protected void setStatusBar() {
-//        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this,null);
-//    }
-    @SuppressLint("MissingSuperCall")
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-        //奔溃前保存位置
-//        if (!= null) {
-//            outState.putInt(Utils.HOME_CURRENT_TAB_POSITION, bindingView.tabLayout.getCurrentTab());
-//        }
+    protected LoginModel getModel() {
+        return new LoginModel();
+    }
+
+    @Override
+    protected CommonPresenter getPresenter() {
+        return new CommonPresenter();
     }
 }

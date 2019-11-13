@@ -89,6 +89,7 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
         //收入Income
         //支出Expend
         //返利Rebate
+
         fragments = new ArrayList<>();
         incomeFragment = new IncomeFragment();//收入
         expendFragment = new ExpendFragment();//支出
@@ -244,10 +245,9 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
 //                mPresenter.getData(ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK,);
                 String userId = SharedPrefrenceUtils.getString(MyIncomeActivity.this, NormalConfig.USER_ID);
                 if (userId!=null) {
-                    mPresenter.getData(ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK, Integer.parseInt(userId));
-                }else{
-                    ToastUtil.showShort(R.string.networkerr+"");
+                    mPresenter.getData(ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK, Integer.parseInt(userId),userEarningsNow);
                 }
+
                 MainActivity mainActivity = new MainActivity();
                 Intent intent = new Intent(MyIncomeActivity.this, MainActivity.class);
                 intent.putExtra("upaway",3);
@@ -277,10 +277,11 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
             //我的收益  收入
             case ApiConfig.TEST_EXPEND:
                 TestExpend testMyEarnings = (TestExpend) t[0];
+
                 if (testMyEarnings.getData()!=null &&testMyEarnings.getCode()==0){
                     TestExpend.DataBean data = testMyEarnings.getData();
 //                    Log.i("tag", "我的收益: "+data.toString());
-                    List<?> userEarningsList = data.getUserEarningsList();
+                     data.getUserEarningsList();
                     TestExpend.DataBean.UserInfoBean userInfo = data.getUserInfo();
 //                    userName 用户姓名
 //                    userNickName 昵称
@@ -304,11 +305,15 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
                     ToastUtil.showShort(testMyEarnings.getMsg());
                 }
                 break;
+
                 //上架所有货物
             case ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK:
+
                 TestPutawayAllOrderStock testPutawayAllOrderStock = (TestPutawayAllOrderStock) t[0];
+
                 if (testPutawayAllOrderStock.getCode()==0){
                     ToastUtil.showShort(testPutawayAllOrderStock.getMsg());
+
                 }else{
                     ToastUtil.showShort(testPutawayAllOrderStock.getMsg());
                 }

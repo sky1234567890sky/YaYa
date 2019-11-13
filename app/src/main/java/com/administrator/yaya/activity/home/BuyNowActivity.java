@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.homepage.TestBuyCom;
 import com.administrator.yaya.bean.orderform.TestToOrderStock;
+import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
@@ -80,6 +82,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     private String bankCard;
     private String remark;
     private String comMoney;
+    private String userId;
 
     @Override
     protected void initView() {
@@ -113,6 +116,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 mComPrice.setText("游戏币单价:￥"+ comPrice);
                 //库存数量
                 comInventory = testBuyCom.getData().getComInventory();
+
                 buyGamemoneyRemainingQuantity.setText("剩余数量:￥"+ comInventory);
                 //最大购买量
                 comPurchaseNumMax = testBuyCom.getData().getComPurchaseNumMax();
@@ -173,7 +177,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
         buyGamemoneyNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
             @SuppressLint("SetTextI18n")
             @Override
@@ -193,17 +196,23 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     payMoney2.setText(i*comPrice + "");
                 }
                 int i = Integer.parseInt(String.valueOf(s));
+
                 if (comPurchaseNumMax>=i){
-                    buyGamemoneyRemainingQuantity.setText("剩余数量："+(comPurchaseNumMax-i));
+                    buyGamemoneyRemainingQuantity.setText("剩余数量："+(comInventory-i));
                 }else{
                     ToastUtil.showLong("已超过最大购买数");
+                    //禁止输入
+                    buyGamemoneyNumber.setInputType(InputType.TYPE_NULL);//来禁止手机软键盘
+                    buyGamemoneyNumber.setInputType(InputType.TYPE_CLASS_TEXT);//来开启软键盘
                 }
             }
+
             @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
 
             }
+
         });
     }
 
@@ -214,6 +223,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 finish();
                 break;
             case R.id.nowbuy_commit_btn:
+                userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
                 String s = buyGamemoneyNumber.getText().toString().trim();//货物数量
                 String paymoey = payMoney2.getText().toString().trim();//付款金额
                 if (!s.isEmpty()) {
@@ -223,7 +233,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                         String name = bankName.getText().toString().trim();
                         if (!name.isEmpty()) {
                             //在此请求网络数据 传到  确认付款 页面(在此解析讲数据船只)（提交数据的  不是 查看详情的）
-                            mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK, i, paymoey, name, s);
+                            mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK,Integer.parseInt(userId), paymoey, name, s);
                             //==================================================》
                         }else{
                             ToastUtil.showShort("请输入付款人姓名");

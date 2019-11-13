@@ -44,7 +44,6 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     ImageView settingIv;
     @BindView(R.id.iv)
     ImageView iv;
-
     @BindView(R.id.my_name_tv)
     TextView myNameTv;
     @BindView(R.id.my_name_state_tv)
@@ -65,6 +64,7 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     RelativeLayout myLl;
     @BindView(R.id.wire)
     View wire;
+
     @BindView(R.id.my_right_ll)
     LinearLayout myRightLl;
     private TestHomePageData.DataBean.UserInfoBean userInfo;
@@ -72,8 +72,10 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     public MyFragment() {
         // Required empty public constructor
     }
+
     @Override
     protected int getLayoutId() {
+
         return R.layout.fragment_my;
     }
     @SuppressLint("SetTextI18n")
@@ -89,15 +91,11 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     protected void initData() {
 //        getPermission();//权限
         String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
-
         if (!TextUtils.isEmpty(userId)) mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId));
-
     }
-    @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_right_ll})
+    @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_right_ll, R.id.my_left_ll})
     public void onViewClicked(View view) {
-
         switch (view.getId()) {
-
             case R.id.system_msg_iv://系統消息
                 Intent intent = new Intent(getActivity(), SystemMessagesActivity.class);
                 startActivity(intent);
@@ -106,9 +104,10 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 Intent sa = new Intent(getActivity(), SettingActivity.class);
                 startActivity(sa);
                 break;
+
             case R.id.my_ll:
                 Intent pd = new Intent(getActivity(), PersonalDatActivity.class);
-                pd.putExtra("headlerIv",userInfo.getUserHeadImg());
+//                pd.putExtra("headlerIv",userInfo.getUserName());
                 startActivityForResult(pd,11);
                 break;
 
@@ -116,8 +115,24 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 Intent myincome = new Intent(getActivity(), MyIncomeActivity.class);
                 startActivity(myincome);
                 break;
+                case R.id.my_left_ll:
+                Intent myincome1 = new Intent(getActivity(), MyIncomeActivity.class);
+                startActivity(myincome1);
+                break;
         }
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 11 && resultCode ==12 ){//结果码
+            String nickName = data.getStringExtra("sky");
+            if (nickName!=null){
+                myNameTv.setText(nickName);
+            }
+        }
+    }
+
+
 
     @Override
     protected LoginModel getModel() {
@@ -139,7 +154,6 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TestHomePageData data = (TestHomePageData) t[0];
-
                 if (data.getCode() == 0 && data.getData()!=null && data.getData().getUserInfo() != null) {
                     databean = data.getData();
                     userInfo = databean.getUserInfo();
@@ -153,11 +167,11 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     double comPrice = commodity.getComPrice();
 //                    comImg 商品图片
                     String comImg = commodity.getComImg();
-
 //                    userInfo: 用户基本信息
 //                    userName 用户姓名
-                    String userHeadImg = userInfo.getUserHeadImg();
+                    String userName = userInfo.getUserName();
 
+                    String userHeadImg = userInfo.getUserHeadImg();
 //                    userNickName 昵称
                     String userNickName = userInfo.getUserNickName();
 //                    userEarningsTotal 总收益
@@ -165,7 +179,6 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     allGamemoneyTv.setText(userInfo.getUserEarningsTotal() + "");//總收益
 //                    zfbEd 支付宝已使用额度
 //                    wxEd 微信已使用额度
-
 //                    userEarningsToday 今日收益
                     String userEarningsToday = databean.getUserEarningsToday();
                     if (userEarningsToday==null)
@@ -174,8 +187,9 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 
                     //保存图片 跟 昵称
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW,userHeadImg);
-                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_NICK, userNickName);
-                    myNameTv.setText(userNickName);
+                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_NICK,userName);
+
+                    myNameTv.setText(userName);//用户名称
 
                     tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
                     tvWechatUse.setText(userInfo.getWxEd() + "");//微信已使用额度

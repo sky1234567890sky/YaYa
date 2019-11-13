@@ -96,9 +96,15 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     private IWXAPI api;
     private MySuperiorAdapter mySuperiorAdapter;
     private MyLowerAdapter myLowerAdapter;
-    private List<TestMyInvite.DataBean.UserInfoBean.JuniorUsersBean> juniorUsers;
-    private ArrayList<TestMyInvite.DataBean.UserInfoBean.JuniorUsersBean> myLowerList;
+
+    private List<TestMyInvite.DataBean.UserInfoBean.ParentUserBean> juniorUsers = new ArrayList<>();//上级
+//    juniorUsers			下级用户集合
+
+    private List<TestMyInvite.DataBean.UserInfoBean.ParamsBean> myLowerList = new ArrayList<>();//下级
+//    parentUser			上级用户对象信息
+
     private String userInvitationCode;
+    private String userId;
 
     @Override
     protected int getLayoutId() {
@@ -121,19 +127,20 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         mySuperiorRl.setLayoutManager(new LinearLayoutManager(this));
         myLowerRl.setLayoutManager(new LinearLayoutManager(this));
 
-        mySuperiorAdapter = new MySuperiorAdapter();//上级无数据
-        myLowerList = new ArrayList<>();
-        myLowerAdapter = new MyLowerAdapter(myLowerList);//下級
-        mySuperiorRl.setAdapter(mySuperiorAdapter);
-        myLowerRl.setAdapter(myLowerAdapter);
+        mySuperiorAdapter = new MySuperiorAdapter(myLowerList);//下级无数据
+        myLowerAdapter = new MyLowerAdapter(juniorUsers);//上级
+
+        myLowerRl.setAdapter(mySuperiorAdapter);
+        mySuperiorRl.setAdapter(myLowerAdapter);
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEST_MY_INVITE:
                 TestMyInvite testMyInvite = (TestMyInvite) t[0];
-            if (testMyInvite.getCode() == 0 && testMyInvite.getData()!=null){
+            if (testMyInvite.getCode() ==0){
 //                Log.i("tag", "数据: "+testMyInvite.getData().toString());
                 TestMyInvite.DataBean data = testMyInvite.getData();
                 TestMyInvite.DataBean.UserInfoBean userInfo = data.getUserInfo();///用户基本信息
@@ -144,17 +151,27 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 //邀請碼
                 userInvitationCode = userInfo.getUserInvitationCode();
 
-                String userHeadImg = userInfo.getUserHeadImg();
+                Object userHeadImg = userInfo.getUserHeadImg();
+
                 RequestOptions requestOptions = new RequestOptions().centerCrop();
                 Glide.with(this).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(mMyinviteIv);
 
 //                parentUser			上级用户对象信息
+
 //                userId			用户id
 //                userName		用户姓名
 //                juniorUsers			下级用户集合
-                juniorUsers = userInfo.getJuniorUsers();
 
-                myLowerList.addAll(this.juniorUsers);
+
+//                userInfo.getJuniorUsers();//下级
+
+                juniorUsers.add(testMyInvite.getData().getUserInfo().getParentUser());//上级
+                myLowerList.addAll(testMyInvite.getData().getUserInfo().getJuniorUsers());
+
+                mySuperiorAdapter.notifyDataSetChanged();//
+                if (juniorUsers.size() == 0){
+                    mySuperiorRl.setVisibility(View.GONE);
+                }
                 myLowerAdapter.notifyDataSetChanged();
 //                userId			用户id
 //                userName		用户姓名
@@ -165,7 +182,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 //                userName 			用户姓名
                 String userName = userInfo.getUserName();
 //                userNickName 		昵称
-                String userNickName = userInfo.getUserNickName();
+                Object userNickName = userInfo.getUserNickName();
 //                userEarningsTotal 	总收益
                 int userContributeTotal = userInfo.getUserContributeTotal();
 //                zfbEd 				支付宝已使用额度
@@ -174,8 +191,11 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 int wxEd = userInfo.getWxEd();
 
                 myNameTv.setText(userName);
+
                 myNameStateTv.setText("ID:"+userId);
+
                 tv3.setText("返利比例：2%");
+
 //                getGamemoneyTv.setText();
                 allGamemoneyTv.setText(userContributeTotal+"");
             }
@@ -185,8 +205,8 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     @Override
     protected void initData() {
         super.initData();
-        String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_INVITE,Integer.parseInt(userId));
+        userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        if (userId !=null)mPresenter.getData(ApiConfig.TEST_MY_INVITE,Integer.parseInt(userId));
     }
     @Override
     protected void initListener() {

@@ -1,10 +1,11 @@
 package com.administrator.yaya.bean.my;
 //我的小账本
 public class TestSmallBook {
+
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userId":null,"moneyToday":0,"moneyHistory":26159,"moneyWxToday":0,"moneyWxHistory":0,"moneyZfbToday":0,"moneyZfbHistory":0}
+     * data : {"userId":null,"moneyToday":69906.84,"moneyHistory":69906.84,"moneyWxToday":0,"moneyWxHistory":0,"moneyZfbToday":0,"moneyZfbHistory":0}
      */
 
     private String msg;
@@ -38,8 +39,8 @@ public class TestSmallBook {
     public static class DataBean {
         /**
          * userId : null
-         * moneyToday : 0
-         * moneyHistory : 26159
+         * moneyToday : 69906.84
+         * moneyHistory : 69906.84
          * moneyWxToday : 0
          * moneyWxHistory : 0
          * moneyZfbToday : 0
@@ -47,8 +48,8 @@ public class TestSmallBook {
          */
 
         private Object userId;
-        private int moneyToday;
-        private int moneyHistory;
+        private double moneyToday;
+        private double moneyHistory;
         private int moneyWxToday;
         private int moneyWxHistory;
         private int moneyZfbToday;
@@ -62,19 +63,19 @@ public class TestSmallBook {
             this.userId = userId;
         }
 
-        public int getMoneyToday() {
+        public double getMoneyToday() {
             return moneyToday;
         }
 
-        public void setMoneyToday(int moneyToday) {
+        public void setMoneyToday(double moneyToday) {
             this.moneyToday = moneyToday;
         }
 
-        public int getMoneyHistory() {
+        public double getMoneyHistory() {
             return moneyHistory;
         }
 
-        public void setMoneyHistory(int moneyHistory) {
+        public void setMoneyHistory(double moneyHistory) {
             this.moneyHistory = moneyHistory;
         }
 

@@ -6,9 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.orderform.SellFragment">
 
-
-
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
     android:id="@+id/sell_refreshLayout"
     android:layout_width="match_parent"

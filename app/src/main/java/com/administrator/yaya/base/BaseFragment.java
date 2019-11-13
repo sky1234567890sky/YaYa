@@ -89,6 +89,7 @@ public abstract class BaseFragment extends Fragment {
     public void loadMore() {
     }
     public  void refresh() {
+
     }
 
     @Override

@@ -93,7 +93,6 @@ public class OrderFormkFragment extends BaseFragment {
     protected void initListener() {
         super.initListener();
     }
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_order_formk;
@@ -113,7 +112,6 @@ public class OrderFormkFragment extends BaseFragment {
         titles.add("售卖中");
         titles.add("已完成");
         titles.add("已取消");
-
 //        tabLayout.addTab(tabLayout.newTab().setText(titles.get(0)));
 //        tabLayout.addTab(tabLayout.newTab().setText(titles.get(1)));
 //        tabLayout.addTab(tabLayout.newTab().setText(titles.get(2)));
@@ -137,7 +135,6 @@ public class OrderFormkFragment extends BaseFragment {
         orderFormAdapter.notifyDataSetChanged();
 
     }
-
 //    @Override
 //    public void onHiddenChanged(boolean hidden) {
 //        super.onHiddenChanged(hidden);

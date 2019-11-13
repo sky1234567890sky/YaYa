@@ -10,12 +10,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.bean.my.TestMyInvite;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MySuperiorAdapter extends RecyclerView.Adapter<MySuperiorAdapter.Vh> {
+    private final List<TestMyInvite.DataBean.UserInfoBean.ParamsBean> myLowerList;
     private Context context;
+
+    public MySuperiorAdapter(List<TestMyInvite.DataBean.UserInfoBean.ParamsBean> myLowerList) {
+
+        this.myLowerList = myLowerList;
+    }
 
     @NonNull
     @Override
@@ -28,12 +40,18 @@ public class MySuperiorAdapter extends RecyclerView.Adapter<MySuperiorAdapter.Vh
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
+        TestMyInvite.DataBean.UserInfoBean.ParamsBean parentUserBean = myLowerList.get(i);
+        vh.mMysuperiorJunior.setText(parentUserBean.getJunior()+"");
+        vh.mMysuperiorRabaterecordName.setText(parentUserBean.getUserName()+"");
+        vh.mMysuperiorPutawayNumberTv.setText("用户ID:"+parentUserBean.getUserId()+"");
+        vh.mMysuperiorUserContributeTotal.setText("积累贡献："+parentUserBean.getUserContributeTotal()+"");
+        RequestOptions requestOptions = new RequestOptions().centerCrop();
+        Glide.with(context).load(parentUserBean.getUserHeadImg()).apply(requestOptions).placeholder(R.mipmap.icon).into(vh.mMysuperiorHeadleriv);
 
     }
-
     @Override
     public int getItemCount() {
-        return 0;
+        return myLowerList.size();
     }
 
     public class Vh extends RecyclerView.ViewHolder {

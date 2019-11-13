@@ -73,8 +73,10 @@ public class LoginModel implements ICommonModel {
                 break;
 
             case ApiConfig.TEXT_GATHERING2://已付款
+                int i1= (int) t[0];
+                int t2  = (int) t[1];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestAccountPaid((int) t[0], (int) t[1]), view, whichApi);
+                        .getTestAccountPaid(i1,t2), view, whichApi);
                 break;
 
             case ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO://付款信息
@@ -115,6 +117,7 @@ public class LoginModel implements ICommonModel {
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getWechatReceiverCode((int) t[0], (int) t[1]), view, whichApi);
                 break;
+
             case ApiConfig.TEST_UPAWAY_SINGLE_GOODS://上架单个货物
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestUpawaySingleGoods((String) t[0]), view, whichApi);
@@ -145,14 +148,17 @@ public class LoginModel implements ICommonModel {
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestConfirmReceipt((int) t[0]), view, whichApi);//salesId
                 break;
+
 //                    取消售卖订单
 //            http://192.168.0.198:8080/yayaApp/comSell/cancelOrderSales
 //            参数:
 //            订单编号	saleId
             case ApiConfig.TEST_CANCEL_ORDER_SALES:
+                int t1 = (int) t[0];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestCancelOrderSales((int) t[0]), view, whichApi);//salesId
+                        .getTestCancelOrderSales(t1), view, whichApi);//salesId
                 break;
+
             //我的收益
             case ApiConfig.TEST_MY_EARNINGS:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
@@ -161,8 +167,9 @@ public class LoginModel implements ICommonModel {
 
                 //TestPutawayAllOrderStock上架全部货物
             case ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK:
+                int ii  = (int) t[1];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getPutawayAllOrderStock((int) t[0]), view, whichApi);
+                        .getPutawayAllOrderStock((int) t[0],ii), view, whichApi);
                 break;
 
                 //我的收益
@@ -185,8 +192,12 @@ public class LoginModel implements ICommonModel {
 
                 //修改密码
             case ApiConfig.TEST_UPDATEPASSWORD:
+
+                String phone = (String) t[0];
+                String versication = (String) t[1];
+                String pwd = (String) t[2];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestUpdatePwd((String) t[0],(String) t[1],(String) t[2]), view, whichApi);
+                        .getTestUpdatePwd(phone,versication,pwd), view, whichApi);
                 break;
 
                 //更换头像
@@ -201,18 +212,25 @@ public class LoginModel implements ICommonModel {
 //                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
 //                .getTestUpdateHeadImg(body,(int) t[0]), view, whichApi);
 //                break;
-            //验证码
+            //验证码  666666
+
             case ApiConfig.TEST_VERIFICATIONCODE:
+                String s5 = (String) t[0];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestVerficationCode((String) t[0]), view, whichApi);
+                        .getTestVerficationCode(s5), view, whichApi);
                 break;
+
                 //开关收款码
             case ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestSwitchReceiveingQrCode((int) t[0],(int) t[1],(int) t[2]), view, whichApi);
                 break;
 
-
+                //上传昵称   接口得调
+            case ApiConfig.TEST_UPLOAD_NAME:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestUploadHeadler((int) t[0],(String) t[1]), view, whichApi);
+                break;
 
 //==================================================>
             case ApiConfig.GET_SMS_MJG:

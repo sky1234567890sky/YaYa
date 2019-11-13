@@ -56,7 +56,7 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 //        状态		salesStatus		1售卖中 2 已完成 3已取消
 //        操作时间	salesUpdateTime
         String orderBuildTime = orderStockListBean.getOrderNumber();
-        int commodityPrice = orderStockListBean.getCommodityPrice();
+        double commodityPrice = orderStockListBean.getSalesAmountMoney();
         int salesAmount = orderStockListBean.getSalesAmount();
 
 //        货物信息对象	commodity
@@ -68,15 +68,29 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 //                最大购买数量comPurchaseNumMax
 //        今日收款数		amount
 //        vh.mFinishCommodityPrice.setText();
-        vh.mFinishOrderNumber.setText("【微信】订单编号："+orderNumber);
         vh.mFinishOrderBuildTime.setText("收货时间："+orderBuildTime);
         TestAllOrderStock.DataBean.CommodityBean commodityBean = listCommodityBean.get(0);
         String comImg = commodityBean.getComImg();
         String comName = commodityBean.getComName();
         Double comPrice = commodityBean.getComPrice();
+
+
+        double salesAmountMoney = list.get(i).getSalesAmountMoney();
+        vh.mFinishCommodityPrice.setText("售卖总价￥:"+salesAmountMoney);
+
         int comInventory = commodityBean.getComInventory();
-        vh.mFinishCommodityPrice.setText("售卖总价：￥"+commodityPrice);
-        vh.mFinishOrderNumber.setText("售卖数量："+salesAmount);
+        if (list.get(i).getOrderPayTpe() == 0){
+            vh.mFinishOrderNumber.setVisibility(View.GONE);
+        }else if (list.get(i).getOrderPayTpe() == 1){
+            vh.mFinishOrderNumber.setVisibility(View.VISIBLE);
+            vh.mFinishOrderNumber.setText("【微信】订单编号："+orderNumber);
+        }if (list.get(i).getOrderPayTpe() == 2){
+            vh.mFinishOrderNumber.setVisibility(View.VISIBLE);
+            vh.mFinishOrderNumber.setText("【支付宝】订单编号："+orderNumber);
+        }
+
+        vh.mFinishCommodityAmount.setText("售卖数量："+salesAmount);
+
         vh.mFinishGcomName.setText(commodityBean.getComName());
         Glide.with(activity).load(comImg).placeholder(R.mipmap.icon).into(vh.mFinishComImg);
     }

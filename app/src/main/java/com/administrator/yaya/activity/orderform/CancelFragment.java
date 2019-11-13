@@ -21,6 +21,7 @@ import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
 import com.administrator.yaya.bean.orderform.TestCancel;
 import com.administrator.yaya.fragment.InventoryFragment;
@@ -55,49 +56,42 @@ public class CancelFragment  extends BaseMvpFragment<LoginModel> implements ICom
     private CanaelAdapter adapter;
     private OrderFormkFragment parentFragment1;
     private TestCancel.DataBean data;
+    private TextView tvObligation;
+    private String userId;
 
     public CancelFragment() {
         // Required empty public constructor
     }
-
     //判断是否展示—与ViewPager连用，进行左右切换
     @SuppressLint("SetTextI18n")
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser ==true){//当前处于可见状态
-            Fragment parentFragment = getParentFragment();
-            if (parentFragment instanceof OrderFormkFragment) {
-                parentFragment1 = (OrderFormkFragment) parentFragment;//父 Fragment
-                // 父 TestView
-                if (parentFragment1.getView().findViewById(R.id.orderform_inventory_money) != null) {
-                    TextView tvObligation = parentFragment1.getView().findViewById(R.id.orderform_inventory_money);
-                    if (TextUtils.isEmpty(data.getAmount())) {
-                        tvObligation.setText("今日所收游戏币：库存");//库存  父 Fragment 顶部赋值
-                    } else {
-                        tvObligation.setText("今日所收游戏币：" +data.getAmount());//库存  父 Fragment 顶部赋值
-                    }
-                }
-            }
+
+            //不可见的时候关闭加载
+      if (isVisibleToUser ==true){//当前处于可见状态
+            if (cacelRefreshLayout != null)
+            refresh();
         }
     }
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_cancel, container, false);
-//    }
+@SuppressLint("SetTextI18n")
 @Override
 public void onResponse(int whichApi, Object[] t) {
     switch (whichApi) {
         case ApiConfig.TEST_CANCEL://已取消
             if (list!=null&& !list.isEmpty())list.clear();
-
             TestCancel testCancel = (TestCancel) t[0];
             Log.i("tag", "已取消: "+testCancel.toString());
-            if (testCancel.getCode()==0 && testCancel.getData()!=null && testCancel.getData().getOrderSalesList()!=null){
+            if (testCancel.getCode()==0){
                 data = testCancel.getData();
+
 //                    进货订单集合	orderSalesList
+                if (TextUtils.isEmpty(data.getAmount())) {
+                    tvObligation.setText("今日所收游戏币：0");//库存  父 Fragment 顶部赋值
+                } else {
+                    tvObligation.setText("今日所收游戏币：" +data.getAmount());//库存  父 Fragment 顶部赋值
+                }
+
                 List<TestCancel.DataBean.OrderSalesListBean> orderStockList = data.getOrderSalesList();
                 list.addAll(orderStockList);
                 listCommodity.add(data.getCommodity());
@@ -106,7 +100,6 @@ public void onResponse(int whichApi, Object[] t) {
 //                if(data.getAmount()!=null) {
 //                    EventBus.getDefault().postSticky(data.getAmount());
 //                }
-
 //                    订单id		salesId
 //                    订单编号	orderNumber
 //                    下单时间	salesBuildTime
@@ -130,11 +123,18 @@ public void onResponse(int whichApi, Object[] t) {
             }
             break;
     }
-    cacelRefreshLayout.finishRefresh(2000);
+    cacelRefreshLayout.finishRefresh();
 }
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
+
+        if (parentFragment1==null){
+
+            getFragment();
+
+        }
+
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
         initRecycleView(mList,cacelRefreshLayout);
         list = new ArrayList<>();
@@ -142,33 +142,44 @@ public void onResponse(int whichApi, Object[] t) {
         adapter = new CanaelAdapter(listCommodity,list,getActivity());
         cacelRefreshLayout.setEnableLoadMore(false);
         mList.setAdapter(adapter);
+
+    }
+
+    private void getFragment() {
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment instanceof OrderFormkFragment) {
+            parentFragment1 = (OrderFormkFragment) parentFragment;//父 Fragment
+            // 父 TestView
+            if (parentFragment1.getView().findViewById(R.id.orderform_inventory_money) != null) {
+                tvObligation = parentFragment1.getView().findViewById(R.id.orderform_inventory_money);
+            }
+        }
     }
     @Override
     protected void initData() {
         super.initData();
-        String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
-        if (userId!=null) {
+        userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
+        if (userId !=null) {
             mPresenter.getData(ApiConfig.TEST_CANCEL, Integer.parseInt(userId), 3);
-        }else{
-            ToastUtil.showShort(R.string.networkerr+"");
         }
     }
-
     @Override
     public void refresh() {
         super.refresh();
+
+        cacelRefreshLayout.autoRefresh();
+
         initData();//刷新
+
     }
     @Override
     public void loadMore() {
         super.loadMore();
     }
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();

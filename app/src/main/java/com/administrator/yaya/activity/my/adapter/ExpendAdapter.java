@@ -30,7 +30,6 @@ public class ExpendAdapter extends RecyclerView.Adapter<ExpendAdapter.Vh> {
         @SuppressLint("InflateParams") View inflate = LayoutInflater.from(context).inflate(R.layout.expend_item, null);
         return new Vh(inflate);
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
@@ -41,12 +40,13 @@ public class ExpendAdapter extends RecyclerView.Adapter<ExpendAdapter.Vh> {
 //        earningsTime	收益日期
         TestMyEarnings.DataBean.UserEarningsListBean userEarningsListBean = list.get(i);
         String orderId = userEarningsListBean.getOrderId();
-        int salesAmount = userEarningsListBean.getSalesAmount();
+        double salesAmount = userEarningsListBean.getSalesAmount();
         int earningsAmount = userEarningsListBean.getEarningsAmount();
         int earningsType = userEarningsListBean.getEarningsType();
         String createTime = userEarningsListBean.getEarningsTime();
-        if (earningsType==1){
-            vh.mExpendEarningsAmount.setText("+"+earningsAmount);
+
+        if (earningsType==2){
+            vh.mExpendEarningsAmount.setText("-"+earningsAmount);
             vh.mExpendOrderId.setText("订单："+orderId);
             vh.mExpendEarningsTime.setText(createTime);
             vh.mExpendPutawaySalesAmount.setText("售卖数量："+salesAmount);

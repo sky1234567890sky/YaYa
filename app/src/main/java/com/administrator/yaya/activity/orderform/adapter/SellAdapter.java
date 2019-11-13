@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SellAdapter extends RecyclerView.Adapter<SellAdapter.Vh>{
+
     private final List<TestAllOrderStock.DataBean.OrderSalesListBean> listBean;
     private List<TestAllOrderStock.DataBean> list;
     private final FragmentActivity activity;
@@ -40,17 +41,20 @@ public class SellAdapter extends RecyclerView.Adapter<SellAdapter.Vh>{
         View inflate = LayoutInflater.from(context).inflate(R.layout.sell_item, null);
         return new Vh(inflate);
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, @SuppressLint("RecyclerView") final int i) {
+
 //        进货订单集合	orderSalesList
 //        订单id		salesId
 //        订单编号	orderNumber
 //        货物信息对象	commodity
 //        货物名称	comName
+
         List<TestAllOrderStock.DataBean.OrderSalesListBean> orderSalesList = list.get(0).getOrderSalesList();
         int status = orderSalesList.get(i).getSalesStatus();
-        if (status==1){//1售卖中 2 已完成 3已取消
+        //1售卖中 2 已完成 3已取消
             TestAllOrderStock.DataBean.CommodityBean commodity = list.get(0).getCommodity();
             String comName =commodity.getComName();
             String comImg = commodity.getComImg();
@@ -58,11 +62,10 @@ public class SellAdapter extends RecyclerView.Adapter<SellAdapter.Vh>{
 //        货物单价	comPrice
 //        货物图片	comImg
 //        库存数量	comInventory
-
 //        最小购买数量comPurchaseNumMin
 //                最大购买数量comPurchaseNumMax
 //        今日收款数		amoun
-            TestAllOrderStock.DataBean.OrderSalesListBean orderSalesListBean = orderSalesList.get(i);
+            TestAllOrderStock.DataBean.OrderSalesListBean orderSalesListBean = listBean.get(i);
             String orderNumber = orderSalesListBean.getOrderNumber();
 
             Glide.with(context).load(comImg).placeholder(R.mipmap.icon).into(vh.mSellComImg);
@@ -78,20 +81,17 @@ public class SellAdapter extends RecyclerView.Adapter<SellAdapter.Vh>{
 ////        货物信息对象	commodity
 ////        货物名称	comName
             vh.mSellGcomName.setText(comName);
-
 ////        货物单价	comPrice
-            int commodityPrice = listBean.get(i).getCommodityPrice();
-
-            vh.mSellCommodityPrice.setText("售卖总价￥:"+commodityPrice);
+            double commodityPrice = listBean.get(i).getCommodityPrice();
+        double salesAmountMoney = listBean.get(i).getSalesAmountMoney();
+        vh.mSellCommodityPrice.setText("售卖总价￥:"+salesAmountMoney);
 ////        货物图片	comImg
 ////        库存数量	comInventory
             int salesAmount = listBean.get(i).getSalesAmount();
-
             vh.mSellCommodityAmount.setText("售卖数量："+salesAmount);
 ////        最小购买数量comPurchaseNumMin
 //        最大购买数量comPurchaseNumMax
 //        今日收款数		amount
-        }
 
         //点击事件
         vh.mSellGetGatheringBtn.setOnClickListener(new View.OnClickListener() {

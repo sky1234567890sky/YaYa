@@ -23,6 +23,7 @@ import com.administrator.yaya.bean.my.TestNotificationInfo;
 import com.administrator.yaya.bean.my.TestPutawayAllOrderStock;
 import com.administrator.yaya.bean.my.TestRebate;
 import com.administrator.yaya.bean.my.TestSmallBook;
+import com.administrator.yaya.bean.my.TestUploadHeadler;
 import com.administrator.yaya.bean.my.TestWechatReceiverCode;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
 import com.administrator.yaya.bean.orderform.TestCancel;
@@ -90,12 +91,12 @@ public interface INetService{
 //    Observable<TestAllOrderStock> getTestAllOrderStock(@Field("userId") int userId, @Field("orderStatus") int orderStatus);
     @POST("comBuy/allOrderStock") //待付款
     @FormUrlEncoded
-    Observable<TestObligation> getTestObateligation(@Field("userId") int userId, @Field("orderStatus") int orderStatus);
+    Observable<TestObligation> getTestObateligation(@Field("userId") int userId, @Field("orderStatus") int orderStatus);//1
 
     @POST("comBuy/allOrderStock")
     @FormUrlEncoded
-//已付款
-    Observable<TestAccountPaid> getTestAccountPaid(@Field("userId") int userId, @Field("orderStatus") int orderNumber);//订单编
+        //已付款
+    Observable<TestAccountPaid> getTestAccountPaid(@Field("userId") int userId, @Field("orderStatus") int orderStatus);//2
 
     //付款信息 http://192.168.0.198:8080/yayaApp/comBuy/getGathering
     @POST("comBuy/getGathering")
@@ -107,7 +108,6 @@ public interface INetService{
     @POST("comBuy/cancelOrderStock")
     @FormUrlEncoded
     Observable<TestCancelOrderStock> getTestCancelOrderStock(@Field("stockId") int stockId);
-
     //    通知信息
 //    http://192.168.0.198:8080/yayaApp/getInfo
     @POST("getInfo")
@@ -140,12 +140,10 @@ public interface INetService{
     @FormUrlEncoded
     Observable<TestWechatReceiverCode> getWechatReceiverCode(@Field("userId") int userId, @Field("type") int type);
 
-
     //上架单个货物http://192.168.0.198:8080/yayaApp/comBuy/putawayOneOrderStock
     @POST("comBuy/putawayOneOrderStock")
     @FormUrlEncoded
     Observable<TestUpawaySingleGoods> getTestUpawaySingleGoods(@Field("orderNumber") String orderNumber);
-
 
     //    上架全部货物
 //    http://192.168.0.198:8080/yayaApp/comBuy/putawayAllOrderStock
@@ -191,7 +189,6 @@ public interface INetService{
     @FormUrlEncoded
     Observable<TestCancelOrderStock> getTestCancelOrderSales(@Field("salesId") int salesId);//传入取消售卖中的selaiD
 
-
     //我的收益
 //    http://192.168.0.198:8080/yayaApp/myInfo
 //    参数:
@@ -218,9 +215,9 @@ public interface INetService{
 
 
     //上架全部货物
-
     //    上架全部货物
 //    http://192.168.0.198:8080/yayaApp/comBuy/putawayAllOrderStock
+
 //    参数:
 //    用户Id	userId
 // 我的收益页面--上架所有货物
@@ -230,9 +227,9 @@ public interface INetService{
 // 收益数量 salesAmount
 //结果：
 // 上架成功
-    @POST("comBuy/putawayAllOrderStock")
+    @POST("myInfoPutaway")
     @FormUrlEncoded
-    Observable<TestPutawayAllOrderStock> getPutawayAllOrderStock(@Field("userId") int userId);
+    Observable<TestPutawayAllOrderStock> getPutawayAllOrderStock(@Field("userId") int userId,@Field("salesAmount") int salesAmount);
 
     //    修改密码
 //    http://192.168.0.198:8080/yayaApp/updatePwd
@@ -240,6 +237,7 @@ public interface INetService{
 //    手机号 telephone
 //    验证码 codename
 //    密码 pwd
+
     @POST("updatePwd")
     @FormUrlEncoded
     Observable<TestUpdatePwd> getTestUpdatePwd(@Field("telephone") String telephone, @Field("codename") String codename, @Field("pwd") String pwd);
@@ -274,7 +272,15 @@ public interface INetService{
     @POST("updateHeadImg")
     @FormUrlEncoded
     Observable<RequestBody> getTestUpdateHeadImg(@Body RequestBody body, @Field("userId") int userId);
+
 //    @Multipart
 //    @POST("services.php?apicall=profileImage")
 //    Call<ResponseBody> postImage(@Part("file") RequestBody image, @Part("id") String id);
+
+
+
+    //修改昵称
+    @POST("updateName")
+    @FormUrlEncoded
+    Observable<TestUploadHeadler> getTestUploadHeadler(@Field("userId") int userId, @Field("userName") String userName);
 }

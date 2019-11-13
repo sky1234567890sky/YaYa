@@ -15,6 +15,7 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
 import com.administrator.yaya.bean.TestCancelOrderStock;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
 import com.administrator.yaya.bean.orderform.TestConfirmReceipt;
@@ -37,7 +38,6 @@ import butterknife.BindView;
  * 售卖中
  */
 public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
-
     @BindView(R.id.sell_lv)
     RecyclerView mList;
     @BindView(R.id.sell_refreshLayout)
@@ -49,27 +49,25 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
     private int num = 1;
     private OrderFormkFragment parentFragment1;
     private TestAllOrderStock.DataBean data;
+    private TextView tvObligation;
 
     //判断是否展示—与ViewPager连用，进行左右切换
+
     @SuppressLint("SetTextI18n")
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser ==true){//当前处于可见状态
-            Fragment parentFragment = getParentFragment();
-            if (parentFragment instanceof OrderFormkFragment) {
-                parentFragment1 = (OrderFormkFragment) parentFragment;//父 Fragment
-                // 父 TestView
-                if (parentFragment1.getView().findViewById(R.id.orderform_inventory_money) != null) {
-                    TextView tvObligation = parentFragment1.getView().findViewById(R.id.orderform_inventory_money);
-                    if (TextUtils.isEmpty(data.getAmount())) {
-                        tvObligation.setText("今日所收游戏币：售卖中");//库存  父 Fragment 顶部赋值
-                    } else {
-                        tvObligation.setText("今日所收游戏币：" +data.getAmount());//库存  父 Fragment 顶部赋值
-                    }
-                }
-            }
+
+//            //不可见的时候关闭加载
+//        if(!isVisibleToUser){
+//            sellResh.finishRefresh();
+//        }
+
+        if (isVisibleToUser == true) {//当前处于可见状态
+            if (sellResh != null)
+                refresh();
         }
+
     }
 
     @Override
@@ -85,47 +83,74 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
     @Override
     protected int getLayoutId() {
         Fragment parentFragment = getParentFragment();
-        if (parentFragment instanceof OrderFormkFragment){
+        if (parentFragment instanceof OrderFormkFragment) {
             parentFragment1 = (OrderFormkFragment) parentFragment;
         }
-
         return R.layout.fragment_sell;
     }
+
     @Override
     public void onError(int whichApi, Throwable e) {
 
     }
+
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
+
+        if (parentFragment1 == null) {
+            getFragment();
+        }
+
         list = new ArrayList<>();
         listBean = new ArrayList<>();
-        initRecycleView(mList,sellResh);
+        initRecycleView(mList, sellResh);
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new SellAdapter(listBean,list, getActivity());
+        adapter = new SellAdapter(listBean, list, getActivity());
         sellResh.setEnableLoadMore(false);
         mList.setAdapter(adapter);
     }
+
+    private void getFragment() {
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment instanceof OrderFormkFragment) {
+            parentFragment1 = (OrderFormkFragment) parentFragment;//父 Fragment
+            // 父 TestView
+            if (parentFragment1.getView().findViewById(R.id.orderform_inventory_money) != null) {
+                tvObligation = parentFragment1.getView().findViewById(R.id.orderform_inventory_money);
+            }
+        }
+    }
+
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEST_ALL_ORDERSTOCK://售卖中
-                if (listBean!=null && !listBean.isEmpty())listBean.clear();
+                if (listBean != null && !listBean.isEmpty()) listBean.clear();
 
                 TestAllOrderStock testAllOrderStock = (TestAllOrderStock) t[0];
 //                TextView tv_order_money = parentFragment1.getView().findViewById(R.id.orderform_inventory_money);
 //                tv_order_money.setText(testAllOrderStock.getData().getAmount());
                 if (testAllOrderStock.getCode() == 0 && testAllOrderStock.getData() != null && testAllOrderStock.getData().getCommodity() != null) {
                     data = testAllOrderStock.getData();
+
+                    if (tvObligation != null) {
+                        if (TextUtils.isEmpty(data.getAmount())) {
+                            tvObligation.setText("今日所收游戏币：0");//库存  父 Fragment 顶部赋值
+                        } else {
+                            tvObligation.setText("今日所收游戏币：" + data.getAmount());//库存  父 Fragment 顶部赋值
+                        }
+                    }
+
                     List<TestAllOrderStock.DataBean.OrderSalesListBean> orderSalesList = data.getOrderSalesList();
                     listBean.addAll(orderSalesList);
                     list.add(data);
                     String amount1 = data.getAmount();
                     adapter.notifyDataSetChanged();
 
-                    if(data.getAmount()!=null) {
-                        EventBus.getDefault().postSticky(data.getAmount());
-                    }
+//                    if(data.getAmount()!=null) {
+//                        EventBus.getDefault().postSticky(data.getAmount());
+//                    }
 //                    进货订单集合	orderSalesList
 //                    EventBus.getDefault().postSticky(amount1);
 //                    订单id		salesId
@@ -151,22 +176,18 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
                 break;
 
             //取消进货订单
-            case ApiConfig.TEST_CANCEL_ORDER_STOCK:
+            case ApiConfig.TEST_CANCEL_ORDER_SALES:
                 TestCancelOrderStock testCancelOrderStock = (TestCancelOrderStock) t[0];
+                if (testCancelOrderStock.getCode() == 0) {
 
-                if (testCancelOrderStock != null && testCancelOrderStock.getCode() == 0) {
-
-                    ToastUtil.showShort(testCancelOrderStock.getMsg());
-
-                    list.remove(cancelIndex);
-
-                    adapter.notifyItemChanged(cancelIndex);//局部刷新
-
+                    ToastUtil.showLong(testCancelOrderStock.getMsg());
+                    refresh();
+//                    adapter.notifyItemRemoved(cancelIndex);
                 } else {
-                    ToastUtil.showShort(testCancelOrderStock.getMsg());
+                    ToastUtil.showLong(testCancelOrderStock.getMsg());
                 }
-                break;
 
+                break;
             //确认收货
             case ApiConfig.TEST_CONFIRM_RECEIPT:
                 TestConfirmReceipt testConfirmReceipt = (TestConfirmReceipt) t[0];
@@ -175,6 +196,8 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
                 } else {
                     ToastUtil.showShort(testConfirmReceipt.getMsg());
                 }
+                //刷新
+                refresh();
                 break;
         }
         sellResh.finishRefresh();
@@ -184,7 +207,7 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
     public void refresh() {
         super.refresh();
         //加载
-        sellResh.autoLoadMore();
+        sellResh.autoRefresh();
 
         initData();
     }
@@ -192,8 +215,8 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
     @Override
     public void loadMore() {
         super.loadMore();
-
     }
+
     @Override
     protected void initData() {
         super.initData();
@@ -201,8 +224,6 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
         if (userId != null) {
             mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), num);
-        } else {
-
         }
     }
 
@@ -221,23 +242,25 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
         adapter.setCancelsetOnclikListener(new SellAdapter.CancelsetOnclikListener() {
             @Override
             public void setonclik(int postion) {
-                cancelIndex =  postion;
-                mPresenter.getData(ApiConfig.TEST_CANCEL_ORDER_STOCK, listBean.get(postion).getSalesId());
+                cancelIndex = postion;
+                mPresenter.getData(ApiConfig.TEST_CANCEL_ORDER_SALES, listBean.get(postion).getSalesId());
             }
         });
     }
+
     //获取焦点时刷新
     @Override
     public void onResume() {
         super.onResume();
         if (isRefresh) {
-            if (!listBean.isEmpty()){
+            if (!listBean.isEmpty()) {
                 listBean.clear();
             }
             refresh();
             isRefresh = false;
         }
     }
+
     @Override
     public void onPause() {
         super.onPause();

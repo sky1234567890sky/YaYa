@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.inventory.adapter.ObligationAdapter;
 import com.administrator.yaya.activity.my.adapter.AlipayReceiverCodeAdapter;
@@ -40,7 +39,6 @@ import butterknife.OnClick;
  * 支付宝收款
  */
 public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
-
     @BindView(R.id.pay_receive_back_iv)
     ImageView payReceiveBackIv;
     @BindView(R.id.two_switch)
@@ -49,8 +47,6 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
     RecyclerView mList;
     @BindView(R.id.alipay_refreshLayout)
     SmartRefreshLayout smartRefreshLayout;
-
-
 //    @BindView(R.id.add1)
 //    ImageView add1;
 //    @BindView(R.id.add2)
@@ -71,35 +67,29 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 //    TextView mReceivableTv3;
 //    @BindView(R.id.receivable_tv4)
 //    TextView mReceivableTv4;
-
     List<TestAlipayReceiverCode.DataBean.UserCodeImgListBean> list = new ArrayList<>();
     private int wechatCode;
     private TestAlipayReceiverCode testAlipayReceiverCode;
     private AlipayReceiverCodeAdapter adapter;
-
+    private String userId;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_payments_receive;
     }
     @Override
     protected void initData() {
-
         super.initData();
 //        参数:
 //        用户id		userId
 //        类型		type	1、微信 2、支付宝
-
-        String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         if (userId != null) {
             mPresenter.getData(ApiConfig.TEST_ALIPAY_RECEIVER_CODE, Integer.parseInt(userId), 2);
         }
-
     }
-
     @Override
     protected void initView() {
         super.initView();
-
         list = new ArrayList<>();
 //        initRecycleView(mList,abligationRefreshLayout);
 //        abligationRefreshLayout.setEnableLoadMore(false);
@@ -114,7 +104,6 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
         switch (whichApi) {
             case ApiConfig.TEST_ALIPAY_RECEIVER_CODE:
                 testAlipayReceiverCode = (TestAlipayReceiverCode) t[0];
-
                 if (testAlipayReceiverCode != null && testAlipayReceiverCode.getData() != null) {
                     TestAlipayReceiverCode.DataBean data = testAlipayReceiverCode.getData();
                     Log.i("tag", "支付宝: "+ testAlipayReceiverCode.toString());
@@ -122,10 +111,10 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
                     int vxButtonStatus = data.getVxButtonStatus();
                     int zfbButtonStatus = data.getZfbButtonStatus();
                     wechatCode = vxButtonStatus;
+
                     list.addAll(userCodeImgList);
 //                    Log.i("tag", "list支付宝: "+list.toString());
                     adapter.notifyDataSetChanged();
-
                 } else {
                     ToastUtil.showShort(testAlipayReceiverCode.getMsg());
                 }
@@ -152,7 +141,6 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 //                TestAlipayReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean = list.get(wechatCode);
 //                if (userCodeImgListBean.getImgType() == 2) {
                     if (isChecked) {
-                        String userId = SharedPrefrenceUtils.getString(AlipayReceiverCodeActivity.this, NormalConfig.USER_ID);
                         if (userId!=null)mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE,Integer.parseInt(userId),2,1);
 //                        ToastUtil.showShort("onCheckedChanged: 开启" + isChecked);
 //                        if (list.get(0).getImgUrl()!=null)Glide.with(getApplication()).load(list.get(0).getImgUrl()).into(add1);
@@ -164,7 +152,6 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 //                        mReceivableTv4.setText(list.get(0).getImgMoney()+"元");
                     } else {
 //                        ToastUtil.showShort( "onCheckedChanged: 关闭" + isChecked);
-                        String userId = SharedPrefrenceUtils.getString(AlipayReceiverCodeActivity.this, NormalConfig.USER_ID);
                         if (userId!=null)mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE,Integer.parseInt(userId),2,2);
                     }
             }

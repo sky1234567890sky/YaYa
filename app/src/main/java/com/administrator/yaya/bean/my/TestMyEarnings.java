@@ -381,7 +381,7 @@ public class TestMyEarnings {
             private int earningsId;
             private int userId;
             private String orderId;
-            private int salesAmount;
+            private double salesAmount;
             private int earningsAmount;
             private int earningsType;
             private String earningsTime;
@@ -467,11 +467,11 @@ public class TestMyEarnings {
                 this.orderId = orderId;
             }
 
-            public int getSalesAmount() {
+            public double getSalesAmount() {
                 return salesAmount;
             }
 
-            public void setSalesAmount(int salesAmount) {
+            public void setSalesAmount(double salesAmount) {
                 this.salesAmount = salesAmount;
             }
 

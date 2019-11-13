@@ -47,13 +47,11 @@ public class AlipayReceiverCodeAdapter extends RecyclerView.Adapter<AlipayReceiv
         }else{
             vh.mMoneyNumber.setText(imgMoney+"元");
         }
-
 //        vh.mApliayLl.
     }
     @Override
     public int getItemCount() {
         return list != null ? list.size() : 0;
-
     }
     public class Vh extends RecyclerView.ViewHolder {
         @BindView(R.id.alipay_item_ll)//点击调用相机

@@ -50,10 +50,12 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     TextView tvWechatDay;
     private TestHomePageData.DataBean databean;
     private TestHomePageData.DataBean.UserInfoBean userInfo;
+    private String userId;
+
     @Override
     protected void initData() {
         super.initData();
-        String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
+        userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
         mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId));
     }
     @Override
@@ -64,36 +66,37 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     protected int getLayoutId() {
         return R.layout.fragment_home_page;
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TestHomePageData data = (TestHomePageData) t[0];
-                databean = data.getData();
-                userInfo = databean.getUserInfo();
-                if (data.getCode() == 0 && userInfo != null && databean != null) {
-                    Log.i("tag", "首頁==》: "+data.toString());
+                if (data.getCode() == 0) {
+                        databean = data.getData();
+                        userInfo = databean.getUserInfo();
+                        Log.i("tag", "首頁==》: " + data.toString());
 //                    commodity:  货物信息
-                    TestHomePageData.DataBean.CommodityBean commodity = databean.getCommodity();
+                        TestHomePageData.DataBean.CommodityBean commodity = databean.getCommodity();
 //                    comName 货物名称
-                    String comName = commodity.getComName();
-                    homeGamemoneyName.setText(comName);
+                        String comName = commodity.getComName();
+                        homeGamemoneyName.setText(comName);
 //                    comImg 商品图片
-                    String comImg = commodity.getComImg();
-                    Glide.with(getContext()).load(comImg).placeholder(R.mipmap.icon).into(mHeadlerIv);
+                        String comImg = commodity.getComImg();
+                        Glide.with(getContext()).load(comImg).placeholder(R.mipmap.icon).into(mHeadlerIv);
 //                    comPrice 商品价格
-                    double comPrice1 = commodity.getComPrice();
-                    homeGamemoneyPrice.setText("进货价￥："+comPrice1);
+                        double comPrice1 = commodity.getComPrice();
+                        homeGamemoneyPrice.setText("进货价￥：" + comPrice1);
 //                    zfbEd 支付宝已使用额度
-                    tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
+                        tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
 //                    wxEd 微信已使用额度
-                    tvWechatUse.setText(userInfo.getWxEd() + "");//微信已使用额度
-                    String tvday = tvDay.getText().toString();
-                    tvSheng.setText((Integer.parseInt(tvday)-userInfo.getZfbEd())+"");//支付宝剩余额度
+                        tvWechatUse.setText(userInfo.getWxEd() + "");//微信已使用额度
+                        String tvday = tvDay.getText().toString();
+                        tvSheng.setText((Integer.parseInt(tvday) - userInfo.getZfbEd()) + "");//支付宝剩余额度
 //                    userEarningsToday 今日收益
-                    String tvwechatday = tvWechatDay.getText().toString();
-                    tvWechatSheng.setText((Integer.parseInt(tvwechatday)-userInfo.getWxEd())+"");//微信剩余额度
+                        String tvwechatday = tvWechatDay.getText().toString();
+                        tvWechatSheng.setText((Integer.parseInt(tvwechatday) - userInfo.getWxEd()) + "");//微信剩余额度
 //                    userInfo: 用户基本信息
 //                    userName 用户姓名
 //                    userNickName 昵称
@@ -102,6 +105,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
                 break;
         }
     }
+
     @OnClick({R.id.home_buy_now_btn_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {

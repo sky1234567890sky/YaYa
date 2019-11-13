@@ -93,10 +93,10 @@ public class InventoryFragment extends BaseFragment {
 //            }
 //        }
 //    }
-
     @Override
     protected void initListener() {
         super.initListener();
+
 //        mTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 //            @Override
 //            public void onTabSelected(TabLayout.Tab tab) {

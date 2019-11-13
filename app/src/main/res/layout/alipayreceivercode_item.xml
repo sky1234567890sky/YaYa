@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        tools:ignore="UselessParent">
 <!-- 、、、、、、、、、、、、、、、、、、、、、、、、、、、、 -->
         <!--选择图片后上传   单独显示一张图片-->
         <ImageView

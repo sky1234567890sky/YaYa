@@ -100,6 +100,7 @@
             android:layout_gravity="center_horizontal"
             >
     <RelativeLayout
+        android:id="@+id/personal_nick_name_ll"
         android:background="@drawable/persinal_shape_bg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"

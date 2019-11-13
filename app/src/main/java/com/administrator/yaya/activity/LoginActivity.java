@@ -130,7 +130,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 if (code == 0) {
 //                    Gson gson = new Gson();
 //                    TestLogin testLogin = gson.fromJson(msg, TestLogin.class);
-
 //                    int userId = info.getData().getUserId();
                     int userId = data.getUserInfo().getUserId();
                     mApplication.userid = userId;
@@ -140,7 +139,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                     SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.PASS_WORD, pwd);
                     //保存id
                     SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.USER_ID, String.valueOf(userId));
-
                     Intent intent = new Intent(this, MainActivity.class);
 //                    editorMain.putBoolean(NormalConfig.ISFIRST, true);//成功的记录第一次登录
 //                    editorMain.commit();//记录
@@ -161,7 +159,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
         String psw = mPsw.getText().toString().trim();
 
     }
-
     @OnClick({R.id.login_btn, R.id.tv_registered, R.id.tv_forgetPassword})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -185,25 +182,21 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
                 break;
         }
     }
-
     private void login() {
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd)) {
+        if (TextUtils.isEmpty(name)) {
+            ToastUtil.showLong("请输入手机号");
+            return;
+        }
+        if (TextUtils.isEmpty(pwd)){
+            ToastUtil.showLong("请输入手机密码");
+            return;
+        }
             String regex = "[A-Za-z0-9]{4,12}";
             if (AppValidationMgr.isPhone(name) && pwd.matches(regex)) {
                 mPresenter.getData(ApiConfig.TEXT_LOGIN, name, pwd);
 //                okLogin();
-            } else ToastUtil.showShort("请输入正确的手机号");
-        } else ToastUtil.showShort("请输入账号或密码");
+            } else ToastUtil.showShort("请输入正确的手机号或密码");
     }
-
-    private void okLogin() {
-//        Intent intent = new Intent(this, MainActivity.class);
-//                editorMain.putBoolean(NormalConfig.ISFIRST,true);
-//                editorMain.commit();
-//                startActivity(intent);
-//                LoginActivity.this.finish();
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -212,8 +205,8 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> implements TakePh
             String name = data.getStringExtra(NormalConfig.USER_NAME);
             String psw = data.getStringExtra(NormalConfig.PASS_WORD);
 //            ToastUtil.showShort(name+"\n"+psw);
-            mName.setText(name);
-            mPsw.setText(psw);
+//            mName.setText(name);
+//            mPsw.setText(psw);
         }
     }
 

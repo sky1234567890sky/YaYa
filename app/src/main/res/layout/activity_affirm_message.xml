@@ -23,7 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44"
             android:gravity="center_vertical">
-
             <ImageView
                 android:id="@+id/affirm_msg_back_iv"
                 android:layout_width="@dimen/dp_39"
@@ -33,7 +32,6 @@
                 android:paddingLeft="@dimen/dp_15"
                 android:paddingRight="@dimen/dp_15"
                 android:src="@mipmap/icon_back" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,7 +41,6 @@
                 android:textSize="@dimen/sp_18"
                 tools:ignore="SpUsage" />
         </RelativeLayout>
-
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +48,6 @@
             app:cardCornerRadius="@dimen/dp_5"
             app:cardElevation="@dimen/dp_5"
             app:cardUseCompatPadding="true">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,7 +64,6 @@
                     android:layout_marginLeft="@dimen/dp_12_5"
                     android:layout_marginRight="@dimen/dp_12_5"
                     android:layout_marginBottom="@dimen/dp_25">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -76,17 +71,15 @@
                         android:text="收款人"
                         android:textColor="#333333"
                         android:textSize="@dimen/sp_15" />
-
                     <TextView
                         android:id="@+id/receiver_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
-                        android:text="xxx"
+                        android:text="---"
                         android:textColor="#499FF1"
                         android:textSize="@dimen/sp_15" />
-
                     <TextView
                         android:id="@+id/receiver_copy"
                         android:layout_width="wrap_content"
@@ -112,7 +105,6 @@
                     android:layout_marginRight="@dimen/dp_12_5"
                     android:layout_marginBottom="@dimen/dp_24_5"
                     android:background="@drawable/background_rl">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -120,17 +112,15 @@
                         android:text="银行卡号"
                         android:textColor="#333333"
                         android:textSize="@dimen/sp_15" />
-
                     <TextView
                         android:id="@+id/bank_code_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
-                        android:text="xxx"
+                        android:text="---"
                         android:textColor="#499FF1"
                         android:textSize="@dimen/sp_15" />
-
                     <TextView
                         android:id="@+id/bank_code_number_copy"
                         android:layout_width="wrap_content"
@@ -171,7 +161,7 @@
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dp_23"
-                        android:text="xxx"
+                        android:text="---"
                         android:textColor="#499FF1"
                         android:textSize="@dimen/sp_15" />
 
@@ -234,7 +224,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
-                        android:text="￥xxx"
+                        android:text="￥---"
                         android:textColor="#499FF1"
                         android:textSize="@dimen/sp_15" />
 
@@ -260,7 +250,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/background_rl">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -268,17 +257,15 @@
                         android:text="备注"
                         android:textColor="#333333"
                         android:textSize="@dimen/sp_15" />
-
                     <TextView
                         android:id="@+id/remark_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
-                        android:text="xxx"
+                        android:text="---"
                         android:textColor="#499FF1"
                         android:textSize="@dimen/sp_15" />
-
                     <TextView
                         android:id="@+id/remark_btn_copy"
                         android:layout_width="wrap_content"

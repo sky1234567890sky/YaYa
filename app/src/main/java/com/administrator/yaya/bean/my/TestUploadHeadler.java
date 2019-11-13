@@ -1,11 +1,11 @@
-package com.administrator.yaya.bean;
-//取消售卖订单
-//售卖
-public class   TestCancelOrderStock {
+package com.administrator.yaya.bean.my;
+//上传昵称 实体类
+public class TestUploadHeadler {
     /**
-     * msg : 运单取消成功
+     * msg : 保存成功
      * code : 0
      */
+
     private String msg;
     private int code;
 

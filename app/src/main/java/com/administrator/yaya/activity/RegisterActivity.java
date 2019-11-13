@@ -53,7 +53,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     EditText registerEtUname;//手机号
 
     @BindView(R.id.et_register_verificationcode)
-    EditText etRegisterVerificationcode;//输入邀请码
+    EditText etRegisterVerificationcode;//输入验证码     8888
 
     @BindView(R.id.btn_register_phonecode)//获取手机验证码
     TextView mInvitecode;
@@ -62,7 +62,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     EditText etRegisterPw;//输入密码
 
     @BindView(R.id.et_getcode)
-    EditText etGetcode;//输入验证码
+    EditText etGetcode;//输入邀请码  6666
 
     @BindView(R.id.register_register_btn)
     TextView registerRegisterBtn;
@@ -185,29 +185,27 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
                 break;
         }
     }
+
     @SuppressLint("NewApi")
     private void register() {
 
         String userPhone = registerEtUname.getText().toString().trim();
         String userPwd = etRegisterPw.getText().toString().trim();
-        String userInvitationCode = etRegisterVerificationcode.getText().toString().trim();
-        String codeName = etGetcode.getText().toString().trim();
+        String codeName = etRegisterVerificationcode.getText().toString().trim();//验证码
+        String userInvitationCode = etGetcode.getText().toString().trim();//邀请码
 
         if (userPhone.isEmpty() || userPwd.isEmpty()  || userInvitationCode.isEmpty() || codeName.isEmpty()) {
             ToastUtil.showShort("请输入完整信息");
         }else{
-
             String regex = "[A-Za-z0-9]{4,12}";
-
             if (AppValidationMgr.isPhone(userPhone) && userPwd.matches(regex) ){
                 //邀请码与验证码验证   @Field("userPhone") String userPhone, @Field("userPwd") String userPwd, @Field("userInvitationCode") String userInvitationCode, @Field("codeName") String codeName
                 mPresenter.getData(ApiConfig.TEXT_REGISTER,userPhone,userPwd,userInvitationCode,codeName);
-//                Intent intent = new Intent();
-//                intent.putExtra(NormalConfig.USER_NAME,registerEtUname.getText().toString());
-//                intent.putExtra(NormalConfig.PASS_WORD,etRegisterPw.getText().toString());
-//                setResult(100,intent);
-//                finish();
-
+                Intent intent = new Intent();
+                intent.putExtra(NormalConfig.USER_NAME,registerEtUname.getText().toString());
+                intent.putExtra(NormalConfig.PASS_WORD,etRegisterPw.getText().toString());
+                setResult(100,intent);
+                finish();
             } else ToastUtil.showShort("请输入正确的格式");
         }
     }

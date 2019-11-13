@@ -15,6 +15,7 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
 import com.administrator.yaya.fragment.InventoryFragment;
 import com.administrator.yaya.fragment.OrderFormkFragment;
@@ -44,6 +45,7 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     private List<TestAllOrderStock.DataBean.CommodityBean> listCommodityBean;
     private OrderFormkFragment parentFragment1;
     private TestAllOrderStock.DataBean data;
+    private TextView tvObligation;
 
     public FinishFragment() {
         // Required empty public constructor
@@ -63,30 +65,26 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+            //不可见的时候关闭加载
         if (isVisibleToUser ==true){//当前处于可见状态
-            Fragment parentFragment = getParentFragment();
-            if (parentFragment instanceof OrderFormkFragment) {
-                parentFragment1 = (OrderFormkFragment) parentFragment;//父 Fragment
-                // 父 TestView
-                if (parentFragment1.getView().findViewById(R.id.orderform_inventory_money) != null) {
-                    TextView tvObligation = parentFragment1.getView().findViewById(R.id.orderform_inventory_money);
-                    if (TextUtils.isEmpty(data.getAmount())) {
-                        tvObligation.setText("今日所收游戏币：已完成");//库存  父 Fragment 顶部赋值
-                    } else {
-                        tvObligation.setText("今日所收游戏币：" +data.getAmount());//库存  父 Fragment 顶部赋值
-                    }
-                }
-            }
+            if (finishRefresh != null)
+                refresh();
         }
+
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_finish;
     }
+
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
+        if(parentFragment1== null){
+            getFragment();
+        }
+
         list = new ArrayList<>();
         listCommodityBean = new ArrayList<>();
         initRecycleView(mList,finishRefresh);
@@ -94,6 +92,18 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new FinishAdapter(listCommodityBean,list,getActivity());
         mList.setAdapter(adapter);
+
+    }
+
+    private void getFragment() {
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment instanceof OrderFormkFragment) {
+            parentFragment1 = (OrderFormkFragment) parentFragment;//父 Fragment
+            // 父 TestView
+            if (parentFragment1.getView().findViewById(R.id.orderform_inventory_money) != null) {
+                tvObligation = parentFragment1.getView().findViewById(R.id.orderform_inventory_money);
+            }
+        }
     }
 
     @Override
@@ -107,9 +117,13 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
             ToastUtil.showShort(R.string.networkerr + "");
         }
     }
+
     @Override
     public void refresh() {
         super.refresh();
+
+        finishRefresh.autoRefresh();
+
         initData();
     }
 
@@ -125,9 +139,18 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
                 if (list!=null&& !list.isEmpty())list.clear();
                 TestAllOrderStock testFinish = (TestAllOrderStock) t[0];
                 Log.i("tag", "已完成: " + testFinish.toString());
+
                 if (testFinish.getCode() == 0 && testFinish.getData() != null && testFinish.getData().getOrderSalesList() != null) {
-                    data = testFinish.getData();
 //                    进货订单集合	orderSalesList
+
+                    data = testFinish.getData();
+                    if (TextUtils.isEmpty(data.getAmount())) {
+                        tvObligation.setText("今日所收游戏币：0");//库存  父 Fragment 顶部赋值
+                    } else {
+                        tvObligation.setText("今日所收游戏币：" +data.getAmount());//库存  父 Fragment 顶部赋值
+                    }
+
+
                     String amount = data.getAmount();
                     List<TestAllOrderStock.DataBean.OrderSalesListBean> orderStockList = data.getOrderSalesList();
                     listCommodityBean.add(data.getCommodity());
@@ -161,17 +184,24 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
                 }
                 break;
         }
-        finishRefresh.finishRefresh(2000);
+        finishRefresh.finishRefresh();
     }
+
     //获取焦点时刷新
     @Override
     public void onResume() {
         super.onResume();
+
         if (isRefresh) {
+
             if (!list.isEmpty()){
+
                 list.clear();
+
             }
+
             refresh();
+
             isRefresh = false;
         }
     }
@@ -180,4 +210,5 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
         super.onPause();
         if (!isRefresh) isRefresh = true;
     }
+
 }

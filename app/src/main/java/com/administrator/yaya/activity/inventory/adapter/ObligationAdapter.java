@@ -124,11 +124,9 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
     }
     //跳转确认信息接口回调
     private AccountpaidTosetOnclikListener accountpaidTosetOnclikListener;
-
     public interface AccountpaidTosetOnclikListener{
         void  setonclik(int index);
     }
-
     public void setAccountpaidTosetOnclikListener(AccountpaidTosetOnclikListener accountpaidTosetOnclikListener) {
         this.accountpaidTosetOnclikListener = accountpaidTosetOnclikListener;
     }

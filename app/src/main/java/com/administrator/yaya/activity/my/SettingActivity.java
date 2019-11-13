@@ -81,10 +81,8 @@ public class SettingActivity extends BaseActivity {
                             @SuppressLint("ApplySharedPref")
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
                                 Intent login = new Intent(SettingActivity.this, LoginActivity.class);
                                 //清除数据
-
 //                                SharedPreferences settings = getSharedPreferences("config", MODE_PRIVATE);
 ////                                SharedPreferences.Editor edit = settings.edit();
 ////                                edit.putString(NormalConfig.USER_ID,"");

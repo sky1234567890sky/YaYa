@@ -1,4 +1,5 @@
 package com.administrator.yaya.activity.my.fragment;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
 import com.administrator.yaya.bean.my.TestMyEarnings;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
@@ -25,24 +27,58 @@ import butterknife.BindView;
  * A simple {@link Fragment} subclass.
  * 支出    2
  */
-public class ExpendFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
+public class ExpendFragment extends BaseLazyLoadFragment<LoginModel> implements ICommonView {
     @BindView(R.id.expend_lv)
     RecyclerView mList;
     @BindView(R.id.expend_refreshLayout)
     SmartRefreshLayout expendRefreshLayout;
     private ExpendAdapter adapter;
     private ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list;
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        //不可见的时候关闭加载
+//        if (!isVisibleToUser) {
+//            if (expendRefreshLayout != null) {
+//                expendRefreshLayout.finishRefresh();
+//            }
+//        } else {
+//            super.setUserVisibleHint(isVisibleToUser);
+//        }
+
+        if (isVisibleToUser ==true){//当前处于可见状态
+            if (expendRefreshLayout!=null){
+                refresh();
+            }
+        }
+    }
+    @Override
+    public void refresh() {
+        super.refresh();
+        expendRefreshLayout.autoRefresh();
+
+        initData();
+    }
+    @Override
+    public void fetchData() {
+
+    }
 
     @Override
     protected void initData() {
         super.initData();
+
         String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
         if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),2);//收益类型--1收入-2支出-3返利
+
     }
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEST_MY_EARNINGS://支出
+                if (!list.isEmpty() || list != null) {
+                    list.clear();
+                }
                 TestMyEarnings testMyEarnings = (TestMyEarnings) t[0];
                 if (testMyEarnings.getCode()==0 && testMyEarnings.getData()!=null)  {
                     Log.i("tag", "支出: " + testMyEarnings.toString());
@@ -52,10 +88,11 @@ public class ExpendFragment extends BaseMvpFragment<LoginModel> implements IComm
                     adapter.notifyDataSetChanged();
                 }
         }
+        expendRefreshLayout.finishRefresh();
     }
     public ExpendFragment() {
-        // Required empty public constructor
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_expend;
@@ -63,11 +100,13 @@ public class ExpendFragment extends BaseMvpFragment<LoginModel> implements IComm
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
+
+        initRecycleView(mList,expendRefreshLayout);
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ArrayList<>();
+        expendRefreshLayout.setEnableLoadMore(false);
         adapter = new ExpendAdapter(list);
         mList.setAdapter(adapter);
-
     }
     @Override
     protected LoginModel getModel() {

@@ -32,7 +32,6 @@ import butterknife.OnClick;
  * 确认信息
  */
 public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
-
     @BindView(R.id.affirm_msg_back_iv)
     ImageView affirmMsgBackIv;
     @BindView(R.id.receiver_name)
@@ -71,47 +70,44 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     protected void initView() {
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void initData() {
-        //提交订单传过来的数据
-//        intent.putExtra("bankName",bankName1);//银行
-//        intent.putExtra("payeeName",payeeName);//收款人姓名
-//        intent.putExtra("comMoney",comMoney);//收款金额
-//        intent.putExtra("bankCard",bankCard);//
-//        intent.putExtra("remark",remark);//备注
-        if (getIntent() != null) {
             //網絡請求  付款信息
             orderNumber = getIntent().getStringExtra("OrderNumber");
-            //
-            //应付款金额
-            String payeeName = getIntent().getStringExtra("payeeName");
-            String bankName = getIntent().getStringExtra("bankName");
-            String comMoney = getIntent().getStringExtra("comMoney");
-            String bankCard = getIntent().getStringExtra("bankCard");
-            String remark = getIntent().getStringExtra("remark");
-            if (!TextUtils.isEmpty(payeeName)||!TextUtils.isEmpty(bankName)||!TextUtils.isEmpty(comMoney)
-                    ||!TextUtils.isEmpty(bankCard)||!TextUtils.isEmpty(remark) ){
-                bankYinhang.setText(bankName + "");
-                receiverName.setText(payeeName + "");
-                bankCodeNumber.setText(bankCard + "");
-                moneyTv.setText(comMoney+"");
-                mRemarkTv.setText(remark + "");
-            }else{
-              ToastUtil.showLong("暂无数据");
-            }
+            Log.i("tag", "订单编号2: " + orderNumber);
+            if (!TextUtils.isEmpty(orderNumber) ||orderNumber!=null)//不为空则是 查看详情  为空则是 提交订单传过来的值
+
+                mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO, orderNumber);
+            else {
+                //提交订单传过来的数据
+                //应付款金额
+                String payeeName = getIntent().getStringExtra("payeeName");
+                String bankName = getIntent().getStringExtra("bankName");
+                String comMoney = getIntent().getStringExtra("comMoney");
+                String bankCard = getIntent().getStringExtra("bankCard");
+                String remark = getIntent().getStringExtra("remark");
+                if (!TextUtils.isEmpty(payeeName) || !TextUtils.isEmpty(bankName) || !TextUtils.isEmpty(comMoney)
+                        || !TextUtils.isEmpty(bankCard) || !TextUtils.isEmpty(remark)) {
+                    bankYinhang.setText(bankName + "");
+                    receiverName.setText(payeeName + "");
+                    bankCodeNumber.setText(bankCard + "");
+                    moneyTv.setText(comMoney + "");
+                    mRemarkTv.setText(remark + "");
+                }
         }
 //        Log.i("tag", "data======》: " + commodityAmount + payerName + commodityPrice + userId);
-        int i = Integer.parseInt(userId);
+//        int i = Integer.parseInt(userId);
         //用户第一次进入时  立即购买展示的数据
-//        if (commodityAmount.isEmpty() ){
         //提交订单
 //        if (TextUtils.isEmpty(orderNumber)){
 //            mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK, i, commodityPrice, payerName, commodityAmount);
 //        } else{
+
         //库存的
+
         //查看详情
-        if (!TextUtils.isEmpty(orderNumber))mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO, orderNumber);
     }
     //}
     //待付款跳转此页面 时 的展示 数据
@@ -158,6 +154,7 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                 intent.putExtra("affirm", 2);
                 startActivity(intent);
                 finish();
+
 //              AffirmMessageActivity.this.finish();
                 break;
         }
@@ -208,7 +205,10 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
             case ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO://从库存付款信息跳到确认信息解析
 //                getTestPayToAffimInfo()
                 TestPayToAffirmInfo testPayToAffirmInfo = (TestPayToAffirmInfo) t[0];
-                if (testPayToAffirmInfo.getData() != null && testPayToAffirmInfo.getCode() == 0) {
+
+                Log.i("tag", "订单编号list: "+testPayToAffirmInfo.toString());
+
+                if ( testPayToAffirmInfo.getCode() == 0) {
                     TestPayToAffirmInfo.DataBean data = testPayToAffirmInfo.getData();
 //                    收款人姓名	payeeName
                     String payeeName = data.getPayeeName();
@@ -220,8 +220,8 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                     String bankName = data.getBankName();
                     bankYinhang.setText(bankName);
 //                    金额		comMoney
-                    int comMoney = data.getComMoney();
-                    moneyTv.setText(comMoney + "");
+                    Double comMoney = data.getComMoney();
+                    moneyTv.setText(comMoney+ "");
 //                    备注信息	remark
                     String remark = data.getRemark();
                     mRemarkTv.setText(remark);
