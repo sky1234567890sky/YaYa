@@ -181,13 +181,19 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
                 MyIncomeActivity.this.finish();
                 break;
             case R.id.go_up:
-                popupPutaway();
+                //可用为零不能上架
+                if (userEarningsNow==0) {
+                    ToastUtil.showLong("当前无可用游戏币不能上架。");
+                } else{
+                    popupPutaway();
+                }
                 break;
             case R.id.myincome_game_money_plain_iv:
                 startActivity(new Intent(this,GameMoneyExplainActivity.class));
                 break;
         }
     }
+    @SuppressLint("SetTextI18n")
     private void popupPutaway() {
         //上
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_putaway, null);
@@ -244,6 +250,7 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
                 //解析上架所有货物
 //                mPresenter.getData(ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK,);
                 String userId = SharedPrefrenceUtils.getString(MyIncomeActivity.this, NormalConfig.USER_ID);
+
                 if (userId!=null) {
                     mPresenter.getData(ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK, Integer.parseInt(userId),userEarningsNow);
                 }

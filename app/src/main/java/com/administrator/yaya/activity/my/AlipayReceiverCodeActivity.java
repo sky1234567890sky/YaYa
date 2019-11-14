@@ -47,6 +47,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
     RecyclerView mList;
     @BindView(R.id.alipay_refreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+
 //    @BindView(R.id.add1)
 //    ImageView add1;
 //    @BindView(R.id.add2)

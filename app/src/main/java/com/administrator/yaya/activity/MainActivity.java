@@ -276,6 +276,7 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
                 popupWindow.dismiss();
             }
         });
+
         popupWindow.setOutsideTouchable(false);
     }
     @Override

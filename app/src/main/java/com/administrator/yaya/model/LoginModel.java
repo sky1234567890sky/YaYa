@@ -118,10 +118,19 @@ public class LoginModel implements ICommonModel {
                         .getWechatReceiverCode((int) t[0], (int) t[1]), view, whichApi);
                 break;
 
+                //微信二维码图片上传
+            case ApiConfig.TEST_UPLOAD_IMAGEVIE:
+
+               netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getUploadIv((MultipartBody.Part)t[0]), view, whichApi);
+                break;
+
+
             case ApiConfig.TEST_UPAWAY_SINGLE_GOODS://上架单个货物
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestUpawaySingleGoods((String) t[0]), view, whichApi);
                 break;
+
                 //所有售卖订单
 //            getTestAllOrderStock
             //售卖中
@@ -129,6 +138,7 @@ public class LoginModel implements ICommonModel {
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestAllOrderStock((int) t[0],(int) t[1]), view, whichApi);
                 break;
+
             //已完成
             case ApiConfig.TEST_FINISH:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
@@ -213,6 +223,12 @@ public class LoginModel implements ICommonModel {
 //                .getTestUpdateHeadImg(body,(int) t[0]), view, whichApi);
 //                break;
             //验证码  666666
+
+            //上传头像
+            case ApiConfig.TEST_CHANGE_HEADLER:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getLoadHeadlerIv((MultipartBody.Part)t[0],(int) t[1]), view, whichApi);
+                break;
 
             case ApiConfig.TEST_VERIFICATIONCODE:
                 String s5 = (String) t[0];

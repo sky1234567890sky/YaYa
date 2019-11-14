@@ -112,7 +112,6 @@ public class IncomeFragment extends BaseLazyLoadFragment<LoginModel> implements 
         switch (whichApi) {
             case ApiConfig.TEST_MY_EARNINGS://收入记录
                 list.clear();
-
                 TestMyEarnings testMyEarnings = (TestMyEarnings) t[0];
                 if (testMyEarnings.getCode()==0 && testMyEarnings.getData()!=null)  {
 //                    Log.i("tag", "收入: " + testMyEarnings.toString());

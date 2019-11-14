@@ -61,12 +61,12 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
     private String userId;
     private InventoryFragment parentFragment1;
     private TextView tvObligation;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
 //        inventoryFragment = new InventoryFragment();
         super.initView(inflate);
-
         if (parentFragment1 == null) {
             setFragment();
         }
@@ -86,8 +86,8 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
 //        最小购买数量comPurchaseNumMin
 //                最大购买数量comPurchaseNumMax
 //        库存合计数量	amount
-
     }
+
     private void setFragment() {
         Fragment parentFragment = getParentFragment();
         parentFragment1 = (InventoryFragment) parentFragment;//父 Fragment
@@ -99,14 +99,17 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
             }
         }
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_GATHERING:
+
                 //获取父Fragment控件
                 TestObligation testObligation = (TestObligation) t[0];
                 data = testObligation.getData();
+
                 if (tvObligation != null) {
                     if (TextUtils.isEmpty(data.getAmount())) {
                         tvObligation.setText("游戏币库存合计：0");//库存  父 Fragment 顶部赋值
@@ -123,7 +126,9 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
                     list.addAll(orderStockList);
                     adapter.notifyDataSetChanged();
                 }
+
                 break;
+
             //取消售卖订单（不用）
 //            case ApiConfig.TEST_CANCEL_ORDER_SALES:
 //                TestCancelOrderStock testCancelOrderStock = (TestCancelOrderStock) t[0];
@@ -140,6 +145,7 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
         }
         abligationRefreshLayout.finishRefresh();//数据回来后一秒刷新
     }
+
     @Override
     public void onError(int whichApi, Throwable e) {
 
@@ -153,12 +159,10 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
             mPresenter.getData(ApiConfig.TEXT_GATHERING, anInt, num);//待付款
         }
     }
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_obligation;
     }
-
     //懒加载加载数据
     @Override
     public void fetchData() {

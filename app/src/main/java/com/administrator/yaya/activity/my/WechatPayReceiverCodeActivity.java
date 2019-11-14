@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -23,12 +24,15 @@ import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.base.NetConfig;
 import com.administrator.yaya.bean.TestUpLoadCodeIv;
+import com.administrator.yaya.bean.TestUpLoadCodeIv2;
 import com.administrator.yaya.bean.my.SwitchReceiveingQrCode;
 import com.administrator.yaya.bean.my.TestWechatReceiverCode;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.AlbumUtil;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -59,44 +63,18 @@ import razerdp.design.SlideFromBottomPopup;
 /**
  * 微信收款码
  */
-public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> implements ICommonView, TakePhoto.TakeResultListener, SlideFromBottomPopup.BottomPopClick {
+public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
 
     @BindView(R.id.wechatpay_receive_back_iv)
     ImageView wechatpayReceiveBackIv;
 
     @BindView(R.id.wechatpay_two_switch)
     Switch wechatpayTwoSwitch;
+
     @BindView(R.id.wechat_qr)
     RecyclerView mList;
     @BindView(R.id.wechat_refreshLayout)
     SmartRefreshLayout mSmartRefresh;
-
-
-//    @BindView(R.id.pay_add1_iv)
-//    ImageView payAdd1Iv;
-//    @BindView(R.id.pay_add2_iv)
-//    ImageView payAdd2Iv;
-//    @BindView(R.id.two_ll)
-//    LinearLayout twoLl;
-//
-//    @BindView(R.id.get_menry)
-//    TextView getMenry;
-//
-//    @BindView(R.id.iv_money1)
-//    TextView mMoneyTv1;
-//
-//    @BindView(R.id.iv_money2)
-//    TextView mMoneyTv2;
-//
-//    @BindView(R.id.iv_money3)
-//    TextView mMoneyTv3;
-//
-//    @BindView(R.id.pay_add3_iv)
-//    ImageView payAdd3Iv;
-//    @BindView(R.id.ll3)
-//    LinearLayout ll3;
-//    @BindView(R.id.pay_add4_iv)
-//    ImageView payAdd4Iv;
 
     private List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> list = new ArrayList<>();
     private TestWechatReceiverCode.DataBean data;
@@ -105,6 +83,9 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     private File cameraSavePath;
     private String userId;
     private WechatPayReceiverCodeAdapter adapter;
+    double money = 0.0;
+    private String imgUrl;
+    private  int index = -1;
 
     @Override
     protected int getLayoutId() {
@@ -119,31 +100,13 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                SPUtils.getInstance().put(Constants.AUTO_PALY_IN_WIFI, isChecked);
                 if (isChecked) {//开启
-                    userId = SharedPrefrenceUtils.getString(WechatPayReceiverCodeActivity.this, NormalConfig.USER_ID);
+
                     if (userId != null)
                         mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE, Integer.parseInt(userId), 1, 1);
-//                    List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList = data.getUserCodeImgList();
-//                    if (userCodeImgList.size()>0) {
-//                        String imgUrl1 = userCodeImgList.get(0).getImgUrl();
-//                        String imgUrl2 = userCodeImgList.get(1).getImgUrl();
-////                        String imgUrl3 = userCodeImgList.get(2).getImgUrl();
-//
-//                        int imgMoney1 = userCodeImgList.get(0).getImgMoney();
-//                        int imgMoney2 = userCodeImgList.get(1).getImgMoney();
-////                        int imgMoney3 = userCodeImgList.get(2).getImgMoney();
-//
-//                        Glide.with(WechatPayReceiverCodeActivity.this).load(imgUrl1).into(payAdd1Iv);
-//                        Glide.with(WechatPayReceiverCodeActivity.this).load(imgUrl2).into(payAdd2Iv);
-////                        Glide.with(WechatPayReceiverCodeActivity.this).load(imgUrl3).into(payAdd3Iv);
-//                        mMoneyTv1.setText(imgMoney1+"元");
-//                        mMoneyTv2.setText(imgMoney2+"元");
-////                        mMoneyTv3.setText(imgMoney3+"元");
-//                    }
 
                 } else {
                     if (userId != null)
                         mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE, Integer.parseInt(userId), 1, 2);
-//                    ToastUtil.showShort( "onCheckedChanged: 关闭" + isChecked);
                 }
             }
         });
@@ -151,11 +114,14 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 
     @Override
     protected void initView() {
+        userId = SharedPrefrenceUtils.getString(WechatPayReceiverCodeActivity.this, NormalConfig.USER_ID);
+
         cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
-        mList.setLayoutManager(new GridLayoutManager(this,2));
-        adapter = new WechatPayReceiverCodeAdapter(list);
         initRecycleView(mList,mSmartRefresh);
         mSmartRefresh.setEnableLoadMore(false);
+        mList.setLayoutManager(new GridLayoutManager(this,2));
+        adapter = new WechatPayReceiverCodeAdapter(list);
+
         mList.setAdapter(adapter);
     }
 
@@ -166,17 +132,60 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 //        类型		type	1、微信 2、支付宝
         if (userId != null) {
             mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, Integer.parseInt(userId), 1);//1、微信 2、支付宝
-        } else {
-            ToastUtil.showShort(R.string.networkerr + "");
         }
-    }
 
+        adapter.setWechatPayReceiverCodesetOnclikListener(new WechatPayReceiverCodeAdapter.WechatPayReceiverCodesetOnclikListener() {
+            @Override
+            public void setonclik(int index, View view) {
+                WechatPayReceiverCodeActivity.this.index = index;
+                //打开相册
+                if (index==1){
+                    money=1000.0;
+                }else if (index==2){
+                    money=2000.0;
+                }else if (index==3){
+                    money=3000.0;
+                }else if (index==4){
+                    money=4000.0;
+                }else if (index==5){
+                    money=5000.0;
+                }else{
+                    money=0.0;
+                }
+                getPhotoAlbum();
+//                ImageView iamgeViewHeadler = view.findViewById(R.id.ImageView_url_wechat);
+//                switch (index) {
+//                    case 1:
+////                            AlbumUtil.getFilePath(this,cameraSavePath,);
+//                        Glide.with(WechatPayReceiverCodeActivity.this).load(finalPhotoPath).into(iamgeViewHeadler);
+//                        break;
+//                    case 2:
+//                        Glide.with(WechatPayReceiverCodeActivity.this).load(finalPhotoPath).into(iamgeViewHeadler);
+//
+//                        break;
+//                    case 3:
+//                        Glide.with(WechatPayReceiverCodeActivity.this).load(finalPhotoPath).into(iamgeViewHeadler);
+//
+//                        break;
+//                    case 4:
+//                        Glide.with(WechatPayReceiverCodeActivity.this).load(finalPhotoPath).into(iamgeViewHeadler);
+//
+//                        break;
+//                    case 5:
+//                        Glide.with(WechatPayReceiverCodeActivity.this).load(finalPhotoPath).into(iamgeViewHeadler);
+//                        break;
+//                }
+
+            }
+        });
+    }
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
+            //列表
             case ApiConfig.TEST_WECHAT_RECEIVER_CODE:
                 TestWechatReceiverCode testWechatReceiverCode = (TestWechatReceiverCode) t[0];
-                if (testWechatReceiverCode.getCode() == 0 && testWechatReceiverCode.getData() != null) {
+                if (testWechatReceiverCode.getCode() == 0) {
                     data = testWechatReceiverCode.getData();
                     List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList = data.getUserCodeImgList();
                     list.addAll(userCodeImgList);
@@ -191,30 +200,29 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                 SwitchReceiveingQrCode switchReceiveingQrCode = (SwitchReceiveingQrCode) t[0];
                 if (switchReceiveingQrCode.getCode() == 0) {
                     ToastUtil.showShort("打开" + switchReceiveingQrCode.getMsg());
+
                 } else {
+
                     ToastUtil.showShort("" + switchReceiveingQrCode.getMsg());
                 }
                 break;
-//                关闭开关
-//            case ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE2:
+            //微信上传二维码
+            case ApiConfig.TEST_UPLOAD_IMAGEVIE:
+                TestUpLoadCodeIv2 testUpLoadCodeIvs = (TestUpLoadCodeIv2) t[0];
+                if(testUpLoadCodeIvs.getCode()==0){
+//                    TestUpLoadCodeIv.DataBean data = testUpLoadCodeIvs.getData();
+//                    String imgUrl = data.getImgUrl();
+                    //上传成功//展示图片
+                    ToastUtil.showLong(testUpLoadCodeIvs.getMsg());
 
-//                break;
+                }else {
+
+                    //不成功  待审核
+                    ToastUtil.showLong(testUpLoadCodeIvs.getMsg());
+                }
+                break;
+
         }
-    }
-
-    @Override
-    protected LoginModel getModel() {
-        return new LoginModel();
-    }
-
-    @Override
-    protected CommonPresenter getPresenter() {
-        return new CommonPresenter();
-    }
-
-    @Override
-    public void onError(int whichApi, Throwable e) {
-
     }
 
     @OnClick({R.id.wechatpay_receive_back_iv})
@@ -224,106 +232,13 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
             case R.id.wechatpay_receive_back_iv:
                 WechatPayReceiverCodeActivity.this.finish();
                 break;
-//            case R.id.wechatpay_two_switch:
-//
-//                break;
-//            case R.id.pay_add1_iv:
-////                //初始化底部弹出拍照的pop
-////                showPopWIndow();
-//                getPhotoAlbum(1);
-//                break;
-//            case R.id.pay_add2_iv:
-////初始化底部弹出拍照的pop
-////               showPopWIndow();
-//                getPhotoAlbum(2);
-//                break;
-//            case R.id.pay_add3_iv:
-////初始化底部弹出拍照的pop
-////                showPopWIndow();
-//                getPhotoAlbum(3);
-//                break;
-//            case R.id.pay_add4_iv:
-////初始化底部弹出拍照的pop
-////                showPopWIndow();
-//                getPhotoAlbum(4);
-//                break;
         }
     }
-
     private void getPhotoAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
 //        intent.putExtra("1", type);
         intent.setType("image/*");
         startActivityForResult(intent, ApiConfig.request_open_album_code);
-    }
-    /**
-     * 点击相册选图
-     */
-    @Override
-    public void clickTop() {
-        mTakePhoto = new TakePhotoImpl(this, this);
-        mTakePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(1080).create(), true);
-        mTakePhoto.onPickFromGalleryWithCrop(getUri(), getOption());
-//        mTakePhoto.onPickFromGallery();
-        mPop.dismiss();
-    }
-
-    /**
-     * 点击拍照
-     */
-    @Override
-    public void clickCenter() {
-        mTakePhoto = new TakePhotoImpl(this, this);
-        //压缩图片
-        mTakePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(1080).create(), true);
-        //从相册获取并裁剪
-        mTakePhoto.onPickFromCaptureWithCrop(getUri(), getOption());
-//        mTakePhoto.onPickFromCapture(getUri());
-        mPop.dismiss();
-    }
-
-    /**
-     * 取消popupwindow
-     */
-    @Override
-    public void clickBottom() {
-        mPop.dismiss();
-    }
-
-    private CropOptions getOption() {
-        return new CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(false).create();
-    }
-
-    private Uri getUri() {
-        File file = new File(Environment.getExternalStorageDirectory(), "/YaYa/" + System.currentTimeMillis() + ".png");
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
-        }
-        Uri imageUri = Uri.fromFile(file);
-        return imageUri;
-    }
-
-    /**
-     * 获取拍照或相册处理过的图片路劲
-     *
-     * @param result
-     */
-
-    @Override
-    public void takeSuccess(TResult result) {
-        String path = result.getImage().getCompressPath() != null ? result.getImage().getCompressPath() : result.getImage().getOriginalPath();//先设置到列表中
-        if (!TextUtils.isEmpty(path)) {
-            //记住头像
-//            SharedPrefrenceUtils.saveString(this,NormalConfig.HEADLER_IMAGEVIEW,path);
-//            ToastUtil.showShort("上传成功");
-//            showLoadingDialog();
-//            mPresenter.getData(ApiConfig.UPLOAD_IMAGE, path);
-//            Glide.with(this).load(path).into(registerHeadlerIv);
-            File file = new File(path);
-//            SwitchIv(path);
-//            Log.i("tag", "takeSuccess:"+path);
-//            uploadFile(file);
-        }
     }
 
     private void uploadFile(File file) {
@@ -340,7 +255,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 
                 .addFormDataPart("userId", userId)
 
-                .addFormDataPart("imgMoney", userId)
+                .addFormDataPart("imgMoney", String.valueOf(list.get(index).getImgMoney()))
 
                 .addFormDataPart("imgType", "1")//代表微信
 
@@ -371,46 +286,19 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (testLoadHeadlerIv.getCode() == 0 && testLoadHeadlerIv.getData() != null) {
-
+                        if (testLoadHeadlerIv.getCode() == 0) {
                             TestUpLoadCodeIv.DataBean data = testLoadHeadlerIv.getData();
-
-                            String imgUrl = data.getImgUrl();
-
-//                            Glide.with(WechatPayReceiverCodeActivity.this).load(imgUrl).into(payAdd1Iv);
-
+                            imgUrl = data.getImgUrl();
+//                            Glide.with(WechatPayReceiverCodeActivity.this).load(imgUrl).into();
                             ToastUtil.showShort(testLoadHeadlerIv.getMsg());
-
                         } else {
                             ToastUtil.showShort(testLoadHeadlerIv.getMsg());
                         }
                     }
                 });
-
             }
         });
-
     }
-
-    /**
-     * 拍照或获取相册图片失败
-     *
-     * @param result
-     * @param msg
-     */
-    @Override
-    public void takeFail(TResult result, String msg) {
-        ToastUtil.showShort(msg);
-    }
-
-    /**
-     * 取消获取图片
-     */
-    @Override
-    public void takeCancel() {
-//        ToastUtil.showShort("cancel_get_image");
-    }
-
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 //        ToastUtil.showShort(event.getKeyCode()+"");
@@ -425,41 +313,48 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String photoPath = null;
         if (requestCode == ApiConfig.request_open_album_code && resultCode == RESULT_OK) {
-
             int intExtra = data.getIntExtra("1", -1);
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
                 photoPath = String.valueOf(cameraSavePath);
-
             }
-//            else {
-//                photoPath = uri.getEncodedPath();
-//            }
-            switch (intExtra) {
-                case 1:
-//                    Glide.with(WechatPayReceiverCodeActivity.this).load(photoPath).into(payAdd1Iv);
-
-                    break;
-                case 2:
-//                    Glide.with(WechatPayReceiverCodeActivity.this).load(photoPath).into(payAdd2Iv);
-
-                    break;
-                case 3:
-//                    Glide.with(WechatPayReceiverCodeActivity.this).load(photoPath).into(payAdd3Iv);
-
-                    break;
-                case 4:
-//                    Glide.with(WechatPayReceiverCodeActivity.this).load(photoPath).into(payAdd4Iv);
-
-                    break;
-                case 5:
-//                    Glide.with(WechatPayReceiverCodeActivity.this).load(photoPath).into(payAdd4Iv);
-
-                    break;
+            Uri uri = data.getData();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                photoPath = String.valueOf(cameraSavePath);
             }
+            System.out.println("phone's path:"+uri.toString());
+            String path = "" ;
+                path = AlbumUtil.getFilePath(WechatPayReceiverCodeActivity.this, uri, data);
+            if (path == null || "".equals(path))
+                path = AlbumUtil.getImagePath(WechatPayReceiverCodeActivity.this, uri, data);
+
+
+            File upladFile = new File(path);
+
+            RequestBody body = RequestBody.create(MediaType.parse("application/octet-stream"), upladFile);
+
+            MultipartBody.Part filePart = MultipartBody.Part.createFormData("srcFile", "yaya.png", body);
+
+            //微信
+            ///上传图片
+//            mPresenter.getData(ApiConfig.TEST_UPLOAD_IMAGEVIE,path,Integer.parseInt(userId),money,1);//1微信 2二维码
+            mPresenter.getData(ApiConfig.TEST_UPLOAD_IMAGEVIE,filePart);//1微信 2二维码
 
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected LoginModel getModel() {
+        return new LoginModel();
+    }
+
+    @Override
+    protected CommonPresenter getPresenter() {
+        return new CommonPresenter();
+    }
+
+    @Override
+    public void onError(int whichApi, Throwable e) {
+
     }
 }

@@ -1,7 +1,6 @@
 package com.administrator.yaya.bean;
 //上传二维码
 public class TestUpLoadCodeIv {
-
     /**
      * msg : 操作成功
      * code : 0

@@ -194,7 +194,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 
                 myNameStateTv.setText("ID:"+userId);
 
-                tv3.setText("返利比例：2%");
+                tv3.setText("返利比例：0.2%");
 
 //                getGamemoneyTv.setText();
                 allGamemoneyTv.setText(userContributeTotal+"");

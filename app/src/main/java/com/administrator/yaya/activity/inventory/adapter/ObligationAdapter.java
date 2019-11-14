@@ -61,7 +61,10 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
 //        下单时间	orderBuildTime
         vh.mDaifuOrderBuildTime.setText("下单时间" + orderStockListBean.getOrderBuildTime());
 //        数量		commodityAmount
-        vh.mDaifuCommodityAmount.setText("数量：" + orderStockListBean.getCommodityAmount());
+        int commodityAmount = orderStockListBean.getCommodityAmount();
+
+        vh.mDaifuCommodityAmount.setText("数量：" + commodityAmount);
+
 //        应付金额	commodityPrice
         vh.mDaifuCommodityPrice.setText("应付金额：" + orderStockListBean.getCommodityPrice());
         //跳转确认信息
@@ -71,6 +74,7 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
                 if (accountpaidTosetOnclikListener!=null){
                     accountpaidTosetOnclikListener.setonclik(i);
                 }
+
 //                    Intent intent = new Intent(context, AffirmMessageActivity.class);
 //                    intent.putExtra("OrderNumber",list.get(i).getOrderNumber());
 //                    context.startActivity(intent);

@@ -1,6 +1,7 @@
 package com.administrator.yaya.base;
 
 import com.administrator.yaya.bean.TestCancelOrderStock;
+import com.administrator.yaya.bean.TestUpLoadCodeIv2;
 import com.administrator.yaya.bean.VerifyCodeInfo;
 import com.administrator.yaya.bean.homepage.TestBuyCom;
 import com.administrator.yaya.bean.homepage.TestHomePageData;
@@ -17,6 +18,7 @@ import com.administrator.yaya.bean.my.TestAlipayReceiverCode;
 import com.administrator.yaya.bean.my.TestExpend;
 import com.administrator.yaya.bean.my.TestGetEtVerificationCode;
 import com.administrator.yaya.bean.my.TestIncome;
+import com.administrator.yaya.bean.my.TestLoadHeadlerIv;
 import com.administrator.yaya.bean.my.TestMyEarnings;
 import com.administrator.yaya.bean.my.TestMyInvite;
 import com.administrator.yaya.bean.my.TestNotificationInfo;
@@ -35,6 +37,7 @@ import com.administrator.yaya.bean.orderform.TestUpdatePwd;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -42,22 +45,27 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
-public interface INetService{
+public interface INetService {
     //获取验证码
     @POST("/v2/sms/send")
     @FormUrlEncoded
     Observable<VerifyCodeInfo> getVerify(@FieldMap Map<String, String> params, @HeaderMap Map<String, String> maps);
+
     @POST("/v2/sms/send")
     @Headers("Content-Type:application/json")
     Observable<VerifyCodeInfo> getVerify2(@Body RequestBody pBody);
+
     //====================================?
     //    登录
     @POST("appLogin")
     @FormUrlEncoded
     //@Headers({"Content-Type:application/x-www-form-urlencoded","Authorization:Basic ZG1kOjEyMzQ1Ng=="})
     Observable<TestLogin> getTestLogin(@Field("userPhone") String userPhone, @Field("userPwd") String userPwd);
+
     //    注册
     @POST("appRegister")
     @FormUrlEncoded
@@ -108,6 +116,7 @@ public interface INetService{
     @POST("comBuy/cancelOrderStock")
     @FormUrlEncoded
     Observable<TestCancelOrderStock> getTestCancelOrderStock(@Field("stockId") int stockId);
+
     //    通知信息
 //    http://192.168.0.198:8080/yayaApp/getInfo
     @POST("getInfo")
@@ -135,10 +144,22 @@ public interface INetService{
     @FormUrlEncoded
     Observable<TestAlipayReceiverCode> getAlipayReceiverCode(@Field("userId") int userId, @Field("type") int type);
 
-    //微信
+
+//    @POST("updateHeadImg")
+//    @Multipart
+//    @FormUrlEncoded
+//    Observable<TestWechatReceiverCode> getTestUploadImage(@Field("userId") int userId, @Field("type") int type);
+
+
+    //微信二维码列表
     @POST("getUserCodeImg")
     @FormUrlEncoded
     Observable<TestWechatReceiverCode> getWechatReceiverCode(@Field("userId") int userId, @Field("type") int type);
+
+    //微信 上传 二维码
+    @POST("uploadCodeImg")
+    @Multipart
+    Observable<TestUpLoadCodeIv2> getUploadIv(@Part MultipartBody.Part file);
 
     //上架单个货物http://192.168.0.198:8080/yayaApp/comBuy/putawayOneOrderStock
     @POST("comBuy/putawayOneOrderStock")
@@ -218,7 +239,7 @@ public interface INetService{
     //    上架全部货物
 //    http://192.168.0.198:8080/yayaApp/comBuy/putawayAllOrderStock
 
-//    参数:
+    //    参数:
 //    用户Id	userId
 // 我的收益页面--上架所有货物
 //http://192.168.0.198:8080/yayaApp/myInfoPutaway
@@ -229,7 +250,7 @@ public interface INetService{
 // 上架成功
     @POST("myInfoPutaway")
     @FormUrlEncoded
-    Observable<TestPutawayAllOrderStock> getPutawayAllOrderStock(@Field("userId") int userId,@Field("salesAmount") int salesAmount);
+    Observable<TestPutawayAllOrderStock> getPutawayAllOrderStock(@Field("userId") int userId, @Field("salesAmount") int salesAmount);
 
     //    修改密码
 //    http://192.168.0.198:8080/yayaApp/updatePwd
@@ -259,28 +280,25 @@ public interface INetService{
 //    状态 status 1开    2关
     @POST("openButton")
     @FormUrlEncoded
-    Observable<SwitchReceiveingQrCode> getTestSwitchReceiveingQrCode(@Field("userId") int userId,@Field("type") int type,@Field("status") int status);
+    Observable<SwitchReceiveingQrCode> getTestSwitchReceiveingQrCode(@Field("userId") int userId, @Field("type") int type, @Field("status") int status);
 
-//    更换头像
+    //    更换头像
 //    修改成功/修改失败
 //    结果:
+//    文件  file
 //    用户id  userId
-//    文件  MultipartFile
 //    参数：
 //    http://192.168.0.198:8080/yayaApp/updateHeadImg
-
     @POST("updateHeadImg")
+    @Multipart
     @FormUrlEncoded
-    Observable<RequestBody> getTestUpdateHeadImg(@Body RequestBody body, @Field("userId") int userId);
-
-//    @Multipart
-//    @POST("services.php?apicall=profileImage")
-//    Call<ResponseBody> postImage(@Part("file") RequestBody image, @Part("id") String id);
-
+    Observable<TestLoadHeadlerIv> getLoadHeadlerIv(@Part MultipartBody.Part url, @Field("userId") int userId);
 
 
     //修改昵称
     @POST("updateName")
     @FormUrlEncoded
     Observable<TestUploadHeadler> getTestUploadHeadler(@Field("userId") int userId, @Field("userName") String userName);
+
+
 }

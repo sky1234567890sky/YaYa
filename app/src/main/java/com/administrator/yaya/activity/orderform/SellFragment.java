@@ -58,17 +58,14 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-//            //不可见的时候关闭加载
-//        if(!isVisibleToUser){
-//            sellResh.finishRefresh();
-//        }
-
         if (isVisibleToUser == true) {//当前处于可见状态
             if (sellResh != null)
                 refresh();
         }
-
     }
+
+    //处于可见
+
 
     @Override
     protected LoginModel getModel() {
@@ -127,13 +124,11 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
         switch (whichApi) {
             case ApiConfig.TEST_ALL_ORDERSTOCK://售卖中
                 if (listBean != null && !listBean.isEmpty()) listBean.clear();
-
                 TestAllOrderStock testAllOrderStock = (TestAllOrderStock) t[0];
 //                TextView tv_order_money = parentFragment1.getView().findViewById(R.id.orderform_inventory_money);
 //                tv_order_money.setText(testAllOrderStock.getData().getAmount());
                 if (testAllOrderStock.getCode() == 0 && testAllOrderStock.getData() != null && testAllOrderStock.getData().getCommodity() != null) {
                     data = testAllOrderStock.getData();
-
                     if (tvObligation != null) {
                         if (TextUtils.isEmpty(data.getAmount())) {
                             tvObligation.setText("今日所收游戏币：0");//库存  父 Fragment 顶部赋值
@@ -141,16 +136,15 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
                             tvObligation.setText("今日所收游戏币：" + data.getAmount());//库存  父 Fragment 顶部赋值
                         }
                     }
-
                     List<TestAllOrderStock.DataBean.OrderSalesListBean> orderSalesList = data.getOrderSalesList();
                     listBean.addAll(orderSalesList);
                     list.add(data);
                     String amount1 = data.getAmount();
                     adapter.notifyDataSetChanged();
-
 //                    if(data.getAmount()!=null) {
 //                        EventBus.getDefault().postSticky(data.getAmount());
 //                    }
+
 //                    进货订单集合	orderSalesList
 //                    EventBus.getDefault().postSticky(amount1);
 //                    订单id		salesId
@@ -178,15 +172,16 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
             //取消进货订单
             case ApiConfig.TEST_CANCEL_ORDER_SALES:
                 TestCancelOrderStock testCancelOrderStock = (TestCancelOrderStock) t[0];
+
                 if (testCancelOrderStock.getCode() == 0) {
 
                     ToastUtil.showLong(testCancelOrderStock.getMsg());
+
                     refresh();
 //                    adapter.notifyItemRemoved(cancelIndex);
                 } else {
                     ToastUtil.showLong(testCancelOrderStock.getMsg());
                 }
-
                 break;
             //确认收货
             case ApiConfig.TEST_CONFIRM_RECEIPT:
@@ -196,8 +191,10 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
                 } else {
                     ToastUtil.showShort(testConfirmReceipt.getMsg());
                 }
+
                 //刷新
                 refresh();
+
                 break;
         }
         sellResh.finishRefresh();
@@ -210,13 +207,14 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
         sellResh.autoRefresh();
 
         initData();
+
     }
 
     @Override
     public void loadMore() {
         super.loadMore();
-    }
 
+    }
     @Override
     protected void initData() {
         super.initData();
@@ -226,7 +224,6 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
             mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), num);
         }
     }
-
     @Override
     protected void initListener() {
         super.initListener();
@@ -237,7 +234,6 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
                 mPresenter.getData(ApiConfig.TEST_CONFIRM_RECEIPT, listBean.get(postion).getSalesId());
             }
         });
-
         //取消進貨订单
         adapter.setCancelsetOnclikListener(new SellAdapter.CancelsetOnclikListener() {
             @Override
@@ -247,7 +243,6 @@ public class SellFragment extends BaseMvpFragment<LoginModel> implements ICommon
             }
         });
     }
-
     //获取焦点时刷新
     @Override
     public void onResume() {

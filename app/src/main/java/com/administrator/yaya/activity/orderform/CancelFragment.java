@@ -79,7 +79,8 @@ public class CancelFragment  extends BaseMvpFragment<LoginModel> implements ICom
 public void onResponse(int whichApi, Object[] t) {
     switch (whichApi) {
         case ApiConfig.TEST_CANCEL://已取消
-            if (list!=null&& !list.isEmpty())list.clear();
+            list.clear();
+
             TestCancel testCancel = (TestCancel) t[0];
             Log.i("tag", "已取消: "+testCancel.toString());
             if (testCancel.getCode()==0){

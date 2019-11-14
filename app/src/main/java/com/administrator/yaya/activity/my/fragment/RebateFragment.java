@@ -69,7 +69,6 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
 
     @Override
     public void fetchData() {
-
 //        initData();
     }
 
@@ -93,8 +92,6 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
         adapter = new RebateAdapter(list);
         mList.setAdapter(adapter);
     }
-
-
     @Override
     protected void initData() {
 
@@ -118,6 +115,8 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEST_MY_EARNINGS://返利
+                list.clear();
+
                 TestMyEarnings testMyEarnings = (TestMyEarnings) t[0];
                 if (testMyEarnings.getCode()==0 && testMyEarnings.getData()!=null)  {
                     TestMyEarnings.DataBean data = testMyEarnings.getData();
@@ -125,6 +124,7 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
                     list.addAll(userEarningsList);
                     adapter.notifyDataSetChanged();
                     Log.i("tag", "返利: "+ testMyEarnings.toString());
+
 //                    用户信息:userInfo
 //                    userName 用户姓名
 //                    userNickName 昵称

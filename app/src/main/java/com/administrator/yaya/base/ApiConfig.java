@@ -28,7 +28,6 @@ public class ApiConfig {
     public static final int TEST_MY_INVITE = 17;//我的邀请
     public static final int TEST_SMALLBOOK = 18;//我的小账本
     public static final int TEST_ALIPAY_RECEIVER_CODE = 19;//支付宝二维码
-    public static final int TEST_WECHAT_RECEIVER_CODE = 20;//微信二维码
 
     public static final int TEST_UPAWAY_SINGLE_GOODS = 21; //上架单个货物
 
@@ -62,5 +61,11 @@ public class ApiConfig {
 
 
     public static final int TEST_UPLOAD_NAME = 37;//上传昵称
+
+    public static final int TEST_UPLOAD_IMAGEVIE = 38;//微信上传二维码图片
+
+    public static final int TEST_WECHAT_RECEIVER_CODE = 20;//微信二维码
+
+
 
 }

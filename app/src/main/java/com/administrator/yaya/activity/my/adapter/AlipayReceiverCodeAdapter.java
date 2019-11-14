@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.bean.my.TestAlipayReceiverCode;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -36,23 +37,41 @@ public class AlipayReceiverCodeAdapter extends RecyclerView.Adapter<AlipayReceiv
         @SuppressLint("InflateParams") View inflate = LayoutInflater.from(context).inflate(R.layout.alipayreceivercode_item, null);
         return new Vh(inflate);
     }
+    int imgMoney;
+    String imgUrl;
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
-
-        TestAlipayReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean = list.get(i);
-        int imgMoney = userCodeImgListBean.getImgMoney();
-        String imgUrl = userCodeImgListBean.getImgUrl();
-        if (i==0){
-            vh.mMoneyNumber.setText("任意收款金额");
-        }else{
+        if (list.size()>0) {
+            TestAlipayReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean = list.get(i);
+             imgMoney = userCodeImgListBean.getImgMoney();
+             imgUrl = userCodeImgListBean.getImgUrl();
+        }
+        if(i==0){
+            vh.mMoneyNumber.setText("任意付款金额");
+            Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
+        }else if(i==1){
             vh.mMoneyNumber.setText(imgMoney+"元");
+            Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
+        }else if(i==2){
+            vh.mMoneyNumber.setText(imgMoney+"元");
+            Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
+        }else if(i==3){
+            vh.mMoneyNumber.setText(imgMoney+"元");
+            Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
+        }else if(i==4){
+            vh.mMoneyNumber.setText(imgMoney+"元");
+            Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
+        }else if(i==5){
+            vh.mMoneyNumber.setText(imgMoney+"元");
+            Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
         }
 //        vh.mApliayLl.
     }
     @Override
     public int getItemCount() {
-        return list != null ? list.size() : 0;
+        return 6;
     }
+
     public class Vh extends RecyclerView.ViewHolder {
         @BindView(R.id.alipay_item_ll)//点击调用相机
         LinearLayout mApliayLl;

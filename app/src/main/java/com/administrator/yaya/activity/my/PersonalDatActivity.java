@@ -115,6 +115,10 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
                     ToastUtil.showLong(testUploadHeadler.getMsg());
                 }
                 break;
+                //上传头像
+            case ApiConfig.TEST_VERIFICATIONCODE:
+
+                break;
         }
     }
 
@@ -134,6 +138,7 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
 //        if (nickName != null) persionalName.setText(nickName);
         String phone_code = SharedPrefrenceUtils.getString(this, NormalConfig.USER_NAME);//手机号
         String headler_iamge = SharedPrefrenceUtils.getString(this, NormalConfig.HEADLER_IMAGEVIEW);//头像
+
         if (persionalPhoneCode != null && headler_iamge != null) {
             persionalPhoneCode.setText(phone_code);
             Glide.with(this).load(headler_iamge).placeholder(R.mipmap.icon).into(personalHeaderIv);
@@ -156,12 +161,10 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.personal_back_iv:
-
                 Intent intent = new Intent();
                 intent.putExtra("sky",persionalName.getText().toString());
                 setResult(12, intent);
                 finish();
-
                 break;
             case R.id.personal_header_iv:
                 //获取权限工具类
@@ -230,7 +233,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     public void takeSuccess(TResult result) {
 
         String path = result.getImage().getCompressPath() != null ? result.getImage().getCompressPath() : result.getImage().getOriginalPath();//先设置到列表中
-
         if (!TextUtils.isEmpty(path)) {
 //            ToastUtil.showShort("上传成功");
 //            showLoadingDialog();
@@ -238,6 +240,7 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
 //            Glide.with(this).load(path).into(mImage);
             //上传头像
             File file = new File(path);
+
             uploadFile(file);
             //上传成功保存
 //            Glide.with(this).load(path).placeholder(R.mipmap.icon).into(personalHeaderIv);
@@ -273,16 +276,14 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (testLoadHeadlerIv.getCode() == 0 && testLoadHeadlerIv.getData() != null) {
+                        if (testLoadHeadlerIv.getCode() == 0) {
                             TestLoadHeadlerIv.DataBean data = testLoadHeadlerIv.getData();
                             String imgUrl = data.getImgUrl();
                             //后台登录才能访问图片吧
                             Glide.with(PersonalDatActivity.this).load(imgUrl).into(personalHeaderIv);
                             //保存头像
                             SharedPrefrenceUtils.saveString(PersonalDatActivity.this, NormalConfig.HEADLER_IMAGEVIEW, imgUrl);
-
                             ToastUtil.showShort(testLoadHeadlerIv.getMsg());
-
                         } else {
                             ToastUtil.showShort(testLoadHeadlerIv.getMsg());
                         }

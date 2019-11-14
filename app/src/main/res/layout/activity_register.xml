@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/c_ffffff"
     tools:context=".activity.RegisterActivity">
+
     <ImageView
         android:layout_width="@dimen/dp_312_5"
         android:layout_height="@dimen/dp_127_5"
@@ -19,6 +20,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44">

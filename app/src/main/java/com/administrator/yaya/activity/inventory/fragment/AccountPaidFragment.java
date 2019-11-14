@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +17,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.activity.inventory.adapter.AccountPaidAdapter;
 import com.administrator.yaya.base.ApiConfig;
-import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
@@ -35,14 +32,9 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
-
 /**
  * A simple {@link Fragment} subclass.
  * 已付款
@@ -53,7 +45,7 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
     @BindView(R.id.account_refreshLayout)
     SmartRefreshLayout accountRefreshLayout;
     List<TestAccountPaid.DataBean.OrderStockListBean> list = new ArrayList<>();
-    List<TestAccountPaid.DataBean.CommodityBean> commodityBean=new ArrayList<>();
+    List<TestAccountPaid.DataBean.CommodityBean> commodityBean = new ArrayList<>();
     private AccountPaidAdapter adapter;
     private ImageView mCancelPopCloseIv;
     private TextView mPopupTvNumber;
@@ -76,7 +68,7 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
-        if (parentFragment1==null){
+        if (parentFragment1 == null) {
             setFragment();
         }
         initRecycleView(mList, accountRefreshLayout);
@@ -85,21 +77,23 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
         adapter = new AccountPaidAdapter(commodityBean, list, getActivity());
         mList.setAdapter(adapter);
     }
-
     private void setFragment() {
         Fragment parentFragment = getParentFragment();
         parentFragment1 = (InventoryFragment) parentFragment;//父 Fragment
+
 //            if (TextUtils.isEmpty(amount) ) {
 //                inventory_allgamemoneys.setText("游戏币库存合计：0");//库存  父 Fragment 顶部赋值
 //            } else {
 //                inventory_allgamemoneys.setText("游戏币库存合计：" + amount);//库存  父 Fragment 顶部赋值
 //            }
-        if (parentFragment1 instanceof  InventoryFragment){
-            if (parentFragment1.getView().findViewById(R.id.inventory_allgamemoneys)!=null){
+
+        if (parentFragment1 instanceof InventoryFragment) {
+            if (parentFragment1.getView().findViewById(R.id.inventory_allgamemoneys) != null) {
                 tvObligation = parentFragment1.getView().findViewById(R.id.inventory_allgamemoneys);
             }
         }
     }
+
     @Override
     public void refresh() {
         super.refresh();
@@ -107,10 +101,12 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
         accountRefreshLayout.autoRefresh();
         initData();
     }
+
     @Override
     public void loadMore() {
         super.loadMore();
     }
+
     @SuppressLint("CheckResult")
     @Override
     protected void initData() {
@@ -118,6 +114,7 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
         userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
         mPresenter.getData(ApiConfig.TEXT_GATHERING2, Integer.parseInt(userId), num);//已付款
     }
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -194,6 +191,7 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
         }
         accountRefreshLayout.finishRefresh();//网络请求玩才计时
     }
+
     @Override
     public void onError(int whichApi, Throwable e) {
     }
@@ -220,7 +218,7 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
         mPopupTvCancel = inflate.findViewById(R.id.popup_tv_cancel);
         mPopupTvOk = inflate.findViewById(R.id.popup_tv_ok);
 
-        mPopupTvNumber.setText( commodityAmount+ "");//库存数量
+        mPopupTvNumber.setText(commodityAmount + "");//库存数量
 
 //        if (orderStockList.size()>0) {
 //            mPopupTvNumber.setText(orderStockList.get(0).getCommodityAmount());//数量
@@ -267,7 +265,7 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
             public void onClick(View v) {
 //                String orderNumber = orderStockListBean.getOrderNumber();
                 //上架单个货物（请求网络数据）
-                mPresenter.getData(ApiConfig.TEST_UPAWAY_SINGLE_GOODS,list.get(index).getOrderNumber());//传入订单编号
+                mPresenter.getData(ApiConfig.TEST_UPAWAY_SINGLE_GOODS, list.get(index).getOrderNumber());//传入订单编号
 //                直接营业
 //                FragmentTransaction fragmentTransaction = new FragmentManager().beginTransaction();
 //                FragmentUtils.addFragment(getChildFragmentManager(),new OrderFormkFragment().getClass(), R.id.home_fragment);
@@ -280,6 +278,7 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
         });
         popupWindow.setOutsideTouchable(false);
     }
+
     //获取焦点时刷新
     @Override
     public void onResume() {
@@ -292,17 +291,20 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
             isRefresh = false;
         }
     }
+
     @Override
     public void onPause() {
         super.onPause();
         if (!isRefresh) isRefresh = true;
     }
+
     //接口回调
     private AccountPaidsetOnclikListener accountPaidsetOnclikListener;
 
     public interface AccountPaidsetOnclikListener {
         void setonclik(String amount);
     }
+
     public void setAccountPaidsetOnclikListener(AccountPaidsetOnclikListener accountPaidsetOnclikListener) {
         this.accountPaidsetOnclikListener = accountPaidsetOnclikListener;
     }

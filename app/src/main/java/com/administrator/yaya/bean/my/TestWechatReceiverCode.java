@@ -104,7 +104,7 @@ public class TestWechatReceiverCode {
             private ParamsBean params;
             private int imgId;
             private int userId;
-            private int imgMoney;
+            private double imgMoney;
             private String imgUrl;
             private int imgType;
             private int imgStatus;
@@ -184,11 +184,11 @@ public class TestWechatReceiverCode {
                 this.userId = userId;
             }
 
-            public int getImgMoney() {
+            public double getImgMoney() {
                 return imgMoney;
             }
 
-            public void setImgMoney(int imgMoney) {
+            public void setImgMoney(double imgMoney) {
                 this.imgMoney = imgMoney;
             }
 
