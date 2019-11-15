@@ -73,6 +73,7 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
 
     private int userEarningsNow;
     private int userContributeTotal;
+    private String userId;
 
     @Override
     protected int getLayoutId() {
@@ -116,14 +117,13 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
     protected void initData() {
         super.initData();
 
-        String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        if (userId!=null) {
+        userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        if (userId !=null) {
             mPresenter.getData(ApiConfig.TEST_EXPEND, Integer.parseInt(userId), 2);
         }else{
             ToastUtil.showShort(R.string.networkerr+"");
         }
     }
-
     @Override
     protected void initListener() {
 //        mTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

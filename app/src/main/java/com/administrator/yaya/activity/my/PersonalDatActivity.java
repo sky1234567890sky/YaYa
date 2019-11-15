@@ -2,6 +2,7 @@ package com.administrator.yaya.activity.my;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
@@ -20,6 +21,8 @@ import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.NetConfig;
+import com.administrator.yaya.bean.TestUpLoadCodeIv2;
+import com.administrator.yaya.bean.TestUpLoadGetQr;
 import com.administrator.yaya.bean.my.TestLoadHeadlerIv;
 import com.administrator.yaya.bean.my.TestUploadHeadler;
 import com.administrator.yaya.design.SmsVerifyView;
@@ -28,8 +31,10 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoImpl;
@@ -62,7 +67,7 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
 
     //personal_nick_name_ll
     @BindView(R.id.personal_header_iv)
-    RoundedImageView personalHeaderIv;
+    ImageView personalHeaderIv;
 
     @BindView(R.id.persional_ll)
     RelativeLayout persionalLl;
@@ -116,8 +121,19 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
                 }
                 break;
                 //上传头像
-            case ApiConfig.TEST_VERIFICATIONCODE:
+            case ApiConfig.TEST_CHANGE_HEADLER:
 
+                TestUpLoadGetQr testUploadHeadler1 = (TestUpLoadGetQr) t[0];
+
+                if (testUploadHeadler1.getCode()==0){
+
+                    ToastUtil.showLong(testUploadHeadler1.getMsg());
+
+                }else{
+
+                    ToastUtil.showLong(testUploadHeadler1.getMsg());
+
+                }
                 break;
         }
     }
@@ -141,21 +157,27 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
 
         if (persionalPhoneCode != null && headler_iamge != null) {
             persionalPhoneCode.setText(phone_code);
-            Glide.with(this).load(headler_iamge).placeholder(R.mipmap.icon).into(personalHeaderIv);
-        }
+            RequestOptions requestOptions = new RequestOptions().circleCrop();
 
+            if (headler_iamge!=null){
+                Glide.with(PersonalDatActivity.this)
+                        .load(headler_iamge)
+                        .apply(new RequestOptions().circleCrop())
+                        .placeholder(R.mipmap.icon)
+                        .into(personalHeaderIv);
+            }
+        }
     }
+
     @Override
     protected void initData() {
         super.initData();
-
     }
     //    "http://ww1.sinaimg.cn/large/0065oQSqly1g2pquqlp0nj30n00yiq8u.jpg"
     //弹出输入框
     @Override
     protected void initListener() {
         super.initListener();
-
     }
     @OnClick({R.id.personal_back_iv, R.id.personal_header_iv, R.id.personal_nick_name_ll})
     public void onViewClicked(View view) {
@@ -207,7 +229,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
         builder.show();
     }
     private void upLoadHeadlerIv(String nickName) {
-
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
 
         if (!nickName.isEmpty()) mPresenter.getData(ApiConfig.TEST_UPLOAD_NAME, Integer.parseInt(userId), nickName);
@@ -223,11 +244,8 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
             setResult(12, intent);
             finish();
             return true;
-
         }
-
         return false;
-
     }
     @Override
     public void takeSuccess(TResult result) {
@@ -242,22 +260,21 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
             File file = new File(path);
 
             uploadFile(file);
+
             //上传成功保存
 //            Glide.with(this).load(path).placeholder(R.mipmap.icon).into(personalHeaderIv);
         }
     }
-
     private void uploadFile(File file) {
-        String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        final String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
         MultipartBody body = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("file", file.getName(), requestBody)
-                .addFormDataPart("userId", userId)//用户头像
                 .build();
         Request request = new Request.Builder()
-                .url(NetConfig.BaseUrl + "updateHeadImg")
+                .url(NetConfig.BaseUrl + "uploadCodeImg")
                 .post(body)
                 .build();
         Call call = okHttpClient.newCall(request);
@@ -266,33 +283,45 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
             public void onFailure(Call call, IOException e) {
                 ToastUtil.showShort(e.getMessage());
             }
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String url = response.body().string();
 //                Log.i("tag", "路经: "+url);
                 Gson gson = new Gson();
-                final TestLoadHeadlerIv testLoadHeadlerIv = gson.fromJson(url, TestLoadHeadlerIv.class);
+                final TestUpLoadCodeIv2 testLoadHeadlerIv = gson.fromJson(url, TestUpLoadCodeIv2.class);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if (testLoadHeadlerIv.getCode() == 0) {
-                            TestLoadHeadlerIv.DataBean data = testLoadHeadlerIv.getData();
-                            String imgUrl = data.getImgUrl();
+
+                            String urlIv = testLoadHeadlerIv.getMsg();
+
+                            Log.i("tag", "修改头像: "+urlIv);
+
                             //后台登录才能访问图片吧
-                            Glide.with(PersonalDatActivity.this).load(imgUrl).into(personalHeaderIv);
+//                          Glide.with(PersonalDatActivity.this).load(urlIv).placeholder(R.mipmap.icon).into(personalHeaderIv);
+                            Glide.with( PersonalDatActivity.this)
+                                    .load(urlIv)
+                                    .apply(new RequestOptions().centerCrop())
+                                    .placeholder(R.mipmap.icon)
+                                    .into(personalHeaderIv);
+
                             //保存头像
-                            SharedPrefrenceUtils.saveString(PersonalDatActivity.this, NormalConfig.HEADLER_IMAGEVIEW, imgUrl);
-                            ToastUtil.showShort(testLoadHeadlerIv.getMsg());
-                        } else {
-                            ToastUtil.showShort(testLoadHeadlerIv.getMsg());
+                            SharedPrefrenceUtils.saveString(PersonalDatActivity.this, NormalConfig.HEADLER_IMAGEVIEW, urlIv);
+//                            ToastUtil.showShort(testLoadHeadlerIv.getMsg());
+//                            上传头像
+//                          updateHeadImg
+//                            参数:
+//                            userId 用户id
+//                            userHeadImg 图片路径
+                            mPresenter.getData(ApiConfig.TEST_CHANGE_HEADLER,Integer.parseInt(userId),urlIv);
                         }
                     }
                 });
-
             }
         });
     }
+
 
     @Override
     public void takeFail(TResult result, String msg) {

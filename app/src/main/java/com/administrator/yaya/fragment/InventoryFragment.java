@@ -163,4 +163,14 @@ public class InventoryFragment extends BaseFragment {
         protected int getLayoutId () {
             return R.layout.fragment_inventory;
         }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (getActivity() != null && !hidden) {
+//            Log.i("tag", "刷新数据2: ");
+            initData();
+        }
     }
+}

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.my.adapter.WechatPayReceiverCodeAdapter;
@@ -25,6 +26,7 @@ import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.base.NetConfig;
 import com.administrator.yaya.bean.TestUpLoadCodeIv;
 import com.administrator.yaya.bean.TestUpLoadCodeIv2;
+import com.administrator.yaya.bean.TestUpLoadGetQr;
 import com.administrator.yaya.bean.my.SwitchReceiveingQrCode;
 import com.administrator.yaya.bean.my.TestWechatReceiverCode;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
@@ -73,9 +75,11 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 
     @BindView(R.id.wechat_qr)
     RecyclerView mList;
-    @BindView(R.id.wechat_refreshLayout)
-    SmartRefreshLayout mSmartRefresh;
 
+    private String imgUrl;
+
+//    @BindView(R.id.wechat_refreshLayout)
+//    SmartRefreshLayout mSmartRefresh;
     private List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> list = new ArrayList<>();
     private TestWechatReceiverCode.DataBean data;
     private TakePhotoImpl mTakePhoto;
@@ -84,8 +88,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     private String userId;
     private WechatPayReceiverCodeAdapter adapter;
     double money = 0.0;
-    private String imgUrl;
-    private  int index = -1;
+    private int index = -1;
 
     @Override
     protected int getLayoutId() {
@@ -100,28 +103,30 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                SPUtils.getInstance().put(Constants.AUTO_PALY_IN_WIFI, isChecked);
                 if (isChecked) {//开启
-
                     if (userId != null)
                         mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE, Integer.parseInt(userId), 1, 1);
-
                 } else {
                     if (userId != null)
                         mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE, Integer.parseInt(userId), 1, 2);
                 }
             }
         });
-    }
 
+        adapter.setWechatPayReceiverCodesetOnclikListener(new WechatPayReceiverCodeAdapter.WechatPayReceiverCodesetOnclikListener() {
+            @Override
+            public void setonclik(int index, View view) {
+
+            }
+        });
+    }
     @Override
     protected void initView() {
         userId = SharedPrefrenceUtils.getString(WechatPayReceiverCodeActivity.this, NormalConfig.USER_ID);
-
         cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
-        initRecycleView(mList,mSmartRefresh);
-        mSmartRefresh.setEnableLoadMore(false);
-        mList.setLayoutManager(new GridLayoutManager(this,2));
+//        initRecycleView(mList, mSmartRefresh);
+//        mSmartRefresh.setEnableLoadMore(false);
+        mList.setLayoutManager(new GridLayoutManager(this, 2));
         adapter = new WechatPayReceiverCodeAdapter(list);
-
         mList.setAdapter(adapter);
     }
 
@@ -130,98 +135,84 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 //        参数:
 //        用户id		userId
 //        类型		type	1、微信 2、支付宝
-        if (userId != null) {
-            mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, Integer.parseInt(userId), 1);//1、微信 2、支付宝
-        }
-
         adapter.setWechatPayReceiverCodesetOnclikListener(new WechatPayReceiverCodeAdapter.WechatPayReceiverCodesetOnclikListener() {
             @Override
             public void setonclik(int index, View view) {
                 WechatPayReceiverCodeActivity.this.index = index;
                 //打开相册
-                if (index==1){
-                    money=1000.0;
-                }else if (index==2){
-                    money=2000.0;
-                }else if (index==3){
-                    money=3000.0;
-                }else if (index==4){
-                    money=4000.0;
-                }else if (index==5){
-                    money=5000.0;
-                }else{
-                    money=0.0;
+                if (index == 1) {
+                    money = 1000.0;
+                } else if (index == 2) {
+                    money = 2000.0;
+                } else if (index == 3) {
+                    money = 3000.0;
+                } else if (index == 4) {
+                    money = 4000.0;
+                } else if (index == 5) {
+                    money = 5000.0;
+                } else {
+                    money = 0.0;
                 }
                 getPhotoAlbum();
-//                ImageView iamgeViewHeadler = view.findViewById(R.id.ImageView_url_wechat);
-//                switch (index) {
-//                    case 1:
-////                            AlbumUtil.getFilePath(this,cameraSavePath,);
-//                        Glide.with(WechatPayReceiverCodeActivity.this).load(finalPhotoPath).into(iamgeViewHeadler);
-//                        break;
-//                    case 2:
-//                        Glide.with(WechatPayReceiverCodeActivity.this).load(finalPhotoPath).into(iamgeViewHeadler);
-//
-//                        break;
-//                    case 3:
-//                        Glide.with(WechatPayReceiverCodeActivity.this).load(finalPhotoPath).into(iamgeViewHeadler);
-//
-//                        break;
-//                    case 4:
-//                        Glide.with(WechatPayReceiverCodeActivity.this).load(finalPhotoPath).into(iamgeViewHeadler);
-//
-//                        break;
-//                    case 5:
-//                        Glide.with(WechatPayReceiverCodeActivity.this).load(finalPhotoPath).into(iamgeViewHeadler);
-//                        break;
-//                }
-
             }
         });
     }
+
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
-            //列表
+            //收款码
             case ApiConfig.TEST_WECHAT_RECEIVER_CODE:
                 TestWechatReceiverCode testWechatReceiverCode = (TestWechatReceiverCode) t[0];
                 if (testWechatReceiverCode.getCode() == 0) {
+                    ToastUtil.showLong(testWechatReceiverCode.getMsg());
                     data = testWechatReceiverCode.getData();
                     List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList = data.getUserCodeImgList();
                     list.addAll(userCodeImgList);
                     adapter.notifyDataSetChanged();
-                    Log.i("tag", "微信: " + testWechatReceiverCode.toString());
                 } else {
                     ToastUtil.showShort(testWechatReceiverCode.getMsg());
                 }
                 break;
+
             //打开开关
             case ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE:
                 SwitchReceiveingQrCode switchReceiveingQrCode = (SwitchReceiveingQrCode) t[0];
                 if (switchReceiveingQrCode.getCode() == 0) {
                     ToastUtil.showShort("打开" + switchReceiveingQrCode.getMsg());
-
                 } else {
-
                     ToastUtil.showShort("" + switchReceiveingQrCode.getMsg());
                 }
                 break;
-            //微信上传二维码
-            case ApiConfig.TEST_UPLOAD_IMAGEVIE:
-                TestUpLoadCodeIv2 testUpLoadCodeIvs = (TestUpLoadCodeIv2) t[0];
-                if(testUpLoadCodeIvs.getCode()==0){
-//                    TestUpLoadCodeIv.DataBean data = testUpLoadCodeIvs.getData();
-//                    String imgUrl = data.getImgUrl();
-                    //上传成功//展示图片
-                    ToastUtil.showLong(testUpLoadCodeIvs.getMsg());
 
-                }else {
-
+            //微信上传图片
+//            case ApiConfig.TEST_UPLOAD_IMAGEVIE:
+//                TestUpLoadCodeIv2 testUpLoadCodeIvs = (TestUpLoadCodeIv2) t[0];
+//                if (testUpLoadCodeIvs.getCode() == 0) {
+//                    String urlPath = testUpLoadCodeIvs.getMsg();
+                    //上传成功
+//                    ToastUtil.showLong(testUpLoadCodeIvs.getMsg());
+//                    imgId   添加时可无
+//                    userId 用户id
+//                    imgType 1、微信 2、支付宝
+//                    imgUrl 图片路径
+//                    imgMoney  码金额
+                    //上传收款码
+//                    mPresenter.getData(ApiConfig.,Integer.parseInt(userId),1,urlPath,1000);
+//                } else {
                     //不成功  待审核
-                    ToastUtil.showLong(testUpLoadCodeIvs.getMsg());
+//                    ToastUtil.showLong(testUpLoadCodeIvs.getMsg());
+//                }
+//                break;
+            //上传收款码
+            case ApiConfig.TEST_UPLOAD_GET_QR:
+                TestUpLoadGetQr testUpLoadGetQr = (TestUpLoadGetQr) t[0];
+                if (testUpLoadGetQr.getCode() == 0) {//返回图片路径
+//                    ToastUtil.showLong(testUpLoadGetQr.getMsg());
+                    //二维码上传
+                    mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, Integer.parseInt(userId), 1);//1、微信 2、支付宝
                 }
                 break;
-
         }
     }
 
@@ -234,6 +225,8 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                 break;
         }
     }
+
+    //打开相册
     private void getPhotoAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
 //        intent.putExtra("1", type);
@@ -252,23 +245,16 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                 .setType(MultipartBody.FORM)
 
                 .addFormDataPart("file", file.getName(), requestBody)
-
-                .addFormDataPart("userId", userId)
-
-                .addFormDataPart("imgMoney", String.valueOf(list.get(index).getImgMoney()))
-
-                .addFormDataPart("imgType", "1")//代表微信
-
                 .build();
-
         Request request = new Request.Builder()
 
-                .url(NetConfig.BaseUrl + "yayaApp/uploadCodeImg")
-
+                .url(NetConfig.BaseUrl + "uploadCodeImg")
+                //上传图片
+                //uploadCodeImg
+                //参数：file
+                //结果：url
                 .post(body)
-
                 .build();
-
         Call call = okHttpClient.newCall(request);
 
         call.enqueue(new Callback() {
@@ -282,23 +268,26 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                 String url = response.body().string();
 //                Log.i("tag", "路经: "+url);
                 Gson gson = new Gson();
-                final TestUpLoadCodeIv testLoadHeadlerIv = gson.fromJson(url, TestUpLoadCodeIv.class);
+                final TestUpLoadCodeIv2 testUpLoadCodeIv2 = gson.fromJson(url, TestUpLoadCodeIv2.class);
+
                 runOnUiThread(new Runnable() {
+
+
+
                     @Override
                     public void run() {
-                        if (testLoadHeadlerIv.getCode() == 0) {
-                            TestUpLoadCodeIv.DataBean data = testLoadHeadlerIv.getData();
-                            imgUrl = data.getImgUrl();
-//                            Glide.with(WechatPayReceiverCodeActivity.this).load(imgUrl).into();
-                            ToastUtil.showShort(testLoadHeadlerIv.getMsg());
-                        } else {
-                            ToastUtil.showShort(testLoadHeadlerIv.getMsg());
+                        if (testUpLoadCodeIv2.getCode() == 0) {
+                            imgUrl = testUpLoadCodeIv2.getMsg();
+                            Log.i("tag", "收款码ImageView: "+ imgUrl);
+                            //上传收款码
+                            mPresenter.getData(ApiConfig.TEST_UPLOAD_GET_QR, Integer.parseInt(userId), 1, imgUrl, 1000 + "");
                         }
                     }
                 });
             }
         });
     }
+
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 //        ToastUtil.showShort(event.getKeyCode()+"");
@@ -321,23 +310,30 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 photoPath = String.valueOf(cameraSavePath);
             }
-            System.out.println("phone's path:"+uri.toString());
-            String path = "" ;
-                path = AlbumUtil.getFilePath(WechatPayReceiverCodeActivity.this, uri, data);
+
+            System.out.println("phone's path:" + uri.toString());
+
+            String path = "";
+            path = AlbumUtil.getFilePath(WechatPayReceiverCodeActivity.this, uri, data);
             if (path == null || "".equals(path))
                 path = AlbumUtil.getImagePath(WechatPayReceiverCodeActivity.this, uri, data);
-
 
             File upladFile = new File(path);
 
             RequestBody body = RequestBody.create(MediaType.parse("application/octet-stream"), upladFile);
 
             MultipartBody.Part filePart = MultipartBody.Part.createFormData("srcFile", "yaya.png", body);
-
-            //微信
-            ///上传图片
+            //微信 上传图片        参数：file
 //            mPresenter.getData(ApiConfig.TEST_UPLOAD_IMAGEVIE,path,Integer.parseInt(userId),money,1);//1微信 2二维码
-            mPresenter.getData(ApiConfig.TEST_UPLOAD_IMAGEVIE,filePart);//1微信 2二维码
+
+            uploadFile(upladFile);
+
+//            mPresenter.getData(ApiConfig.TEST_UPLOAD_IMAGEVIE,filePart);//1微信 2二维码
+            //上传收款码    参数:
+            // imgId   添加时可无
+            // userId 用户id
+            // imgType 1、微信 2、支付宝
+            // imgUrl 图片路径
 
         }
         super.onActivityResult(requestCode, resultCode, data);

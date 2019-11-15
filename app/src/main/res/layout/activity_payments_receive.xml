@@ -89,27 +89,27 @@
         </android.support.v7.widget.CardView>
 
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/alipay_refreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srlEnableAutoLoadMore="true"
-            app:srlEnableLoadMore="true">
+        <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+            <!--android:id="@+id/alipay_refreshLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:srlEnableAutoLoadMore="true"-->
+            <!--app:srlEnableLoadMore="true">-->
 
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <!--<com.scwang.smartrefresh.layout.header.ClassicsHeader-->
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlClassicsSpinnerStyle="FixedBehind"
-            app:srlDrawableMarginRight="@dimen/dp_20"
-            app:srlDrawableProgress="@mipmap/icon_dark_refresh"
-            app:srlDrawableProgressSize="@dimen/dp_20"
-            app:srlEnableLastTime="true"
-            app:srlTextSizeTime="@dimen/sp_8"
-            app:srlTextSizeTitle="@dimen/sp_12"
-            app:srlTextTimeMarginTop="@dimen/dp_2"
-            />
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srlClassicsSpinnerStyle="FixedBehind"-->
+            <!--app:srlDrawableMarginRight="@dimen/dp_20"-->
+            <!--app:srlDrawableProgress="@mipmap/icon_dark_refresh"-->
+            <!--app:srlDrawableProgressSize="@dimen/dp_20"-->
+            <!--app:srlEnableLastTime="true"-->
+            <!--app:srlTextSizeTime="@dimen/sp_8"-->
+            <!--app:srlTextSizeTitle="@dimen/sp_12"-->
+            <!--app:srlTextTimeMarginTop="@dimen/dp_2"-->
+            <!--/>-->
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -117,13 +117,13 @@
             android:id="@+id/alipay_qr"
             android:layout_marginTop="@dimen/dp_10"/>
 
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlDrawableProgress="@mipmap/icon_dark_refresh"
-            app:srlTextSizeTime="@dimen/sp_8"
-            app:srlTextSizeTitle="@dimen/sp_12" />
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        <!--<com.scwang.smartrefresh.layout.footer.ClassicsFooter-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srlDrawableProgress="@mipmap/icon_dark_refresh"-->
+            <!--app:srlTextSizeTime="@dimen/sp_8"-->
+            <!--app:srlTextSizeTitle="@dimen/sp_12" />-->
+        <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
         <!--<RelativeLayout-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent"-->

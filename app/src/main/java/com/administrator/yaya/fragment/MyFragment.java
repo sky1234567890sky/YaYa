@@ -3,6 +3,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
 import com.administrator.yaya.bean.homepage.TestHomePageData;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
@@ -32,6 +34,7 @@ import butterknife.OnClick;
  * 我的界面
  */
 public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
+
     @BindView(R.id.get_gamemoney_tv)
     TextView getGamemoneyTv;
     @BindView(R.id.all_gamemoney_tv)
@@ -69,6 +72,8 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     LinearLayout myRightLl;
     private TestHomePageData.DataBean.UserInfoBean userInfo;
     private TestHomePageData.DataBean databean;
+    private String userId;
+
     public MyFragment() {
         // Required empty public constructor
     }
@@ -78,20 +83,37 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 
         return R.layout.fragment_my;
     }
+
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser==true && iv!=null){
+//            initData();
+//        }
+//    }
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
+
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.c_ffffff));
 //        if (databean.getUserEarningsToday()!=null) {SpannableString spannableString = ChangTvSizeUtils.changTVsize((Integer.parseInt( databean.getUserEarningsToday()) + Integer.parseInt("0.00"))+"");
 //        getGamemoneyTv.setText(spannableString);}
 //        SpannableString getInventory2 = ChangTvSizeUtils.changTVsize((userInfo.getUserEarningsTotal()+Integer.parseInt("0.00"))+"");
 //        if (getInventory2!=null)allGamemoneyTv.setText(getInventory2);
     }
+
     @Override
     protected void initData() {
+
+//        String urlPath = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW);
+//        if (urlPath!=null){
+//            Glide.with(getContext()).load(urlPath).apply(new RequestOptions().circleCrop()).placeholder(R.mipmap.icon).into(iv);
+//        }
+
 //        getPermission();//权限
-        String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
-        if (!TextUtils.isEmpty(userId)) mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId));
+        userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
+
+        mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId));
     }
     @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_right_ll, R.id.my_left_ll})
     public void onViewClicked(View view) {
@@ -104,18 +126,16 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 Intent sa = new Intent(getActivity(), SettingActivity.class);
                 startActivity(sa);
                 break;
-
             case R.id.my_ll:
                 Intent pd = new Intent(getActivity(), PersonalDatActivity.class);
 //                pd.putExtra("headlerIv",userInfo.getUserName());
                 startActivityForResult(pd,11);
                 break;
-
             case R.id.my_right_ll:
                 Intent myincome = new Intent(getActivity(), MyIncomeActivity.class);
                 startActivity(myincome);
                 break;
-                case R.id.my_left_ll:
+            case R.id.my_left_ll:
                 Intent myincome1 = new Intent(getActivity(), MyIncomeActivity.class);
                 startActivity(myincome1);
                 break;
@@ -175,14 +195,16 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 //                    userNickName 昵称
                     String userNickName = userInfo.getUserNickName();
 //                    userEarningsTotal 总收益
-                    int userEarningsTotal = userInfo.getUserEarningsTotal();
-                    allGamemoneyTv.setText(userInfo.getUserEarningsTotal() + "");//總收益
+
+                    allGamemoneyTv.setText(userInfo.getUserEarningsTotal()+ "");//總收益
 //                    zfbEd 支付宝已使用额度
 //                    wxEd 微信已使用额度
 //                    userEarningsToday 今日收益
                     String userEarningsToday = databean.getUserEarningsToday();
                     if (userEarningsToday==null)
+
                     getGamemoneyTv.setText("0");//今日收益
+//                    userEarningsToday
                     else getGamemoneyTv.setText(userEarningsToday);
 
                     //保存图片 跟 昵称
@@ -206,7 +228,6 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     else ToastUtil.showShort("已达到每日限度");
                     RequestOptions requestOptions = new RequestOptions().centerCrop();
                     Glide.with(getContext()).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(iv);
-
 //                    myNameTv.setText();
                 } else {
                     ToastUtil.showShort(data.getMsg());
@@ -214,4 +235,20 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 break;
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+//        Log.i("tag", "刷新数据1: )
+    }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (getActivity() != null && !hidden) {
+//            Log.i("tag", "刷新数据2: ");
+            initData();
+        }
+    }
+
+
 }

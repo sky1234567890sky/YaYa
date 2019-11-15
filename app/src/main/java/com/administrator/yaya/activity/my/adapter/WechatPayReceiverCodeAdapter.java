@@ -28,7 +28,6 @@ public class WechatPayReceiverCodeAdapter extends RecyclerView.Adapter<WechatPay
     public WechatPayReceiverCodeAdapter(List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> list) {
         this.list = list;
     }
-
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -36,43 +35,42 @@ public class WechatPayReceiverCodeAdapter extends RecyclerView.Adapter<WechatPay
         View inflate = LayoutInflater.from(context).inflate(R.layout.wechatpayreceivercode_item, viewGroup, false);
         return new Vh(inflate);
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, final int i) {
-
-        //1.图片的点击事件  点击图片选图
-        //2.上传后等待审核  用 加载图片展示下
-
-        //3.上传成功  展示图片
         TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean  = null;
+
         String imgUrl = null;
+
         double imgMoney=0;
 
         if (list.size() > 0) {
-
             for (int j = 0; j < list.size(); j++) {
                 userCodeImgListBean = list.get(j);
                 imgUrl = userCodeImgListBean.getImgUrl();
                 imgMoney = userCodeImgListBean.getImgMoney();
                 if (userCodeImgListBean.getImgMoney()==1000 && i == 1){
+//                    vh.item
+//                    vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
                     Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
                 }else  if (userCodeImgListBean.getImgMoney()==2000 && i == 2){
+//                    vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
                     Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
                 }else  if (userCodeImgListBean.getImgMoney()==3000 && i == 3){
+//                    vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
                     Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
                 }else  if (userCodeImgListBean.getImgMoney()==4000 && i == 4){
+//                    vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
                     Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
                 }else  if (userCodeImgListBean.getImgMoney()==5000 && i == 5){
+//                    vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
                     Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
                 }else{
+//                    vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
                     Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
                 }
             }
-
         }
-
-
         if (i == 0) {
             vh.mWechatGetmenryTv.setText("任意收款金额");
         }else if (i==1){

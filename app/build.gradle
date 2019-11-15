@@ -32,7 +32,6 @@ android {
 //            v2SigningEnabled false
 //        }
 //    }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -41,7 +40,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 //    buildTypes {
 //        release {
 //            minifyEnabled false
@@ -162,6 +160,8 @@ dependencies {
     //noinspection GradleDynamicVersion,GradleDependency
     implementation 'com.hjq:xxpermissions:1.+'
 
+
+    implementation 'com.squareup.picasso:picasso:2.5.2'
     //微信分享
     //noinspection GradleDynamicVersion
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'

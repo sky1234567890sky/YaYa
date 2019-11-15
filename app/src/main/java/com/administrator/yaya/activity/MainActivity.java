@@ -89,7 +89,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
     private String position = "0";
     private String userId;
     private int num = 2;
-    private String amount;
 
     @Override
     protected int getLayoutId() {
@@ -98,12 +97,11 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
     @Override
     protected void initView() {
         mHomepage.setChecked(true);
-        titles = new ArrayList<Integer>();
+        titles = new ArrayList<>();
         titles.add(R.string.homepage);
         titles.add(R.string.inventory);
         titles.add(R.string.orderform);
         titles.add(R.string.my);
-
         //初始化页面管理类
         manager = getSupportFragmentManager();
         initFragment();
@@ -159,7 +157,7 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
     protected void initData() {
         super.initData();
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        mPresenter.getData(ApiConfig.TEXT_GATHERING2, Integer.parseInt(userId), num);//已付款
+
     }
     @Override
     public void onError(int whichApi, Throwable e) {
@@ -171,13 +169,24 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
         switch (whichApi) {
             case ApiConfig.TEXT_GATHERING2:
                 TestAccountPaid testObligation = (TestAccountPaid) t[0];
-                if (testObligation.getData().getAmount()!=null){
-                    amount = testObligation.getData().getAmount();
+
+                if (testObligation.getCode()==0 && !TextUtils.isEmpty(testObligation.getData().getAmount())){
+
+//                    Log.i("tag", "============: "+testObligation.getData().getAmount());
+
+                    popupSelector(testObligation.getData().getAmount());//营业
+
+                }else {
+
+                    if (TextUtils.isEmpty(testObligation.getData().getAmount())){
+
+                        ToastUtil.showLong("当前没有库存，不能营业哦！");
+
+                    }
                 }
                 break;
         }
     }
-
     @OnClick({R.id.homepage, R.id.inventory_btn, R.id.dobusiness_btn, R.id.orderform_btn, R.id.mine_btn, R.id.dobusiness_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -189,11 +198,7 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
                 FragmentUtils.addFragment(manager, inventoryFragment.getClass(), R.id.home_fragment, null);
                 break;
             case R.id.dobusiness_iv:
-                if (amount==null || amount.equals("") || amount.isEmpty()|| TextUtils.isEmpty(amount)){//为空
-                    ToastUtil.showLong("当前没有库存，不能营业哦！");
-                }else{
-                    popupSelector();//营业
-                }
+                mPresenter.getData(ApiConfig.TEXT_GATHERING2, Integer.parseInt(userId), num);
                 break;
             case R.id.orderform_btn://订单
                 FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, null);
@@ -223,7 +228,7 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
         }
         return false;
     }
-    private void popupSelector() {
+    private void popupSelector(String amount) {
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_yingye, null);
         //显示营业游戏币数量
         ImageView cancel_iv = inflate.findViewById(R.id.cancel_pop_close_iv);
@@ -232,7 +237,7 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
         TextView mPopupTvCancel = inflate.findViewById(R.id.popup_tv_cancel);
         TextView mPopupTvOk = inflate.findViewById(R.id.popup_tv_ok);
 
-        if (!amount.isEmpty()) upAwayNumber.setText(amount);
+        upAwayNumber.setText(amount);
 
         popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
         //手动设置 PopupWindow 响应返回键并关闭的问题
@@ -276,7 +281,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
                 popupWindow.dismiss();
             }
         });
-
         popupWindow.setOutsideTouchable(false);
     }
     @Override

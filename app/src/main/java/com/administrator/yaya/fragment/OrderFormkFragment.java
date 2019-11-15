@@ -143,6 +143,7 @@ public class OrderFormkFragment extends BaseFragment {
 //            getFragmentManager().beginTransaction().replace(R.id.orderform_vp, sellFragment).commit();
 //        }
 //    }
+
     private void initTab() {
 //        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 //            @Override
@@ -159,6 +160,7 @@ public class OrderFormkFragment extends BaseFragment {
 //                        break;
 //                }
 //            }
+
 //            @Override
 //            public void onTabUnselected(TabLayout.Tab tab) {
 //            }
@@ -166,6 +168,7 @@ public class OrderFormkFragment extends BaseFragment {
 //            public void onTabReselected(TabLayout.Tab tab) {
 //            }
 //        });
+
     }
     private OrderFormsetOnclikListener orderFormsetOnclikListener;
     public interface OrderFormsetOnclikListener {
@@ -173,5 +176,12 @@ public class OrderFormkFragment extends BaseFragment {
     }
     public void OrderFormsetOnclikListener(OrderFormsetOnclikListener orderFormsetOnclikListener) {
         this.orderFormsetOnclikListener = orderFormsetOnclikListener;
+    }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (getActivity() != null && !hidden) {
+            initData();
+        }
     }
 }

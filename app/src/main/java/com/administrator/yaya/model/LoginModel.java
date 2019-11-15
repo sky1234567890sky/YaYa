@@ -13,6 +13,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class LoginModel implements ICommonModel {
+
     @Override
     public void getData(ICommonView view, int whichApi, Object[] t) {
         NetManager netManager = NetManager.getNetManager();
@@ -112,23 +113,37 @@ public class LoginModel implements ICommonModel {
                         .getAlipayReceiverCode((int) t[0], (int) t[1]), view, whichApi);
                 break;
 
-            //微信二维码
+            //上传收款码（列表接口）
+            // imgId   添加时可无
+            // userId 用户id
+            // imgType 1、微信 2、支付宝
+            // imgUrl 图片路径
             case ApiConfig.TEST_WECHAT_RECEIVER_CODE:
+                int userId = (int) t[0];
+                int type = (int) t[1];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getWechatReceiverCode((int) t[0], (int) t[1]), view, whichApi);
+                        .getWechatReceiverCode(userId,type),view, whichApi);
                 break;
-
                 //微信二维码图片上传
             case ApiConfig.TEST_UPLOAD_IMAGEVIE:
-
                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getUploadIv((MultipartBody.Part)t[0]), view, whichApi);
                 break;
 
-
             case ApiConfig.TEST_UPAWAY_SINGLE_GOODS://上架单个货物
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestUpawaySingleGoods((String) t[0]), view, whichApi);
+                break;
+//            参数:
+//            imgId   添加时可无
+//            userId 用户id
+//            imgType 1、微信 2、支付宝
+//            imgUrl 图片路径
+//            imgMoney  码金额
+
+            case ApiConfig.TEST_UPLOAD_GET_QR://上传收款码
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestUpLoadGetQr((int)t[0],(int)t[1],(String)t[2],(String)t[3]), view, whichApi);
                 break;
 
                 //所有售卖订单
@@ -194,6 +209,7 @@ public class LoginModel implements ICommonModel {
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestExpend((int) t[0],(int) t[1]), view, whichApi);
                 break;
+
                 //收入
             case ApiConfig.TEST_INCOME:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
@@ -226,8 +242,9 @@ public class LoginModel implements ICommonModel {
 
             //上传头像
             case ApiConfig.TEST_CHANGE_HEADLER:
+                String img = (String) t[1];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getLoadHeadlerIv((MultipartBody.Part)t[0],(int) t[1]), view, whichApi);
+                        .getLoadHeadlerIv((int) t[0],img), view, whichApi);
                 break;
 
             case ApiConfig.TEST_VERIFICATIONCODE:

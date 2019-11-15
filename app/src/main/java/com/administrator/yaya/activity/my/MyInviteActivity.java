@@ -155,10 +155,10 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 
                 RequestOptions requestOptions = new RequestOptions().centerCrop();
                 Glide.with(this).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(mMyinviteIv);
-
 //                parentUser			上级用户对象信息
 
 //                userId			用户id
+
 //                userName		用户姓名
 //                juniorUsers			下级用户集合
 
@@ -195,7 +195,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 myNameStateTv.setText("ID:"+userId);
 
                 tv3.setText("返利比例：0.2%");
-
 //                getGamemoneyTv.setText();
                 allGamemoneyTv.setText(userContributeTotal+"");
             }

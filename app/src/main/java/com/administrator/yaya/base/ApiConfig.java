@@ -62,10 +62,7 @@ public class ApiConfig {
 
     public static final int TEST_UPLOAD_NAME = 37;//上传昵称
 
-    public static final int TEST_UPLOAD_IMAGEVIE = 38;//微信上传二维码图片
-
+    public static final int TEST_UPLOAD_IMAGEVIE = 38;//微信上传图片
     public static final int TEST_WECHAT_RECEIVER_CODE = 20;//微信二维码
-
-
-
+    public static final int TEST_UPLOAD_GET_QR = 39;//上传收款码
 }

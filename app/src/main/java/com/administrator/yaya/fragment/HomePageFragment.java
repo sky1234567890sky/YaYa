@@ -84,7 +84,11 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
                         homeGamemoneyName.setText(comName);
 //                    comImg 商品图片
                         String comImg = commodity.getComImg();
+
+                        Log.i("tag", "首页ImageView=========》: "+comImg);
+
                         Glide.with(getContext()).load(comImg).placeholder(R.mipmap.icon).into(mHeadlerIv);
+
 //                    comPrice 商品价格
                         double comPrice1 = commodity.getComPrice();
                         homeGamemoneyPrice.setText("进货价￥：" + comPrice1);
@@ -133,5 +137,15 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (getActivity() != null && !hidden) {
+//            Log.i("tag", "刷新数据2: ");
+            initData();
+        }
     }
 }

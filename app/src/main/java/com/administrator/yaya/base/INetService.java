@@ -2,6 +2,7 @@ package com.administrator.yaya.base;
 
 import com.administrator.yaya.bean.TestCancelOrderStock;
 import com.administrator.yaya.bean.TestUpLoadCodeIv2;
+import com.administrator.yaya.bean.TestUpLoadGetQr;
 import com.administrator.yaya.bean.VerifyCodeInfo;
 import com.administrator.yaya.bean.homepage.TestBuyCom;
 import com.administrator.yaya.bean.homepage.TestHomePageData;
@@ -10,7 +11,6 @@ import com.administrator.yaya.bean.invite.TestObligation;
 import com.administrator.yaya.bean.invite.TestPayToAffirmInfo;
 import com.administrator.yaya.bean.invite.TestUpawayAllSingleGoods;
 import com.administrator.yaya.bean.invite.TestUpawaySingleGoods;
-import com.administrator.yaya.bean.login_register_bean.TestVersitionCode;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
 import com.administrator.yaya.bean.login_register_bean.TestRegister;
 import com.administrator.yaya.bean.my.SwitchReceiveingQrCode;
@@ -135,31 +135,9 @@ public interface INetService {
     @FormUrlEncoded
     Observable<TestSmallBook> getTestSmallBook(@Field("userId") int userId);
 
-    //    收款码
-//    http://192.168.0.198:8080/yayaApp/getUserCodeImg
-//    参数:
-//    用户id		userId
-//    类型		type	1、微信 2、支付宝
-    @POST("getUserCodeImg")
-    @FormUrlEncoded
-    Observable<TestAlipayReceiverCode> getAlipayReceiverCode(@Field("userId") int userId, @Field("type") int type);
 
 
-//    @POST("updateHeadImg")
-//    @Multipart
-//    @FormUrlEncoded
-//    Observable<TestWechatReceiverCode> getTestUploadImage(@Field("userId") int userId, @Field("type") int type);
 
-
-    //微信二维码列表
-    @POST("getUserCodeImg")
-    @FormUrlEncoded
-    Observable<TestWechatReceiverCode> getWechatReceiverCode(@Field("userId") int userId, @Field("type") int type);
-
-    //微信 上传 二维码
-    @POST("uploadCodeImg")
-    @Multipart
-    Observable<TestUpLoadCodeIv2> getUploadIv(@Part MultipartBody.Part file);
 
     //上架单个货物http://192.168.0.198:8080/yayaApp/comBuy/putawayOneOrderStock
     @POST("comBuy/putawayOneOrderStock")
@@ -278,27 +256,62 @@ public interface INetService {
 //    用户id userId
 //    类型 type 1微信  2支付宝
 //    状态 status 1开    2关
+
     @POST("openButton")
     @FormUrlEncoded
     Observable<SwitchReceiveingQrCode> getTestSwitchReceiveingQrCode(@Field("userId") int userId, @Field("type") int type, @Field("status") int status);
 
-    //    更换头像
-//    修改成功/修改失败
-//    结果:
-//    文件  file
-//    用户id  userId
-//    参数：
-//    http://192.168.0.198:8080/yayaApp/updateHeadImg
+    //上传头像
+//    参数:
+//    userId 用户id
+//    userHeadImg 图片路径
     @POST("updateHeadImg")
-    @Multipart
     @FormUrlEncoded
-    Observable<TestLoadHeadlerIv> getLoadHeadlerIv(@Part MultipartBody.Part url, @Field("userId") int userId);
-
+    Observable<TestUpLoadGetQr> getLoadHeadlerIv(@Field("userId") int userId,@Field("userHeadImg") String userHeadImg);
 
     //修改昵称
     @POST("updateName")
     @FormUrlEncoded
     Observable<TestUploadHeadler> getTestUploadHeadler(@Field("userId") int userId, @Field("userName") String userName);
 
+    //支付宝收款码
+//    http://192.168.0.198:8080/yayaApp/getUserCodeImg
+//    参数:
+//    用户id		userId
+//    类型		type	1、微信 2、支付宝
+    @POST("getUserCodeImg")
+    @FormUrlEncoded
+    Observable<TestAlipayReceiverCode> getAlipayReceiverCode(@Field("userId") int userId, @Field("type") int type);
 
+
+//    @POST("updateHeadImg")
+//    @Multipart
+//    @FormUrlEncoded
+//    Observable<TestWechatReceiverCode> getTestUploadImage(@Field("userId") int userId, @Field("type") int type);
+
+
+    //微信二维码  列表展示
+    // imgId   添加时可无
+    // userId 用户id
+    // imgType 1、微信 2、支付宝
+    // imgUrl 图片路径
+    @POST("getUserCodeImg")
+    @FormUrlEncoded
+    Observable<TestWechatReceiverCode> getWechatReceiverCode(@Field("userId") int userId, @Field("type") int type);
+
+    //微信 上传 图片 二维码   imgId
+//    appUploadCodeImg
+//    参数:
+//    imgId   添加时可无
+//    userId 用户id
+//    imgType 1、微信 2、支付宝
+//    imgUrl 图片路径
+    @POST("appUploadCodeImg")
+    @FormUrlEncoded
+    Observable<TestUpLoadGetQr> getTestUpLoadGetQr(@Field("userId") int userId, @Field("imgType") int imgType, @Field("imgUrl") String imgUrl, @Field("imgMoney") String imgMoney);
+
+    //上传图片
+    @POST("uploadCodeImg")
+    @Multipart
+    Observable<TestUpLoadCodeIv2> getUploadIv(@Part MultipartBody.Part file);
 }
