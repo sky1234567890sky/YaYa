@@ -64,24 +64,21 @@ public class AlipayReceiverCodeAdapter extends RecyclerView.Adapter<AlipayReceiv
                     Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
                 }
             }
-
         }
-
 
         if (i == 0) {
             vh.mMoneyNumber.setText("任意收款金额");
         }else if (i==1){
-            vh.mMoneyNumber.setText(imgMoney+"元");
+            vh.mMoneyNumber.setText("1000.0元");
         }else if (i==2){
-            vh.mMoneyNumber.setText(imgMoney+"元");
+            vh.mMoneyNumber.setText("2000.0元");
         }else if (i==3){
-            vh.mMoneyNumber.setText(imgMoney+"元");
+            vh.mMoneyNumber.setText("3000.0元");
         }else if (i==4){
-            vh.mMoneyNumber.setText(imgMoney+"元");
+            vh.mMoneyNumber.setText("4000.0元");
         }else if (i==5){
-            vh.mMoneyNumber.setText(imgMoney+"元");
+            vh.mMoneyNumber.setText("5000.0元");
         }
-
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,12 +88,10 @@ public class AlipayReceiverCodeAdapter extends RecyclerView.Adapter<AlipayReceiv
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return 6;
     }
-
     public class Vh extends RecyclerView.ViewHolder {
         @BindView(R.id.alipay_item_ll)//点击调用相机
         LinearLayout mApliayLl;
@@ -104,18 +99,15 @@ public class AlipayReceiverCodeAdapter extends RecyclerView.Adapter<AlipayReceiv
         TextView mMoneyNumber;//金额显示
         @BindView(R.id.ImageView_url_alipay)
         ImageView mImageViewUrl;//图片显示
-        @BindView(R.id.hint_unreviewed)
+        @BindView(R.id.hint_unreviewed)//hint_unreviewed
         TextView mHintUnreviewed;//待审核显示
         public Vh(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
-
-
     //跳转确认信息接口回调
     private AlipayPayReceiverCodesetOnclikListener alipayPayReceiverCodesetOnclikListener;
-
     public interface AlipayPayReceiverCodesetOnclikListener {
         void setonclik(int index,View view);
     }

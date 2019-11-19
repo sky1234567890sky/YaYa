@@ -46,7 +46,6 @@ public class TestSmallBook {
          * moneyZfbToday : 0
          * moneyZfbHistory : 0
          */
-
         private Object userId;
         private double moneyToday;
         private double moneyHistory;

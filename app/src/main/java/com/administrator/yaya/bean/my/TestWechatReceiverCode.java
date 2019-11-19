@@ -5,11 +5,10 @@ import java.util.List;
 //微信二维码
 public class TestWechatReceiverCode {
 
-
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"vxButtonStatus":2,"userCodeImgList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":5,"userId":1,"imgMoney":1000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/06/cdad99334b1515d3fb553ac88b70d0ba.jpg","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":3,"userId":1,"imgMoney":1000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/06/451f01109fe01f56c89a31866c123722.jpg","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":2,"userId":1,"imgMoney":2000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/06/650289e36970f6ed1ecfe4edd3f9d876.png","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0}],"zfbButtonStatus":2}
+     * data : {"vxButtonStatus":2,"userCodeImgList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":25,"userId":41,"imgMoney":1000,"imgUrl":"http://192.168.0.198:8082/profile/upload/2019/11/18/65e7d9841adbf69cdb96e6639a75a4ef.jpg","imgType":1,"imgStatus":1,"imgButton":null,"userName":null,"userPhone":null,"zfbEd":0,"wxEd":0}],"zfbButtonStatus":2}
      */
 
     private String msg;
@@ -43,7 +42,7 @@ public class TestWechatReceiverCode {
     public static class DataBean {
         /**
          * vxButtonStatus : 2
-         * userCodeImgList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":5,"userId":1,"imgMoney":1000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/06/cdad99334b1515d3fb553ac88b70d0ba.jpg","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":3,"userId":1,"imgMoney":1000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/06/451f01109fe01f56c89a31866c123722.jpg","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":2,"userId":1,"imgMoney":2000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/06/650289e36970f6ed1ecfe4edd3f9d876.png","imgType":1,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0}]
+         * userCodeImgList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":25,"userId":41,"imgMoney":1000,"imgUrl":"http://192.168.0.198:8082/profile/upload/2019/11/18/65e7d9841adbf69cdb96e6639a75a4ef.jpg","imgType":1,"imgStatus":1,"imgButton":null,"userName":null,"userPhone":null,"zfbEd":0,"wxEd":0}]
          * zfbButtonStatus : 2
          */
 
@@ -84,13 +83,15 @@ public class TestWechatReceiverCode {
              * updateTime : null
              * remark : null
              * params : {}
-             * imgId : 5
-             * userId : 1
+             * imgId : 25
+             * userId : 41
              * imgMoney : 1000
-             * imgUrl : http://192.168.0.198:8080/profile/upload/2019/11/06/cdad99334b1515d3fb553ac88b70d0ba.jpg
+             * imgUrl : http://192.168.0.198:8082/profile/upload/2019/11/18/65e7d9841adbf69cdb96e6639a75a4ef.jpg
              * imgType : 1
-             * imgStatus : 2
-             * userName : 钱浩龙
+             * imgStatus : 1
+             * imgButton : null
+             * userName : null
+             * userPhone : null
              * zfbEd : 0
              * wxEd : 0
              */
@@ -108,7 +109,9 @@ public class TestWechatReceiverCode {
             private String imgUrl;
             private int imgType;
             private int imgStatus;
-            private String userName;
+            private Object imgButton;
+            private Object userName;
+            private Object userPhone;
             private int zfbEd;
             private int wxEd;
 
@@ -216,12 +219,28 @@ public class TestWechatReceiverCode {
                 this.imgStatus = imgStatus;
             }
 
-            public String getUserName() {
+            public Object getImgButton() {
+                return imgButton;
+            }
+
+            public void setImgButton(Object imgButton) {
+                this.imgButton = imgButton;
+            }
+
+            public Object getUserName() {
                 return userName;
             }
 
-            public void setUserName(String userName) {
+            public void setUserName(Object userName) {
                 this.userName = userName;
+            }
+
+            public Object getUserPhone() {
+                return userPhone;
+            }
+
+            public void setUserPhone(Object userPhone) {
+                this.userPhone = userPhone;
             }
 
             public int getZfbEd() {
@@ -259,7 +278,9 @@ public class TestWechatReceiverCode {
                         ", imgUrl='" + imgUrl + '\'' +
                         ", imgType=" + imgType +
                         ", imgStatus=" + imgStatus +
-                        ", userName='" + userName + '\'' +
+                        ", imgButton=" + imgButton +
+                        ", userName=" + userName +
+                        ", userPhone=" + userPhone +
                         ", zfbEd=" + zfbEd +
                         ", wxEd=" + wxEd +
                         '}';

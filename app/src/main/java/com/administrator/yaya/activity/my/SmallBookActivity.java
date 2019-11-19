@@ -72,6 +72,7 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
 
     @Override
     public void onError(int whichApi, Throwable e) {
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -80,7 +81,8 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
         switch (whichApi) {
             case ApiConfig.TEST_SMALLBOOK:
                 TestSmallBook testSmallBook = (TestSmallBook) t[0];
-                if (testSmallBook != null && testSmallBook.getCode() == 0) {
+
+                if (testSmallBook.getCode() == 0) {
                     TestSmallBook.DataBean data = testSmallBook.getData();
 //                    moneyToday		今日付款
                     double moneyToday = data.getMoneyToday();

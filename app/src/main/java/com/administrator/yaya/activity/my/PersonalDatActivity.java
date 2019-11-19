@@ -160,6 +160,7 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
             RequestOptions requestOptions = new RequestOptions().circleCrop();
 
             if (headler_iamge!=null){
+
                 Glide.with(PersonalDatActivity.this)
                         .load(headler_iamge)
                         .apply(new RequestOptions().circleCrop())
@@ -295,9 +296,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
                         if (testLoadHeadlerIv.getCode() == 0) {
 
                             String urlIv = testLoadHeadlerIv.getMsg();
-
-                            Log.i("tag", "修改头像: "+urlIv);
-
                             //后台登录才能访问图片吧
 //                          Glide.with(PersonalDatActivity.this).load(urlIv).placeholder(R.mipmap.icon).into(personalHeaderIv);
                             Glide.with( PersonalDatActivity.this)
@@ -305,7 +303,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
                                     .apply(new RequestOptions().centerCrop())
                                     .placeholder(R.mipmap.icon)
                                     .into(personalHeaderIv);
-
                             //保存头像
                             SharedPrefrenceUtils.saveString(PersonalDatActivity.this, NormalConfig.HEADLER_IMAGEVIEW, urlIv);
 //                            ToastUtil.showShort(testLoadHeadlerIv.getMsg());
@@ -321,8 +318,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
             }
         });
     }
-
-
     @Override
     public void takeFail(TResult result, String msg) {
 //        ToastUtil.showShort(msg);
@@ -332,7 +327,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     public void takeCancel() {
 //        ToastUtil.showShort("取消获取图片");
     }
-
     @Override
     public void clickTop() {
         mTakePhoto = new TakePhotoImpl(this, this);
@@ -370,19 +364,14 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     public void clickBottom() {
         mPop.dismiss();
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mTakePhoto.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-
     @Override
     public void smsCodeSend() {
-
     }
-
     @Override
     public void countryCodeOpen() {
 

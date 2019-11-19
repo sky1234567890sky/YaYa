@@ -27,13 +27,13 @@
             android:id="@+id/hint_unreviewed"
             android:layout_width="@dimen/dp_150"
             android:layout_height="@dimen/dp_150"
-            android:text="等待后台审核...."
+            android:text="等待后台审核中...."
             android:gravity="center"
-            android:background="#F8F8F8"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             tools:ignore="HardcodedText"
             android:visibility="gone"
+            android:background="#80ffffff"
             />
 
 

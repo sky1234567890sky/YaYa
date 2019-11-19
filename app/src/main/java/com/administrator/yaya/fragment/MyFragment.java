@@ -77,7 +77,6 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     public MyFragment() {
         // Required empty public constructor
     }
-
     @Override
     protected int getLayoutId() {
 
@@ -91,30 +90,28 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 //            initData();
 //        }
 //    }
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
-
 //        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.c_ffffff));
 //        if (databean.getUserEarningsToday()!=null) {SpannableString spannableString = ChangTvSizeUtils.changTVsize((Integer.parseInt( databean.getUserEarningsToday()) + Integer.parseInt("0.00"))+"");
 //        getGamemoneyTv.setText(spannableString);}
 //        SpannableString getInventory2 = ChangTvSizeUtils.changTVsize((userInfo.getUserEarningsTotal()+Integer.parseInt("0.00"))+"");
 //        if (getInventory2!=null)allGamemoneyTv.setText(getInventory2);
-    }
 
+    }
     @Override
     protected void initData() {
-
 //        String urlPath = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW);
 //        if (urlPath!=null){
 //            Glide.with(getContext()).load(urlPath).apply(new RequestOptions().circleCrop()).placeholder(R.mipmap.icon).into(iv);
 //        }
-
 //        getPermission();//权限
         userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
-
         mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId));
     }
+
     @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_right_ll, R.id.my_left_ll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -141,6 +138,7 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 break;
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -151,22 +149,16 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
             }
         }
     }
-
-
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
-
     }
     @SuppressLint("SetTextI18n")
     @Override
@@ -190,7 +182,6 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 //                    userInfo: 用户基本信息
 //                    userName 用户姓名
                     String userName = userInfo.getUserName();
-
                     String userHeadImg = userInfo.getUserHeadImg();
 //                    userNickName 昵称
                     String userNickName = userInfo.getUserNickName();
@@ -206,11 +197,9 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     getGamemoneyTv.setText("0");//今日收益
 //                    userEarningsToday
                     else getGamemoneyTv.setText(userEarningsToday);
-
                     //保存图片 跟 昵称
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW,userHeadImg);
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_NICK,userName);
-
                     myNameTv.setText(userName);//用户名称
 
                     tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
@@ -238,17 +227,19 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     @Override
     public void onResume() {
         super.onResume();
-//        Log.i("tag", "刷新数据1: )
+//        Log.i("tag", "刷新数据1:"+"" );
+        initData();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+//        Log.i("tag", "刷新数据12:"+"" );
     }
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-
         if (getActivity() != null && !hidden) {
 //            Log.i("tag", "刷新数据2: ");
-            initData();
         }
     }
-
-
 }

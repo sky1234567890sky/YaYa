@@ -66,7 +66,8 @@
             android:textColor="#333333"
             android:textSize="@dimen/sp_15"
             />
-        <ImageView
+
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/personal_header_iv"
             android:layout_width="@dimen/dp_44"
             android:layout_height="@dimen/dp_44"
@@ -74,8 +75,8 @@
             android:layout_marginRight="@dimen/dp_40"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon"
+            app:riv_oval="true"
             />
-
         <ImageView
             android:layout_marginRight="@dimen/dp_20"
             android:layout_centerVertical="true"
