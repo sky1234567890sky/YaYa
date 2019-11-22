@@ -30,7 +30,6 @@
             android:textSize="@dimen/sp_18"
             android:textStyle="normal"
             />
-
     </RelativeLayout>
 
     <!--android:background="@drawable/inventory_bg_code"-->

@@ -164,19 +164,18 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
                 if (!list.isEmpty())list.clear();
 
                 TestInventory testInventory = (TestInventory) t[0];
+                if (testInventory.getMsg()==SignOut){
 
+                    ToastUtil.showLong(R.string.username_login_hint+"");
+
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+
+                    startActivity(intent);
+
+                    return;
+                }
 
                 if (testInventory.getCode() == 0) {
-
-                    if (testInventory.getMsg()==SignOut){
-
-                        ToastUtil.showLong(R.string.username_login_hint+"");
-
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-
-                        startActivity(intent);
-
-                    }else {
                         Log.i("tag", "库存数据: " + testInventory.toString());
                         data = testInventory.getData();
                         TestInventory.DataBean.CommodityBean commodity = data.getCommodity();
@@ -188,7 +187,6 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 
                         list.addAll(orderStockList);
                         adapter.notifyDataSetChanged();
-                    }
                 }
                 break;
         }
