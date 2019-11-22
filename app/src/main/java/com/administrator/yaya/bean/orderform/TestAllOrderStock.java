@@ -266,7 +266,7 @@ public class TestAllOrderStock {
             private int salesId;
             private int userId;
             private String orderNumber;
-            private int commodityPrice;
+            private double commodityPrice;
             private int salesAmount;
             private double salesAmountMoney;
             private int parentSalesId;
@@ -358,11 +358,11 @@ public class TestAllOrderStock {
                 this.orderNumber = orderNumber;
             }
 
-            public int getCommodityPrice() {
+            public double getCommodityPrice() {
                 return commodityPrice;
             }
 
-            public void setCommodityPrice(int commodityPrice) {
+            public void setCommodityPrice(double commodityPrice) {
                 this.commodityPrice = commodityPrice;
             }
 

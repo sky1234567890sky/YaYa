@@ -1,6 +1,8 @@
 package com.administrator.yaya.activity.my.fragment;
 
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,12 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.my.adapter.RebateAdapter;
 import com.administrator.yaya.activity.orderform.adapter.SellAdapter;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
 import com.administrator.yaya.bean.my.TestMyEarnings;
 import com.administrator.yaya.bean.my.TestRebate;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
@@ -34,24 +38,57 @@ import butterknife.BindView;
 
 /**
  * A simple {@link Fragment} subclass.
- * 返利
+ * 返利   3
  */
-public class RebateFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
+public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements ICommonView {
     @BindView(R.id.rebate_lv)
     RecyclerView mList;
     @BindView(R.id.rebate_refreshLayout)
     SmartRefreshLayout rebateRefreshLayout;
     private RebateAdapter adapter;
     private ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list;
+    private String userId;
+    private String token;
 
     public RebateFragment() {
         // Required empty public constructor
     }
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        //不可见的时候关闭加载
+//        if (!isVisibleToUser) {
+//            if (rebateRefreshLayout != null) {
+//                rebateRefreshLayout.finishRefresh();
+//            }
+//        } else {
+//            super.setUserVisibleHint(isVisibleToUser);
+//        }
+
+        if (isVisibleToUser ==true){//当前处于可见状态
+            if (rebateRefreshLayout!=null){
+                refresh();
+            }
+        }
+    }
+
+    @Override
+    public void fetchData() {
+//        initData();
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        rebateRefreshLayout.autoRefresh();
+
+        initData();
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_rebate;
     }
-
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
@@ -62,14 +99,16 @@ public class RebateFragment extends BaseMvpFragment<LoginModel> implements IComm
     }
     @Override
     protected void initData() {
-        String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
-        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),1);//收益类型--1收入-2支出-3返利
+
+        userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
+        token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
+
+        if (userId !=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),token,3);//收益类型--1收入-2支出-3返利
     }
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
@@ -79,18 +118,26 @@ public class RebateFragment extends BaseMvpFragment<LoginModel> implements IComm
     public void onError(int whichApi, Throwable e) {
 
     }
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEST_MY_EARNINGS://返利
+                list.clear();
+
                 TestMyEarnings testMyEarnings = (TestMyEarnings) t[0];
+                if (testMyEarnings.getMsg()==SignOut){
+                    ToastUtil.showLong(""+R.string.username_login_hint);
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
                 if (testMyEarnings.getCode()==0 && testMyEarnings.getData()!=null)  {
                     TestMyEarnings.DataBean data = testMyEarnings.getData();
                     List<TestMyEarnings.DataBean.UserEarningsListBean> userEarningsList = data.getUserEarningsList();
                     list.addAll(userEarningsList);
                     adapter.notifyDataSetChanged();
-                    Log.i("tag", "返利: " + testMyEarnings.toString());
+                    Log.i("tag", "返利: "+ testMyEarnings.toString());
+
 //                    用户信息:userInfo
 //                    userName 用户姓名
 //                    userNickName 昵称
@@ -112,5 +159,23 @@ public class RebateFragment extends BaseMvpFragment<LoginModel> implements IComm
                 }
                 break;
         }
+        rebateRefreshLayout.finishRefresh();
+    }
+    //获取焦点时刷新
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isRefresh) {
+            if (!list.isEmpty()){
+                list.clear();
+            }
+            refresh();
+            isRefresh = false;
+        }
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!isRefresh) isRefresh = true;
     }
 }

@@ -30,14 +30,12 @@ public class CanaelAdapter extends RecyclerView.Adapter<CanaelAdapter.Vh> {
         this.list = list;
         this.activity = activity;
     }
-
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View inflate = LayoutInflater.from(activity).inflate(R.layout.cancel_item, null);
         return new Vh(inflate);
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
@@ -62,28 +60,34 @@ public class CanaelAdapter extends RecyclerView.Adapter<CanaelAdapter.Vh> {
 //                最大购买数量comPurchaseNumMax
 //        今日收款数		amoun
         int salesStatus = orderStockListBean.getSalesStatus();
-        if (salesStatus ==3 ||  orderStockListBean!=null) {//1售卖中 2 已完成 3已取消
+
+//        if (salesStatus ==3 ||  orderStockListBean!=null) {//1售卖中 2 已完成 3已取消
+
             String salesUpdateTime = orderStockListBean.getSalesUpdateTime();
+
             String orderNumber = orderStockListBean.getOrderNumber();
-            Object salesAmount = orderStockListBean.getSalesAmount();
+
             vh.mCancelOrderBuildTime.setText("取消时间：" + salesUpdateTime);
+
             int orderPayTpe = orderStockListBean.getOrderPayTpe();
-            int salesAmountMoney = orderStockListBean.getSalesAmountMoney();
+            double salesAmountMoney = orderStockListBean.getSalesAmountMoney();
+
+            double salesAmountMoney1 = list.get(i).getSalesAmountMoney();
             String salesBuildTime = orderStockListBean.getSalesBuildTime();
-            vh.mCancelCommodityPrice.setText("售卖总价￥："+salesAmountMoney);
+            vh.mCancelCommodityPrice.setText("售卖总价￥："+salesAmountMoney1);
             vh.mCancelGcomName.setText(commodityBean.getComName());
             String comImg = commodityBean.getComImg();
             Glide.with(activity).load(comImg).into(vh.mCancelComImg);
             int comInventory = commodityBean.getComInventory();
-            vh.mCancelOrderBuildTime.setText("售卖数量："+comInventory);
 
-        }
+        int salesAmount = orderStockListBean.getSalesAmount();
+        vh.mCancelCommodityAmount.setText("售卖数量："+salesAmount);
+//        }
     }
     @Override
     public int getItemCount() {
         return list != null ? list.size() : 0;
     }
-
 
     public class Vh extends RecyclerView.ViewHolder{
         @BindView(R.id.cancel_right_iv)

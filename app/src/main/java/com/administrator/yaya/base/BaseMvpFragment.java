@@ -1,6 +1,9 @@
 package com.administrator.yaya.base;
 
+import android.widget.Toast;
+
 public abstract class BaseMvpFragment<M> extends BaseFragment implements ICommonView{
+
     public CommonPresenter mPresenter;
     public M mModel;
     @Override
@@ -17,10 +20,10 @@ public abstract class BaseMvpFragment<M> extends BaseFragment implements ICommon
     protected int getLoadType(Object[] t){
         return  t != null && t.length>1 ? (int) t[1] : 0;
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         mPresenter.detach();
     }
+
 }

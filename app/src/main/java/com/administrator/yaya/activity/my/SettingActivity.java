@@ -81,25 +81,28 @@ public class SettingActivity extends BaseActivity {
                             @SuppressLint("ApplySharedPref")
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
                                 Intent login = new Intent(SettingActivity.this, LoginActivity.class);
                                 //清除数据
-
 //                                SharedPreferences settings = getSharedPreferences("config", MODE_PRIVATE);
 ////                                SharedPreferences.Editor edit = settings.edit();
 ////                                edit.putString(NormalConfig.USER_ID,"");
 //////                                edit.putBoolean(NormalConfig.ISFIRST,false);
 ////                                edit.commit();
                                 SharedPrefrenceUtils.saveString(SettingActivity.this,NormalConfig.USER_ID,"");
+
+                                SharedPrefrenceUtils.saveString(SettingActivity.this,NormalConfig.TOKEN,"");
+
                                 mApplication.userid =0;
+
+                                mApplication.mToken = "";
+
                                 startActivity(login);
+
                                 finish();
                             }
-
                         }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 }).show();
                 break;

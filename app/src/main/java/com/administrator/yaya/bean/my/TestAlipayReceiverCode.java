@@ -9,7 +9,6 @@ public class TestAlipayReceiverCode {
      * code : 0
      * data : {"vxButtonStatus":2,"userCodeImgList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":3,"userId":1,"imgMoney":20000,"imgUrl":"http://192.168.0.198:8080/profile/upload/2019/11/01/8dba748d8f6c26c8ba99d631ea278d50.jpg","imgType":2,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"imgId":2,"userId":1,"imgMoney":2000,"imgUrl":"http://localhost:8080/profile/upload/2019/10/25/01d9052cea6ada00e56fda20f5b97eb9.jpg","imgType":2,"imgStatus":2,"userName":"钱浩龙","zfbEd":0,"wxEd":0}],"zfbButtonStatus":2}
      */
-
     private String msg;
     private int code;
     private DataBean data;

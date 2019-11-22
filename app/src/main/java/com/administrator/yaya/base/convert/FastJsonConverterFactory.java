@@ -56,7 +56,6 @@ public class FastJsonConverterFactory extends Converter.Factory{
             serializeConfig = config;
             serializerFeatures = features;
         }
-
         @Override
         public RequestBody convert(T value) throws IOException {
             byte[] content;

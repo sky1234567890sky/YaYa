@@ -3,12 +3,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.my.MyIncomeActivity;
 import com.administrator.yaya.activity.my.PersonalDatActivity;
 import com.administrator.yaya.activity.my.SettingActivity;
@@ -17,6 +19,7 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
 import com.administrator.yaya.bean.homepage.TestHomePageData;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
@@ -32,6 +35,7 @@ import butterknife.OnClick;
  * 我的界面
  */
 public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
+
     @BindView(R.id.get_gamemoney_tv)
     TextView getGamemoneyTv;
     @BindView(R.id.all_gamemoney_tv)
@@ -44,7 +48,6 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     ImageView settingIv;
     @BindView(R.id.iv)
     ImageView iv;
-
     @BindView(R.id.my_name_tv)
     TextView myNameTv;
     @BindView(R.id.my_name_state_tv)
@@ -65,19 +68,28 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     RelativeLayout myLl;
     @BindView(R.id.wire)
     View wire;
+
     @BindView(R.id.my_right_ll)
     LinearLayout myRightLl;
     private TestHomePageData.DataBean.UserInfoBean userInfo;
     private TestHomePageData.DataBean databean;
+    private String userId;
+    private String token;
 
     public MyFragment() {
         // Required empty public constructor
     }
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_my;
     }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser==true && iv!=null){
+//            initData();
+//        }
+//    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -88,19 +100,21 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 //        SpannableString getInventory2 = ChangTvSizeUtils.changTVsize((userInfo.getUserEarningsTotal()+Integer.parseInt("0.00"))+"");
 //        if (getInventory2!=null)allGamemoneyTv.setText(getInventory2);
     }
+
     @Override
     protected void initData() {
-//        getPermission();//权限
+//        String urlPath = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW);
+//        if (urlPath!=null){
+//            Glide.with(getContext()).load(urlPath).apply(new RequestOptions().circleCrop()).placeholder(R.mipmap.icon).into(iv);
+//        }
 
-        String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
-        if (!TextUtils.isEmpty(userId))
-            mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId));
-        else {
-            ToastUtil.showShort("网络请求有误");
-        }
+//        getPermission();//权限
+        userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
+        token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
+        mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId),token);
     }
 
-    @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_right_ll})
+    @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_right_ll, R.id.my_left_ll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.system_msg_iv://系統消息
@@ -111,30 +125,40 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 Intent sa = new Intent(getActivity(), SettingActivity.class);
                 startActivity(sa);
                 break;
-
             case R.id.my_ll:
                 Intent pd = new Intent(getActivity(), PersonalDatActivity.class);
-                pd.putExtra("headlerIv",userInfo.getUserHeadImg());
+//                pd.putExtra("headlerIv",userInfo.getUserName());
                 startActivityForResult(pd,11);
                 break;
-
             case R.id.my_right_ll:
                 Intent myincome = new Intent(getActivity(), MyIncomeActivity.class);
                 startActivity(myincome);
+                break;
+            case R.id.my_left_ll:
+                Intent myincome1 = new Intent(getActivity(), MyIncomeActivity.class);
+                startActivity(myincome1);
                 break;
         }
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 11 && resultCode ==12 ){//结果码
+            String nickName = data.getStringExtra("sky");
+            if (nickName!=null){
+                myNameTv.setText(nickName);
+            }
+        }
+    }
+    @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
 
@@ -146,7 +170,14 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TestHomePageData data = (TestHomePageData) t[0];
 
-                if (data.getCode() == 0 && data.getData()!=null && data.getData().getUserInfo() != null) {
+                //1
+                if (data.getMsg()==SignOut){
+
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+
+                    startActivity(intent);
+
+                }else if (data.getCode() == 0 && data.getData()!=null && data.getData().getUserInfo() != null) {
                     databean = data.getData();
                     userInfo = databean.getUserInfo();
 //                    tvDay.setText(""+);//每日限額
@@ -159,29 +190,25 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     double comPrice = commodity.getComPrice();
 //                    comImg 商品图片
                     String comImg = commodity.getComImg();
-
 //                    userInfo: 用户基本信息
 //                    userName 用户姓名
+                    String userName = userInfo.getUserName();
                     String userHeadImg = userInfo.getUserHeadImg();
-
 //                    userNickName 昵称
-                    String userNickName = userInfo.getUserNickName();
+//                    String userNickName = userInfo.getUserNickName();
 //                    userEarningsTotal 总收益
-                    int userEarningsTotal = userInfo.getUserEarningsTotal();
-                    allGamemoneyTv.setText(userInfo.getUserEarningsTotal() + "");//總收益
+                    allGamemoneyTv.setText(userInfo.getUserEarningsTotal()+ "");//總收益
 //                    zfbEd 支付宝已使用额度
 //                    wxEd 微信已使用额度
-
 //                    userEarningsToday 今日收益
                     String userEarningsToday = databean.getUserEarningsToday();
-                    if (userEarningsToday==null)
-                    getGamemoneyTv.setText("0");//今日收益
+                    if (userEarningsToday==null) getGamemoneyTv.setText("0");//今日收益
+//                    userEarningsToday
                     else getGamemoneyTv.setText(userEarningsToday);
-
                     //保存图片 跟 昵称
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW,userHeadImg);
-                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_NICK, userNickName);
-                    myNameTv.setText(userNickName);
+                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_NICK,userName);
+                    myNameTv.setText(userName);//用户名称
 
                     tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
                     tvWechatUse.setText(userInfo.getWxEd() + "");//微信已使用额度
@@ -194,16 +221,38 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     //剩余额度
                     if (alipayInt>=userInfo.getZfbEd())tvSheng.setText((alipayInt-userInfo.getZfbEd())+"");
                     else ToastUtil.showShort("已达到每日限度");
+
                     if (wechatInt>=userInfo.getWxEd())tvWechatSheng.setText((wechatInt-userInfo.getWxEd())+"");
                     else ToastUtil.showShort("已达到每日限度");
+
                     RequestOptions requestOptions = new RequestOptions().centerCrop();
                     Glide.with(getContext()).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(iv);
 
 //                    myNameTv.setText();
+
                 } else {
                     ToastUtil.showShort(data.getMsg());
                 }
                 break;
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+//        Log.i("tag", "刷新数据1:"+"" );
+        initData();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+//        Log.i("tag", "刷新数据12:"+"" );
+    }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (getActivity() != null && !hidden) {
+//            Log.i("tag", "刷新数据2: ");
+            initData();
         }
     }
 }

@@ -18,6 +18,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.activity.my.adapter.MyInviteFragmentAdapter;
 import com.administrator.yaya.activity.my.fragment.ExpendFragment;
@@ -73,6 +74,8 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
 
     private int userEarningsNow;
     private int userContributeTotal;
+    private String userId;
+    private String token;
 
     @Override
     protected int getLayoutId() {
@@ -89,6 +92,7 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
         //收入Income
         //支出Expend
         //返利Rebate
+
         fragments = new ArrayList<>();
         incomeFragment = new IncomeFragment();//收入
         expendFragment = new ExpendFragment();//支出
@@ -115,14 +119,15 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
     protected void initData() {
         super.initData();
 
-        String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        if (userId!=null) {
-            mPresenter.getData(ApiConfig.TEST_EXPEND, Integer.parseInt(userId), 2);
+        userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
+
+        if (userId !=null) {
+            mPresenter.getData(ApiConfig.TEST_EXPEND, Integer.parseInt(userId),token, 2);
         }else{
             ToastUtil.showShort(R.string.networkerr+"");
         }
     }
-
     @Override
     protected void initListener() {
 //        mTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -180,13 +185,19 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
                 MyIncomeActivity.this.finish();
                 break;
             case R.id.go_up:
-                popupPutaway();
+                //可用为零不能上架
+                if (userEarningsNow==0) {
+                    ToastUtil.showLong("当前无可用游戏币不能上架。");
+                } else{
+                    popupPutaway();
+                }
                 break;
             case R.id.myincome_game_money_plain_iv:
                 startActivity(new Intent(this,GameMoneyExplainActivity.class));
                 break;
         }
     }
+    @SuppressLint("SetTextI18n")
     private void popupPutaway() {
         //上
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_putaway, null);
@@ -243,11 +254,11 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
                 //解析上架所有货物
 //                mPresenter.getData(ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK,);
                 String userId = SharedPrefrenceUtils.getString(MyIncomeActivity.this, NormalConfig.USER_ID);
+
                 if (userId!=null) {
-                    mPresenter.getData(ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK, Integer.parseInt(userId));
-                }else{
-                    ToastUtil.showShort(R.string.networkerr+"");
+                    mPresenter.getData(ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK, Integer.parseInt(userId),mApplication.mToken,userEarningsNow);
                 }
+
                 MainActivity mainActivity = new MainActivity();
                 Intent intent = new Intent(MyIncomeActivity.this, MainActivity.class);
                 intent.putExtra("upaway",3);
@@ -277,10 +288,18 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
             //我的收益  收入
             case ApiConfig.TEST_EXPEND:
                 TestExpend testMyEarnings = (TestExpend) t[0];
+
+                if (testMyEarnings.getMsg()==mApplication.SignOut){
+                    ToastUtil.showLong(R.string.username_login_hint+"");
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+
                 if (testMyEarnings.getData()!=null &&testMyEarnings.getCode()==0){
                     TestExpend.DataBean data = testMyEarnings.getData();
 //                    Log.i("tag", "我的收益: "+data.toString());
-                    List<?> userEarningsList = data.getUserEarningsList();
+                     data.getUserEarningsList();
                     TestExpend.DataBean.UserInfoBean userInfo = data.getUserInfo();
 //                    userName 用户姓名
 //                    userNickName 昵称
@@ -304,11 +323,21 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
                     ToastUtil.showShort(testMyEarnings.getMsg());
                 }
                 break;
+
                 //上架所有货物
             case ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK:
+
                 TestPutawayAllOrderStock testPutawayAllOrderStock = (TestPutawayAllOrderStock) t[0];
+                if (testPutawayAllOrderStock.getMsg() == mApplication.SignOut){
+                    ToastUtil.showLong(""+R.string.username_login_hint);
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+
                 if (testPutawayAllOrderStock.getCode()==0){
                     ToastUtil.showShort(testPutawayAllOrderStock.getMsg());
+
                 }else{
                     ToastUtil.showShort(testPutawayAllOrderStock.getMsg());
                 }

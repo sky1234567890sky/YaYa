@@ -8,12 +8,12 @@
     android:background="@color/c_ffffff"
     android:orientation="vertical"
     tools:context=".fragment.HomePageFragment">
-    <!--<ImageView-->
-        <!--android:layout_width="@dimen/dp_312_5"-->
-        <!--android:layout_height="@dimen/dp_127_5"-->
-        <!--android:src="@mipmap/logo"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--tools:ignore="ContentDescription" />-->
+    <ImageView
+        android:layout_width="@dimen/dp_312_5"
+        android:layout_height="@dimen/dp_127_5"
+        android:src="@mipmap/logo"
+        android:layout_alignParentBottom="true"
+        tools:ignore="ContentDescription" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

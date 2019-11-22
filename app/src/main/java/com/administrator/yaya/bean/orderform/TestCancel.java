@@ -1,9 +1,10 @@
 package com.administrator.yaya.bean.orderform;
 
+import java.io.Serializable;
 import java.util.List;
 
 //已取消
-public class TestCancel {
+public class TestCancel implements Serializable {
 
     /**
      * msg : 操作成功
@@ -47,7 +48,7 @@ public class TestCancel {
          */
 
         private CommodityBean commodity;
-        private Object amount;
+        private String amount;
         private List<OrderSalesListBean> orderSalesList;
 
         public CommodityBean getCommodity() {
@@ -58,11 +59,11 @@ public class TestCancel {
             this.commodity = commodity;
         }
 
-        public Object getAmount() {
+        public String getAmount() {
             return amount;
         }
 
-        public void setAmount(Object amount) {
+        public void setAmount(String amount) {
             this.amount = amount;
         }
 
@@ -270,7 +271,7 @@ public class TestCancel {
             private String orderNumber;
             private double commodityPrice;
             private int salesAmount;
-            private int salesAmountMoney;
+            private double salesAmountMoney;
             private int parentSalesId;
             private int orderPayTpe;
             private int salesStatus;
@@ -376,11 +377,11 @@ public class TestCancel {
                 this.salesAmount = salesAmount;
             }
 
-            public int getSalesAmountMoney() {
+            public double getSalesAmountMoney() {
                 return salesAmountMoney;
             }
 
-            public void setSalesAmountMoney(int salesAmountMoney) {
+            public void setSalesAmountMoney(double salesAmountMoney) {
                 this.salesAmountMoney = salesAmountMoney;
             }
 
@@ -431,7 +432,6 @@ public class TestCancel {
             public void setSalesBuildTimeEnd(Object salesBuildTimeEnd) {
                 this.salesBuildTimeEnd = salesBuildTimeEnd;
             }
-
             public String getUserName() {
                 return userName;
             }

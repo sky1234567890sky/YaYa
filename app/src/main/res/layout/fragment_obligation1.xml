@@ -9,33 +9,51 @@
         android:src="@mipmap/logo"
         android:layout_alignParentBottom="true"
         />
-    <RelativeLayout
-        android:background="@drawable/inventory_item_bg"
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_162"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+
         android:layout_marginLeft="@dimen/dp_12_5"
         android:layout_marginRight="@dimen/dp_12_5"
         android:layout_marginTop="@dimen/dp_15"
         android:paddingLeft="@dimen/dp_12_5"
-        android:paddingBottom="@dimen/dp_10">
+        android:paddingBottom="@dimen/dp_10"
+        >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_162"
+        >
+        <ImageView
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_55"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/icon_daifukuan"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            />
+
 
         <TextView
             android:id="@+id/daifu_orderNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="订单编号：xxxxxxxxxxx"
+            android:text="订单编号：-----------"
             android:textStyle="normal"
             android:textColor="#666666"
             android:textSize="@dimen/sp_13"
             tools:ignore="HardcodedText"
             android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginLeft="@dimen/dp_5"
             />
         <ImageView
             android:id="@+id/daifu_comImg"
             android:layout_width="@dimen/dp_75"
             android:layout_height="@dimen/dp_75"
             android:layout_below="@id/daifu_orderNumber"
-            android:layout_marginTop="@dimen/dp_12_5"
+            android:layout_marginTop="@dimen/dp_10"
             android:background="@mipmap/icon"
             tools:ignore="ContentDescription"
             />
@@ -149,7 +167,9 @@
             android:paddingLeft="@dimen/dp_12"
             android:paddingTop="@dimen/dp_3"
             android:paddingBottom="@dimen/dp_3"
+            android:visibility="gone"
             />
 
     </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

@@ -20,7 +20,6 @@
 -dontwarn android.support.**
 -keep class android.support.** { *; }
 
-
 -keepattributes InnerClasses
 -dontoptimize
 

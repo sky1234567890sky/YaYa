@@ -46,7 +46,7 @@ public class IncomeAdapter extends RecyclerView.Adapter<IncomeAdapter.Vh> {
 //        earningsTime	收益日期
         TestMyEarnings.DataBean.UserEarningsListBean userEarningsListBean = list.get(i);
         String orderId = userEarningsListBean.getOrderId();
-        int salesAmount = userEarningsListBean.getSalesAmount();
+        double salesAmount = userEarningsListBean.getSalesAmount();
         int earningsAmount = userEarningsListBean.getEarningsAmount();
         int earningsType = userEarningsListBean.getEarningsType();
         String createTime = userEarningsListBean.getEarningsTime();

@@ -6,7 +6,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/c_ffffff"
     tools:context=".activity.inventory.fragment.AccountPaidFragment">
-
+    <!--<ImageView-->
+        <!--android:layout_width="@dimen/dp_312_5"-->
+        <!--android:layout_height="@dimen/dp_127_5"-->
+        <!--android:src="@mipmap/logo"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--tools:ignore="ContentDescription" />-->
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
     android:id="@+id/account_refreshLayout"
     android:layout_width="match_parent"

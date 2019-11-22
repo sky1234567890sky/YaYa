@@ -6,7 +6,6 @@ public class TestUpdatePwd {
      * msg : 修改成功!
      * code : 0
      */
-
     private String msg;
     private int code;
 

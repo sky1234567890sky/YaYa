@@ -1,7 +1,7 @@
 package com.administrator.yaya.bean;
-//取消进货订单
-public class TestCancelOrderStock {
-
+//取消售卖订单
+//售卖
+public class   TestCancelOrderStock {
     /**
      * msg : 运单取消成功
      * code : 0

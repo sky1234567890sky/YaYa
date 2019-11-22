@@ -7,7 +7,7 @@ public class TestMyInvite {
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":418,"userEarningsTotal":541,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":1,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":13,"userName":null,"userNickName":null,"userHeadImg":null,"userPhone":"18898186027","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"W0VXY2","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":6,"userName":"钱浩","userNickName":"123","userHeadImg":null,"userPhone":"17631365661","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"AP65X1","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":"2000"}],"junior":null},"userContributeTotalToday":2000,"allUserContributeTotal":0}
+     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":36,"userName":"晓琪","userNickName":null,"userHeadImg":null,"userPhone":"13723030657","userPwd":"666666","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"204953","userParentId":1,"userEarningsNow":2018,"userEarningsTotal":2018,"userContributeTotal":672,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"sky","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8082/profile/upload/2019/11/08/faf9587590a7a6d4dee87b4851cc503d.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"8888","userParentId":0,"userEarningsNow":200732,"userEarningsTotal":10554,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":1,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"juniorUsers":[],"junior":null},"userContributeTotalToday":0,"allUserContributeTotal":0}
      */
 
     private String msg;
@@ -40,8 +40,8 @@ public class TestMyInvite {
 
     public static class DataBean {
         /**
-         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":418,"userEarningsTotal":541,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":1,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":13,"userName":null,"userNickName":null,"userHeadImg":null,"userPhone":"18898186027","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"W0VXY2","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":6,"userName":"钱浩","userNickName":"123","userHeadImg":null,"userPhone":"17631365661","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"AP65X1","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":"2000"}],"junior":null}
-         * userContributeTotalToday : 2000
+         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":36,"userName":"晓琪","userNickName":null,"userHeadImg":null,"userPhone":"13723030657","userPwd":"666666","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"204953","userParentId":1,"userEarningsNow":2018,"userEarningsTotal":2018,"userContributeTotal":672,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"sky","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8082/profile/upload/2019/11/08/faf9587590a7a6d4dee87b4851cc503d.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"8888","userParentId":0,"userEarningsNow":200732,"userEarningsTotal":10554,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":1,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"juniorUsers":[],"junior":null}
+         * userContributeTotalToday : 0
          * allUserContributeTotal : 0
          */
 
@@ -82,25 +82,25 @@ public class TestMyInvite {
              * updateTime : null
              * remark : null
              * params : {}
-             * userId : 1
-             * userName : 钱浩龙
-             * userNickName : qhl
-             * userHeadImg : http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png
-             * userPhone : 17631365666
-             * userPwd : 1234
-             * userProfit : 8.0E-4
+             * userId : 36
+             * userName : 晓琪
+             * userNickName : null
+             * userHeadImg : null
+             * userPhone : 13723030657
+             * userPwd : 666666
+             * userProfit : 6.0E-4
              * userStatus : 1
-             * userInvitationCode : 6666
-             * userParentId : 0
-             * userEarningsNow : 418
-             * userEarningsTotal : 541
-             * userContributeTotal : 0
+             * userInvitationCode : 204953
+             * userParentId : 1
+             * userEarningsNow : 2018
+             * userEarningsTotal : 2018
+             * userContributeTotal : 672
              * zfbEd : 0
              * wxEd : 0
-             * vxButtonStatus : 1
+             * vxButtonStatus : 2
              * zfbButtonStatus : 2
-             * parentUser : null
-             * juniorUsers : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":13,"userName":null,"userNickName":null,"userHeadImg":null,"userPhone":"18898186027","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"W0VXY2","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":6,"userName":"钱浩","userNickName":"123","userHeadImg":null,"userPhone":"17631365661","userPwd":"1234","userProfit":6.0E-4,"userStatus":1,"userInvitationCode":"AP65X1","userParentId":1,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":"2000"}]
+             * parentUser : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"sky","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8082/profile/upload/2019/11/08/faf9587590a7a6d4dee87b4851cc503d.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"8888","userParentId":0,"userEarningsNow":200732,"userEarningsTotal":10554,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":1,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
+             * juniorUsers : []
              * junior : null
              */
 
@@ -113,8 +113,8 @@ public class TestMyInvite {
             private ParamsBean params;
             private int userId;
             private String userName;
-            private String userNickName;
-            private String userHeadImg;
+            private Object userNickName;
+            private Object userHeadImg;
             private String userPhone;
             private String userPwd;
             private double userProfit;
@@ -128,9 +128,9 @@ public class TestMyInvite {
             private int wxEd;
             private int vxButtonStatus;
             private int zfbButtonStatus;
-            private Object parentUser;
+            private ParentUserBean parentUser;
             private Object junior;
-            private List<JuniorUsersBean> juniorUsers;
+            private List<TestMyInvite.DataBean.UserInfoBean.ParamsBean> juniorUsers;
 
             public Object getSearchValue() {
                 return searchValue;
@@ -204,19 +204,19 @@ public class TestMyInvite {
                 this.userName = userName;
             }
 
-            public String getUserNickName() {
+            public Object getUserNickName() {
                 return userNickName;
             }
 
-            public void setUserNickName(String userNickName) {
+            public void setUserNickName(Object userNickName) {
                 this.userNickName = userNickName;
             }
 
-            public String getUserHeadImg() {
+            public Object getUserHeadImg() {
                 return userHeadImg;
             }
 
-            public void setUserHeadImg(String userHeadImg) {
+            public void setUserHeadImg(Object userHeadImg) {
                 this.userHeadImg = userHeadImg;
             }
 
@@ -324,11 +324,11 @@ public class TestMyInvite {
                 this.zfbButtonStatus = zfbButtonStatus;
             }
 
-            public Object getParentUser() {
+            public ParentUserBean getParentUser() {
                 return parentUser;
             }
 
-            public void setParentUser(Object parentUser) {
+            public void setParentUser(ParentUserBean parentUser) {
                 this.parentUser = parentUser;
             }
 
@@ -340,18 +340,63 @@ public class TestMyInvite {
                 this.junior = junior;
             }
 
-            public List<JuniorUsersBean> getJuniorUsers() {
+            public List<TestMyInvite.DataBean.UserInfoBean.ParamsBean> getJuniorUsers() {
                 return juniorUsers;
             }
 
-            public void setJuniorUsers(List<JuniorUsersBean> juniorUsers) {
+            public void setJuniorUsers(List<TestMyInvite.DataBean.UserInfoBean.ParamsBean> juniorUsers) {
                 this.juniorUsers = juniorUsers;
             }
 
             public static class ParamsBean {
+                private int userId;
+                private String userName;
+                private String junior;
+                private String userContributeTotal;
+                private String userHeadImg;
+
+                public String getUserHeadImg() {
+                    return userHeadImg;
+                }
+
+                public void setUserHeadImg(String userHeadImg) {
+                    this.userHeadImg = userHeadImg;
+                }
+
+                public int getUserId() {
+                    return userId;
+                }
+
+                public void setUserId(int userId) {
+                    this.userId = userId;
+                }
+
+                public String getUserName() {
+                    return userName;
+                }
+
+                public void setUserName(String userName) {
+                    this.userName = userName;
+                }
+
+                public String getJunior() {
+                    return junior;
+                }
+
+                public void setJunior(String junior) {
+                    this.junior = junior;
+                }
+
+                public String getUserContributeTotal() {
+                    return userContributeTotal;
+                }
+
+                public void setUserContributeTotal(String userContributeTotal) {
+                    this.userContributeTotal = userContributeTotal;
+                }
             }
 
-            public static class JuniorUsersBean {
+            public static class ParentUserBean {
                 /**
                  * searchValue : null
                  * createBy : null
@@ -360,22 +405,22 @@ public class TestMyInvite {
                  * updateTime : null
                  * remark : null
                  * params : {}
-                 * userId : 13
-                 * userName : null
-                 * userNickName : null
-                 * userHeadImg : null
-                 * userPhone : 18898186027
+                 * userId : 1
+                 * userName : sky
+                 * userNickName : qhl
+                 * userHeadImg : http://192.168.0.198:8082/profile/upload/2019/11/08/faf9587590a7a6d4dee87b4851cc503d.png
+                 * userPhone : 17631365666
                  * userPwd : 1234
-                 * userProfit : 6.0E-4
+                 * userProfit : 8.0E-4
                  * userStatus : 1
-                 * userInvitationCode : W0VXY2
-                 * userParentId : 1
-                 * userEarningsNow : 0
-                 * userEarningsTotal : 0
+                 * userInvitationCode : 8888
+                 * userParentId : 0
+                 * userEarningsNow : 200732
+                 * userEarningsTotal : 10554
                  * userContributeTotal : 0
                  * zfbEd : 0
                  * wxEd : 0
-                 * vxButtonStatus : 2
+                 * vxButtonStatus : 1
                  * zfbButtonStatus : 2
                  * parentUser : null
                  * juniorUsers : null
@@ -390,9 +435,9 @@ public class TestMyInvite {
                 private Object remark;
                 private ParamsBeanX params;
                 private int userId;
-                private Object userName;
-                private Object userNickName;
-                private Object userHeadImg;
+                private String userName;
+                private String userNickName;
+                private String userHeadImg;
                 private String userPhone;
                 private String userPwd;
                 private double userProfit;
@@ -474,27 +519,27 @@ public class TestMyInvite {
                     this.userId = userId;
                 }
 
-                public Object getUserName() {
+                public String getUserName() {
                     return userName;
                 }
 
-                public void setUserName(Object userName) {
+                public void setUserName(String userName) {
                     this.userName = userName;
                 }
 
-                public Object getUserNickName() {
+                public String getUserNickName() {
                     return userNickName;
                 }
 
-                public void setUserNickName(Object userNickName) {
+                public void setUserNickName(String userNickName) {
                     this.userNickName = userNickName;
                 }
 
-                public Object getUserHeadImg() {
+                public String getUserHeadImg() {
                     return userHeadImg;
                 }
 
-                public void setUserHeadImg(Object userHeadImg) {
+                public void setUserHeadImg(String userHeadImg) {
                     this.userHeadImg = userHeadImg;
                 }
 

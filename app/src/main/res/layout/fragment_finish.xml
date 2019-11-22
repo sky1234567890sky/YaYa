@@ -6,9 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.orderform.FinishFragment">
 
-
-
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
     android:id="@+id/finish_refreshLayout"
     android:layout_width="match_parent"

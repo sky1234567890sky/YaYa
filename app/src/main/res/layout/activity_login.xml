@@ -46,14 +46,19 @@
         app:riv_tile_mode="repeat"
         />
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:layout_marginRight="@dimen/dp_35"
+            android:layout_marginLeft="@dimen/dp_35"
+            android:layout_marginTop="@dimen/dp_43"
+            >
     <LinearLayout
-        android:layout_marginRight="@dimen/dp_35"
-        android:layout_marginLeft="@dimen/dp_35"
-        android:layout_marginTop="@dimen/dp_43"
-        android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
+        android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:background="@mipmap/dl_shuru"
         >
         <ImageView
             android:layout_marginLeft="@dimen/dp_18"
@@ -66,7 +71,7 @@
             android:id="@+id/login_name_et"
             android:layout_marginTop="@dimen/dp_13"
             android:layout_marginLeft="@dimen/dp_15"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:textSize="@dimen/sp_14"
@@ -86,13 +91,22 @@
             android:focusableInTouchMode="true"
             />
     </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:layout_marginRight="@dimen/dp_35"
+            android:layout_marginLeft="@dimen/dp_35"
+            android:layout_marginTop="@dimen/dp_25"
+            >
     <LinearLayout
-        android:layout_marginRight="@dimen/dp_35"
-        android:layout_marginLeft="@dimen/dp_35"
-        android:layout_marginTop="@dimen/dp_25"
-        android:layout_width="match_parent"
+
         android:orientation="horizontal"
-        android:background="@mipmap/dl_shuru"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
         >
         <ImageView
@@ -106,7 +120,7 @@
             android:id="@+id/et_login_password"
             android:layout_marginTop="@dimen/dp_13"
             android:layout_marginLeft="@dimen/dp_15"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:textColorHint="@color/c_et_tvcolor"
@@ -123,6 +137,7 @@
             android:focusableInTouchMode="true"
             />
     </LinearLayout>
+        </android.support.v7.widget.CardView>
 
     <!--<TextView-->
         <!--android:id="@+id/login_btn"-->
@@ -169,7 +184,7 @@
             android:layout_marginRight="@dimen/dp_30"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#B3B3B3"
+            android:textColor="@color/blue"
             android:textSize="@dimen/sp_12"
             android:gravity="center_vertical"
             android:text="@string/register_name"
@@ -181,7 +196,6 @@
             android:gravity="center_vertical"
             android:background="@color/c_view"
             />
-
         <TextView
             android:id="@+id/tv_forgetPassword"
             android:layout_marginLeft="@dimen/dp_30"
@@ -190,7 +204,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="@string/number_password"
-            android:textColor="#B3B3B3"
+            android:textColor="@color/blue"
             android:background="@drawable/ripple_bg"
             />
     </LinearLayout>

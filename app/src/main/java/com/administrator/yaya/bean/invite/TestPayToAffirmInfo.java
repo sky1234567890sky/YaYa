@@ -68,7 +68,7 @@ public class TestPayToAffirmInfo {
         private String bankCard;
         private String bankName;
         private int bankStatus;
-        private int comMoney;
+        private double comMoney;
 
         public Object getSearchValue() {
             return searchValue;
@@ -166,7 +166,7 @@ public class TestPayToAffirmInfo {
             this.bankStatus = bankStatus;
         }
 
-        public int getComMoney() {
+        public double getComMoney() {
             return comMoney;
         }
 
@@ -176,5 +176,33 @@ public class TestPayToAffirmInfo {
 
         public static class ParamsBean {
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "searchValue=" + searchValue +
+                    ", createBy=" + createBy +
+                    ", createTime=" + createTime +
+                    ", updateBy=" + updateBy +
+                    ", updateTime=" + updateTime +
+                    ", remark='" + remark + '\'' +
+                    ", params=" + params +
+                    ", gaId=" + gaId +
+                    ", payeeName='" + payeeName + '\'' +
+                    ", bankCard='" + bankCard + '\'' +
+                    ", bankName='" + bankName + '\'' +
+                    ", bankStatus=" + bankStatus +
+                    ", comMoney=" + comMoney +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "TestPayToAffirmInfo{" +
+                "msg='" + msg + '\'' +
+                ", code=" + code +
+                ", data=" + data +
+                '}';
     }
 }

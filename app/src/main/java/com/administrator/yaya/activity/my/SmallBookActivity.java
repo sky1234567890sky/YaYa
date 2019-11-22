@@ -1,12 +1,14 @@
 package com.administrator.yaya.activity.my;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.home.AffirmMessageActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
@@ -27,22 +29,26 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
 
     @BindView(R.id.small_book_back_iv)
     ImageView smallBookBackIv;
+
     @BindView(R.id.small_book_pay_money_tv)
     TextView smallBookPayMoneyTv;
     @BindView(R.id.small_book_pay_money_iv)
     TextView smallBookPayMoneyIv;
-    @BindView(R.id.ll2)
-    LinearLayout ll2;
-    @BindView(R.id.tv_wechat_use)
-    TextView tvWechatUse;
-    @BindView(R.id.tv_wechat_day)
-    TextView tvWechatDay;
-    @BindView(R.id.ll1)
-    LinearLayout ll1;
-    @BindView(R.id.small_book_tv_use_money)
-    TextView smallBookTvUseMoney;
-    @BindView(R.id.tv_day)
-    TextView tvDay;
+
+//    @BindView(R.id.ll2)
+//    LinearLayout ll2;
+//    @BindView(R.id.tv_wechat_use)
+//    TextView tvWechatUse;
+//    @BindView(R.id.tv_wechat_day)
+//    TextView tvWechatDay;
+//    @BindView(R.id.ll1)
+//    LinearLayout ll1;
+//    @BindView(R.id.small_book_tv_use_money)
+//    TextView smallBookTvUseMoney;
+//    @BindView(R.id.tv_day)
+//    TextView tvDay;
+
+    private String userId;
 
     @Override
     protected int getLayoutId() {
@@ -52,21 +58,25 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
     @Override
     protected void initData() {
         super.initData();
-        String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        if (userId != null) mPresenter.getData(ApiConfig.TEST_SMALLBOOK, Integer.parseInt(userId));
+        userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        if (userId != null) mPresenter.getData(ApiConfig.TEST_SMALLBOOK, Integer.parseInt(userId),mApplication.mToken);
     }
 
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
+
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
+
     @Override
     public void onError(int whichApi, Throwable e) {
+
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -74,12 +84,19 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
             case ApiConfig.TEST_SMALLBOOK:
                 TestSmallBook testSmallBook = (TestSmallBook) t[0];
 
-                if (testSmallBook != null && testSmallBook.getCode() == 0) {
+                if (testSmallBook.getMsg()==mApplication.SignOut){
+                    ToastUtil.showLong(R.string.username_login_hint+"");
+                    Intent intent = new Intent(this, AffirmMessageActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+
+                if (testSmallBook.getCode() == 0) {
                     TestSmallBook.DataBean data = testSmallBook.getData();
 //                    moneyToday		今日付款
-                    int moneyToday = data.getMoneyToday();
+                    double moneyToday = data.getMoneyToday();
 //                    moneyHistory	历史付款
-                    int moneyHistory = data.getMoneyHistory();
+                    double moneyHistory = data.getMoneyHistory();
                     smallBookPayMoneyTv.setText(moneyToday + "");
                     smallBookPayMoneyIv.setText(moneyHistory + "");
 
@@ -89,7 +106,6 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
                 break;
         }
     }
-
     @OnClick({R.id.small_book_back_iv, R.id.small_book_pay_money_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {

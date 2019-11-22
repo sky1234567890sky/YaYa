@@ -2,6 +2,7 @@ package com.administrator.yaya.activity.my;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -23,6 +24,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.my.adapter.MyLowerAdapter;
 import com.administrator.yaya.activity.my.adapter.MySuperiorAdapter;
 import com.administrator.yaya.base.ApiConfig;
@@ -96,15 +98,22 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     private IWXAPI api;
     private MySuperiorAdapter mySuperiorAdapter;
     private MyLowerAdapter myLowerAdapter;
-    private List<TestMyInvite.DataBean.UserInfoBean.JuniorUsersBean> juniorUsers;
-    private ArrayList<TestMyInvite.DataBean.UserInfoBean.JuniorUsersBean> myLowerList;
+
+    private List<TestMyInvite.DataBean.UserInfoBean.ParentUserBean> juniorUsers = new ArrayList<>();//上级
+//    juniorUsers			下级用户集合
+
+    private List<TestMyInvite.DataBean.UserInfoBean.ParamsBean> myLowerList = new ArrayList<>();//下级
+//    parentUser			上级用户对象信息
+
     private String userInvitationCode;
+    private String userId;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_invite;
     }
-//    //向微信注册app
+
+    //    //向微信注册app
 //    public void register(Context context) {
 //        if(api==null){
 //            api = WXAPIFactory.createWXAPI(context, APP_ID, true);
@@ -121,12 +130,13 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         mySuperiorRl.setLayoutManager(new LinearLayoutManager(this));
         myLowerRl.setLayoutManager(new LinearLayoutManager(this));
 
-        mySuperiorAdapter = new MySuperiorAdapter();//上级无数据
-        myLowerList = new ArrayList<>();
-        myLowerAdapter = new MyLowerAdapter(myLowerList);//下級
-        mySuperiorRl.setAdapter(mySuperiorAdapter);
-        myLowerRl.setAdapter(myLowerAdapter);
+        mySuperiorAdapter = new MySuperiorAdapter(myLowerList);//下级无数据
+        myLowerAdapter = new MyLowerAdapter(juniorUsers);//上级
+
+        myLowerRl.setAdapter(mySuperiorAdapter);
+        mySuperiorRl.setAdapter(myLowerAdapter);
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -134,64 +144,90 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
             case ApiConfig.TEST_MY_INVITE:
                 TestMyInvite testMyInvite = (TestMyInvite) t[0];
 
-            if (testMyInvite.getCode() == 0 && testMyInvite.getData()!=null){
+                if (testMyInvite.getMsg() == mApplication.SignOut) {
+
+                    ToastUtil.showLong(R.string.username_login_hint + "");
+
+                    Intent intent = new Intent(this, LoginActivity.class);
+
+                    startActivity(intent);
+                }
+
+                if (testMyInvite.getCode() == 0) {
 //                Log.i("tag", "数据: "+testMyInvite.getData().toString());
-                TestMyInvite.DataBean data = testMyInvite.getData();
-                TestMyInvite.DataBean.UserInfoBean userInfo = data.getUserInfo();///用户基本信息
+                    TestMyInvite.DataBean data = testMyInvite.getData();
+                    TestMyInvite.DataBean.UserInfoBean userInfo = data.getUserInfo();///用户基本信息
 
-                int userContributeTotalToday = data.getUserContributeTotalToday();//今日收益
-                getGamemoneyTv.setText(userContributeTotalToday+"");
-                int allUserContributeTotal = data.getAllUserContributeTotal();//縂返利
-                //邀請碼
-                userInvitationCode = userInfo.getUserInvitationCode();
+                    int userContributeTotalToday = data.getUserContributeTotalToday();//今日收益
+                    getGamemoneyTv.setText(userContributeTotalToday + "");
+                    int allUserContributeTotal = data.getAllUserContributeTotal();//縂返利
+                    //邀請碼
+                    userInvitationCode = userInfo.getUserInvitationCode();
 
-                String userHeadImg = userInfo.getUserHeadImg();
-                RequestOptions requestOptions = new RequestOptions().centerCrop();
-                Glide.with(this).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(mMyinviteIv);
+                    Object userHeadImg = userInfo.getUserHeadImg();
+
+                    RequestOptions requestOptions = new RequestOptions().centerCrop();
+
+                    Glide.with(this).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(mMyinviteIv);
 
 //                parentUser			上级用户对象信息
-//                userId			用户id
-//                userName		用户姓名
-//                juniorUsers			下级用户集合
-                juniorUsers = userInfo.getJuniorUsers();
 
-                myLowerList.addAll(this.juniorUsers);
-                myLowerAdapter.notifyDataSetChanged();
+//                userId			    用户id
+
+//                userName		        用户姓名
+
+//                juniorUsers			下级用户集合
+
+//                userInfo.getJuniorUsers();        //下级
+
+                    juniorUsers.add(testMyInvite.getData().getUserInfo().getParentUser());//上级
+                    myLowerList.addAll(testMyInvite.getData().getUserInfo().getJuniorUsers());
+
+                    mySuperiorAdapter.notifyDataSetChanged();//
+                    if (juniorUsers.size() == 0) {
+                        mySuperiorRl.setVisibility(View.GONE);
+                    }
+                    myLowerAdapter.notifyDataSetChanged();
 //                userId			用户id
 //                userName		用户姓名
 //                junior			今日贡献
 //                userContributeTotal	总贡献
 //                userId				用户id
-                int userId = userInfo.getUserId();
+                    int userId = userInfo.getUserId();
 //                userName 			用户姓名
-                String userName = userInfo.getUserName();
+                    String userName = userInfo.getUserName();
 //                userNickName 		昵称
-                String userNickName = userInfo.getUserNickName();
+                    Object userNickName = userInfo.getUserNickName();
 //                userEarningsTotal 	总收益
-                int userContributeTotal = userInfo.getUserContributeTotal();
+                    int userContributeTotal = userInfo.getUserContributeTotal();
 //                zfbEd 				支付宝已使用额度
-                int zfbEd = userInfo.getZfbEd();
+                    int zfbEd = userInfo.getZfbEd();
 //                wxEd 				微信已使用额度
-                int wxEd = userInfo.getWxEd();
+                    int wxEd = userInfo.getWxEd();
 
-                myNameTv.setText(userName);
-                myNameStateTv.setText("ID:"+userId);
-                tv3.setText("返利比例：2%");
+                    myNameTv.setText(userName);
+
+                    myNameStateTv.setText("ID:" + userId);
+
+                    tv3.setText("返利比例：0.2%");
 //                getGamemoneyTv.setText();
-                allGamemoneyTv.setText(userContributeTotal+"");
-            }
+                    allGamemoneyTv.setText(userContributeTotal + "");
+                }
                 break;
         }
     }
+
     @Override
     protected void initData() {
         super.initData();
-        String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_INVITE,Integer.parseInt(userId));
+        userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        if (userId != null) mPresenter.getData(ApiConfig.TEST_MY_INVITE, Integer.parseInt(userId));
     }
+
     @Override
     protected void initListener() {
     }
+
     @OnClick({R.id.myinvite_book_back_iv, R.id.myinvite_friend})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -203,6 +239,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 break;
         }
     }
+
     private void popupSelector() {
         //分享二维码
         View inflate = LayoutInflater.from(this).inflate(R.layout.myinvite_popup, null);
@@ -210,7 +247,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         mMyinviteTwoDimentionCodTv = inflate.findViewById(R.id.myinvite_two_dimention_cod_tv);//邀请码
         mMyinviteShareWechatBtnTv = inflate.findViewById(R.id.myinvite_share_wechat_btn_tv);//微信分享按钮
         mMyinviteCloneDissPopupIv = inflate.findViewById(R.id.myinvite_clone_diss_popup_iv);//关闭弹窗
-        mMyinviteTwoDimentionCodTv.setText("邀请码:"+userInvitationCode);
+        mMyinviteTwoDimentionCodTv.setText("邀请码:" + userInvitationCode);
 
         popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
         //手动设置 PopupWindow 响应返回键并关闭的问题
@@ -235,12 +272,13 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         //二維碼
         //Bitmap bitmap = MyQrCode.QRCode.createQRCode("我是苏克阳", 500);//不需要logo，传入分享链接和二维码图片大小
         //需要logo，传入分享链接,二维码大小以及logo图片
-          Bitmap bitmap = MyQrCode.QRCode.createQRCodeWithLogo(userInvitationCode, 1000, BitmapFactory.decodeResource(getResources(),R.mipmap.icon));
+        Bitmap bitmap = MyQrCode.QRCode.createQRCodeWithLogo(userInvitationCode, 1000, BitmapFactory.decodeResource(getResources(), R.mipmap.icon));
         mMyinviteTwoDimentionCodeIv.setImageBitmap(bitmap);
         //隐藏弹窗点击事件
         mMyinviteShareWechatBtnTv.setOnClickListener(this);
         mMyinviteCloneDissPopupIv.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -253,18 +291,19 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 //                popupWindow.dismiss();
                 //修改了  将图片保存到本地
                 Bitmap headlerIvbitmap = ((BitmapDrawable) mMyinviteTwoDimentionCodeIv.getDrawable()).getBitmap();
-                SaveBitmapToPhotoUtils.saveImageToGallery(this,headlerIvbitmap,getString(R.string.app_name) + "" + System.currentTimeMillis()+".png");
+                SaveBitmapToPhotoUtils.saveImageToGallery(this, headlerIvbitmap, getString(R.string.app_name) + "" + System.currentTimeMillis() + ".png");
                 break;
         }
     }
+
     private void initShareIv() {
         //登录
 //        WxShareUtils.WxLogin(this);
         //分享textview
-        WxShareUtils.WxTextShare(this,"微信分享",WxShareUtils.WECHAT_FRIEND);//分享好友
+        WxShareUtils.WxTextShare(this, "微信分享", WxShareUtils.WECHAT_FRIEND);//分享好友
         //分享图片
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.icon);
-        WxShareUtils.WxBitmapShare(this,bitmap,WxShareUtils.WECHAT_FRIEND);
+        WxShareUtils.WxBitmapShare(this, bitmap, WxShareUtils.WECHAT_FRIEND);
         //方法一：
 //        WXWebpageObject webpage = new WXWebpageObject();
 //        webpage.webpageUrl = "网页链接";
@@ -287,17 +326,19 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         //方法二
     }
 
-//    private byte[] bmpToByteArray(Bitmap thumb, boolean b) {
+    //    private byte[] bmpToByteArray(Bitmap thumb, boolean b) {
 //        return new byte[0];
 //    }
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
+
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
+
     @Override
     public void onError(int whichApi, Throwable e) {
         ToastUtil.showShort(e.getMessage());

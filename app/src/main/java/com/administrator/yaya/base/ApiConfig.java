@@ -28,7 +28,6 @@ public class ApiConfig {
     public static final int TEST_MY_INVITE = 17;//我的邀请
     public static final int TEST_SMALLBOOK = 18;//我的小账本
     public static final int TEST_ALIPAY_RECEIVER_CODE = 19;//支付宝二维码
-    public static final int TEST_WECHAT_RECEIVER_CODE = 20;//微信二维码
 
     public static final int TEST_UPAWAY_SINGLE_GOODS = 21; //上架单个货物
 
@@ -49,13 +48,26 @@ public class ApiConfig {
     public static final int TEST_INCOME = 27;//收入
 
     public static final int TEST_UPDATEPASSWORD = 32;//修改密码
+
     public static final int TEST_CHANGE_HEADLER = 33;//更换头像
     //修改密码
     public static final int TEST_VERIFICATIONCODE = 34;//获取验证码
-    public static final int TEST_SWITCH_RECEIVEING_QRCODE = 35;//开关收款码
-    public static final int TEST_SWITCH_RECEIVEING_QRCODE2 = 36;//关闭开关收款码
+
+    public static final int TEST_SWITCH_RECEIVEING_QRCODE = 35;//打开收款码
+
+    public static final int TEST_SWITCH_RECEIVEING_QRCODE2 = 36;//关闭收款码
 
     public static final int request_open_album_code = 666;
 
 
+    public static final int TEST_UPLOAD_NAME = 37;//上传昵称
+
+    public static final int TEST_UPLOAD_IMAGEVIE = 38;//微信上传图片
+    public static final int TEST_WECHAT_RECEIVER_CODE = 20;//微信二维码
+    public static final int TEST_UPLOAD_GET_QR = 39;//上传收款码
+    public static final int TEST_UPLOAD_GET_QR_NO2 = 40;//第二次上传收款码
+    public static final int TEST_GET_USERNOW_MSG = 41;//消息未读
+
+    public static final int TEST_INVENTORY = 42;//库存（新）
+    public static final int TEST_DIANJIYINGYE = 43;//点击营业（新）
 }

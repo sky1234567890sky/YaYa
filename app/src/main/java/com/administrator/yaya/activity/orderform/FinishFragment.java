@@ -1,18 +1,26 @@
 package com.administrator.yaya.activity.orderform;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.orderform.adapter.FinishAdapter;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
+import com.administrator.yaya.fragment.InventoryFragment;
+import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
@@ -37,6 +45,10 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     private FinishAdapter adapter;
     private List<TestAllOrderStock.DataBean.OrderSalesListBean> list;
     private List<TestAllOrderStock.DataBean.CommodityBean> listCommodityBean;
+    private OrderFormkFragment parentFragment1;
+    private TestAllOrderStock.DataBean data;
+    private TextView tvObligation;
+    private String token;
 
     public FinishFragment() {
         // Required empty public constructor
@@ -51,13 +63,29 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
         return new CommonPresenter();
     }
 
+    //判断是否展示—与ViewPager连用，进行左右切换
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+            //不可见的时候关闭加载
+        if (isVisibleToUser ==true){//当前处于可见状态
+            if (finishRefresh != null)
+                refresh();
+        }
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_finish;
     }
+
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
+        if(parentFragment1== null){
+            getFragment();
+        }
+
         list = new ArrayList<>();
         listCommodityBean = new ArrayList<>();
         initRecycleView(mList,finishRefresh);
@@ -65,6 +93,18 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new FinishAdapter(listCommodityBean,list,getActivity());
         mList.setAdapter(adapter);
+
+    }
+
+    private void getFragment() {
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment instanceof OrderFormkFragment) {
+            parentFragment1 = (OrderFormkFragment) parentFragment;//父 Fragment
+            // 父 TestView
+            if (parentFragment1.getView().findViewById(R.id.orderform_inventory_money) != null) {
+                tvObligation = parentFragment1.getView().findViewById(R.id.orderform_inventory_money);
+            }
+        }
     }
 
     @Override
@@ -72,16 +112,17 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
         super.initData();
         //已完成
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
+        token = SharedPrefrenceUtils.getString(getContext(), NormalConfig.TOKEN);
         if (userId != null) {
-            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), 2);
-        } else {
-            ToastUtil.showShort(R.string.networkerr + "");
+            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), 2,token);
         }
     }
-
     @Override
     public void refresh() {
         super.refresh();
+
+        finishRefresh.autoRefresh();
+
         initData();
     }
 
@@ -89,6 +130,7 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     public void onError(int whichApi, Throwable e) {
 
     }
+
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
@@ -96,15 +138,35 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
                 if (list!=null&& !list.isEmpty())list.clear();
 
                 TestAllOrderStock testFinish = (TestAllOrderStock) t[0];
-                Log.i("tag", "已完成: " + testFinish.toString());
+
+//                Log.i("tag", "已完成: " + testFinish.toString());
+                if (testFinish.getMsg()==SignOut){
+                    ToastUtil.showLong(R.string.username_login_hint+"");
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+
                 if (testFinish.getCode() == 0 && testFinish.getData() != null && testFinish.getData().getOrderSalesList() != null) {
-                    TestAllOrderStock.DataBean data = testFinish.getData();
 //                    进货订单集合	orderSalesList
+
+                    data = testFinish.getData();
+                    if (TextUtils.isEmpty(data.getAmount())) {
+                        tvObligation.setText("今日所收游戏币：0");//库存  父 Fragment 顶部赋值
+                    } else {
+                        tvObligation.setText("今日所收游戏币：" +data.getAmount());//库存  父 Fragment 顶部赋值
+                    }
+
+
                     String amount = data.getAmount();
                     List<TestAllOrderStock.DataBean.OrderSalesListBean> orderStockList = data.getOrderSalesList();
                     listCommodityBean.add(data.getCommodity());
                     list.addAll(orderStockList);
                     adapter.notifyDataSetChanged();
+
+                    if(data.getAmount()!=null) {
+                        EventBus.getDefault().postSticky(data.getAmount());
+                    }
 //                    EventBus.getDefault().postSticky(amount);
 //                    订单id		salesId
 //                    订单编号	orderNumber
@@ -129,6 +191,39 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
                 }
                 break;
         }
-        finishRefresh.finishRefresh(2000);
+        finishRefresh.finishRefresh();
+    }
+
+    //获取焦点时刷新
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (isRefresh) {
+
+            if (!list.isEmpty()){
+
+                list.clear();
+
+            }
+
+            refresh();
+
+            isRefresh = false;
+        }
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!isRefresh) isRefresh = true;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden && getActivity()!=null){
+            if (finishRefresh != null)
+                refresh();
+        }
     }
 }
