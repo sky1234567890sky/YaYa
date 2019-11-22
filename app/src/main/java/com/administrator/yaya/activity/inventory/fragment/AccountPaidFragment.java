@@ -205,6 +205,7 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
 
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onError(int whichApi, Throwable e) {
     }
@@ -213,7 +214,6 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
@@ -221,7 +221,6 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
 
     public AccountPaidFragment() {
     }
-
     @SuppressLint("SetTextI18n")
     private void putAway(int commodityAmount) {
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.layout_putaway, null);
