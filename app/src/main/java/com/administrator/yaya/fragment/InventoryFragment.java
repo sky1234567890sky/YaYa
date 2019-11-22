@@ -174,7 +174,6 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 
                     return;
                 }
-
                 if (testInventory.getCode() == 0) {
                         Log.i("tag", "库存数据: " + testInventory.toString());
                         data = testInventory.getData();
