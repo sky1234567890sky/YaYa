@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.home.BuyNowActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
@@ -48,20 +49,23 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     TextView tvWechatSheng;
     @BindView(R.id.tv_wechat_day)
     TextView tvWechatDay;
-    private TestHomePageData.DataBean databean;
-    private TestHomePageData.DataBean.UserInfoBean userInfo;
     private String userId;
+    private String token;
 
     @Override
     protected void initData() {
         super.initData();
         userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
-        mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId));
+        token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
+        Log.i("tag", "首页: "+userId+"<||>"+token);
+        mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId),token);
     }
+
     @Override
     protected void initListener() {
         super.initListener();
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_home_page;
@@ -73,9 +77,16 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TestHomePageData data = (TestHomePageData) t[0];
-                if (data.getCode() == 0) {
-                        databean = data.getData();
-                        userInfo = databean.getUserInfo();
+
+                if (data.getCode() == 0 && data.getData()!=null) {
+
+                    if (data.getMsg()==SignOut){
+                        ToastUtil.showLong(R.string.username_login_hint+"");
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                    }else {
+                        TestHomePageData.DataBean databean = data.getData();
+                        TestHomePageData.DataBean.UserInfoBean userInfo = databean.getUserInfo();
                         Log.i("tag", "首頁==》: " + data.toString());
 //                    commodity:  货物信息
                         TestHomePageData.DataBean.CommodityBean commodity = databean.getCommodity();
@@ -85,10 +96,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 //                    comImg 商品图片
                         String comImg = commodity.getComImg();
 
-                        Log.i("tag", "首页ImageView=========》: "+comImg);
-
                         Glide.with(getContext()).load(comImg).placeholder(R.mipmap.icon).into(mHeadlerIv);
-
 //                    comPrice 商品价格
                         double comPrice1 = commodity.getComPrice();
                         homeGamemoneyPrice.setText("进货价￥：" + comPrice1);
@@ -105,6 +113,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 //                    userName 用户姓名
 //                    userNickName 昵称
 //                    userEarningsTotal 总收益
+                    }
                 }
                 break;
         }

@@ -126,6 +126,7 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
     public void setAccountpaidsetOnclikListener(AccountpaidsetOnclikListener accountpaidsetOnclikListener) {
         this.accountpaidsetOnclikListener = accountpaidsetOnclikListener;
     }
+
     //跳转确认信息接口回调
     private AccountpaidTosetOnclikListener accountpaidTosetOnclikListener;
     public interface AccountpaidTosetOnclikListener{

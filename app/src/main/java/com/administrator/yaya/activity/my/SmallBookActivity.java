@@ -1,12 +1,14 @@
 package com.administrator.yaya.activity.my;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.home.AffirmMessageActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
@@ -57,7 +59,7 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
     protected void initData() {
         super.initData();
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        if (userId != null) mPresenter.getData(ApiConfig.TEST_SMALLBOOK, Integer.parseInt(userId));
+        if (userId != null) mPresenter.getData(ApiConfig.TEST_SMALLBOOK, Integer.parseInt(userId),mApplication.mToken);
     }
 
     @Override
@@ -81,6 +83,13 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
         switch (whichApi) {
             case ApiConfig.TEST_SMALLBOOK:
                 TestSmallBook testSmallBook = (TestSmallBook) t[0];
+
+                if (testSmallBook.getMsg()==mApplication.SignOut){
+                    ToastUtil.showLong(R.string.username_login_hint+"");
+                    Intent intent = new Intent(this, AffirmMessageActivity.class);
+                    startActivity(intent);
+                    return;
+                }
 
                 if (testSmallBook.getCode() == 0) {
                     TestSmallBook.DataBean data = testSmallBook.getData();

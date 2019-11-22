@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
@@ -68,7 +69,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
     @BindView(R.id.pay_way)
     TextView payWay;
-
     @BindView(R.id.nowbuy_commit_btn)
     TextView nowbuyCommitBtn;
     @BindView(R.id.bank_name)
@@ -87,25 +87,38 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     @Override
     protected void initView() {
         super.initView();
+
     }
 
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.getData(ApiConfig.TEXT_BUY_COM);
+        userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        mPresenter.getData(ApiConfig.TEXT_BUY_COM,Integer.parseInt(userId),mApplication.mToken);
     }
 
     @Override
     public void onError(int whichApi, Throwable e) {
 
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_BUY_COM:
+
                 TestBuyCom  testBuyCom= (TestBuyCom) t[0];
-            if (testBuyCom.getCode()==0 && testBuyCom.getData()!=null){
+
+                if (testBuyCom.getMsg()==mApplication.SignOut){
+
+                    Intent intent = new Intent(this, LoginActivity.class);
+
+                    startActivity(intent);
+
+                    finish();
+
+                }else if (testBuyCom.getCode()==0){
                 Log.i("tag", "立即購買====》: "+testBuyCom.toString());
                 String comImg = testBuyCom.getData().getComImg();
                 Glide.with(this).load(comImg).apply(new RequestOptions().centerCrop()).into(nowBuGamemoneyIv);
@@ -116,7 +129,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 mComPrice.setText("游戏币单价:￥"+ comPrice);
                 //库存数量
                 comInventory = testBuyCom.getData().getComInventory();
-
                 buyGamemoneyRemainingQuantity.setText("剩余数量:￥"+ comInventory);
                 //最大购买量
                 comPurchaseNumMax = testBuyCom.getData().getComPurchaseNumMax();
@@ -126,42 +138,51 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 buyMaxGamemoneyRemainingQuantity.setText("最大购买数量："+comPurchaseNumMax);
                 //传值
 //                EventBus.getDefault().postSticky(comInventory);   //发送时间
-            }else{
-                ToastUtil.showShort(testBuyCom.getMsg());
             }
                 break;
-            //提交信息
+            //提交订单
             case ApiConfig.TEXT_ORDER_STOCK:
                 TestToOrderStock testToOrderStock = (TestToOrderStock) t[0];
                 //查看信息   非提交订单
                 if (testToOrderStock.getCode() == 0 && testToOrderStock.getData() != null) {
-                    TestToOrderStock.DataBean data = testToOrderStock.getData();
-                    //银行
-                    bankName1 = data.getBankName();
-                    //收款人姓名
-                    payeeName = data.getPayeeName();
-                    //货物数量
-                    int gaId = data.getGaId();
-                    //金额
-                    comMoney = data.getComMoney();
-                    //银行卡号
-                    bankCard = data.getBankCard();
-                    //备注信息
-                    remark = data.getRemark();
+
+                    if (testToOrderStock.getMsg() == mApplication.SignOut) {
+
+                        ToastUtil.showLong(R.string.username_login_hint+"");
+
+                        Intent intent = new Intent(this, LoginActivity.class);
+
+                        startActivity(intent);
+
+                    } else {
+                        TestToOrderStock.DataBean data = testToOrderStock.getData();
+                        //银行
+                        bankName1 = data.getBankName();
+                        //收款人姓名
+                        payeeName = data.getPayeeName();
+                        //货物数量
+                        int gaId = data.getGaId();
+                        //金额
+                        comMoney = data.getComMoney();
+                        //银行卡号
+                        bankCard = data.getBankCard();
+                        //备注信息
+                        remark = data.getRemark();
 //                    bankYinhang.setText(bankName + "");
 //                    receiverName.setText(payeeName + "");
 //                    bankCodeNumber.setText(bankCard + "");
 //                    moneyTv.setText(data.getComMoney());
 //                    mRemarkTv.setText(remark + "");
-                    Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
-                    if (!TextUtils.isEmpty(payeeName)||!TextUtils.isEmpty(bankName1)||!TextUtils.isEmpty(comMoney)
-                            ||!TextUtils.isEmpty(bankCard)||!TextUtils.isEmpty(remark) ) {
-                        intent.putExtra("bankName", bankName1);//银行
-                        intent.putExtra("payeeName", payeeName);//收款人姓名
-                        intent.putExtra("comMoney", comMoney);//收款金额
-                        intent.putExtra("bankCard", bankCard);//
-                        intent.putExtra("remark", remark);//备注
-                        startActivity(intent);
+                        Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
+                        if (!TextUtils.isEmpty(payeeName) || !TextUtils.isEmpty(bankName1) || !TextUtils.isEmpty(comMoney)
+                                || !TextUtils.isEmpty(bankCard) || !TextUtils.isEmpty(remark)) {
+                            intent.putExtra("bankName", bankName1);//银行
+                            intent.putExtra("payeeName", payeeName);//收款人姓名
+                            intent.putExtra("comMoney", comMoney);//收款金额
+                            intent.putExtra("bankCard", bankCard);//
+                            intent.putExtra("remark", remark);//备注
+                            startActivity(intent);
+                        }
                     }
                 }
                 break;
@@ -233,7 +254,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                         String name = bankName.getText().toString().trim();
                         if (!name.isEmpty()) {
                             //在此请求网络数据 传到  确认付款 页面(在此解析讲数据船只)（提交数据的  不是 查看详情的）
-                            mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK,Integer.parseInt(userId), paymoey, name, s);
+                            mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK,Integer.parseInt(userId), mApplication.mToken,paymoey, name, s);
                             //==================================================》
                         }else{
                             ToastUtil.showShort("请输入付款人姓名");
@@ -251,6 +272,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     protected LoginModel getModel() {
         return new LoginModel();
     }
+
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();

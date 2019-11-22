@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.MainActivity;
+import com.administrator.yaya.activity.UpGameMoneyActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
@@ -26,6 +27,9 @@ import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.administrator.yaya.fragment.InventoryFragment.FORM_INVENTORY;
+import static com.administrator.yaya.fragment.InventoryFragment.FORM_INVENTORY2;
 
 
 /**
@@ -58,8 +62,9 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     TextView bankMoney;
     @BindView(R.id.remark)
     TextView mRemark;
-    private String userId;
     private String orderNumber;
+    private String orderNumbers;
+    private String userId;
 
     @Override
     protected int getLayoutId() {
@@ -75,12 +80,18 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     @Override
     protected void initData() {
             //網絡請求  付款信息
-            orderNumber = getIntent().getStringExtra("OrderNumber");
-            Log.i("tag", "订单编号2: " + orderNumber);
-            if (!TextUtils.isEmpty(orderNumber) ||orderNumber!=null)//不为空则是 查看详情  为空则是 提交订单传过来的值
+//        orderNumber = getIntent().getStringExtra(FORM_INVENTORY2);//已付款
+        String accountPaid = getIntent().getStringExtra("accountPaid");
+//        orderNumbers = getIntent().getStringExtra(FORM_INVENTORY);//待付款
+        String orderNumber = getIntent().getStringExtra("OrderNumber");
+        //已付款
+            if (!TextUtils.isEmpty(accountPaid) || accountPaid !=null)//不为空则是 查看详情  为空则是 提交订单传过来的值
+                    mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO,accountPaid,mApplication.mToken);
+            //待付款
+            else if (!TextUtils.isEmpty(orderNumber) ||orderNumber!=null){
+                mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO,orderNumber,mApplication.mToken);
+            } else {
 
-                mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO, orderNumber);
-            else {
                 //提交订单传过来的数据
                 //应付款金额
                 String payeeName = getIntent().getStringExtra("payeeName");
@@ -205,10 +216,15 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
             case ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO://从库存付款信息跳到确认信息解析
 //                getTestPayToAffimInfo()
                 TestPayToAffirmInfo testPayToAffirmInfo = (TestPayToAffirmInfo) t[0];
-
                 Log.i("tag", "订单编号list: "+testPayToAffirmInfo.toString());
+                if (testPayToAffirmInfo.getMsg()==mApplication.SignOut){
+                    ToastUtil.showLong(R.string.username_login_hint+"");
+                    Intent intent = new Intent(this, AffirmMessageActivity.class);
+                    startActivity(intent);
+                }
 
                 if ( testPayToAffirmInfo.getCode() == 0) {
+
                     TestPayToAffirmInfo.DataBean data = testPayToAffirmInfo.getData();
 //                    收款人姓名	payeeName
                     String payeeName = data.getPayeeName();

@@ -63,7 +63,6 @@
                 android:id="@+id/my_invientory_rl"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_44"
-
                 android:background="@drawable/setting_shape_bg"
                 >
                 <ImageView

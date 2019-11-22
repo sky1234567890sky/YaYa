@@ -89,8 +89,15 @@ public class SettingActivity extends BaseActivity {
 //////                                edit.putBoolean(NormalConfig.ISFIRST,false);
 ////                                edit.commit();
                                 SharedPrefrenceUtils.saveString(SettingActivity.this,NormalConfig.USER_ID,"");
+
+                                SharedPrefrenceUtils.saveString(SettingActivity.this,NormalConfig.TOKEN,"");
+
                                 mApplication.userid =0;
+
+                                mApplication.mToken = "";
+
                                 startActivity(login);
+
                                 finish();
                             }
                         }).setPositiveButton("取消", new DialogInterface.OnClickListener() {

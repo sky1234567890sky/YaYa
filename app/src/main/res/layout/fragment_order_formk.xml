@@ -1,87 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c_ffffff"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.OrderFormkFragment">
+
     <ImageView
         android:layout_width="@dimen/dp_312_5"
         android:layout_height="@dimen/dp_127_5"
-        android:src="@mipmap/logo"
         android:layout_alignParentBottom="true"
+        android:src="@mipmap/logo"
         tools:ignore="ContentDescription" />
-        <RelativeLayout
-            android:id="@+id/orderform_rl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/title_bg_blue2"
-            >
-            <TextView
-                android:id="@+id/orderform_inventory_money"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_45"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_15"
-                android:gravity="center_vertical"
-                android:text="今日所收游戏币：---"
-                android:textColor="@color/c_ffffff"
-                android:textSize="@dimen/sp_16"
-                tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded" />
-        </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/orderform_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_bg_blue2">
+
+        <TextView
+            android:id="@+id/orderform_inventory_money"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_45"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:gravity="center_vertical"
+            android:text="今日所收游戏币：---"
+            android:textColor="@color/c_ffffff"
+            android:textSize="@dimen/sp_16"
+            tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded" />
+    </RelativeLayout>
 
     <!--<android.support.design.widget.TabLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/dp_44"-->
-        <!--android:id="@+id/tab_layout"-->
-        <!--android:layout_below="@id/orderform_rl"-->
-        <!--&gt;</android.support.design.widget.TabLayout>-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/dp_44"-->
+    <!--android:id="@+id/tab_layout"-->
+    <!--android:layout_below="@id/orderform_rl"-->
+    <!--&gt;</android.support.design.widget.TabLayout>-->
 
     <!--<android.support.design.widget.TabLayout-->
-        <!--android:id="@+id/tab_layout"-->
-        <!--android:layout_below="@id/orderform_rl"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/dp_44"-->
-        <!--android:background="@color/white"-->
-        <!--app:tl_indicator_width="@dimen/dp_15"-->
-        <!--app:tl_indicator_height="@dimen/dp_2"-->
-        <!--app:tl_indicator_color="@color/blue"-->
-        <!--app:tl_indicator_corner_radius="@dimen/dp_2"-->
-        <!--app:tl_divider_color="@color/c_00000000"-->
-        <!--app:tl_textSelectColor="@color/c_000000"-->
-        <!--app:tl_textUnselectColor="@color/grey_first"-->
-        <!--app:tl_textsize="@dimen/sp_14"-->
-        <!--app:tl_tab_space_equal="true"-->
-        <!--/>-->
+    <!--android:id="@+id/tab_layout"-->
+    <!--android:layout_below="@id/orderform_rl"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/dp_44"-->
+    <!--android:background="@color/white"-->
+    <!--app:tl_indicator_width="@dimen/dp_15"-->
+    <!--app:tl_indicator_height="@dimen/dp_2"-->
+    <!--app:tl_indicator_color="@color/blue"-->
+    <!--app:tl_indicator_corner_radius="@dimen/dp_2"-->
+    <!--app:tl_divider_color="@color/c_00000000"-->
+    <!--app:tl_textSelectColor="@color/c_000000"-->
+    <!--app:tl_textUnselectColor="@color/grey_first"-->
+    <!--app:tl_textsize="@dimen/sp_14"-->
+    <!--app:tl_tab_space_equal="true"-->
+    <!--/>-->
 
     <!--<FrameLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_below="@id/tab_layout"-->
+    <!--android:id="@+id/orderform_vp"-->
+    <!--&gt;</FrameLayout>-->
+    <!--<com.flyco.tablayout.SlidingTabLayout-->
+        <!--android:id="@+id/sl"-->
         <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_below="@id/tab_layout"-->
-        <!--android:id="@+id/orderform_vp"-->
-        <!--&gt;</FrameLayout>-->
+        <!--android:layout_height="48dp"-->
+        <!--android:background="#6D8FB0"-->
+        <!--android:paddingLeft="5dp"-->
+        <!--android:paddingRight="5dp"-->
+
+        <!--&gt;-->
+    <!--</com.flyco.tablayout.SlidingTabLayout>-->
+<!--    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/orderform_rl"
+
+        >
+    </android.support.design.widget.TabLayout>-->
+
     <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/orderform_tab"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFFFFF"
+        android:layout_below="@id/orderform_rl"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        tl:tl_indicator_margin_left="2dp"
+        tl:tl_indicator_margin_right="2dp"
+        app:tl_indicator_style="BLOCK"
+        app:tl_textUnselectColor="#B3B3B3"
+        app:tl_textSelectColor="@color/c_ffffff"
+        app:tl_indicator_color="#408DEE"
+        app:tl_divider_color="@color/c_000000"
+        app:tl_tab_space_equal="true"
+        />
+    <View
+        android:id="@+id/orderform_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_5"
+        android:layout_above="@+id/rl_nav"
+        android:layout_below="@+id/orderform_tab"
+        android:layout_marginBottom="@dimen/dp_0_5"
+        android:background="@color/c_cccccc"
+        />
+
+   <!-- <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/orderform_stab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
         android:layout_below="@id/orderform_rl"
-        android:background="@color/white"
+        android:background="@color/c_ffffff"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         app:tl_divider_color="@color/c_00000000"
         app:tl_indicator_color="@color/blue"
         app:tl_indicator_corner_radius="@dimen/dp_2"
-        app:tl_indicator_height="@dimen/dp_2"
+        app:tl_indicator_height="@dimen/dp_0"
+        app:tl_indicator_margin_left="2dp"
+        app:tl_indicator_margin_right="2dp"
+        app:tl_indicator_style="BLOCK"
         app:tl_indicator_width="@dimen/dp_15"
         app:tl_tab_space_equal="true"
-        app:tl_textSelectColor="@color/c_000000"
-        app:tl_textUnselectColor="@color/grey_first"
+        app:tl_textSelectColor="@color/c_ffffff"
+        app:tl_textUnselectColor="@color/c_cccccc"
         app:tl_textsize="@dimen/sp_14"
-        />
+        />-->
     <android.support.v4.view.ViewPager
+        android:id="@+id/orderform_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/orderform_stab"
-        android:id="@+id/orderform_vp"
+        android:layout_below="@+id/orderform_view"
         />
 </RelativeLayout>

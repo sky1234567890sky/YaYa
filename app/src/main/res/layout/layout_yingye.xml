@@ -23,6 +23,7 @@
             android:src="@mipmap/icon_close"
             tools:ignore="RtlHardcoded"
             />
+        <!--展示总库存数量-->
         <TextView
             android:id="@+id/popup_tv_number"
             android:layout_width="wrap_content"
@@ -31,7 +32,30 @@
             android:layout_marginTop="@dimen/dp_140"
             android:text="---"
             android:textColor="#ffffffff"
-            android:textSize="45sp" />
+            android:textSize="18sp"
+            tools:ignore="HardcodedText"
+            />
+        <!--选择库存数量上架-->
+        <EditText
+            android:id="@+id/et_gamemoney_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_below="@+id/popup_tv_number"
+            android:inputType="number"
+            android:maxLength="11"
+            android:hint="请输入您要营业的数量"
+            android:textSize="@dimen/sp_15"
+            android:drawablePadding="10dp"
+            android:textColorHint="@color/c_cccccc"
+            android:padding="10dp"
+            android:drawableBottom="@drawable/shape_et_bottom_line"
+            tools:ignore="Autofill,HardcodedText"
+
+            >
+        </EditText>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

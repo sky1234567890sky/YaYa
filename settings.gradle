@@ -1,1 +1,1 @@
-include ':app', ':takephoto', ':basepop'
+include ':app', ':basepop', ':takephoto'

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:tools="http://schemas.android.com/tools"
-    android:color="@color/c_cccccc" android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:ignore="NewApi">
-    <gradient android:startColor="#60CDF8"
-        android:endColor="#408DEE">
-    </gradient>
+android:color="@color/c_cccccc" android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android"
+tools:ignore="NewApi">
+<gradient android:startColor="#60CDF8"
+    android:endColor="#408DEE">
+</gradient>
 </ripple>

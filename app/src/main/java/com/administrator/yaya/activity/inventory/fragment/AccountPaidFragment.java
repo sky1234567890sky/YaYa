@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.activity.inventory.adapter.AccountPaidAdapter;
 import com.administrator.yaya.base.ApiConfig;
@@ -87,11 +88,11 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
 //                inventory_allgamemoneys.setText("游戏币库存合计：" + amount);//库存  父 Fragment 顶部赋值
 //            }
 
-        if (parentFragment1 instanceof InventoryFragment) {
-            if (parentFragment1.getView().findViewById(R.id.inventory_allgamemoneys) != null) {
-                tvObligation = parentFragment1.getView().findViewById(R.id.inventory_allgamemoneys);
-            }
-        }
+//        if (parentFragment1 instanceof InventoryFragment) {
+//            if (parentFragment1.getView().findViewById(R.id.inventory_allgamemoneys) != null) {
+//                tvObligation = parentFragment1.getView().findViewById(R.id.inventory_allgamemoneys);
+//            }
+//        }
     }
 
     @Override
@@ -179,9 +180,18 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
                     adapter.notifyDataSetChanged();
                 }
                 break;
+
             case ApiConfig.TEST_UPAWAY_SINGLE_GOODS://上架单个货物
 
                 TestUpawaySingleGoods testUpawaySingleGoods = (TestUpawaySingleGoods) t[0];
+
+                if (testUpawaySingleGoods.getMsg()==SignOut){
+                    ToastUtil.showLong(R.string.username_login_hint+"");
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+
                 if (testUpawaySingleGoods.getCode() == 0 && testUpawaySingleGoods.getMsg() != null) {
                     ToastUtil.showShort(testUpawaySingleGoods.getMsg());
                 } else {

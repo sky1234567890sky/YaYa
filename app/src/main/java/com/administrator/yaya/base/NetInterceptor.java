@@ -116,7 +116,7 @@ class NetInterceptor {
                     .newBuilder()
                     .scheme(request.url().scheme())
                     .host(request.url().host())
-                    .addQueryParameter("token1", BaseApp.mBaseApp.mToken)
+                    .addQueryParameter("token1", BaseApp.mBaseApp.mToken+"")
                     .addQueryParameter("token2", "2")
                     .build();
             Request newRequest = request.newBuilder()
@@ -127,7 +127,6 @@ class NetInterceptor {
             return chain.proceed(newRequest);
         }
     }
-
     static class CommonParamsPostInterceptor implements Interceptor {
 
         @Override

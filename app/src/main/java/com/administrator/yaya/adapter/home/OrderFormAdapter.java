@@ -23,7 +23,6 @@ public class OrderFormAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return fragments.size();
     }
-
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {

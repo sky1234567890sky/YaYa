@@ -7,7 +7,7 @@ public class TestHomePageData implements Serializable {
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":2709,"userEarningsTotal":2832,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":1,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null},"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币1","comPrice":0.01,"comImg":"http://103.251.91.21:8080/yaya/profile/upload/2019/11/12/2af3daf15777a56e74599a9b617949c2.jpg","comInventory":87482806,"comPurchaseNumMin":10000,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"},"userEarningsToday":"26"}
+     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":41,"userName":"南门屏","userNickName":null,"userHeadImg":"http://192.168.0.198:8082/profile/upload/2019/11/19/d7c2b9c3cd052472f3c8cdc9acadcaa2.png","userPhone":"18898186027","userPwd":"1234","userProfit":0.006,"userStatus":1,"userInvitationCode":"215409","userParentId":40,"userEarningsNow":91334,"userEarningsTotal":82664,"userContributeTotal":24278,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"userAllCount":4000000,"userSalesCount":8000000,"userDoneCount":1500000,"userSalesCountLock":300000,"userNews":1,"userToken":"397ce45e39b444faa070c9c0120dfb8a","parentUser":null,"juniorUsers":null,"junior":null},"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":0.01,"comImg":"http://192.168.0.198:8082/profile/upload/2019/11/15/9213039ec18ea51f22b4ec4a7c35b856.jpg","comInventory":730125453,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"},"userEarningsToday":"19800"}
      */
 
     private String msg;
@@ -40,15 +40,14 @@ public class TestHomePageData implements Serializable {
 
     public static class DataBean {
         /**
-         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1,"userName":"钱浩龙","userNickName":"qhl","userHeadImg":"http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png","userPhone":"17631365666","userPwd":"1234","userProfit":8.0E-4,"userStatus":1,"userInvitationCode":"6666","userParentId":0,"userEarningsNow":2709,"userEarningsTotal":2832,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":1,"zfbButtonStatus":2,"parentUser":null,"juniorUsers":null,"junior":null}
-         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币1","comPrice":0.01,"comImg":"http://103.251.91.21:8080/yaya/profile/upload/2019/11/12/2af3daf15777a56e74599a9b617949c2.jpg","comInventory":87482806,"comPurchaseNumMin":10000,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"}
-         * userEarningsToday : 26
+         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":41,"userName":"南门屏","userNickName":null,"userHeadImg":"http://192.168.0.198:8082/profile/upload/2019/11/19/d7c2b9c3cd052472f3c8cdc9acadcaa2.png","userPhone":"18898186027","userPwd":"1234","userProfit":0.006,"userStatus":1,"userInvitationCode":"215409","userParentId":40,"userEarningsNow":91334,"userEarningsTotal":82664,"userContributeTotal":24278,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"userAllCount":4000000,"userSalesCount":8000000,"userDoneCount":1500000,"userSalesCountLock":300000,"userNews":1,"userToken":"397ce45e39b444faa070c9c0120dfb8a","parentUser":null,"juniorUsers":null,"junior":null}
+         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":0.01,"comImg":"http://192.168.0.198:8082/profile/upload/2019/11/15/9213039ec18ea51f22b4ec4a7c35b856.jpg","comInventory":730125453,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"}
+         * userEarningsToday : 19800
          */
 
         private UserInfoBean userInfo;
         private CommodityBean commodity;
         private String userEarningsToday;
-
         public UserInfoBean getUserInfo() {
             return userInfo;
         }
@@ -82,23 +81,29 @@ public class TestHomePageData implements Serializable {
              * updateTime : null
              * remark : null
              * params : {}
-             * userId : 1
-             * userName : 钱浩龙
-             * userNickName : qhl
-             * userHeadImg : http://192.168.0.198:8080/profile/upload/2019/11/05/6988361266429a53278f92a2c44373ca.png
-             * userPhone : 17631365666
+             * userId : 41
+             * userName : 南门屏
+             * userNickName : null
+             * userHeadImg : http://192.168.0.198:8082/profile/upload/2019/11/19/d7c2b9c3cd052472f3c8cdc9acadcaa2.png
+             * userPhone : 18898186027
              * userPwd : 1234
-             * userProfit : 8.0E-4
+             * userProfit : 0.006
              * userStatus : 1
-             * userInvitationCode : 6666
-             * userParentId : 0
-             * userEarningsNow : 2709
-             * userEarningsTotal : 2832
-             * userContributeTotal : 0
+             * userInvitationCode : 215409
+             * userParentId : 40
+             * userEarningsNow : 91334
+             * userEarningsTotal : 82664
+             * userContributeTotal : 24278
              * zfbEd : 0
              * wxEd : 0
-             * vxButtonStatus : 1
+             * vxButtonStatus : 2
              * zfbButtonStatus : 2
+             * userAllCount : 4000000
+             * userSalesCount : 8000000
+             * userDoneCount : 1500000
+             * userSalesCountLock : 300000
+             * userNews : 1
+             * userToken : 397ce45e39b444faa070c9c0120dfb8a
              * parentUser : null
              * juniorUsers : null
              * junior : null
@@ -113,7 +118,7 @@ public class TestHomePageData implements Serializable {
             private ParamsBean params;
             private int userId;
             private String userName;
-            private String userNickName;
+            private Object userNickName;
             private String userHeadImg;
             private String userPhone;
             private String userPwd;
@@ -128,6 +133,12 @@ public class TestHomePageData implements Serializable {
             private int wxEd;
             private int vxButtonStatus;
             private int zfbButtonStatus;
+            private int userAllCount;
+            private int userSalesCount;
+            private int userDoneCount;
+            private int userSalesCountLock;
+            private int userNews;
+            private String userToken;
             private Object parentUser;
             private Object juniorUsers;
             private Object junior;
@@ -204,11 +215,11 @@ public class TestHomePageData implements Serializable {
                 this.userName = userName;
             }
 
-            public String getUserNickName() {
+            public Object getUserNickName() {
                 return userNickName;
             }
 
-            public void setUserNickName(String userNickName) {
+            public void setUserNickName(Object userNickName) {
                 this.userNickName = userNickName;
             }
 
@@ -324,6 +335,54 @@ public class TestHomePageData implements Serializable {
                 this.zfbButtonStatus = zfbButtonStatus;
             }
 
+            public int getUserAllCount() {
+                return userAllCount;
+            }
+
+            public void setUserAllCount(int userAllCount) {
+                this.userAllCount = userAllCount;
+            }
+
+            public int getUserSalesCount() {
+                return userSalesCount;
+            }
+
+            public void setUserSalesCount(int userSalesCount) {
+                this.userSalesCount = userSalesCount;
+            }
+
+            public int getUserDoneCount() {
+                return userDoneCount;
+            }
+
+            public void setUserDoneCount(int userDoneCount) {
+                this.userDoneCount = userDoneCount;
+            }
+
+            public int getUserSalesCountLock() {
+                return userSalesCountLock;
+            }
+
+            public void setUserSalesCountLock(int userSalesCountLock) {
+                this.userSalesCountLock = userSalesCountLock;
+            }
+
+            public int getUserNews() {
+                return userNews;
+            }
+
+            public void setUserNews(int userNews) {
+                this.userNews = userNews;
+            }
+
+            public String getUserToken() {
+                return userToken;
+            }
+
+            public void setUserToken(String userToken) {
+                this.userToken = userToken;
+            }
+
             public Object getParentUser() {
                 return parentUser;
             }
@@ -362,11 +421,11 @@ public class TestHomePageData implements Serializable {
              * remark : null
              * params : {}
              * comId : 1
-             * comName : 游戏币1
+             * comName : 游戏币
              * comPrice : 0.01
-             * comImg : http://103.251.91.21:8080/yaya/profile/upload/2019/11/12/2af3daf15777a56e74599a9b617949c2.jpg
-             * comInventory : 87482806
-             * comPurchaseNumMin : 10000
+             * comImg : http://192.168.0.198:8082/profile/upload/2019/11/15/9213039ec18ea51f22b4ec4a7c35b856.jpg
+             * comInventory : 730125453
+             * comPurchaseNumMin : 100
              * comPurchaseNumMax : 10000000
              * comExplain : 这是个游戏币
              */
@@ -390,6 +449,7 @@ public class TestHomePageData implements Serializable {
             public Object getSearchValue() {
                 return searchValue;
             }
+
             public void setSearchValue(Object searchValue) {
                 this.searchValue = searchValue;
             }

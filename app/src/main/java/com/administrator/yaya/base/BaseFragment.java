@@ -20,13 +20,14 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 import static com.scwang.smartrefresh.layout.util.DensityUtil.px2dp;
-
 public abstract class BaseFragment extends Fragment {
     private Unbinder bind;
-
     private LinearLayoutManager mManager;
     public boolean isRefresh = false;//刷新用到
-//    private boolean isCreate = false;
+    public String SignOut = "1";
+
+//    public BaseApp mApplication;
+    //    private boolean isCreate = false;
 //    private boolean isVisible;
 
     @Nullable
@@ -40,18 +41,7 @@ public abstract class BaseFragment extends Fragment {
         initView(inflate);
         initListener();
         return inflate;
-
     }
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//        if (isVisibleToUser &&  isCreate) {
-//            isCreate = false;
-//        } else {
-//            isCreate = true;
-//            isVisible = true;
-//        }
-//    }
     protected abstract int getLayoutId();
     protected void initData() {
 
@@ -89,7 +79,6 @@ public abstract class BaseFragment extends Fragment {
     public void loadMore() {
     }
     public  void refresh() {
-
     }
 
     @Override

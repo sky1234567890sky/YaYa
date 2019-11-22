@@ -2,6 +2,7 @@ package com.administrator.yaya.activity.my.fragment;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.my.adapter.RebateAdapter;
 import com.administrator.yaya.activity.orderform.adapter.SellAdapter;
 import com.administrator.yaya.base.ApiConfig;
@@ -45,6 +47,9 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
     SmartRefreshLayout rebateRefreshLayout;
     private RebateAdapter adapter;
     private ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list;
+    private String userId;
+    private String token;
+
     public RebateFragment() {
         // Required empty public constructor
     }
@@ -95,8 +100,10 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
     @Override
     protected void initData() {
 
-        String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
-        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),3);//收益类型--1收入-2支出-3返利
+        userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
+        token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
+
+        if (userId !=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),token,3);//收益类型--1收入-2支出-3返利
     }
     @Override
     protected LoginModel getModel() {
@@ -118,6 +125,12 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
                 list.clear();
 
                 TestMyEarnings testMyEarnings = (TestMyEarnings) t[0];
+                if (testMyEarnings.getMsg()==SignOut){
+                    ToastUtil.showLong(""+R.string.username_login_hint);
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
                 if (testMyEarnings.getCode()==0 && testMyEarnings.getData()!=null)  {
                     TestMyEarnings.DataBean data = testMyEarnings.getData();
                     List<TestMyEarnings.DataBean.UserEarningsListBean> userEarningsList = data.getUserEarningsList();

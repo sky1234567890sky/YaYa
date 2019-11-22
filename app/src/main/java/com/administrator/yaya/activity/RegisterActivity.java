@@ -41,7 +41,7 @@ import razerdp.design.SlideFromBottomPopup;
 /**
  * 注册界面
  */
-public class RegisterActivity extends BaseMvpActivity<LoginModel>implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick{
+public class RegisterActivity extends BaseMvpActivity<LoginModel> implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick{
 
     @BindView(R.id.register_back_iv)
     ImageView registerBackIv;
@@ -91,32 +91,32 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
         //倒计时工具类
         mDownTimerUtils = new CountDownTimerUtils(mInvitecode, 60000, 1000);
     }
+
     @Override
     public void onError(int whichApi, Throwable e) {
-//        mView.reset();
-//        ToastUtil.showShort(e.getMessage());
     }
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_REGISTER://注册
                 TestRegister register = (TestRegister) t[0];
                 int code = register.getCode();
-
                 if (code==0){//为0注册成功
-                    ToastUtil.showShort(register.getMsg());
-//                    new Intent(this,)
-                    Intent intent = new Intent();
-                    intent.putExtra(NormalConfig.USER_NAME,registerEtUname.getText().toString());
-                    intent.putExtra(NormalConfig.PASS_WORD,etRegisterPw.getText().toString());
-                    setResult(100,intent);
-                    finish();
+                    if (register.getMsg()==mApplication.SignOut){
+                        ToastUtil.showLong(R.string.username_login_hint+"");
+                        Intent intent = new Intent(this, LoginActivity.class);
+                        startActivity(intent);
 
-                }else{
-                    ToastUtil.showLong(register.getMsg());
+                    }else{
+                        ToastUtil.showLong(register.getMsg());
+                        Intent intent = new Intent();
+                        intent.putExtra(NormalConfig.USER_NAME,registerEtUname.getText().toString());
+                        intent.putExtra(NormalConfig.PASS_WORD,etRegisterPw.getText().toString());
+                        setResult(100,intent);
+                        finish();
+                    }
+
                 }
-
             case ApiConfig.TEXT_INVITECODE://注册获取验证码  验证码   666666
                 //获取验证码前判断手机号是否被注册
                 TestRegister testInviteCode = (TestRegister) t[0];
@@ -149,9 +149,8 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
         }
     }
     private void loginIm() {
-        //TODO:登录聊天逻辑处理
-    }
 
+    }
     @Override
     protected void initData() {
         super.initData();
@@ -206,7 +205,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
             String regex = "[A-Za-z0-9]{4,12}";
             if (AppValidationMgr.isPhone(userPhone) && userPwd.matches(regex) ){
                 //邀请码与验证码验证   @Field("userPhone") String userPhone, @Field("userPwd") String userPwd, @Field("userInvitationCode") String userInvitationCode, @Field("codeName") String codeName
-                mPresenter.getData(ApiConfig.TEXT_REGISTER,userPhone,userPwd,userInvitationCode,codeName);
+                mPresenter.getData(ApiConfig.TEXT_REGISTER,userPhone,userPwd,userInvitationCode,codeName,mApplication.mToken);
 
             } else ToastUtil.showShort("请输入正确的格式");
         }
@@ -226,12 +225,14 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
     @Override
     public void clickTop() {
         mTakePhoto = new TakePhotoImpl(this, this);
+
         mTakePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(1080).create(), true);
+
         mTakePhoto.onPickFromGalleryWithCrop(getUri(), getOption());
+
 //        mTakePhoto.onPickFromGallery();
         mPop.dismiss();
     }
-
     /**
      * 点击拍照
      */
@@ -245,6 +246,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
 //        mTakePhoto.onPickFromCapture(getUri());
         mPop.dismiss();
     }
+
     /**
      * 取消popupwindow
      */
@@ -293,6 +295,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel>implements Take
      * @param result
      * @param msg
      */
+
     @Override
     public void takeFail(TResult result, String msg) {
         ToastUtil.showShort(msg);

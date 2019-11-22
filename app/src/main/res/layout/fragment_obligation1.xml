@@ -26,6 +26,16 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_162"
         >
+        <ImageView
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_55"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/icon_daifukuan"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            />
+
+
         <TextView
             android:id="@+id/daifu_orderNumber"
             android:layout_width="wrap_content"

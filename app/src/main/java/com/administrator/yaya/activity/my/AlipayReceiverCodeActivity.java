@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.my.adapter.AlipayReceiverCodeAdapter;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
@@ -23,6 +25,7 @@ import com.administrator.yaya.base.NetConfig;
 import com.administrator.yaya.bean.TestUpLoadCodeIv2;
 import com.administrator.yaya.bean.TestUpLoadGetQr;
 import com.administrator.yaya.bean.my.TestAlipayReceiverCode;
+import com.administrator.yaya.bean.my.TestWechatReceiverCode;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.AlbumUtil;
@@ -161,17 +164,17 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
     TextView getMenry;
 
     private int wechatCode;
-    private TestAlipayReceiverCode testAlipayReceiverCode;
+    private TestWechatReceiverCode testAlipayReceiverCode;
     private AlipayReceiverCodeAdapter adapter;
     private String userId;
     private File cameraSavePath;
     private int index = -1;
-    private double money = 0.00;
+    private double money = 0.0;
     private String imgUrl;
     private View views;
     private int type = 0;
     private int newType=0;
-    private List<TestAlipayReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList;
+    private List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_payments_receive;
@@ -187,20 +190,30 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 //        mList.setLayoutManager(new GridLayoutManager(this, 2));
 //        adapter = new AlipayReceiverCodeAdapter(list);
 //        mList.setAdapter(adapter);
+
     }
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, Integer.parseInt(userId), 2);//1、微信 2、支付
+        mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, Integer.parseInt(userId), 2,mApplication.mToken);//1、微信 2、支付
     }
+
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
-            case ApiConfig.TEST_ALIPAY_RECEIVER_CODE:
-                testAlipayReceiverCode = (TestAlipayReceiverCode) t[0];
+            case ApiConfig.TEST_WECHAT_RECEIVER_CODE:
+                testAlipayReceiverCode = (TestWechatReceiverCode) t[0];
+
+                if (testAlipayReceiverCode.getMsg()==mApplication.SignOut){
+                    ToastUtil.showLong(""+R.string.username_login_hint);
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+
                 if (testAlipayReceiverCode.getCode()==0) {
-                    TestAlipayReceiverCode.DataBean data = testAlipayReceiverCode.getData();
-//                    Log.i("tag", "支付宝: "+ testAlipayReceiverCode.toString());
+                    TestWechatReceiverCode.DataBean data = testAlipayReceiverCode.getData();
+                    Log.i("tag", "支付宝: "+ testAlipayReceiverCode.toString());
                     userCodeImgList = data.getUserCodeImgList();
 //                    list.addAll(userCodeImgList);
 //                    adapter.notifyDataSetChanged();
@@ -223,12 +236,14 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
                     //二维码上传
 //                    mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, Integer.parseInt(userId), 1);//1、微信 2、支付宝
                 }
+
                 break;
         }
     }
-    private void getImageData(List<TestAlipayReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList) {
+
+    private void getImageData(List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList) {
         for (int i = 0; i < userCodeImgList.size(); i++) {
-            TestAlipayReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1 = userCodeImgList.get(i);
+            TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1 = userCodeImgList.get(i);
 
             String imgUrl = userCodeImgListBean1.getImgUrl();
             if (userCodeImgListBean1.getImgMoney() == 1000.0){
@@ -259,13 +274,12 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
             getImageStatus(userCodeImgListBean1, type);
         }
     }
-    private void getImageStatus(TestAlipayReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1, int type) {
+    private void getImageStatus(TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1, int type) {
         switch (type) {
             case 0://任意付款金额
                 if (userCodeImgListBean1.getImgStatus() == 1) {
                     //待审核  不能点击
                     mLl1.setClickable(false);
-
                     ImageViewUrlWechat.setVisibility(View.VISIBLE);
                     wechatHintUnreviewed.setVisibility(View.VISIBLE);
                     mLl1.setVisibility(View.INVISIBLE);
@@ -493,7 +507,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
             //微信 上传图片        参数：file
 //            mPresenter.getData(ApiConfig.TEST_UPLOAD_IMAGEVIE,path,Integer.parseInt(userId),money,1);//1微信 2二维码
 
-            uploadFile(upladFile,newType);
+            uploadFile(upladFile);
 
 //            mPresenter.getData(ApiConfig.TEST_UPLOAD_IMAGEVIE,filePart);//1微信 2二维码
             //上传收款码    参数:
@@ -503,7 +517,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
             // imgUrl 图片路径
         }
     }
-    private void uploadFile(File file,final  int t) {
+    private void uploadFile(File file) {
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
@@ -533,26 +547,25 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 //                Log.i("tag", "路经: "+url);
                 Gson gson = new Gson();
                 final TestUpLoadCodeIv2 testUpLoadCodeIv2 = gson.fromJson(url, TestUpLoadCodeIv2.class);
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if (testUpLoadCodeIv2.getCode() == 0) {
                             imgUrl = testUpLoadCodeIv2.getMsg();
-                            double money = 0.0;
-                            if(t==1){
-                                money=1000.0;
-                            }else if(t==2){
-                                money=2000.0;
-                            }else if(t==3){
-                                money=3000.0;
-                            }else if(t==4){
-                                money=4000.0;
-                            }else if(t==5){
-                                money=5000.0;
-                            }else{
-                                money=0.0;
-                            }
+//                            double money = 0.0;
+//                            if(t==1){
+//                                money=1000.0;
+//                            }else if(t==2){
+//                                money=2000.0;
+//                            }else if(t==3){
+//                                money=3000.0;
+//                            }else if(t==4){
+//                                money=4000.0;
+//                            }else if(t==5){
+//                                money=5000.0;
+//                            }else{
+//                                money=0.0;
+//                            }
                             mPresenter.getData(ApiConfig.TEST_UPLOAD_GET_QR, Integer.parseInt(userId), 2, imgUrl,money);
 //                            Log.i("tag", "支付宝收款码ImageView: "+imgUrl);
                             //上传收款码
@@ -570,15 +583,12 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
     }
 
     //打开相册
-    private void getPhotoAlbum(int newType) {
+    private void getPhotoAlbum(double money) {
+        this.money = money;
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        if(newType!=-1){
-            this.newType=newType;
-        }
         startActivityForResult(intent, ApiConfig.request_open_album_code);
     }
-
     @OnClick({R.id.pay_receive_back_iv, R.id.wechat_ll1, R.id.wechat_ll2, R.id.wechat_ll3, R.id.wechat_ll4, R.id.wechat_ll5, R.id.wechat_ll6,
 
             R.id.ImageView_url_wechat, R.id.wechat_hint_unreviewed, R.id.wechat_no_shenhe,
@@ -599,69 +609,68 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
                 break;
             case R.id.wechat_ll1:
 //                imgId = userCodeImgList.get(0).getImgId();
-                getPhotoAlbum(0);
+
+                getPhotoAlbum(0.0);
                 break;
             case R.id.wechat_ll2:
 //                imgId = userCodeImgList.get(1).getImgId();
-                getPhotoAlbum(1);
+                getPhotoAlbum(1000.0);
                 break;
             case R.id.wechat_ll3:
 //                imgId = userCodeImgList.get(2).getImgId();
-                getPhotoAlbum(2);
+                getPhotoAlbum(2000.0);
                 break;
             case R.id.wechat_ll4:
 //                imgId = userCodeImgList.get(2).getImgId();
-                getPhotoAlbum(3);
+                getPhotoAlbum(3000.0);
                 break;
 
             case R.id.wechat_ll5:
-                imgId = userCodeImgList.get(2).getImgId();
-                getPhotoAlbum(4);
+                getPhotoAlbum(4000.0);
                 break;
 
             case R.id.wechat_ll6:
-                imgId = userCodeImgList.get(2).getImgId();
-                getPhotoAlbum(5);
+                getPhotoAlbum(5000.0);
                 break;
 
             case R.id.ImageView_url_wechat://图片显示上传的二维码
 
-                getPhotoAlbum(-1);
+                getPhotoAlbum(0.0);
 
                 break;
             case R.id.wechat_hint_unreviewed://提示未上传
-
                 break;
             case R.id.wechat_no_shenhe://审核不通过
-
+                getPhotoAlbum(0.0);
                 break;
-
-
             case R.id.ImageView_url_wechat2:
-                getPhotoAlbum(-1);
+                getPhotoAlbum(1000.0);
                 break;
             case R.id.wechat_hint_unreviewed2:
                 break;
 
             case R.id.wechat_no_shenhe2:
+                getPhotoAlbum(1000.0);
                 break;
 
             case R.id.iv_money1:
                 break;
             case R.id.ImageView_url_wechat3:
-                getPhotoAlbum(-1);
+                getPhotoAlbum(2000.0);
                 break;
             case R.id.wechat_hint_unreviewed3:
                 break;
             case R.id.wechat_no_shenhe3:
+                getPhotoAlbum(2000.0);
                 break;
 
             case R.id.ImageView_url_wechat4:
-                getPhotoAlbum(-1);
+                getPhotoAlbum(3000.0);
                 break;
             case R.id.wechat_hint_unreviewed4:
                 break;
             case R.id.wechat_no_shenhe4:
+                getPhotoAlbum(3000.0);
                 break;
 
             case R.id.iv_money2:
@@ -669,19 +678,22 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
             case R.id.iv_money3:
                 break;
             case R.id.ImageView_url_wechat5:
-                getPhotoAlbum(-1);
+                getPhotoAlbum(4000.0);
                 break;
             case R.id.wechat_hint_unreviewed5:
                 break;
             case R.id.wechat_no_shenhe5:
+                getPhotoAlbum(4000.0);
                 break;
 
             case R.id.ImageView_url_wechat6:
-                getPhotoAlbum(-1);
+                getPhotoAlbum(5000.0);
                 break;
             case R.id.wechat_hint_unreviewed6:
+
                 break;
             case R.id.wechat_no_shenhe6:
+                getPhotoAlbum(5000.0);
                 break;
             case R.id.iv_money4:
                 break;

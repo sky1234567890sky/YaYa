@@ -35,7 +35,7 @@ public class AlipayReceiverCodeAdapter extends RecyclerView.Adapter<AlipayReceiv
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
-        @SuppressLint("InflateParams") View inflate = LayoutInflater.from(context).inflate(R.layout.alipayreceivercode_item, null);
+        @SuppressLint("InflateParams") View inflate = LayoutInflater.from(context).inflate(R.layout.alipayreceivercode_item, viewGroup,false);
         return new Vh(inflate);
     }
     int imgMoney;

@@ -1,7 +1,9 @@
 package com.administrator.yaya.base;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -22,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+
 import com.administrator.yaya.R;
 import com.administrator.yaya.broadcast.NetBroadcastReceiver;
 import com.administrator.yaya.broadcast.NetStatusBroadCast;
@@ -32,11 +35,11 @@ import com.hjq.permissions.XXPermissions;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.squareup.haha.perflib.Main;
 import java.util.List;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 import static com.scwang.smartrefresh.layout.util.DensityUtil.px2dp;
-
 public abstract class BaseActivity extends AppCompatActivity {
     protected BaseApp mApplication;
     protected LinearLayoutManager mManager;
@@ -70,12 +73,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .permission(Manifest.permission.CAMERA,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.ACCESS_WIFI_STATE
+                        Manifest.permission.ACCESS_WIFI_STATE,
+                        Manifest.permission.READ_PHONE_STATE
                 )
+//                <!-- 读取手机IMEI的设备权限 -->
+//    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
                 .request(new OnPermission() {
                     @Override
                     public void hasPermission(List<String> granted, boolean isAll) {
-
                     }
                     @Override
                     public void noPermission(List<String> denied, boolean quick) {
@@ -87,8 +92,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 //            XXPermissions.gotoPermissionSettings(getContext());//跳转到权限设置页面
 //        }
     }
-
-
     protected void setStatusBar() {
 //        StatusBarUtil.setColor(this, getResources().getColor(R.color.c_000000));
 
@@ -113,6 +116,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void initExit() {
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -126,6 +130,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         textView.getPaint().setShader(mLinearGradient);
         textView.invalidate();
     }
+
     protected abstract int getLayoutId();
 
     protected void initListener() {
@@ -163,9 +168,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             });
         }
     }
+
     public void loadMore() {
 
     }
+
     public void refresh() {
 
     }
@@ -188,10 +195,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.anim.no_slide, R.anim.out_right);//划出
     }
+
     /**
      * android 快速点击两次出现两个重复界面
      * 在父类activity中重写事件分发的方法dispatchTouchEvent()
      * 当在activity中快速点击某个控件，时间间隔不超过300ms，此时activity拦截click事件，这是点击的view将得不到响应
+     *
      * @param ev
      * @return
      */
@@ -204,6 +213,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
+
     public boolean isFastDoubleClick() {
         long time = System.currentTimeMillis();
         long timeD = time - lastClickTime;
@@ -226,9 +236,119 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (netWorkChangReceiver!=null){
+        if (netWorkChangReceiver != null) {
             this.unregisterReceiver(netWorkChangReceiver);
         }
     }
+
+
+    /**
+     *     * getPermission 动态获取权限方法
+     * <p>
+     *     *
+     * <p>
+     *     * @param context 上下文
+     * <p>
+     *     * @param isAsk  是否开启权限询问      (Android6.0以下用户可以不开启,所有权限自动可以获得；6.0以上用户若不开启，获取不到某权限时将默认跳过)
+     * <p>
+     *     * @param isHandOpen  是否询问用户被引导手动开启权限界面  (用户永久禁用某权限时是否引导让用户手动授权权限)
+     * <p>
+     *    
+     */
+
+    public void getPermission(Context context, boolean isAsk, final boolean isHandOpen) {
+        if (!isAsk) return;
+        if (XXPermissions.isHasPermission(context,
+//所需危险权限可以在此处添加：
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Permission.READ_PHONE_STATE,
+                Manifest.permission.CAMERA,
+                Permission.WRITE_EXTERNAL_STORAGE)) {
+            ToastUtil.showLong("已经获得所需所有权限");
+        } else {
+            XXPermissions.with((Activity) context).permission(
+//同时在此处添加：
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_WIFI_STATE,
+                    Permission.READ_PHONE_STATE,
+                    Manifest.permission.CAMERA,
+                    Permission.WRITE_EXTERNAL_STORAGE
+            ).request(new OnPermission() {
+
+                @Override
+
+                public void noPermission(List<String> denied, boolean quick) {
+
+                    if (quick) {
+
+                        ToastUtil.showLong("被永久拒绝授权，请手动授予权限");
+
+//如果是被永久拒绝就跳转到应用权限系统设置页面
+
+                        if (isHandOpen) {
+
+                            final AlertDialog.Builder normalDialog =
+
+                                    new AlertDialog.Builder(mApplication);
+
+                            normalDialog.setTitle("开启权限引导");
+
+                            normalDialog.setMessage("被您永久禁用的权限为应用必要权限，是否需要引导您去手动开启权限呢？");
+
+                            normalDialog.setPositiveButton("好的", new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface arg0, int arg1) {
+
+                                    XXPermissions.gotoPermissionSettings(mApplication);
+
+                                }
+
+                            });
+
+                            normalDialog.setNegativeButton("下一次", new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface arg0, int arg1) {
+
+                                }
+
+                            });
+
+                            normalDialog.show();
+
+                        }
+
+                    } else {
+
+                        ToastUtil.showLong("获取权限失败");
+
+                    }
+
+                }
+
+                @Override
+
+                public void hasPermission(List<String> granted, boolean isAll) {
+
+                    if (isAll) {
+
+                        ToastUtil.showLong("获取权限成功");
+
+                    } else {
+
+                        ToastUtil.showLong("获取权限成功，部分权限未正常授予");
+
+                    }
+
+                }
+
+            });
+
+        }
+
+    }
+
 
 }

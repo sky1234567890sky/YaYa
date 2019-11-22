@@ -1,11 +1,13 @@
 package com.administrator.yaya.activity.my;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.my.adapter.SystemMessagesAdapter;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
@@ -41,6 +43,7 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
 //    SmartRefreshLayout systemMsgRefreshLayout;
     private List<TestNotificationInfo.DataBean> list;
     private SystemMessagesAdapter adapter;
+    private String userId;
 
     //    recycleview
     @Override
@@ -83,8 +86,10 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
     @Override
     protected void initData() {
         super.initData();
-        String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        if (userId!=null)mPresenter.getData(ApiConfig.TEST_NOTIFICATION_INFO,Integer.parseInt(userId));
+        userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        String mToken = mApplication.mToken;
+
+        mPresenter.getData(ApiConfig.TEST_NOTIFICATION_INFO,Integer.parseInt(userId),mToken);
     }
 
     @Override
@@ -96,20 +101,24 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
                     list.clear();
                 }
 
-
                 TestNotificationInfo testNotificationInfos  = (TestNotificationInfo) t[0];
-            if (testNotificationInfos.getCode()==0 && testNotificationInfos.getData()!=null){
+
+                if (testNotificationInfos.getMsg()==mApplication.SignOut){
+
+                    Intent intent = new Intent(this, LoginActivity.class);
+
+                    startActivity(intent);
+
+                    finish();
+                }else if (testNotificationInfos.getCode()==0 && testNotificationInfos.getData()!=null){
 //                Log.i("tag", "通知消息: "+testNotificationInfos.getData().toString());
                 List<TestNotificationInfo.DataBean> data = testNotificationInfos.getData();
                 list.addAll(data);
                 adapter.notifyDataSetChanged();
-            }else{
-                ToastUtil.showShort(testNotificationInfos.getMsg());
             }
                 break;
         }
         mRefresh.finishRefresh();
-
     }
     @OnClick({R.id.system_msg_back_iv})
     public void onViewClicked(View view) {

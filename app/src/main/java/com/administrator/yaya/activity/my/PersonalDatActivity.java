@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseApp;
 import com.administrator.yaya.base.BaseMvpActivity;
@@ -33,8 +34,6 @@ import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
-import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.picasso.Picasso;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoImpl;
@@ -44,7 +43,6 @@ import org.devio.takephoto.model.TResult;
 
 import java.io.File;
 import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;
@@ -112,6 +110,13 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
             //上传昵称   接口得调
             case ApiConfig.TEST_UPLOAD_NAME:
                 TestUploadHeadler testUploadHeadler = (TestUploadHeadler) t[0];
+                if (testUploadHeadler.getMsg()==mApplication.SignOut){
+                    ToastUtil.showLong(""+R.string.username_login_hint);
+                    Intent inte = new Intent(this, LoginActivity.class);
+                    startActivity(inte);
+                    return;
+                }
+
                 if (testUploadHeadler.getCode() == 0) {
                     ToastUtil.showLong(testUploadHeadler.getMsg());
                     SharedPrefrenceUtils.saveString(this, NormalConfig.USER_NICK, nickName);
@@ -130,9 +135,7 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
                     ToastUtil.showLong(testUploadHeadler1.getMsg());
 
                 }else{
-
                     ToastUtil.showLong(testUploadHeadler1.getMsg());
-
                 }
                 break;
         }
@@ -160,7 +163,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
             RequestOptions requestOptions = new RequestOptions().circleCrop();
 
             if (headler_iamge!=null){
-
                 Glide.with(PersonalDatActivity.this)
                         .load(headler_iamge)
                         .apply(new RequestOptions().circleCrop())
@@ -232,7 +234,7 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     private void upLoadHeadlerIv(String nickName) {
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
 
-        if (!nickName.isEmpty()) mPresenter.getData(ApiConfig.TEST_UPLOAD_NAME, Integer.parseInt(userId), nickName);
+        if (!nickName.isEmpty()) mPresenter.getData(ApiConfig.TEST_UPLOAD_NAME, Integer.parseInt(userId), nickName,mApplication.mToken);
     }
 
     @Override

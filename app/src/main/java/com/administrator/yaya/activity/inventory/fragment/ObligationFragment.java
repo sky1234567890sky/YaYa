@@ -94,9 +94,9 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
 //        if (isVisibleToUser ==true){//当前处于可见状态
         if (parentFragment instanceof InventoryFragment) {
             // 父 TestView
-            if (parentFragment1.getView().findViewById(R.id.inventory_allgamemoneys) != null) {
-                tvObligation = parentFragment1.getView().findViewById(R.id.inventory_allgamemoneys);
-            }
+//            if (parentFragment1.getView().findViewById(R.id.inventory_allgamemoneys) != null) {
+//                tvObligation = parentFragment1.getView().findViewById(R.id.inventory_allgamemoneys);
+//            }
         }
     }
 
@@ -105,7 +105,6 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEXT_GATHERING:
-
                 //获取父Fragment控件
                 TestObligation testObligation = (TestObligation) t[0];
                 data = testObligation.getData();
@@ -126,7 +125,6 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
                     list.addAll(orderStockList);
                     adapter.notifyDataSetChanged();
                 }
-
                 break;
 
             //取消售卖订单（不用）
@@ -196,7 +194,7 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
             public void setonclik(int index) {
                 Intent intent = new Intent(getActivity(), AffirmMessageActivity.class);
                 String orderNumber = list.get(index).getOrderNumber();
-                Log.i("tag", "订单编号1: "+orderNumber);
+//                Log.i("tag", "订单编号1: "+orderNumber);
                 intent.putExtra("OrderNumber", orderNumber);
                 startActivity(intent);
             }

@@ -1,6 +1,7 @@
 package com.administrator.yaya.activity.orderform;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.orderform.adapter.FinishAdapter;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
@@ -46,6 +48,7 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     private OrderFormkFragment parentFragment1;
     private TestAllOrderStock.DataBean data;
     private TextView tvObligation;
+    private String token;
 
     public FinishFragment() {
         // Required empty public constructor
@@ -70,9 +73,7 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
             if (finishRefresh != null)
                 refresh();
         }
-
     }
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_finish;
@@ -111,13 +112,11 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
         super.initData();
         //已完成
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
+        token = SharedPrefrenceUtils.getString(getContext(), NormalConfig.TOKEN);
         if (userId != null) {
-            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), 2);
-        } else {
-            ToastUtil.showShort(R.string.networkerr + "");
+            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), 2,token);
         }
     }
-
     @Override
     public void refresh() {
         super.refresh();
@@ -137,8 +136,16 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
         switch (whichApi) {
             case ApiConfig.TEST_ALL_ORDERSTOCK://已完成
                 if (list!=null&& !list.isEmpty())list.clear();
+
                 TestAllOrderStock testFinish = (TestAllOrderStock) t[0];
-                Log.i("tag", "已完成: " + testFinish.toString());
+
+//                Log.i("tag", "已完成: " + testFinish.toString());
+                if (testFinish.getMsg()==SignOut){
+                    ToastUtil.showLong(R.string.username_login_hint+"");
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
 
                 if (testFinish.getCode() == 0 && testFinish.getData() != null && testFinish.getData().getOrderSalesList() != null) {
 //                    进货订单集合	orderSalesList
@@ -211,4 +218,12 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
         if (!isRefresh) isRefresh = true;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden && getActivity()!=null){
+            if (finishRefresh != null)
+                refresh();
+        }
+    }
 }

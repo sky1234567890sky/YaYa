@@ -29,6 +29,7 @@ import butterknife.OnClick;
  * 修改密码
  */
 public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
+
     @BindView(R.id.update_back_iv)
     ImageView forgetBackIv;
     @BindView(R.id.update_et_code)//手机号
@@ -70,6 +71,7 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
                 }
                 break;
             case R.id.update_ok_btn:
+
                 String phoneCode = updateEtCode.getText().toString().trim();
                 String verificationCode = forgetEtVerificationCode.getText().toString().trim();
                 String psw = updatePasswordEt.getText().toString().trim();
@@ -108,7 +110,7 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
 //              ^(?![0-9])(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{4,12}$
                 String regex = "[A-Za-z0-9]{4,12}";
                    if (AppValidationMgr.isPhone(phoneCode) && psw.matches(regex)) {
-                        mPresenter.getData(ApiConfig.TEST_UPDATEPASSWORD, phoneCode, verificationCode,psw);
+                        mPresenter.getData(ApiConfig.TEST_UPDATEPASSWORD, phoneCode, verificationCode,psw,mApplication.userid,mApplication.mToken);
 //                      okLogin();
                     } else ToastUtil.showShort("请输入正确的手机号或密码");
                 break;
@@ -135,6 +137,15 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
             //修改密码
             case ApiConfig.TEST_UPDATEPASSWORD://修改密碼
                 TestUpdatePwd testUpdatePwd = (TestUpdatePwd) t[0];
+
+                if (testUpdatePwd.getMsg()==mApplication.SignOut){
+
+                    Intent intent = new Intent(this, LoginActivity.class);
+
+                    startActivity(intent);
+
+                    return;
+                }
                 if (testUpdatePwd.getCode()==0){
                     String phone = updateEtCode.getText().toString();
                     String pas = updatePasswordEt.getText().toString();
@@ -146,10 +157,7 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
                     startActivity(intent);
 
                     finish();
-                }else{
-                    ToastUtil.showShort(testUpdatePwd.getMsg());
                 }
-
                 break;
 
                 //获取验证码

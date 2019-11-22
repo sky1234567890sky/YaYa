@@ -18,6 +18,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.activity.my.adapter.MyInviteFragmentAdapter;
 import com.administrator.yaya.activity.my.fragment.ExpendFragment;
@@ -74,6 +75,7 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
     private int userEarningsNow;
     private int userContributeTotal;
     private String userId;
+    private String token;
 
     @Override
     protected int getLayoutId() {
@@ -118,8 +120,10 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
         super.initData();
 
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
+
         if (userId !=null) {
-            mPresenter.getData(ApiConfig.TEST_EXPEND, Integer.parseInt(userId), 2);
+            mPresenter.getData(ApiConfig.TEST_EXPEND, Integer.parseInt(userId),token, 2);
         }else{
             ToastUtil.showShort(R.string.networkerr+"");
         }
@@ -252,7 +256,7 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
                 String userId = SharedPrefrenceUtils.getString(MyIncomeActivity.this, NormalConfig.USER_ID);
 
                 if (userId!=null) {
-                    mPresenter.getData(ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK, Integer.parseInt(userId),userEarningsNow);
+                    mPresenter.getData(ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK, Integer.parseInt(userId),mApplication.mToken,userEarningsNow);
                 }
 
                 MainActivity mainActivity = new MainActivity();
@@ -284,6 +288,13 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
             //我的收益  收入
             case ApiConfig.TEST_EXPEND:
                 TestExpend testMyEarnings = (TestExpend) t[0];
+
+                if (testMyEarnings.getMsg()==mApplication.SignOut){
+                    ToastUtil.showLong(R.string.username_login_hint+"");
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
 
                 if (testMyEarnings.getData()!=null &&testMyEarnings.getCode()==0){
                     TestExpend.DataBean data = testMyEarnings.getData();
@@ -317,6 +328,12 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
             case ApiConfig.TEST_PUTAWAY_ALL_ORDERSTOCK:
 
                 TestPutawayAllOrderStock testPutawayAllOrderStock = (TestPutawayAllOrderStock) t[0];
+                if (testPutawayAllOrderStock.getMsg() == mApplication.SignOut){
+                    ToastUtil.showLong(""+R.string.username_login_hint);
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
 
                 if (testPutawayAllOrderStock.getCode()==0){
                     ToastUtil.showShort(testPutawayAllOrderStock.getMsg());

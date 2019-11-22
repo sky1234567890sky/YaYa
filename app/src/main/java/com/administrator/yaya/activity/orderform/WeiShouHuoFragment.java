@@ -2,6 +2,7 @@ package com.administrator.yaya.activity.orderform;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
+import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.orderform.adapter.CanaelAdapter;
 import com.administrator.yaya.activity.orderform.adapter.SellAdapter;
 import com.administrator.yaya.base.ApiConfig;
@@ -43,7 +45,7 @@ import butterknife.BindView;
  * A simple {@link Fragment} subclass.
  * 已取消
  */
-public class CancelFragment  extends BaseMvpFragment<LoginModel> implements ICommonView {
+public class WeiShouHuoFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
 
     @BindView(R.id.cancel_lv)
     RecyclerView mList;
@@ -58,8 +60,9 @@ public class CancelFragment  extends BaseMvpFragment<LoginModel> implements ICom
     private TestCancel.DataBean data;
     private TextView tvObligation;
     private String userId;
+    private String token;
 
-    public CancelFragment() {
+    public WeiShouHuoFragment() {
         // Required empty public constructor
     }
     //判断是否展示—与ViewPager连用，进行左右切换
@@ -67,7 +70,6 @@ public class CancelFragment  extends BaseMvpFragment<LoginModel> implements ICom
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-
             //不可见的时候关闭加载
       if (isVisibleToUser ==true){//当前处于可见状态
             if (cacelRefreshLayout != null)
@@ -82,10 +84,18 @@ public void onResponse(int whichApi, Object[] t) {
             list.clear();
 
             TestCancel testCancel = (TestCancel) t[0];
-            Log.i("tag", "已取消: "+testCancel.toString());
+//            Log.i("tag", "已取消: "+testCancel.toString());
+
+
+            if (testCancel.getMsg()==SignOut){
+                ToastUtil.showLong(""+R.string.username_login_hint+"");
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                return;
+            }
+
             if (testCancel.getCode()==0){
                 data = testCancel.getData();
-
 //                    进货订单集合	orderSalesList
                 if (TextUtils.isEmpty(data.getAmount())) {
                     tvObligation.setText("今日所收游戏币：0");//库存  父 Fragment 顶部赋值
@@ -160,10 +170,12 @@ public void onResponse(int whichApi, Object[] t) {
     protected void initData() {
         super.initData();
         userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
+        token = SharedPrefrenceUtils.getString(getContext(), NormalConfig.TOKEN);
         if (userId !=null) {
-            mPresenter.getData(ApiConfig.TEST_CANCEL, Integer.parseInt(userId), 3);
+            mPresenter.getData(ApiConfig.TEST_CANCEL, Integer.parseInt(userId),token, 3);
         }
     }
+
     @Override
     public void refresh() {
         super.refresh();
@@ -212,5 +224,12 @@ public void onResponse(int whichApi, Object[] t) {
         super.onPause();
         if (!isRefresh) isRefresh = true;
     }
-
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden && getActivity()!=null){
+            if (cacelRefreshLayout!= null)
+                refresh();
+        }
+    }
 }
