@@ -151,6 +151,9 @@ public class AccountPaidFragment extends BaseMvpFragment<LoginModel> implements 
                 break;
         }
         accountRefreshLayout.finishRefresh(2000);
+
+
+
     }
 
     @SuppressLint("CheckResult")
