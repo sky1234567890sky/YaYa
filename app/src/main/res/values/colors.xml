@@ -21,4 +21,5 @@
     <color name="c_et_tvcolor">#CCCCCC</color>
     <color name="c_cccccc">#CCCCCC</color>
     <color name="light_blue">#ff35a6ff</color>
+    <color name="grey_loading">#868686</color>
 </resources>

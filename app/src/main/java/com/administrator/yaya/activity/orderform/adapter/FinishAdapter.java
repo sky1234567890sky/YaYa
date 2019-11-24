@@ -22,20 +22,24 @@ import butterknife.ButterKnife;
 //已完成adapter
 public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 
-    private final List<TestAllOrderStock.DataBean.CommodityBean> listCommodityBean;
-    private List<TestAllOrderStock.DataBean.OrderSalesListBean> list;
-    private FragmentActivity activity;
+    private final List<TestAllOrderStock.DataBean.OrderSalesListBean> list;
+    private Context context;
+    private TestAllOrderStock.DataBean.CommodityBean commodityBean;
 
-    public FinishAdapter(List<TestAllOrderStock.DataBean.CommodityBean> listCommodityBean, List<TestAllOrderStock.DataBean.OrderSalesListBean> list, FragmentActivity activity) {
-        this.listCommodityBean = listCommodityBean;
+    public FinishAdapter(List<TestAllOrderStock.DataBean.OrderSalesListBean> list) {
         this.list = list;
-        this.activity = activity;
+    }
+
+    public void setData(TestAllOrderStock.DataBean.CommodityBean commodity) {
+        this.commodityBean = commodity;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View inflate = LayoutInflater.from(activity).inflate(R.layout.finish_item, null);
+        context = viewGroup.getContext();
+        View inflate = LayoutInflater.from(context).inflate(R.layout.finish_item, viewGroup,false);
         return new Vh(inflate);
     }
 
@@ -69,31 +73,40 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
 //        今日收款数		amount
 //        vh.mFinishCommodityPrice.setText();
         vh.mFinishOrderBuildTime.setText("收货时间："+orderBuildTime);
-        TestAllOrderStock.DataBean.CommodityBean commodityBean = listCommodityBean.get(0);
+
         String comImg = commodityBean.getComImg();
         String comName = commodityBean.getComName();
         Double comPrice = commodityBean.getComPrice();
-
-
         double salesAmountMoney = list.get(i).getSalesAmountMoney();
         vh.mFinishCommodityPrice.setText("售卖总价￥:"+salesAmountMoney);
 
-        int comInventory = commodityBean.getComInventory();
         if (list.get(i).getOrderPayTpe() == 0){
-            vh.mFinishOrderNumber.setVisibility(View.GONE);
-        }else if (list.get(i).getOrderPayTpe() == 1){
-            vh.mFinishOrderNumber.setVisibility(View.VISIBLE);
-            vh.mFinishOrderNumber.setText("【微信】订单编号："+orderNumber);
-        }if (list.get(i).getOrderPayTpe() == 2){
-            vh.mFinishOrderNumber.setVisibility(View.VISIBLE);
-            vh.mFinishOrderNumber.setText("【支付宝】订单编号："+orderNumber);
-        }
 
+            vh.mFinishOrderNumber.setVisibility(View.GONE);
+
+        }else if (list.get(i).getOrderPayTpe() == 1){
+
+            vh.mFinishOrderNumber.setVisibility(View.VISIBLE);
+
+            vh.mFinishOrderNumber.setText("【微信】订单编号："+orderNumber);
+
+        }if (list.get(i).getOrderPayTpe() == 2){
+
+            vh.mFinishOrderNumber.setVisibility(View.VISIBLE);
+
+            vh.mFinishOrderNumber.setText("【支付宝】订单编号："+orderNumber);
+
+        }
         vh.mFinishCommodityAmount.setText("售卖数量："+salesAmount);
 
         vh.mFinishGcomName.setText(commodityBean.getComName());
-        Glide.with(activity).load(comImg).placeholder(R.mipmap.icon).into(vh.mFinishComImg);
+
+        Glide.with(context).load(comImg).placeholder(R.mipmap.icon).into(vh.mFinishComImg);
+
+        vh.mFinish_pirce.setText("单价￥："+commodityBean.getComPrice());
+
     }
+
     @Override
     public int getItemCount() {
         return list!=null ? list.size() : 0;
@@ -113,6 +126,9 @@ public class FinishAdapter extends RecyclerView.Adapter<FinishAdapter.Vh> {
         TextView mFinishCommodityPrice;
         @BindView(R.id.finish_orderBuildTime)
         TextView mFinishOrderBuildTime;
+        @BindView(R.id.finish_pirce)
+        TextView mFinish_pirce;
+
         public Vh(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

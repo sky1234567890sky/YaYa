@@ -1,20 +1,15 @@
 package com.administrator.yaya.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -33,14 +28,10 @@ import android.widget.TextView;
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.home.ConfirmYingyeActivity;
 import com.administrator.yaya.base.ApiConfig;
-import com.administrator.yaya.base.BaseActivity;
 import com.administrator.yaya.base.BaseMvpActivity;
-import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.invite.TestAccountPaid;
-import com.administrator.yaya.bean.invite.TestObligation;
-import com.administrator.yaya.bean.login_register_bean.TestLogin;
 import com.administrator.yaya.bean.my.TestUserNowMsg;
 import com.administrator.yaya.fragment.HomePageFragment;
 import com.administrator.yaya.fragment.InventoryFragment;
@@ -48,20 +39,14 @@ import com.administrator.yaya.fragment.MyFragment;
 import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
-import com.administrator.yaya.utils.BadgeView;
 import com.administrator.yaya.utils.FragmentUtils;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommonView {
     //@BindView(R.id.title_tb)
@@ -84,7 +69,8 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
     RadioGroup mRg;
     @BindView(R.id.dobusiness_iv)
     ImageView mDobusinessIv;
-
+    @BindView(R.id.hongdian)
+    TextView mHongdian;
     private FragmentManager manager;
     private ArrayList<Fragment> fragments;
     private ArrayList<Integer> titles;
@@ -100,7 +86,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
     private TestAccountPaid testObligation;
     private Button button5;
     private int data;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -118,38 +103,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
         initFragment();
         addHomeFragment();
         //覆盖在RadioGroup之上LinearLayout的第五个占位子布局
-
-        button5 = (Button) findViewById(R.id.btn_my);
-        remind(button5);
-    }
-    @SuppressLint("SetTextI18n")
-    private void remind(View view) {
-
-// 创建一个BadgeView对象，view为你需要显示提醒的控件
-        BadgeView badge1 = new BadgeView(this, view);
-        // 需要显示的提醒类容
-//        badge1.setText("12");
-// 显示的位置.右上角,BadgeView.POSITION_BOTTOM_LEFT,下左，还有其他几个属性
-        badge1.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
-        // 文本颜色
-        badge1.setTextColor(Color.WHITE);
-// 提醒信息的背景颜色，自己设置
-        badge1.setBadgeBackgroundColor(Color.RED);
-//还可以设置背景图片
-//        badge1.setBackgroundResource(R.drawable.boder_ext);
-// 文本大小
-//        badge1.setTextSize(12);
-// 水平和竖直方向的间距
-//        badge1.setBadgeMargin(3, 3);
-//各边间隔
-        badge1.setBadgeMargin(5);
-//显示效果，如果已经显示，则隐藏，如果隐藏，则显示
-//         badge1.toggle();
-// 显示
-//        badge1.show();
-//隐藏
-         badge1.hide();
-
     }
     private void addHomeFragment() {
         FragmentTransaction transaction = manager.beginTransaction();
@@ -165,6 +118,7 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
                     .commit();
             mInventoryBtn.setChecked(true);
         }
+
         int upaway = getIntent().getIntExtra("upaway", 0);
         if (upaway == 3) {
             getSupportFragmentManager()
@@ -183,7 +137,18 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
                     .commit();
             mOrderformBtn.setChecked(true);
         }
+        int home = getIntent().getIntExtra("confirmyingye", 0);
+
+        if (home == 10) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_fragment, homePageFragment)
+                    .addToBackStack(null)
+                    .commit();
+            mHomepage.setChecked(true);
+        }
     }
+
     private void initFragment() {
         homePageFragment = new HomePageFragment();
         inventoryFragment = new InventoryFragment();
@@ -201,7 +166,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
 
         mPresenter.getData(ApiConfig.TEST_GET_USERNOW_MSG,Integer.parseInt(userId),mApplication.mToken);
-
 //        mMineBtn
     }
 
@@ -247,6 +211,7 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
 
                 //消息未读
             case ApiConfig.TEST_GET_USERNOW_MSG:
+
                 TestUserNowMsg testUserNowMsg = (TestUserNowMsg) t[0];
 //                结果：1有	2无
                 if (testUserNowMsg.getMsg()==mApplication.SignOut){
@@ -258,6 +223,14 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
                 if (testUserNowMsg.getCode()==0){
                     String msg = testUserNowMsg.getMsg();
                     data = testUserNowMsg.getData();
+                    if (data==2){//默认不显示
+                        mHongdian.setVisibility(View.GONE);
+                    }else if (data==1){//有
+                        //显示
+                        mHongdian.setVisibility(View.VISIBLE);
+                        //通知有新消息
+
+                    }
                 }
                 break;
         }
@@ -267,21 +240,37 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements  ICommo
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.homepage://首页
+                //消息未读接口
+                mPresenter.getData(ApiConfig.TEST_GET_USERNOW_MSG,Integer.parseInt(userId),mApplication.mToken);
+
                 mHomepage.setChecked(true);
                 FragmentUtils.addFragment(manager, homePageFragment.getClass(), R.id.home_fragment, null);
                 break;
             case R.id.inventory_btn://库存
+
+                //消息未读接口
+                mPresenter.getData(ApiConfig.TEST_GET_USERNOW_MSG,Integer.parseInt(userId),mApplication.mToken);
+
+
                 FragmentUtils.addFragment(manager, inventoryFragment.getClass(), R.id.home_fragment, null);
                 break;
             case R.id.dobusiness_iv:
                     //请求数据
 //                    mPresenter.getData(ApiConfig.TEXT_GATHERING2, Integer.parseInt(userId), num);
-
                 break;
             case R.id.orderform_btn://订单
+
+                //消息未读接口
+                mPresenter.getData(ApiConfig.TEST_GET_USERNOW_MSG,Integer.parseInt(userId),mApplication.mToken);
+
+
                 FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, null);
                 break;
             case R.id.mine_btn://我的
+                //消息未读接口
+                mPresenter.getData(ApiConfig.TEST_GET_USERNOW_MSG,Integer.parseInt(userId),mApplication.mToken);
+
+
                 FragmentUtils.addFragment(manager, myFragment.getClass(), R.id.home_fragment, null);
                 break;
         }

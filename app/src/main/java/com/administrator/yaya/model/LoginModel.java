@@ -113,6 +113,7 @@ public class LoginModel implements ICommonModel {
                 break;
             //我的邀请
             case ApiConfig.TEST_MY_INVITE:
+
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestMyInvite((int) t[0],(String)t[1]), view, whichApi);
                 break;
@@ -166,12 +167,10 @@ public class LoginModel implements ICommonModel {
                         .getTestUpawaySingleGoods((String) t[0],(String) t[1]), view, whichApi);
                 break;
 
-            //所有售卖订单
-//            getTestAllOrderStock
-            //售卖中
+            //全部
             case ApiConfig.TEST_ALL_ORDERSTOCK:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestAllOrderStock((int) t[0], (int) t[1],(String)t[2]), view, whichApi);
+                        .getTestAllOrderStock((int) t[0], (String)t[1]), view, whichApi);
                 break;
 
             //已完成
@@ -179,11 +178,12 @@ public class LoginModel implements ICommonModel {
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestFinish((int) t[0],(String)t[1], (int) t[2]), view, whichApi);
                 break;
+
             //已取消
-            case ApiConfig.TEST_CANCEL:
-                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestCancel((int) t[0], (String)t[1],(int) t[2]), view, whichApi);
-                break;
+//            case ApiConfig.TEST_CANCEL:
+//                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+//                        .getTestCancel((int) t[0], (String)t[1],(int) t[2]), view, whichApi);
+//                break;
 
 //            确认收货
 //            http://192.168.0.198:8080/yayaApp/comSell/confirmReceipt

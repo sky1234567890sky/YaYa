@@ -6,30 +6,25 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
-import com.administrator.yaya.activity.orderform.adapter.SellAdapter;
+import com.administrator.yaya.activity.orderform.adapter.AllAdapter;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
-import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
 import com.administrator.yaya.bean.TestCancelOrderStock;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
 import com.administrator.yaya.bean.orderform.TestConfirmReceipt;
-import com.administrator.yaya.fragment.InventoryFragment;
 import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +41,8 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
     @BindView(R.id.sell_refreshLayout)
     SmartRefreshLayout sellResh;
 
-    private List<TestAllOrderStock.DataBean> list;
-    private List<TestAllOrderStock.DataBean.OrderSalesListBean> listBean;
-    private SellAdapter adapter;
-    private int cancelIndex;
-    private int num = 1;
+    private List<TestAllOrderStock.DataBean.OrderSalesListBean> listBean = new ArrayList<>();;
+    private AllAdapter adapter;
     private OrderFormkFragment parentFragment1;
     private TestAllOrderStock.DataBean data;
     private TextView tvObligation;
@@ -83,10 +75,7 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
 
     @Override
     protected int getLayoutId() {
-        Fragment parentFragment = getParentFragment();
-        if (parentFragment instanceof OrderFormkFragment) {
-            parentFragment1 = (OrderFormkFragment) parentFragment;
-        }
+
         return R.layout.fragment_sell;
     }
 
@@ -100,16 +89,13 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
         if (parentFragment1 == null) {
             getFragment();
         }
-        list = new ArrayList<>();
-        listBean = new ArrayList<>();
+
         initRecycleView(mList, sellResh);
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new SellAdapter(listBean, list, getActivity());
+        adapter = new AllAdapter(listBean);
         sellResh.setEnableLoadMore(false);
         mList.setAdapter(adapter);
-
     }
-
     private void getFragment() {
         Fragment parentFragment = getParentFragment();
         if (parentFragment instanceof OrderFormkFragment) {
@@ -123,34 +109,37 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
+        hideLoadingDialog();
+
         switch (whichApi) {
-            case ApiConfig.TEST_ALL_ORDERSTOCK://售卖中
+            case ApiConfig.TEST_ALL_ORDERSTOCK://全部
                 if (listBean != null && !listBean.isEmpty()) listBean.clear();
 
                 TestAllOrderStock testAllOrderStock = (TestAllOrderStock) t[0];
 
+                if (testAllOrderStock.getMsg().equals(SignOut)) {
+                    ToastUtil.showLong(R.string.username_login_hint + "");
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
 //                TextView tv_order_money = parentFragment1.getView().findViewById(R.id.orderform_inventory_money);
 //                tv_order_money.setText(testAllOrderStock.getData().getAmount());
+
                 if (testAllOrderStock.getCode() == 0 && testAllOrderStock.getData() != null && testAllOrderStock.getData().getCommodity() != null) {
                     //登陆状态其他设备登陆该账号就不能用了得重新登陆
-                    if (testAllOrderStock.getMsg().equals(SignOut)) {
-                        ToastUtil.showLong(R.string.username_login_hint + "");
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                    } else {
                         data = testAllOrderStock.getData();
                         if (tvObligation != null) {
-
                             if (TextUtils.isEmpty(data.getAmount())) {
                                 tvObligation.setText("今日所收游戏币：0");//库存  父 Fragment 顶部赋值
                             } else {
                                 tvObligation.setText("今日所收游戏币：" + data.getAmount());//库存  父 Fragment 顶部赋值
                             }
                         }
+
                         List<TestAllOrderStock.DataBean.OrderSalesListBean> orderSalesList = data.getOrderSalesList();
                         listBean.addAll(orderSalesList);
-                        list.add(data);
-                        String amount1 = data.getAmount();
+                        adapter.setData(data);
                         adapter.notifyDataSetChanged();
 //                    if(data.getAmount()!=null) {
 //                        EventBus.getDefault().postSticky(data.getAmount());
@@ -175,7 +164,6 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
 //                    最小购买数量comPurchaseNumMin
 //                            最大购买数量comPurchaseNumMax
 //                    今日收款数		amount
-                    }
                 }
                 break;
             //取消进货订单
@@ -211,10 +199,8 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
                 } else {
                     ToastUtil.showShort(testConfirmReceipt.getMsg());
                 }
-
                 //刷新
                 refresh();
-
                 break;
         }
         sellResh.finishRefresh();
@@ -238,56 +224,48 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
     @Override
     protected void initData() {
         super.initData();
+        showLoadingDialog();
+
         //售賣中
+
             userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
             token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
-            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId),num,token);
+            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId),token);
     }
+
     @Override
     protected void initListener() {
         super.initListener();
-        //确认收款
-        adapter.setAccountpaidsetOnclikListener(new SellAdapter.AccountpaidsetOnclikListener() {
+        //再次确认
+        adapter.setReconfirmOnclikListener(new AllAdapter.ReconfirmOnclikListener() {
             @Override
             public void setonclik(int postion) {
-                mPresenter.getData(ApiConfig.TEST_CONFIRM_RECEIPT, listBean.get(postion).getSalesId(),Integer.parseInt(userId),token);
+
             }
         });
-        //取消進貨订单
-        adapter.setCancelsetOnclikListener(new SellAdapter.CancelsetOnclikListener() {
+
+        //确认收货
+        adapter.setAccountpaidsetOnclikListener(new AllAdapter.AccountpaidsetOnclikListener() {
             @Override
             public void setonclik(int postion) {
-                cancelIndex = postion;
-                mPresenter.getData(ApiConfig.TEST_CANCEL_ORDER_SALES, listBean.get(postion).getSalesId());
+
+            }
+        });
+        // //未收货
+        adapter.setCancelsetOnclikListener(new AllAdapter.CancelsetOnclikListener() {
+            @Override
+            public void setonclik(int postion) {
+
             }
         });
     }
-    //获取焦点时刷新
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (isRefresh) {
-            if (!listBean.isEmpty()) {
-                listBean.clear();
-            }
-            refresh();
-            isRefresh = false;
-        }
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (!isRefresh) isRefresh = true;
-    }
-
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden && getActivity()!=null){
-            if (sellResh != null)
-                refresh();
-        }
-    }
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (!hidden && getActivity()!=null){
+//            if (sellResh != null)
+//                refresh();
+//        }
+//    }
 }

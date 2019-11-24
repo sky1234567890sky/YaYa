@@ -43,8 +43,7 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     @BindView(R.id.finish_refreshLayout)
     SmartRefreshLayout finishRefresh;
     private FinishAdapter adapter;
-    private List<TestAllOrderStock.DataBean.OrderSalesListBean> list;
-    private List<TestAllOrderStock.DataBean.CommodityBean> listCommodityBean;
+    private List<TestAllOrderStock.DataBean.OrderSalesListBean>  list = new ArrayList<>();
     private OrderFormkFragment parentFragment1;
     private TestAllOrderStock.DataBean data;
     private TextView tvObligation;
@@ -86,12 +85,10 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
             getFragment();
         }
 
-        list = new ArrayList<>();
-        listCommodityBean = new ArrayList<>();
         initRecycleView(mList,finishRefresh);
         finishRefresh.setEnableLoadMore(false);
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new FinishAdapter(listCommodityBean,list,getActivity());
+        adapter = new FinishAdapter(list);
         mList.setAdapter(adapter);
 
     }
@@ -106,17 +103,18 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
             }
         }
     }
-
     @Override
     protected void initData() {
         super.initData();
+        showLoadingDialog();
         //已完成
         String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(getContext(), NormalConfig.TOKEN);
         if (userId != null) {
-            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), 2,token);
+            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId),token);
         }
     }
+
     @Override
     public void refresh() {
         super.refresh();
@@ -131,15 +129,17 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
+        hideLoadingDialog();
         switch (whichApi) {
             case ApiConfig.TEST_ALL_ORDERSTOCK://已完成
+
                 if (list!=null&& !list.isEmpty())list.clear();
 
                 TestAllOrderStock testFinish = (TestAllOrderStock) t[0];
 
-//                Log.i("tag", "已完成: " + testFinish.toString());
                 if (testFinish.getMsg()==SignOut){
                     ToastUtil.showLong(R.string.username_login_hint+"");
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -156,17 +156,15 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
                     } else {
                         tvObligation.setText("今日所收游戏币：" +data.getAmount());//库存  父 Fragment 顶部赋值
                     }
-
-
                     String amount = data.getAmount();
                     List<TestAllOrderStock.DataBean.OrderSalesListBean> orderStockList = data.getOrderSalesList();
-                    listCommodityBean.add(data.getCommodity());
                     list.addAll(orderStockList);
+                    adapter.setData(data.getCommodity());
                     adapter.notifyDataSetChanged();
 
-                    if(data.getAmount()!=null) {
-                        EventBus.getDefault().postSticky(data.getAmount());
-                    }
+//                    if(data.getAmount()!=null) {
+//                        EventBus.getDefault().postSticky(data.getAmount());
+//                    }
 //                    EventBus.getDefault().postSticky(amount);
 //                    订单id		salesId
 //                    订单编号	orderNumber
@@ -194,36 +192,12 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
         finishRefresh.finishRefresh();
     }
 
-    //获取焦点时刷新
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (isRefresh) {
-
-            if (!list.isEmpty()){
-
-                list.clear();
-
-            }
-
-            refresh();
-
-            isRefresh = false;
-        }
-    }
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (!isRefresh) isRefresh = true;
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden && getActivity()!=null){
-            if (finishRefresh != null)
-                refresh();
-        }
-    }
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (!hidden && getActivity()!=null){
+//            if (finishRefresh != null)
+//                refresh();
+//        }
+//    }
 }

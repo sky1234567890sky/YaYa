@@ -21,6 +21,7 @@ import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
 import com.administrator.yaya.bean.homepage.TestHomePageData;
+import com.administrator.yaya.bean.my.TestUserNowMsg;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
@@ -64,6 +65,8 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     TextView tvWechatSheng;
     @BindView(R.id.my_tv_wechat_day)
     TextView tvWechatDay;
+    @BindView(R.id.my_hongdian)
+    TextView mMy_hongdian;
     @BindView(R.id.my_ll)
     RelativeLayout myLl;
     @BindView(R.id.wire)
@@ -103,19 +106,24 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 
     @Override
     protected void initData() {
+        showLoadingDialog();
 //        String urlPath = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW);
 //        if (urlPath!=null){
 //            Glide.with(getContext()).load(urlPath).apply(new RequestOptions().circleCrop()).placeholder(R.mipmap.icon).into(iv);
 //        }
-
 //        getPermission();//权限
         userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
         mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId),token);
+
+        //消息未读
+        mPresenter.getData(ApiConfig.TEST_GET_USERNOW_MSG,Integer.parseInt(userId),token);
+
     }
 
     @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_right_ll, R.id.my_left_ll})
     public void onViewClicked(View view) {
+
         switch (view.getId()) {
             case R.id.system_msg_iv://系統消息
                 Intent intent = new Intent(getActivity(), SystemMessagesActivity.class);
@@ -166,6 +174,7 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
+        hideLoadingDialog();
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TestHomePageData data = (TestHomePageData) t[0];
@@ -232,6 +241,30 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 
                 } else {
                     ToastUtil.showShort(data.getMsg());
+                }
+                break;
+
+            case ApiConfig.TEST_GET_USERNOW_MSG:
+
+                TestUserNowMsg testUserNowMsg = (TestUserNowMsg) t[0];
+//                结果：1有	2无
+                if (testUserNowMsg.getMsg()==SignOut){
+                    ToastUtil.showLong(R.string.username_login_hint+"");
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+                if (testUserNowMsg.getCode()==0){
+                    String msg = testUserNowMsg.getMsg();
+                    int data1 = testUserNowMsg.getData();
+                    Log.i("tag", "=====> "+data1);
+                    if (data1==2){//默认不显示
+                        mMy_hongdian.setVisibility(View.GONE);
+                    }else if (data1==1){//有
+                        //显示
+                        mMy_hongdian.setVisibility(View.VISIBLE);
+                        //通知有新消息
+                    }
                 }
                 break;
         }

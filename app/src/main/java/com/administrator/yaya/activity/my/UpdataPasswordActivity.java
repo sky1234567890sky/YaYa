@@ -150,26 +150,18 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
                     String phone = updateEtCode.getText().toString();
                     String pas = updatePasswordEt.getText().toString();
                     ToastUtil.showShort(testUpdatePwd.getMsg());
-
                     Intent intent = new Intent(UpdataPasswordActivity.this, LoginActivity.class);
-//                    intent.putExtra("updateUsername",phone);
-//                    intent.putExtra("updatePassword",pas);
                     startActivity(intent);
 
                     finish();
                 }
                 break;
-
                 //获取验证码
             case ApiConfig.TEST_VERIFICATIONCODE:
-
                 TestGetEtVerificationCode testGetEtVerificationCode = (TestGetEtVerificationCode)t[0];
-
                 if (testGetEtVerificationCode.getCode() == 0 && testGetEtVerificationCode.getMsg()!=null){
 //                    String verificationCode = testGetEtVerificationCode.getMsg();//验证码
 //                    forgetEtVerificationCode.setText(verificationCode);//自动粘贴
-                    ToastUtil.showShort(testGetEtVerificationCode.getMsg());
-                }else{
                     ToastUtil.showShort(testGetEtVerificationCode.getMsg());
                 }
                 break;

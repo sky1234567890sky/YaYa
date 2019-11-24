@@ -24,11 +24,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.broadcast.NetBroadcastReceiver;
 import com.administrator.yaya.broadcast.NetStatusBroadCast;
 import com.administrator.yaya.utils.ToastUtil;
+import com.administrator.yaya.utils.dialogutils.LoadingDialogWithContent;
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
@@ -48,11 +50,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     private NetStatusBroadCast mNetStatusBroadCast;
     public Activity activity;
     private NetBroadcastReceiver netWorkChangReceiver;
-
+    public LoadingDialogWithContent mDialog;
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDialog = new LoadingDialogWithContent(this, getString(R.string.loading));
         mApplication = (BaseApp) getApplication();
         initExit();
         setContentView(getLayoutId());
@@ -148,6 +151,23 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
+
+
+    public void showLoadingDialog() {
+        if (!mDialog.isShowing()) mDialog.show();
+    }
+
+    public void showToast(String content) {
+        Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showLongToast(String content) {
+        Toast.makeText(this, content, Toast.LENGTH_LONG).show();
+    }
+    public void hideLoadingDialog() {
+        if (mDialog.isShowing()) mDialog.dismiss();
+    }
+
     public void initRecycleView(RecyclerView recyclerView, RefreshLayout refreshLayout) {
         mManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mManager);
@@ -168,16 +188,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             });
         }
     }
-
     public void loadMore() {
-
     }
-
     public void refresh() {
-
     }
-
-
 //    public void registerNetWorkStatus() {
 //        IntentFilter filter = new IntentFilter();
 //        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -238,6 +252,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         if (netWorkChangReceiver != null) {
             this.unregisterReceiver(netWorkChangReceiver);
+        }
+
+        if (mDialog != null){
+            if (mDialog.isShowing())mDialog.cancel();
         }
     }
 

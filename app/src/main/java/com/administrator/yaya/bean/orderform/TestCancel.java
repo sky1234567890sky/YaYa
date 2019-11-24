@@ -40,7 +40,7 @@ public class TestCancel implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币1","comPrice":0.01,"comImg":"http://localhost:8082/profile/upload/2019/11/08/ec5f5e6db7d4c29b0f218f6a2ac915e2.jpg","comInventory":9939354,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"}
          * amount : null
@@ -75,7 +75,7 @@ public class TestCancel implements Serializable {
             this.orderSalesList = orderSalesList;
         }
 
-        public static class CommodityBean {
+        public static class CommodityBean implements Serializable{
             /**
              * searchValue : null
              * createBy : null
@@ -230,11 +230,11 @@ public class TestCancel implements Serializable {
                 this.comExplain = comExplain;
             }
 
-            public static class ParamsBean {
+            public static class ParamsBean implements Serializable{
             }
         }
 
-        public static class OrderSalesListBean {
+        public static class OrderSalesListBean implements Serializable{
             /**
              * searchValue : null
              * createBy : null
@@ -448,8 +448,53 @@ public class TestCancel implements Serializable {
                 this.userPhone = userPhone;
             }
 
-            public static class ParamsBeanX {
+            public static class ParamsBeanX implements Serializable{
+            }
+
+            @Override
+            public String toString() {
+                return "OrderSalesListBean{" +
+                        "searchValue=" + searchValue +
+                        ", createBy=" + createBy +
+                        ", createTime=" + createTime +
+                        ", updateBy=" + updateBy +
+                        ", updateTime=" + updateTime +
+                        ", remark=" + remark +
+                        ", params=" + params +
+                        ", salesId=" + salesId +
+                        ", userId=" + userId +
+                        ", orderNumber='" + orderNumber + '\'' +
+                        ", commodityPrice=" + commodityPrice +
+                        ", salesAmount=" + salesAmount +
+                        ", salesAmountMoney=" + salesAmountMoney +
+                        ", parentSalesId=" + parentSalesId +
+                        ", orderPayTpe=" + orderPayTpe +
+                        ", salesStatus=" + salesStatus +
+                        ", salesBuildTime='" + salesBuildTime + '\'' +
+                        ", salesUpdateTime='" + salesUpdateTime + '\'' +
+                        ", salesBuildTimeEnd=" + salesBuildTimeEnd +
+                        ", userName='" + userName + '\'' +
+                        ", userPhone='" + userPhone + '\'' +
+                        '}';
             }
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "commodity=" + commodity +
+                    ", amount='" + amount + '\'' +
+                    ", orderSalesList=" + orderSalesList +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "TestCancel{" +
+                "msg='" + msg + '\'' +
+                ", code=" + code +
+                ", data=" + data +
+                '}';
     }
 }

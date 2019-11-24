@@ -71,7 +71,7 @@
                     android:src="@mipmap/icon_xiaoxi"
                     />
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/my_hongdian"
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_6"

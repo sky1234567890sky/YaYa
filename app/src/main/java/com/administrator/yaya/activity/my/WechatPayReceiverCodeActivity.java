@@ -207,6 +207,8 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     }
     @Override
     protected void initData() {
+
+        showLoadingDialog();
         //二维码上传
         //数据
         mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, Integer.parseInt(userId), 1,mApplication.mToken);//1、微信 2、支付宝
@@ -214,6 +216,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 
     @Override
     public void onResponse(int whichApi, Object[] t) {
+        hideLoadingDialog();
         switch (whichApi) {
             //收款码
             case ApiConfig.TEST_WECHAT_RECEIVER_CODE:
@@ -338,7 +341,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                 //微信
 //                if (userCodeImgListBean1.getImgType() == 1) {//微信
 
-            Log.i("刷新", "getImageData: "+userCodeImgListBean1.getImgMoney());
+//            Log.i("刷新", "getImageData: "+userCodeImgListBean1.getImgMoney());
 
                     if (userCodeImgListBean1.getImgMoney() == 1000.0) {
                         type = 1;
@@ -375,6 +378,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                     getImageStatus(userCodeImgListBean1, type);
                 }
             }
+
     private void getImageStatus(TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1, int type) {
         switch (type) {
             case 0://任意付款金额
@@ -506,6 +510,9 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
         startActivityForResult(intent, ApiConfig.request_open_album_code);
     }
     private void uploadFile(File file) {
+
+        showLoadingDialog();
+
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);

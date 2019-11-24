@@ -23,7 +23,6 @@ import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
@@ -51,13 +50,14 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     TextView tvWechatDay;
     private String userId;
     private String token;
-
     @Override
     protected void initData() {
         super.initData();
+        showLoadingDialog();
+
         userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
-        Log.i("tag", "首页: "+userId+"<||>"+token);
+//        Log.i("tag", "首页: "+userId+"<||>"+token);
         mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId),token);
     }
 
@@ -74,6 +74,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
+        hideLoadingDialog();
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
                 TestHomePageData data = (TestHomePageData) t[0];
@@ -117,6 +118,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
                 }
                 break;
         }
+
     }
 
     @OnClick({R.id.home_buy_now_btn_tv})

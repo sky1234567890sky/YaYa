@@ -3,34 +3,26 @@ package com.administrator.yaya.activity.my.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.my.adapter.RebateAdapter;
-import com.administrator.yaya.activity.orderform.adapter.SellAdapter;
 import com.administrator.yaya.base.ApiConfig;
-import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
 import com.administrator.yaya.bean.my.TestMyEarnings;
-import com.administrator.yaya.bean.my.TestRebate;
-import com.administrator.yaya.bean.orderform.TestAllOrderStock;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

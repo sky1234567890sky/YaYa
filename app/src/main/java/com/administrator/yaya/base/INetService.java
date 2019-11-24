@@ -174,26 +174,26 @@ public interface INetService {
     @FormUrlEncoded
     Observable<TestUpawayAllSingleGoods> getTestUpawayAllSingleGoods(@Field("userId") int userId,@Field("token") String token);
 
-    //    所有售卖订单
-//    http://192.168.0.198:8080/yayaApp/comSell/allOrderSales
-//    参数:
-//    用户Id		userId
-//    订单状态	salesStatus		 1售卖中 2 已完成 3已取消
-
+//    所有售货订单
+///yayaApp/comSell/allOrderSales
+//    参数：
+//    用户id userId
+//    状态 salesStatus  全部数据不传  待确认1 已完成2  已取消3   未收款4
+    //全部
     @POST("comSell/allOrderSales")
     @FormUrlEncoded
-    Observable<TestAllOrderStock> getTestAllOrderStock(@Field("userId") int userId, @Field("salesStatus") int salesStatus,@Field("token") String token);
+    Observable<TestAllOrderStock> getTestAllOrderStock(@Field("userId") int userId,@Field("token") String token);
 
-    //已完成
+    //其他
     @POST("comSell/allOrderSales")
     @FormUrlEncoded
     Observable<TestFinish> getTestFinish(@Field("userId") int userId,@Field("token") String token, @Field("salesStatus") int salesStatus);//已完成
 
-    //已取消
-    @POST("comSell/allOrderSales")
-    @FormUrlEncoded
-    Observable<TestCancel> getTestCancel(@Field("userId") int userId, @Field("token") String token,@Field("salesStatus") int salesStatus);//已完成
-
+//    //已取消
+//    @POST("comSell/allOrderSales")
+//    @FormUrlEncoded
+//    Observable<TestCancel> getTestCancel(@Field("userId") int userId, @Field("token") String token,@Field("salesStatus") int salesStatus);//已完成
+//
 
     //    确认收货（确认收款）
 //    http://192.168.0.198:8080/yayaApp/comSell/confirmReceipt
@@ -356,6 +356,14 @@ public interface INetService {
     @POST("comSell/getUserNew")
     @FormUrlEncoded
     Observable<TestUserNowMsg> getTestUserNowMsg(@Field("userId") int userId, @Field("token") String token);
+
+//    读取信息
+///yayaApp/comSell/updateUserNew
+//    参数:用户id	userId
+//@POST("comSell/getUserNew")
+//@FormUrlEncoded
+//Observable<TestUserNow> getTestUserNowMsg(@Field("userId") int userId, @Field("token") String token);
+
 
     //未收款 comSell/noReceipt
 //    @POST("comSell/noReceipt")

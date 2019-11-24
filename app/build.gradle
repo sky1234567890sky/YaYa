@@ -202,4 +202,6 @@ dependencies {
 
     //noinspection GradleDynamicVersion
     implementation 'q.rorbin:badgeview:1.+'//气泡
+
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 }

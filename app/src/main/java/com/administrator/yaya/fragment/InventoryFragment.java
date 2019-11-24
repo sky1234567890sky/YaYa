@@ -85,6 +85,8 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     @Override
     public void initData() {
         super.initData();
+        showLoadingDialog();
+
         userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
         mPresenter.getData(ApiConfig.TEST_INVENTORY, Integer.parseInt(userId),token);
@@ -158,6 +160,8 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
+        hideLoadingDialog();
+
         switch (whichApi) {
 //            http://192.168.0.198:8082/yayaApp/comBuy/allOrderStock
             case ApiConfig.TEST_INVENTORY:

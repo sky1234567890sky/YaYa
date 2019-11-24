@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.administrator.yaya.R;
 import com.administrator.yaya.TestDianjiYingye;
 import com.administrator.yaya.activity.LoginActivity;
+import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
@@ -74,20 +75,18 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
                 TestDianjiYingye testDianjiYingye = (TestDianjiYingye) t[0];
 
                 if (testDianjiYingye.getMsg().equals(mApplication.SignOut)){
+                    ToastUtil.showLong(R.string.username_login_hint+"");
                     Intent intent = new Intent(this, LoginActivity.class);
                     startActivity(intent);
                     return;
-                }else{
-                    //
-                    ToastUtil.showLong("跳转到售卖页面");
                 }
                 //其他设备登陆  跳转 到登录界面
                 if (testDianjiYingye.getCode()==0){
-                    //跳转到待付款页面
-//                        ConfirmYingyeActivity.this.finish();
-
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("confirmyingye",10);
+                    startActivity(intent);
+                    finish();
                 }
-
                 break;
 
                 //库存
@@ -114,6 +113,7 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
 
                         mInventory_number.setText(""+ userSalesCount);
                     }
+
                 break;
         }
     }
@@ -127,15 +127,18 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
             public void onClick(View v) {
 
                 String etNumber = mEtCinfirmNumber.getText().toString().trim();
-                //
+                if (etNumber.isEmpty()){
+                    ToastUtil.showLong("请输入您的营业数量");
+                    return;
+                }
+                if(Integer.parseInt(etNumber)==0){
+                    ToastUtil.showLong("当前账户无库存");
+                    return;
+                }
                 if (Integer.parseInt(etNumber)>userSalesCount){
-
                     ToastUtil.showLong("你输入的数量超过库存数量！");
-
                 }else{
-
                     mPresenter.getData(ApiConfig.TEST_DIANJIYINGYE,mApplication.userid,mApplication.mToken,userSalesCount);
-
                 }
             }
         });
@@ -153,16 +156,13 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
                     mConfirm_btn.setBackground(getResources().getDrawable(R.drawable.confirm_bg_shape));
                     mConfirm_btn.setTextColor(getResources().getColor(R.color.c_cccccc));
                     mConfirm_btn.setEnabled(Boolean.FALSE);//不启用按钮
-
                 }else{
-
                     //非空
                     mConfirm_btn.setBackground(getResources().getDrawable(R.drawable.ripple_btn));
                     mConfirm_btn.setTextColor(getResources().getColor(R.color.c_ffffff));
                     mConfirm_btn.setEnabled(Boolean.TRUE);//启用按钮
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -186,10 +186,8 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
                 break;
             case R.id.confirm_btn:
                 break;
-
         }
     }
-
 //    @Override
 //    protected void onResume() {
 //        super.onResume();
@@ -197,5 +195,4 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
 //        initData();
 //
 //    }
-
 }

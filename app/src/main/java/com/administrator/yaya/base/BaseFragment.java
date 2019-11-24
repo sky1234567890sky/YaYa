@@ -10,6 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.administrator.yaya.R;
+import com.administrator.yaya.utils.dialogutils.LoadingDialogWithContent;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -26,15 +30,16 @@ public abstract class BaseFragment extends Fragment {
     public boolean isRefresh = false;//刷新用到
     public String SignOut = "1";
 
+    public LoadingDialogWithContent mDialog;
 //    public BaseApp mApplication;
     //    private boolean isCreate = false;
 //    private boolean isVisible;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mDialog = new LoadingDialogWithContent(getActivity(), getString(R.string.loading));
+
         View inflate = inflater.inflate(getLayoutId(), null);
-//      isCreate = true;
         bind = ButterKnife.bind(this, inflate);
         initMvp();
         initData();
@@ -46,7 +51,6 @@ public abstract class BaseFragment extends Fragment {
     protected void initData() {
 
     }
-
     protected void initListener() {
 
     }
@@ -81,9 +85,29 @@ public abstract class BaseFragment extends Fragment {
     public  void refresh() {
     }
 
+    public void showLoadingDialog() {
+        if (!mDialog.isShowing()) mDialog.show();
+    }
+
+    public void showToast(String content) {
+        Toast.makeText(getActivity(), content, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showLongToast(String content) {
+        Toast.makeText(getActivity(), content, Toast.LENGTH_LONG).show();
+    }
+
+    public void hideLoadingDialog() {
+        if (mDialog.isShowing()) mDialog.dismiss();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         if (bind != null) bind.unbind();
+
+        if (mDialog != null){
+            if (mDialog.isShowing())mDialog.cancel();
+        }
     }
 }

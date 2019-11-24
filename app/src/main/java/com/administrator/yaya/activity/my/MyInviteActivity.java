@@ -107,6 +107,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 
     private String userInvitationCode;
     private String userId;
+    private String token;
 
     @Override
     protected int getLayoutId() {
@@ -151,6 +152,8 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                     Intent intent = new Intent(this, LoginActivity.class);
 
                     startActivity(intent);
+
+                    finish();
                 }
 
                 if (testMyInvite.getCode() == 0) {
@@ -208,7 +211,6 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                     myNameTv.setText(userName);
 
                     myNameStateTv.setText("ID:" + userId);
-
                     tv3.setText("返利比例：0.2%");
 //                getGamemoneyTv.setText();
                     allGamemoneyTv.setText(userContributeTotal + "");
@@ -216,18 +218,16 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 break;
         }
     }
-
     @Override
     protected void initData() {
         super.initData();
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        if (userId != null) mPresenter.getData(ApiConfig.TEST_MY_INVITE, Integer.parseInt(userId));
+        token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
+        if (userId != null) mPresenter.getData(ApiConfig.TEST_MY_INVITE, Integer.parseInt(userId),token);
     }
-
     @Override
     protected void initListener() {
     }
-
     @OnClick({R.id.myinvite_book_back_iv, R.id.myinvite_friend})
     public void onViewClicked(View view) {
         switch (view.getId()) {

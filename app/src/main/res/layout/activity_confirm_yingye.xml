@@ -131,19 +131,19 @@
                 android:gravity="center_vertical"
                 android:hint="请填写数量"
                 android:inputType="phone|number"
+                android:digits="1234567890"
                 android:maxLines="1"
                 android:numeric="integer"
                 android:paddingLeft="@dimen/dp_5"
                 android:paddingTop="@dimen/dp_10"
                 android:paddingBottom="@dimen/dp_10"
                 android:singleLine="true"
-
                 android:textColor="@color/c_000000"
                 android:textColorHint="#A8AFBC"
                 android:textCursorDrawable="@drawable/edit_cursor_color"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="normal"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText,RtlHardcoded" />
         </android.support.v7.widget.CardView>
 
         <TextView

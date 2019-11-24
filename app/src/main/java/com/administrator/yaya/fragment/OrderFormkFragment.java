@@ -42,7 +42,6 @@ public class OrderFormkFragment extends BaseFragment {
     public OrderFormkFragment() {
 
     }
-
     @Override
     protected void initData() {
         super.initData();

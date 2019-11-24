@@ -3,6 +3,7 @@ package com.administrator.yaya.activity.my;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -80,12 +81,16 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
     @Override
     public void refresh() {
         super.refresh();
+        mRefresh.autoRefresh();
+
         //走一遍数据加载
         initData();
     }
     @Override
     protected void initData() {
         super.initData();
+        showLoadingDialog();
+
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         String mToken = mApplication.mToken;
 
@@ -94,6 +99,7 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
 
     @Override
     public void onResponse(int whichApi, Object[] t) {
+        hideLoadingDialog();
         switch (whichApi) {
             case ApiConfig.TEST_NOTIFICATION_INFO:
 
@@ -127,5 +133,17 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
                 SystemMessagesActivity.this.finish();
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("tag", "========> onResume");
+        refresh();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("tag", "========> onPause");
     }
 }

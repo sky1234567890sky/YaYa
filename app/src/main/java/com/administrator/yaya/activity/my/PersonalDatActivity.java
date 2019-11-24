@@ -29,6 +29,7 @@ import com.administrator.yaya.bean.my.TestUploadHeadler;
 import com.administrator.yaya.design.SmsVerifyView;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
+import com.administrator.yaya.utils.DealPhoneNumberUtils;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
@@ -125,6 +126,7 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
                     ToastUtil.showLong(testUploadHeadler.getMsg());
                 }
                 break;
+
                 //上传头像
             case ApiConfig.TEST_CHANGE_HEADLER:
 
@@ -159,7 +161,9 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
         String headler_iamge = SharedPrefrenceUtils.getString(this, NormalConfig.HEADLER_IMAGEVIEW);//头像
 
         if (persionalPhoneCode != null && headler_iamge != null) {
-            persionalPhoneCode.setText(phone_code);
+
+            String phoneNumber = DealPhoneNumberUtils.dealPhoneNumber(phone_code);
+            persionalPhoneCode.setText(phoneNumber);
             RequestOptions requestOptions = new RequestOptions().circleCrop();
 
             if (headler_iamge!=null){

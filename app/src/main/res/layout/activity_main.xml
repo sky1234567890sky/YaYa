@@ -180,7 +180,7 @@
                     android:visibility="invisible"
                     />
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/hongdian"
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_6"
@@ -192,7 +192,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="HardcodedText"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     />
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
