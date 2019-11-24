@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/c_ffffff"
     tools:context=".activity.home.ConfirmYingyeActivity">
 
     <ImageView
@@ -50,7 +51,8 @@
             android:layout_marginTop="@dimen/dp_5"
             android:layout_marginRight="@dimen/dp_10"
             android:background="@drawable/inventory_bg_code"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="ObsoleteLayoutParam">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -71,15 +73,13 @@
                 android:text="------"
                 android:textColor="@color/c_fff"
                 android:textSize="@dimen/sp_25"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
-
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
             android:layout_marginTop="@dimen/dp_10">
-
             <TextView
                 android:id="@+id/tv_confirm_number"
                 android:layout_width="wrap_content"
@@ -90,8 +90,7 @@
                 android:textColor="#333333"
                 android:textSize="@dimen/sp_16"
                 android:textStyle="bold"
-                tools:ignore="HardcodedText" />
-
+                tools:ignore="HardcodedText,RtlHardcoded" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -107,9 +106,8 @@
                 android:textCursorDrawable="@drawable/edit_cursor_color"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="normal"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText,RtlHardcoded" />
         </RelativeLayout>
-
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -127,11 +125,12 @@
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_toRightOf="@+id/tv_confirm_number"
+                android:autofillHints=""
                 android:background="@null"
+                android:digits="1234567890"
                 android:gravity="center_vertical"
                 android:hint="请填写数量"
                 android:inputType="phone|number"
-                android:digits="1234567890"
                 android:maxLines="1"
                 android:numeric="integer"
                 android:paddingLeft="@dimen/dp_5"
@@ -143,23 +142,23 @@
                 android:textCursorDrawable="@drawable/edit_cursor_color"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="normal"
-                tools:ignore="HardcodedText,RtlHardcoded" />
+                tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry,UnusedAttribute" />
         </android.support.v7.widget.CardView>
 
         <TextView
             android:id="@+id/confirm_btn"
             android:layout_width="@dimen/dp_305"
             android:layout_height="@dimen/dp_44"
-            android:background="@drawable/confirm_bg_shape"
-            android:layout_marginLeft="@dimen/dp_35"
-            android:layout_marginRight="@dimen/dp_35"
-            android:layout_marginTop="@dimen/dp_70"
-            android:textSize="@dimen/sp_18"
-            android:text="确认营业"
-            android:gravity="center"
-            android:textColor="#CCCCCC"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_35"
+            android:layout_marginTop="@dimen/dp_70"
+            android:layout_marginRight="@dimen/dp_35"
+            android:background="@drawable/confirm_bg_shape"
             android:clickable="false"
-            />
+            android:gravity="center"
+            android:text="确认营业"
+            android:textColor="#CCCCCC"
+            android:textSize="@dimen/sp_18"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 </RelativeLayout>

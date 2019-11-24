@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.base.ApiConfig;
@@ -28,10 +29,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-
-import org.greenrobot.eventbus.EventBus;
-
-import org.raphets.roundimageview.RoundImageView;
 import butterknife.BindView;
 import butterknife.OnClick;
 /***
@@ -39,7 +36,6 @@ import butterknife.OnClick;
  * sky
  */
 public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
-
     @BindView(R.id.now_buy_iv)
     ImageView nowBuyIv;
     @BindView(R.id.buy_comName)
