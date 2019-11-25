@@ -3,12 +3,10 @@ package com.administrator.yaya.activity.home;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,9 +27,8 @@ import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-
+//确认营业
 public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
 
     @BindView(R.id.confirm_back_iv)
@@ -165,7 +162,6 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
             }
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
     }
@@ -191,7 +187,6 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
 //    @Override
 //    protected void onResume() {
 //        super.onResume();
-//
 //        initData();
 //
 //    }
