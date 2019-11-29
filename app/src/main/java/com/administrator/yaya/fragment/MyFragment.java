@@ -148,6 +148,7 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
         mPresenter.getData(ApiConfig.TEST_GET_USERNOW_MSG, Integer.parseInt(userId), token);
 
         //读取消息
+        mPresenter.getData(ApiConfig.TEST_UPDATE_USERNEW,Integer.parseInt(userId), token);
     }
     @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_right_ll, R.id.my_left_ll})
     public void onViewClicked(View view) {
@@ -156,16 +157,15 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 Intent intent = new Intent(getActivity(), SystemMessagesActivity.class);
                 startActivity(intent);
                 break;
-
             case R.id.setting_iv:
                 Intent sa = new Intent(getActivity(), SettingActivity.class);
                 startActivity(sa);
                 break;
-
             case R.id.my_ll:
                 Intent pd = new Intent(getActivity(), PersonalDatActivity.class);
                 startActivityForResult(pd, 11);
                 break;
+
             case R.id.my_right_ll:
                 Intent myincome = new Intent(getActivity(), MyIncomeActivity.class);
                 startActivity(myincome);
@@ -176,6 +176,7 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 break;
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -257,7 +258,6 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW, userHeadImg);
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_NICK, userName);
                     myNameTv.setText(userName);//用户名称
-
                     tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
                     tvWechatUse.setText(userInfo.getWxEd() + "");//微信已使用额度
 
@@ -336,13 +336,10 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     startActivity(login);
 
                     getActivity().finish();
-
                 }else if (testUpdateUserNew.getCode()==0){
                     //已读取  隐藏
-                    ToastUtil.showLong(testUpdateUserNew.getMsg());
-
-                    mMy_hongdian.setVisibility(View.GONE);
-
+//                    ToastUtil.showLong(testUpdateUserNew.getMsg());
+//                    mMy_hongdian.setVisibility(View.GONE);
                 }
                 break;
         }

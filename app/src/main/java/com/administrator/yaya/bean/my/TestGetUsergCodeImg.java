@@ -266,6 +266,7 @@ public class TestGetUsergCodeImg {
                 this.wxEd = wxEd;
             }
 
+
             public Object getCreditMin() {
                 return creditMin;
             }

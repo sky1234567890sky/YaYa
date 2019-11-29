@@ -22,6 +22,7 @@ public class MyInviteAdapter extends RecyclerView.Adapter<MyInviteAdapter.Vh> {
     private final List<TestMyInviteAll.DataBean.ListBean> list;
     private Context context;
     private double profit;
+    private TestMyInviteAll.DataBean.UserInfoBean userInfo;
 
     public MyInviteAdapter(List<TestMyInviteAll.DataBean.ListBean> list) {
 
@@ -58,18 +59,19 @@ public class MyInviteAdapter extends RecyclerView.Adapter<MyInviteAdapter.Vh> {
             }
         });
 
-        String[] jibie = {"黄金", "铂金", "钻石", "王者", "星耀"};
+//        String[] jibie = {"黄金", "铂金", "钻石", "王者", "星耀"};
         int[] iv = {R.mipmap.icon_huangjin, R.mipmap.icon_bojin, R.mipmap.icon_zuanshi, R.mipmap.icon_wangzhe, R.mipmap.icon_xingyao};
-        String userLevelName = listBean.getLvName();
-        if (jibie[0].equals(userLevelName)) {
+        String userLevelName = userInfo.getUserLevelName();
+        int userLevel = userInfo.getUserLevel();
+        if (userLevel == 1) {
             Glide.with(context).load(iv[0]).placeholder(R.mipmap.icon).into(vh.dengji_iv);
-        } else if (jibie[1].equals(userLevelName)) {
+        } else if (userLevel == 2) {
             Glide.with(context).load(iv[1]).placeholder(R.mipmap.icon).into(vh.dengji_iv);
-        } else if (jibie[2].equals(userLevelName)) {
+        } else if (userLevel == 3) {
             Glide.with(context).load(iv[2]).placeholder(R.mipmap.icon).into(vh.dengji_iv);
-        } else if (jibie[3].equals(userLevelName)) {
+        } else if (userLevel == 4) {
             Glide.with(context).load(iv[3]).placeholder(R.mipmap.icon).into(vh.dengji_iv);
-        } else if (jibie[4].equals(userLevelName)) {
+        } else if (userLevel == 5) {
             Glide.with(context).load(iv[4]).placeholder(R.mipmap.icon).into(vh.dengji_iv);
         }
     }
@@ -79,9 +81,10 @@ public class MyInviteAdapter extends RecyclerView.Adapter<MyInviteAdapter.Vh> {
         return list != null ? list.size() : 0;
     }
 
-    public void setData(double profit) {
+    public void setData(double profit, TestMyInviteAll.DataBean.UserInfoBean userInfo) {
 
         this.profit = profit;
+        this.userInfo = userInfo;
         notifyDataSetChanged();
     }
 

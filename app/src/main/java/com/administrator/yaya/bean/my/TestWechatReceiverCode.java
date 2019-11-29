@@ -65,8 +65,27 @@ public class TestWechatReceiverCode {
         private ParamsBean params;
         private int imgConfigId;
         private int imgConfigType;
+        private int imgStatus;
+        //添加三个
         private double imgConfigMoney;
         private String image;
+        private int imgId;
+
+        public int getImgId() {
+            return imgId;
+        }
+
+        public void setImgId(int imgId) {
+            this.imgId = imgId;
+        }
+
+        public int getImgStatus() {
+            return imgStatus;
+        }
+
+        public void setImgStatus(int imgStatus) {
+            this.imgStatus = imgStatus;
+        }
 
         public String getImage() {
             return image;
@@ -152,7 +171,7 @@ public class TestWechatReceiverCode {
             return imgConfigMoney;
         }
 
-        public void setImgConfigMoney(int imgConfigMoney) {
+        public void setImgConfigMoney(double imgConfigMoney) {
             this.imgConfigMoney = imgConfigMoney;
         }
 

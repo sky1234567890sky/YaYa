@@ -29,4 +29,5 @@ public class NormalConfig {
     public static final String AlipayQr_isChecket = "alipayQr";
 
     public static String isChecket = "shiyongyongjin";//使用佣金
+    public static String fukuanren = "bankname";//付款人姓名
 }

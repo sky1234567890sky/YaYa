@@ -152,6 +152,39 @@
         app:srlEnableLoadMore="true"
         app:srlEnableAutoLoadMore="true"
         >
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/lay_fragment_ProdutEmpty"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical"-->
+            <!--android:visibility="gone"-->
+            <!--&gt;-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/img_fragment_ProdutEmpty"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginRight="5dp"-->
+                <!--android:layout_marginTop="15dp"-->
+                <!--android:background="@color/systemNoColor"-->
+                <!--android:scaleType="fitXY"-->
+                <!--android:src="@drawable/loadfailed" -->
+                <!--/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_fragment_ProdutEmpty"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="15dp"-->
+                <!--android:text="没有发现任何商品。。。"-->
+                <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+                <!--android:textColor="@color/aliRed"-->
+                <!--android:textSize="12pt" />-->
+        <!--</LinearLayout>-->
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

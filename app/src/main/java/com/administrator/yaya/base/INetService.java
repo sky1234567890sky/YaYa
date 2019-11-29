@@ -170,7 +170,6 @@ public interface INetService {
     @FormUrlEncoded
     Observable<TestMyInvite> getTestMyInvite(@Field("userId") int userId, @Field("token") String token);
 
-
     //    小账本
 //    http://192.168.0.198:8080/yayaApp/xiaoZhangBen
     @POST("xiaoZhangBen")
@@ -359,8 +358,7 @@ public interface INetService {
     //图片列表展示
     @POST("getUserCodeImg")
     @FormUrlEncoded
-    Observable<TestGetUsergCodeImg> getUserCodeImg(@Field("userId") int userId,@Field("token") String token,@Field("type") int type);
-
+    Observable<TestGetUsergCodeImg> getUserCodeImg(@Field("userId") int userId, @Field("token") String token, @Field("type") int type);
 
 
     //微信 上传 图片 二维码   imgId
@@ -372,7 +370,7 @@ public interface INetService {
 //    imgUrl 图片路径
     @POST("appUploadCodeImg")
     @FormUrlEncoded
-    Observable<TestUpLoadGetQr> getTestUpLoadGetQr(@Field("userId") int userId, @Field("imgType") int imgType, @Field("imgUrl") String imgUrl, @Field("imgMoney") double imgMoney);
+    Observable<TestUpLoadGetQr> getTestUpLoadGetQr(@Field("imgId") int imgId, @Field("userId") int userId, @Field("imgType") int imgType, @Field("imgUrl") String imgUrl, @Field("imgMoney") double imgMoney);
 
     //第二次上传收款码
     @POST("appUploadCodeImg")

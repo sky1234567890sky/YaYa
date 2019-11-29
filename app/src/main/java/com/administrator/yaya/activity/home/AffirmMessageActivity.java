@@ -72,7 +72,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     private String payeeName;
     private String name2;
     private String comMoney;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_affirm_message;
@@ -122,9 +121,12 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
 
             }
         }
-
-
-        import_hint.setText("请务必使用姓名为"+name2+"的银行卡进行转账，转账金额为"+comMoney+"元，请填好备注信息，才能及时发货，谢谢!");
+        String name = SharedPrefrenceUtils.getString(this, NormalConfig.fukuanren);
+        if (name.isEmpty()){
+            import_hint.setText("请务必使用姓名为xxx的银行卡进行转账，转账金额为"+comMoney+"元，请填好备注信息，才能及时发货，谢谢!");
+        }else{
+            import_hint.setText("请务必使用姓名为"+name+"的银行卡进行转账，转账金额为"+comMoney+"元，请填好备注信息，才能及时发货，谢谢!");
+        }
 
 //        Log.i("tag", "data======》: " + commodityAmount + payerName + commodityPrice + userId);
 //        int i = Integer.parseInt(userId);
@@ -137,7 +139,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
         //库存的
         //查看详情
     }
-
     //}
     //待付款跳转此页面 时 的展示 数据
 //}
@@ -165,7 +166,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                 if (bankYinhang != null) bank.setText(bankYinhang.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
-
             case R.id.bank_money:
                 ClipboardManager bankQian = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。

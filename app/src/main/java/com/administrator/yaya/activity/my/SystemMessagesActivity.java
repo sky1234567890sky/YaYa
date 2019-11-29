@@ -99,10 +99,9 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
 
-
         mPresenter.getData(ApiConfig.TEST_NOTIFICATION_INFO,Integer.parseInt(userId),token);
-    }
 
+    }
     @Override
     public void onResponse(int whichApi, Object[] t) {
 //        hideLoadingDialog();
@@ -112,7 +111,6 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
                 if(!list.isEmpty() || list!=null){
                     list.clear();
                 }
-
                 TestNotificationInfo testNotificationInfos  = (TestNotificationInfo) t[0];
 
                 if (testNotificationInfos.getMsg()==mApplication.SignOut){
@@ -136,12 +134,11 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.system_msg_back_iv:
-
-                if (changeValueCallBack!=null){
-                    //注册接口
-                    changeValueCallBack.changevalue();
-                }
-
+//                if (changeValueCallBack!=null){
+//                    //注册接口
+//                    changeValueCallBack.changevalue();
+//                }
+//
                 SystemMessagesActivity.this.finish();
                 break;
         }
@@ -150,8 +147,6 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("tag", "========> onResume");
-
         refresh();
 
         //获取MainActivity的红点控件  返回时 将其隐藏

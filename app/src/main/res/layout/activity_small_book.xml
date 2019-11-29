@@ -18,11 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44">
-
             <ImageView
                 android:id="@+id/small_book_back_iv"
                 android:layout_width="@dimen/dp_39"
@@ -60,7 +58,6 @@
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginBottom="@dimen/dp_15"
                 android:background="#FFBCBCBD" />
-
             <TextView
                 android:id="@+id/small_book_pay_money_tv"
                 android:layout_width="match_parent"
@@ -68,10 +65,10 @@
                 android:layout_marginTop="@dimen/dp_22"
                 android:layout_toLeftOf="@id/wire"
                 android:gravity="center"
-                android:text=":￥---"
+                android:text="0.0"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_25" />
-
+                android:textSize="@dimen/sp_25"
+                tools:ignore="HardcodedText" />
             <TextView
                 android:id="@+id/small_book_pay_money_iv"
                 android:layout_width="wrap_content"
@@ -80,11 +77,11 @@
                 android:layout_marginTop="@dimen/dp_22"
                 android:layout_toRightOf="@id/wire"
                 android:gravity="center"
-                android:text="：￥---"
+                android:text="0.0"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_25"
-                tools:ignore="HardcodedText" />
-
+                tools:ignore="HardcodedText,RtlHardcoded"
+                />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -164,7 +161,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:text="---"
+                            android:text="0.0"
                             android:textColor="#333333"
                             android:textSize="@dimen/sp_25" />
                         <TextView
@@ -206,7 +203,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:text="---"
+                            android:text="0.0"
                             android:textColor="#333333"
                             android:textSize="@dimen/sp_25" />
 
@@ -289,7 +286,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:text="---"
+                            android:text="0.0"
                             android:textColor="#333333"
                             android:textSize="@dimen/sp_25" />
 
@@ -328,10 +325,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:text="---"
+                            android:text="0.0"
                             android:textColor="#333333"
                             android:textSize="@dimen/sp_25" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

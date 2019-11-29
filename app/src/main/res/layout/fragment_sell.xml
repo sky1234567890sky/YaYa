@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.orderform.AllFragment">
-
+    tools:context=".activity.orderform.AllFragment"
+    >
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/sell_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnableAutoLoadMore="true"
         app:srlEnableLoadMore="true">
-
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,12 +24,26 @@
             app:srlEnableLastTime="true"
             app:srlTextSizeTime="@dimen/sp_8"
             app:srlTextSizeTitle="@dimen/sp_12"
-            app:srlTextTimeMarginTop="@dimen/dp_2" />
+            app:srlTextTimeMarginTop="@dimen/dp_2"
+            />
+        <!--<com.bunny.android.library.LoadDataLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:ldl_loading_tv="不要急,等丫丫加载完成..."-->
+            <!--app:ldl_empty_tv="好像什么也没有..."-->
+            <!--app:ldl_error_tv="oh no! 好像出错了..."-->
+            <!--app:ldl_loading_img="@mipmap/ajax_loader"-->
+            <!--app:ldl_empty_img="@drawable/ic_empty"-->
+            <!--app:ldl_error_img="@drawable/ic_launcher"-->
+            <!--&gt;-->
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/sell_lv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/sell_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        <!--</com.bunny.android.library.LoadDataLayout>-->
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"

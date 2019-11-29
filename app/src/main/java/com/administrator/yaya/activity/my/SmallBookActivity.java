@@ -30,7 +30,6 @@ import butterknife.OnClick;
 public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
     @BindView(R.id.small_book_back_iv)
     ImageView smallBookBackIv;
-
     @BindView(R.id.small_book_pay_money_tv)
     TextView smallBookPayMoneyTv;
     @BindView(R.id.small_book_pay_money_iv)
@@ -48,10 +47,8 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
     TextView smallBookTvUseMoney;
     @BindView(R.id.tv_day)
     TextView tvDay;
-
     private String userId;
     private String token;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_small_book;
@@ -60,14 +57,17 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
     @Override
     protected void initData() {
         super.initData();
+
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
-        if (userId != null) mPresenter.getData(ApiConfig.TEST_SMALLBOOK, Integer.parseInt(userId),token);
+        mPresenter.getData(ApiConfig.TEST_SMALLBOOK, Integer.parseInt(userId), token);
     }
+
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
+
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
@@ -84,11 +84,8 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
         switch (whichApi) {
             case ApiConfig.TEST_SMALLBOOK:
                 TestSmallBook testSmallBook = (TestSmallBook) t[0];
-
-                if (testSmallBook.getMsg().equals(mApplication.SignOut)){
-
+                if (testSmallBook.getMsg().equals(mApplication.SignOut)) {
                     ToastUtil.showLong("您的账号正在其他设备登录,请重新登陆！");
-
                     Intent intent = new Intent(this, LoginActivity.class);
 
                     SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
@@ -103,33 +100,37 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
 
                     finish();
                 }
-
                 if (testSmallBook.getCode() == 0 && !testSmallBook.getMsg().equals(mApplication.SignOut)) {
                     TestSmallBook.DataBean data = testSmallBook.getData();
-//                    moneyToday		今日付款
-                    double moneyToday = data.getMoneyToday();
-//                    moneyHistory	历史付款
-                    double moneyHistory = data.getMoneyHistory();
-                    if (moneyHistory<0){
-                        smallBookPayMoneyIv.setText("0.0");
-                    }else{
-                        smallBookPayMoneyIv.setText(moneyHistory + "");
-                    }
-                    if (moneyToday<0){
-                        smallBookPayMoneyTv.setText( "0.0");
-                    }else{
-                        smallBookPayMoneyTv.setText(moneyToday + "");
-                    }
 
-                    int moneyZfbToday = data.getMoneyZfbToday();
-                    tvWechatUse.setText(moneyZfbToday+"");
-                    tvWechatDay.setText(data.getMoneyZfbHistory()+"");
-                    smallBookTvUseMoney.setText(data.getMoneyWxToday()+"");
-                    tvDay.setText(data.getMoneyWxHistory()+"");
+                    if (data==null){
+                        return;
+                    }else {
+                        //                    moneyToday		今日付款
+                        double moneyToday = data.getMoneyToday();
+//                    moneyHistory	历史付款
+                        double moneyHistory = data.getMoneyHistory();
+                        if (moneyHistory < 0) {
+                            smallBookPayMoneyIv.setText("0.0");
+                        } else {
+                            smallBookPayMoneyIv.setText(moneyHistory + "");
+                        }
+                        if (moneyToday < 0) {
+                            smallBookPayMoneyTv.setText("0.0");
+                        } else {
+                            smallBookPayMoneyTv.setText(moneyToday + "");
+                        }
+                        int moneyZfbToday = data.getMoneyZfbToday();
+                        tvWechatUse.setText(moneyZfbToday + "");
+                        tvWechatDay.setText(""+data.getMoneyZfbHistory());
+                        smallBookTvUseMoney.setText(data.getMoneyWxToday()+"");
+                        tvDay.setText(data.getMoneyWxHistory() + "");
+                    }
                 }
                 break;
         }
     }
+
     @OnClick({R.id.small_book_back_iv, R.id.small_book_pay_money_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -137,6 +138,7 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
                 SmallBookActivity.this.finish();
                 break;
             case R.id.small_book_pay_money_tv:
+
                 break;
         }
     }

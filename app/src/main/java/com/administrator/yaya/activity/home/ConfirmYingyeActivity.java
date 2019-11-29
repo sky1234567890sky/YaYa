@@ -100,6 +100,7 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
                     finish();
                 }
                 break;
+
             //库存
             case ApiConfig.TEST_INVENTORY:
                 TestInventory testInventory = (TestInventory) t[0];

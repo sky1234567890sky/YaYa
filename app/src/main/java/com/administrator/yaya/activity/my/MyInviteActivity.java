@@ -139,11 +139,9 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 //        mMyinviteList = findViewById(R.id.myinvite_list);
         SpannableString getInventory = ChangTvSizeUtils.changTVsize("25.00");
 //        ------------------>
-
         mList.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyInviteAdapter(list);
         mList.setAdapter(adapter);
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -177,25 +175,24 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                     mMyinviteIdTv.setText("ID:" + userId);
 //                    userLevelName 级别名称
 
-                    String[] jibie = {"黄金", "铂金", "钻石", "王者", "星耀"};
+//                    String[] jibie = {"黄金", "铂金", "钻石", "王者", "星耀"};
                     int[] iv = {R.mipmap.icon_huangjin, R.mipmap.icon_bojin, R.mipmap.icon_zuanshi, R.mipmap.icon_wangzhe, R.mipmap.icon_xingyao};
                     String userLevelName = userInfo.getUserLevelName();
-
-                    if (jibie[0].equals(userLevelName)) {
+                    int userLevel = userInfo.getUserLevel();
+                    if (userLevel == 1) {
                         Glide.with(this).load(iv[0]).placeholder(R.mipmap.icon).into(mMyinviteRightDengjiIv);
-                    } else if (jibie[1].equals(userLevelName)) {
+                    } else if (userLevel == 2) {
                         Glide.with(this).load(iv[1]).placeholder(R.mipmap.icon).into(mMyinviteRightDengjiIv);
-                    } else if (jibie[2].equals(userLevelName)) {
+                    } else if (userLevel == 3) {
                         Glide.with(this).load(iv[2]).placeholder(R.mipmap.icon).into(mMyinviteRightDengjiIv);
-                    } else if (jibie[3].equals(userLevelName)) {
+                    } else if (userLevel == 4) {
                         Glide.with(this).load(iv[3]).placeholder(R.mipmap.icon).into(mMyinviteRightDengjiIv);
-                    } else if (jibie[4].equals(userLevelName)) {
+                    } else if (userLevel == 5) {
                         Glide.with(this).load(iv[4]).placeholder(R.mipmap.icon).into(mMyinviteRightDengjiIv);
                     }
 
                     String userName = userInfo.getUserName();
                     myinvite_name.setText(userName);
-
 //                    Glide.with(this).load(userLevelName).into(mMyinviteRightDengjiIv);
 
 //                    userHeadImg  头像
@@ -207,7 +204,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 //                    codeName  邀请码
 //                    lvProfit  返利比例（分配）
                     list.addAll(listBeans);
-                    adapter.setData(profit);
+                    adapter.setData(profit,data.getUserInfo());
                     adapter.notifyDataSetChanged();
                 }
                 break;

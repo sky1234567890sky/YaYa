@@ -62,10 +62,10 @@ public class LoginModel implements ICommonModel {
 
             //立即购买
             case ApiConfig.TEXT_BUY_COM:
-                int  idex = (int) t[0];
+                int idex = (int) t[0];
                 String token = (String) t[1];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestBuyCom(idex,token), view, whichApi);
+                        .getTestBuyCom(idex, token), view, whichApi);
                 break;
 
             //提交订单
@@ -78,7 +78,7 @@ public class LoginModel implements ICommonModel {
                 Double i6 = (Double) t[5];
                 int i7 = (int) t[6];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestOrderStock(i, i2, i3, i4,i5,i6,i7), view, whichApi);
+                        .getTestOrderStock(i, i2, i3, i4, i5, i6, i7), view, whichApi);
                 break;
 
             //查看进货状态 所有进货订单  getTextAllOrderStock
@@ -104,7 +104,7 @@ public class LoginModel implements ICommonModel {
                 String s = (String) t[0];
                 String toke = (String) t[1];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestPayToAffimInfo(s,toke), view, whichApi);
+                        .getTestPayToAffimInfo(s, toke), view, whichApi);
                 break;
             //取消订单
             case ApiConfig.TEST_CANCEL_ORDER_STOCK://取消售卖订单
@@ -120,19 +120,19 @@ public class LoginModel implements ICommonModel {
             //我的邀请
             case ApiConfig.TEST_MY_INVITEALL:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestMyInviteAll((int) t[0],(String)t[1]), view, whichApi);
+                        .getTestMyInviteAll((int) t[0], (String) t[1]), view, whichApi);
                 break;
 
-                //我的邀请-查看返利记录
-                case ApiConfig.TEST_MY_INVITE:
+            //我的邀请-查看返利记录
+            case ApiConfig.TEST_MY_INVITE:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestMyInvite((int) t[0],(String)t[1]), view, whichApi);
+                        .getTestMyInvite((int) t[0], (String) t[1]), view, whichApi);
                 break;
 
             //我的小账本
             case ApiConfig.TEST_SMALLBOOK:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestSmallBook((int) t[0],(String)t[1]), view, whichApi);
+                        .getTestSmallBook((int) t[0], (String) t[1]), view, whichApi);
                 break;
 
             //二维码图片
@@ -149,13 +149,13 @@ public class LoginModel implements ICommonModel {
                         .getWechatReceiverCode(type), view, whichApi);
                 break;
 
-                //（图片列表接口）
+            //（图片列表接口）
             case ApiConfig.TEST_USERCODE_IMG:
                 int Userid = (int) t[0];
                 String token2 = (String) t[1];
                 int type1 = (int) t[2];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getUserCodeImg(Userid,token2,type1), view, whichApi);
+                        .getUserCodeImg(Userid, token2, type1), view, whichApi);
 
                 break;
 
@@ -173,36 +173,38 @@ public class LoginModel implements ICommonModel {
 
             case ApiConfig.TEST_UPLOAD_GET_QR://上传收款码
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestUpLoadGetQr((int) t[0], (int) t[1], (String) t[2], (double) t[3]), view, whichApi);
+                        .getTestUpLoadGetQr((int) t[0],(int) t[1], (int) t[2], (String) t[3], (double) t[4]), view, whichApi);
                 break;
+
 /**
  *第二次上传二维码
- */case ApiConfig.TEST_UPLOAD_GET_QR_NO2://上传收款码
+ */
+            case ApiConfig.TEST_UPLOAD_GET_QR_NO2://上传收款码
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestUpLoadGetQrNo2((int) t[0], (int) t[0], (int) t[1], (String) t[2], (double) t[3]), view, whichApi);
+                        .getTestUpLoadGetQrNo2((int) t[0], (int) t[1], (int) t[2], (String) t[3], (double) t[4]), view, whichApi);
                 break;
 
             case ApiConfig.TEST_UPAWAY_SINGLE_GOODS://上架单个货物
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestUpawaySingleGoods((String) t[0],(String) t[1]), view, whichApi);
+                        .getTestUpawaySingleGoods((String) t[0], (String) t[1]), view, whichApi);
                 break;
 
             //全部
             case ApiConfig.TEST_ALL_ORDERSTOCK:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestAllOrderStock((int) t[0], (String)t[1]), view, whichApi);
+                        .getTestAllOrderStock((int) t[0], (String) t[1]), view, whichApi);
                 break;
 
             //已完成
             case ApiConfig.TEST_FINISH:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestFinish((int) t[0],(String)t[1], (int) t[2]), view, whichApi);
+                        .getTestFinish((int) t[0], (String) t[1], (int) t[2]), view, whichApi);
                 break;
 
             //未收货
             case ApiConfig.TEST_CANCEL:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestCancel((int) t[0], (String)t[1]), view, whichApi);
+                        .getTestCancel((int) t[0], (String) t[1]), view, whichApi);
                 break;
 
 //            确认收货
@@ -229,13 +231,13 @@ public class LoginModel implements ICommonModel {
                 String t22 = (String) t[0];
 
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestCancelOrderSales(t1,t22), view, whichApi);//salesId
+                        .getTestCancelOrderSales(t1, t22), view, whichApi);//salesId
                 break;
 
             //我的收益
             case ApiConfig.TEST_MY_EARNINGS:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestMyEarnings((int) t[0], (String)t[1],(int) t[2]), view, whichApi);
+                        .getTestMyEarnings((int) t[0], (String) t[1], (int) t[2]), view, whichApi);
                 break;
 
             //TestPutawayAllOrderStock上架全部货物
@@ -243,14 +245,14 @@ public class LoginModel implements ICommonModel {
                 String to = (String) t[1];
                 int ii = (int) t[2];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getPutawayAllOrderStock((int) t[0], to,ii), view, whichApi);
+                        .getPutawayAllOrderStock((int) t[0], to, ii), view, whichApi);
                 break;
 
             //我的收益
             //返利
             case ApiConfig.TEST_REBATE:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestRebate((int) t[0], (String) t[1],(int) t[2]), view, whichApi);
+                        .getTestRebate((int) t[0], (String) t[1], (int) t[2]), view, whichApi);
                 break;
 
             //支出
@@ -262,7 +264,7 @@ public class LoginModel implements ICommonModel {
             //收入
             case ApiConfig.TEST_INCOME:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestIncome((int) t[0],  (String) t[1],(int) t[2]), view, whichApi);
+                        .getTestIncome((int) t[0], (String) t[1], (int) t[2]), view, whichApi);
                 break;
 
             //修改密码
@@ -273,7 +275,7 @@ public class LoginModel implements ICommonModel {
                 int userid = (int) t[3];
                 String token3 = (String) t[4];
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestUpdatePwd(phone, versication, pwd, userid, token3), view, whichApi);
+                .getTestUpdatePwd(phone, versication, pwd, userid, token3), view, whichApi);
                 break;
 
             //更换头像
@@ -329,18 +331,16 @@ public class LoginModel implements ICommonModel {
                 break;
 
 
-
-
             //库存
             case ApiConfig.TEST_INVENTORY:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestInventory((int) t[0], (String) t[1]), view, whichApi);
                 break;
 
-                //确认营业
+            //确认营业
             case ApiConfig.TEST_DIANJIYINGYE:
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
-                        .getTestDianjiYingye((int) t[0], (String) t[1],(int) t[2]), view, whichApi);
+                        .getTestDianjiYingye((int) t[0], (String) t[1], (int) t[2]), view, whichApi);
                 break;
 
 

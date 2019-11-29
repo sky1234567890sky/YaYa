@@ -3,6 +3,7 @@ package com.administrator.yaya.activity.my.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,9 +43,20 @@ public class MyXiajiAdapter extends RecyclerView.Adapter<MyXiajiAdapter.Vh> {
         TestMyInvite.DataBean.UserInfoBean.JuniorUsersBean paramsBean = list.get(i);
         vh.xiajiId.setText("用户ID:"+paramsBean.getUserId());
         Glide.with(context).load(paramsBean.getUserHeadImg()).placeholder(R.mipmap.icon).into(vh.xiajiHeadleriv);
-        vh.xiajiJilleigongxian.setText("￥"+paramsBean.getUserContributeTotal()+"");
         vh.xiajiRabaterecordName.setText("用户昵称："+paramsBean.getUserName()+"");
-        vh.xiajiJinrigongxian.setText("￥"+paramsBean.getJunior()+"");
+
+        if (TextUtils.isEmpty(String.valueOf(paramsBean.getUserContributeTotal()))){
+            vh.xiajiJilleigongxian.setText("￥0");
+        }else{
+            vh.xiajiJilleigongxian.setText("￥"+paramsBean.getUserContributeTotal()+"");
+        }
+
+        if (TextUtils.isEmpty(paramsBean.getJunior())){
+            vh.xiajiJinrigongxian.setText("￥0");
+        }else{
+            vh.xiajiJinrigongxian.setText("￥"+paramsBean.getJunior()+"");
+
+        }
 
         int userLevel = paramsBean.getUserLevel();
         String userLevelName = paramsBean.getUserLevelName();

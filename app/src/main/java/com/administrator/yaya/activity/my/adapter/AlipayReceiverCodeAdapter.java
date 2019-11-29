@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
-import com.administrator.yaya.bean.my.TestAlipayReceiverCode;
 import com.administrator.yaya.bean.my.TestWechatReceiverCode;
 import com.bumptech.glide.Glide;
 
@@ -22,27 +21,32 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AlipayReceiverCodeAdapter extends RecyclerView.Adapter<AlipayReceiverCodeAdapter.Vh> {
-
-    private final List<TestAlipayReceiverCode.DataBean.UserCodeImgListBean> list;
-
+    private final List<TestWechatReceiverCode.DataBean> list;
     private Context context;
 
-    public AlipayReceiverCodeAdapter(List<TestAlipayReceiverCode.DataBean.UserCodeImgListBean> list) {
-
+    public AlipayReceiverCodeAdapter(List<TestWechatReceiverCode.DataBean> list) {
         this.list = list;
     }
 
     @NonNull
     @Override
-    public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public AlipayReceiverCodeAdapter.Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
-        @SuppressLint("InflateParams") View inflate = LayoutInflater.from(context).inflate(R.layout.alipayreceivercode_item, viewGroup,false);
+        @SuppressLint("InflateParams") View inflate = LayoutInflater.from(context).inflate(R.layout.wechatpayreceivercode_item, viewGroup, false);
         return new Vh(inflate);
     }
-    int imgMoney;
-    String imgUrl;
+
     @Override
     public void onBindViewHolder(@NonNull Vh vh, final int i) {
+
+        TestWechatReceiverCode.DataBean userCodeImgListBean = list.get(i);
+        String imgUrl = userCodeImgListBean.getImage();
+//        if (userCodeImgListBean.getImgConfigType() == 1) {//微信
+        Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
+        vh.mWechatGetmenryTv.setText(userCodeImgListBean.getImgConfigMoney() + "元");
+
+        getimageStatus(vh, userCodeImgListBean);
+
 ////        TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean  = null;
 ////        String imgUrl = null;
 ////        double imgMoney=0;
@@ -80,38 +84,95 @@ public class AlipayReceiverCodeAdapter extends RecyclerView.Adapter<AlipayReceiv
 ////        }else if (i==5){
 ////            vh.mMoneyNumber.setText("5000.0元");
 ////        }
-////        vh.itemView.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View v) {
-////                if (alipayPayReceiverCodesetOnclikListener!=null){
-////                    alipayPayReceiverCodesetOnclikListener.setonclik(i,v);
-////                }
-////            }
-////        });
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (alipayPayReceiverCodesetOnclikListener != null) {
+                    alipayPayReceiverCodesetOnclikListener.setonclik(i, v);
+                }
+            }
+        });
     }
-//    @Override
+
+    private Boolean getimageStatus(Vh vh, TestWechatReceiverCode.DataBean userCodeImgListBean1) {
+        vh.mImageViewUrlWechat.setVisibility(View.INVISIBLE);
+        vh.mWechatHint.setVisibility(View.INVISIBLE);
+        vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
+
+        if (userCodeImgListBean1.getImgStatus() == 1) {
+            //待审核  不能点击
+            vh.itemView.setClickable(false);
+
+            vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
+            vh.mWechatHint.setVisibility(View.VISIBLE);
+            vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
+            Glide.with(context).load(userCodeImgListBean1.getImage()).into(vh.mImageViewUrlWechat);
+            double imgMoney1 = userCodeImgListBean1.getImgConfigMoney();
+            vh.mWechatGetmenryTv.setText(imgMoney1 + "元");
+            return true;
+
+        } else if (userCodeImgListBean1.getImgStatus() == 2) {
+            //审核通过
+            vh.itemView.setClickable(true);
+            vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
+            vh.mWechatHint.setVisibility(View.GONE);
+            vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
+            Glide.with(context).load(userCodeImgListBean1.getImage()).into(vh.mImageViewUrlWechat);
+            double imgMoney1 = userCodeImgListBean1.getImgConfigMoney();
+            vh.mWechatGetmenryTv.setText(imgMoney1 + "元");
+            return true;
+        } else if (userCodeImgListBean1.getImgStatus() == 3) {
+            //未通过
+            vh.itemView.setClickable(true);
+            vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
+            vh.mWechatNoShenhe.setVisibility(View.VISIBLE);
+            vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
+
+            Glide.with(context).load(userCodeImgListBean1.getImage()).into(vh.mImageViewUrlWechat);
+            double imgMoney1 = userCodeImgListBean1.getImgConfigMoney();
+
+            vh.mWechatGetmenryTv.setText(imgMoney1 + "元");
+            return true;
+        }else {
+            vh.mWechatpayItemLl.setVisibility(View.VISIBLE);
+        }
+        return false;
+    }
+
+
+    @Override
     public int getItemCount() {
-        return 6;
+        return list != null ? list.size() : 0;
     }
+
     public class Vh extends RecyclerView.ViewHolder {
-        @BindView(R.id.alipay_item_ll)//点击调用相机
-        LinearLayout mApliayLl;
-        @BindView(R.id.get_menry)
-        TextView mMoneyNumber;//金额显示
-        @BindView(R.id.ImageView_url_alipay)
-        ImageView mImageViewUrl;//图片显示
-        @BindView(R.id.hint_unreviewed)//hint_unreviewed
-        TextView mHintUnreviewed;//待审核显示
+        @BindView(R.id.ImageView_url_wechat)//图片显示
+                ImageView mImageViewUrlWechat;
+        @BindView(R.id.wechat_hint_unreviewed)//审核通过显示
+                TextView mWechatHint;
+
+        @BindView(R.id.wechat_no_shenhe)//审核不通过显示
+                TextView mWechatNoShenhe;
+        @BindView(R.id.wechatpay_add1_iv)
+        ImageView mWechatpayAdd1Iv;
+        @BindView(R.id.wechatpay_item_ll)//点击点用相机
+                LinearLayout mWechatpayItemLl;
+        @BindView(R.id.wechat_getmenry_tv)//金额显示
+                TextView mWechatGetmenryTv;
+
         public Vh(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
+
     //跳转确认信息接口回调
     private AlipayPayReceiverCodesetOnclikListener alipayPayReceiverCodesetOnclikListener;
+
     public interface AlipayPayReceiverCodesetOnclikListener {
-        void setonclik(int index,View view);
+        void setonclik(int index, View view);
     }
+
     public void setAlipayPayReceiverCodesetOnclikListener(AlipayPayReceiverCodesetOnclikListener alipayPayReceiverCodesetOnclikListener) {
         this.alipayPayReceiverCodesetOnclikListener = alipayPayReceiverCodesetOnclikListener;
     }

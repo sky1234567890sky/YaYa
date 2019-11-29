@@ -69,32 +69,18 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
     @Override
     protected void initExit() {
         //从修改密码页面回来时传的值
-//        String phone = getIntent().getStringExtra("phone");
-//        if (phone!=null) {
-//            //清除UserId
-//            mName.setText(phone);
-////            SharedPreferences sp = getSharedPreferences("loginUser", Context.MODE_PRIVATE);
-////            Editor editor = sp.edit(); editor.clear(); editor.commit();
-//        }
-
 //          在加载布局文件前判断是否登陆过
+
         String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
 
         if (userId.isEmpty() || userId == null || userId.equals("")) {
-
             return;
-
         } else {
-//            sprfMain=PreferenceManager.getDefaultSharedPreferences(this);
-//            editorMain= sprfMain.edit();
-            //.getBoolean("main",false)；当找不到"main"所对应的键值是默认返回false
-//            if (sprfMain.getBoolean(NormalConfig.ISFIRST, false)) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             LoginActivity.this.finish();
         }
     }
-
     @Override
     protected int getLayoutId() {
 //        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -115,7 +101,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
         macAddress = AndroidUtil.getMacAddress();
 
         Log.i("tag", "手机信息====>: "+ phoneModel +"<||>"+ deviceNo +"<||>"+ macAddress);
-
         //进入页面先判断用户是否已经登录
 //        int userId =  mApplication.userid;
 //        String s = String.valueOf(userId);
@@ -170,7 +155,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
                     startActivity(intent);
                     finish();
                 } else {
-                    ToastUtil.showShort(info.getMsg());
+                    Toast.makeText(this, ""+info.getMsg(), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -238,7 +223,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
             //回传的手机号密码
             String name = data.getStringExtra(NormalConfig.USER_NAME);
             String psw = data.getStringExtra(NormalConfig.PASS_WORD);
-
 //            ToastUtil.showShort(name+"\n"+psw);
 //            mName.setText(name);
 //            mPsw.setText(psw);
@@ -258,6 +242,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
     public void onError(int whichApi, Throwable e) {
 
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)//主要是对这个函数的复写
     {
@@ -266,16 +251,14 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
             if(System.currentTimeMillis() - temptime >2000) // 2s内再次选择back键有效
             {
                 System.out.println(Toast.LENGTH_LONG);
-                Toast.makeText(this, "再按一次退出丫丫", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "再按一次退出丫丫", Toast.LENGTH_LONG).show();
                 temptime = System.currentTimeMillis();
                 finish();
             }
-
             else {
                 finish();
                 System.exit(0); //凡是非零都表示异常退出!0表示正常退出!
             }
-
             return true;
 
         }

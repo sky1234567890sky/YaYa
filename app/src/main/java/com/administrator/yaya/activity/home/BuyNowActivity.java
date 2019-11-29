@@ -352,6 +352,8 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     if (comPurchaseNumMin <= i && i <= comPurchaseNumMax) {
                         //付款人姓名上传对照
                         String name = bankName.getText().toString().trim();
+                        SharedPrefrenceUtils.saveString(this,NormalConfig.fukuanren,name);
+
                         Double commodityPriceDeduction = data.getCommodityPriceDeduction();
                         if (!name.isEmpty()) {
                             //在此请求网络数据 传到  确认付款 页面(在此解析讲数据传值)（提交数据的  不是 查看详情的）

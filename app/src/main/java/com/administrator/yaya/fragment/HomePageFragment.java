@@ -34,7 +34,6 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     TextView titleTb;
     @BindView(R.id.headler_iv)
     ImageView mHeadlerIv;
-
     @BindView(R.id.home_gamemoney_name)
     TextView homeGamemoneyName;
     @BindView(R.id.home_gamemoney_price)
@@ -148,6 +147,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 
     @Override
     protected CommonPresenter getPresenter() {
+
         return new CommonPresenter();
     }
 
@@ -156,7 +156,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 //        ToastUtil.showShort(e.getMessage());
     }
 
-        @Override
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (getActivity() != null && !hidden) {
@@ -164,5 +164,4 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
             initData();
         }
     }
-
 }

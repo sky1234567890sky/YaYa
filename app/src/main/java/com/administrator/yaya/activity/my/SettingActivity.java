@@ -28,6 +28,7 @@ import butterknife.OnClick;
  */
 public class SettingActivity extends BaseActivity {
 
+    public static final String FORSETTING = "forSetting";
     @BindView(R.id.my_invientory_rl)
     RelativeLayout myInvientoryRl;
     @BindView(R.id.my_small_rl)
@@ -66,14 +67,16 @@ public class SettingActivity extends BaseActivity {
                 break;
 
             case R.id.my_update_password_rl://修改密码
-                Intent upa = new Intent(this, UpdataPasswordActivity.class);
-                startActivity(upa);
+                Intent intent1 = new Intent(this, UpdataPasswordActivity.class);
+//                intent1.putExtra(FORSETTING,FORSETTING);
+                startActivity(intent1);
                 break;
 
             case R.id.my_relation_service_rl://联系客服
                 Intent csa = new Intent(this, CustomerServiceActivity.class);
                 startActivity(csa);
                 break;
+
             case R.id.setting_back_login:
                 //注銷登錄
                 new AlertDialog.Builder(this)
@@ -83,8 +86,10 @@ public class SettingActivity extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent login = new Intent(SettingActivity.this, LoginActivity.class);
+
                                 SharedPrefrenceUtils.saveString(SettingActivity.this, NormalConfig.USER_ID, "");
                                 SharedPrefrenceUtils.saveString(SettingActivity.this, NormalConfig.TOKEN, "");
+
                                 mApplication.userid = 0;
                                 mApplication.mToken = "";
                                 startActivity(login);

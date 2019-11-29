@@ -50,14 +50,11 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
     private TextView tvObligation;
     private String token;
     private String userId;
-
     // Fragment管理对象
     private FragmentTransaction ft;
     private int reconfirmIndex;//在次确认
     private int confirmReceiptIndex;//确认收货
     private int noReceiverIndex;//未收货
-
-
     @SuppressLint("SetTextI18n")
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -89,7 +86,6 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
     public void onError(int whichApi, Throwable e) {
 
     }
-
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
@@ -281,7 +277,6 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
         token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
         mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), token);
     }
-
     @Override
     protected void initListener() {
         super.initListener();

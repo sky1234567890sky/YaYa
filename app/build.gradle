@@ -12,8 +12,16 @@ android {
         //
         multiDexEnabled true
 
+//        vectorDrawables.useSupportLibrary = true
+//        // Stops the Gradle plugin’s automatic rasterization of vectors
+//        generatedDensities = []
         //resConfigs "zh"      //删除无用的语言资源
     }
+//
+//    aaptOptions {
+//        additionalParameters "--no-version-vectors"
+//    }
+
     //必须写到buildTypes上边
 //    signingConfigs {
 //        debug {
@@ -113,7 +121,6 @@ dependencies {
     //配合Rxjava
 //    implementation 'com.nineoldandroids:library:2.4.0'
 //    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0@aar'
-
     //noinspection GradleDependency
     implementation "com.jakewharton:butterknife:$butterknife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
@@ -204,4 +211,8 @@ dependencies {
     implementation 'q.rorbin:badgeview:1.+'//气泡
 
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    //加载进度条
+    implementation 'com.zhengliang:LoadDdataLayout:1.+'
+
+
 }
