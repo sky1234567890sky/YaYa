@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.my.adapter.IncomeAdapter;
 import com.administrator.yaya.base.ApiConfig;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
 /**
  * A simple {@link Fragment} subclass.
  * 收入记录   1
@@ -37,9 +39,13 @@ public class IncomeFragment extends BaseLazyLoadFragment<LoginModel> implements 
     SmartRefreshLayout incomeRefreshLayout;
     private IncomeAdapter adapter;
     private ArrayList<TestMyEarnings.DataBean.UserEarningsListBean> list;
+    private String token;
+    private String userId;
+
     public IncomeFragment() {
         // Required empty public constructor
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -53,8 +59,8 @@ public class IncomeFragment extends BaseLazyLoadFragment<LoginModel> implements 
 //        }
 
 
-        if (isVisibleToUser ==true){//当前处于可见状态
-            if (incomeRefreshLayout!=null){
+        if (isVisibleToUser == true) {//当前处于可见状态
+            if (incomeRefreshLayout != null) {
                 refresh();
             }
         }
@@ -68,73 +74,93 @@ public class IncomeFragment extends BaseLazyLoadFragment<LoginModel> implements 
     @Override
     public void refresh() {
         super.refresh();
-        incomeRefreshLayout.autoRefresh();
-
+        mList.scrollToPosition(0);
+//        incomeRefreshLayout.autoRefresh();
         initData();
     }
+
+    @Override
+    public void loadMore() {
+        super.loadMore();
+        incomeRefreshLayout.finishLoadMoreWithNoMoreData();
+        incomeRefreshLayout.setNoMoreData(true);
+    }
+
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
-
         list = new ArrayList<>();
-        initRecycleView(mList,incomeRefreshLayout);
+        initRecycleView(mList, incomeRefreshLayout);
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
-        incomeRefreshLayout.setEnableLoadMore(false);//禁止加载更多
+//        incomeRefreshLayout.setEnableLoadMore(false);//禁止加载更多
         adapter = new IncomeAdapter(list);
         mList.setAdapter(adapter);
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_income;
     }
+
     @Override
     protected void initData() {
         super.initData();
 
-        String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
-        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),1);//收益类型--1收入-2支出-3返利
+        userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
+        token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
+        if (userId != null)
+            mPresenter.getData(ApiConfig.TEST_MY_EARNINGS, Integer.parseInt(userId), token, 1);//收益类型--1收入-2支出-3返利
     }
 
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
+
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
+
     @Override
     public void onError(int whichApi, Throwable e) {
 
     }
+
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
             case ApiConfig.TEST_MY_EARNINGS://收入记录
                 list.clear();
+
                 TestMyEarnings testMyEarnings = (TestMyEarnings) t[0];
-                if (testMyEarnings.getCode()==0 && testMyEarnings.getData()!=null)  {
+                if (testMyEarnings.getCode() == 0 && testMyEarnings.getData() != null) {
 //                    Log.i("tag", "收入: " + testMyEarnings.toString());
                     TestMyEarnings.DataBean data = testMyEarnings.getData();
                     List<TestMyEarnings.DataBean.UserEarningsListBean> userEarningsList = data.getUserEarningsList();
                     list.addAll(userEarningsList);
                     adapter.notifyDataSetChanged();
+
                 }
-          }
-          incomeRefreshLayout.finishRefresh();
+        }
+
+        incomeRefreshLayout.finishRefresh();
+        incomeRefreshLayout.finishLoadMore();
     }
+
     //获取焦点时刷新
     @Override
     public void onResume() {
         super.onResume();
         if (isRefresh) {
-            if (!list.isEmpty()){
+            if (!list.isEmpty()) {
                 list.clear();
             }
             refresh();
             isRefresh = false;
         }
     }
+
     @Override
     public void onPause() {
         super.onPause();

@@ -38,16 +38,13 @@ public class OrderFormkFragment extends BaseFragment {
     private ArrayList<String> titles;
     private FragmentTransaction transaction;
     private DaiQueRenFragment daiQueRenFragment;
-
     public OrderFormkFragment() {
-
     }
     @Override
     protected void initData() {
         super.initData();
         transaction = getFragmentManager().beginTransaction();
     }
-
     @Override
     protected void initListener() {
         super.initListener();

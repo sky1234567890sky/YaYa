@@ -57,11 +57,9 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
     private TestObligation.DataBean data;
     private int index;
     private List<TestObligation.DataBean.CommodityBean> arrayList = new ArrayList<>();
-    ;
     private String userId;
     private InventoryFragment parentFragment1;
     private TextView tvObligation;
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
@@ -70,13 +68,11 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
         if (parentFragment1 == null) {
             setFragment();
         }
-
         initRecycleView(mList, abligationRefreshLayout);
         abligationRefreshLayout.setEnableLoadMore(false);
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new ObligationAdapter(arrayList, list, getActivity());
         mList.setAdapter(adapter);
-
 //        mList.addItemDecoration(adapter);
 //        货物名称	comName  爲空
 //        mDaifuGcomName.setText(orderStockListBean.getPayerName());
@@ -99,7 +95,6 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
 //            }
         }
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -126,7 +121,6 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
                     adapter.notifyDataSetChanged();
                 }
                 break;
-
             //取消售卖订单（不用）
 //            case ApiConfig.TEST_CANCEL_ORDER_SALES:
 //                TestCancelOrderStock testCancelOrderStock = (TestCancelOrderStock) t[0];
@@ -142,6 +136,7 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
 //                break;
         }
         abligationRefreshLayout.finishRefresh();//数据回来后一秒刷新
+        abligationRefreshLayout.finishLoadMore();
     }
 
     @Override
@@ -170,8 +165,9 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
     @Override
     public void refresh() {
         super.refresh();
+        mList.scrollToPosition(0);
         //进入刷新
-        abligationRefreshLayout.autoRefresh();
+//        abligationRefreshLayout.autoRefresh();
         initData();
     }
 

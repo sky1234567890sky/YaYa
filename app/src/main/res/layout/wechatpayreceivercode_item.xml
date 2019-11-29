@@ -17,7 +17,9 @@
             android:orientation="vertical"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:scaleType="fitXY"
             android:visibility="gone"
+
             />
         <!-- 、、、、、、、、、、、、、、、、、、、、、、、、、、、、 -->
 
@@ -27,6 +29,7 @@
             android:layout_width="@dimen/dp_150"
             android:layout_height="@dimen/dp_150"
             android:text="待审核状态...."
+            android:textColor="@color/blue"
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
@@ -41,6 +44,7 @@
             android:layout_height="@dimen/dp_150"
             android:text="审核不通过...."
             android:gravity="center"
+            android:textColor="@color/blue"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             tools:ignore="HardcodedText"
@@ -57,7 +61,7 @@
         <LinearLayout
             android:id="@+id/wechatpay_item_ll"
             android:layout_width="@dimen/dp_150"
-            android:layout_height="@dimen/dp_150"
+            android:layout_height="@dimen/dp_170"
             android:background="#F8F8F8"
             android:gravity="center"
             android:orientation="vertical"
@@ -85,6 +89,7 @@
             android:textSize="@dimen/sp_14"
             android:gravity="center"
             tools:ignore="HardcodedText,RtlHardcoded"
+            android:layout_marginBottom="@dimen/dp_5"
             />
 
     </RelativeLayout>

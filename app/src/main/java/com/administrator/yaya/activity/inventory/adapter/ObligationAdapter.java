@@ -53,7 +53,7 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
         String comName = commodityBean.getComName();
         double comPrice = commodityBean.getComPrice();
         Glide.with(context).load(comImg).placeholder(R.mipmap.icon).into(vh.mDaifuComImg);
-        vh.mDaifuPirce.setText("单价￥："+comPrice);
+        vh.mDaifuPirce.setText("单价：￥"+comPrice);
         vh.mDaifuGcomName.setText(comName);
         vh.mDaifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
 //        进货订单集合	orderStockList
@@ -74,7 +74,6 @@ public class ObligationAdapter extends RecyclerView.Adapter<ObligationAdapter.Vh
                 if (accountpaidTosetOnclikListener!=null){
                     accountpaidTosetOnclikListener.setonclik(i);
                 }
-
 //                    Intent intent = new Intent(context, AffirmMessageActivity.class);
 //                    intent.putExtra("OrderNumber",list.get(i).getOrderNumber());
 //                    context.startActivity(intent);

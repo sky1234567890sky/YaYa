@@ -54,7 +54,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
@@ -88,7 +88,7 @@
         <!-- 让输入法把布局顶上去 -->
         <activity
             android:name=".activity.my.UpdataPasswordActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.my.CustomerServiceActivity" />
         <activity android:name=".activity.my.AlipayReceiverCodeActivity" />
         <activity android:name=".activity.home.BuyNowActivity" />
@@ -104,6 +104,8 @@
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true" />
+        <activity android:name=".activity.home.ConfirmYingyeActivity" />
+        <activity android:name=".activity.my.RebateRecordActivity" />
         <!-- android:screenOrientation="portrait" -->
         <!-- android:theme="@style/NoTitleTranslucent80Theme" -->
         <!-- 写在style.xml文件里（windowAnimationStyle可以不添加，这里只是一个动画）： -->
@@ -124,7 +126,7 @@
             android:exported="false"
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".activity.home.ConfirmYingyeActivity"></activity>
+
     </application>
 
 </manifest>

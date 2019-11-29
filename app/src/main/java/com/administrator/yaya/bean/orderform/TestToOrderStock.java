@@ -4,7 +4,6 @@ package com.administrator.yaya.bean.orderform;
  * 提交订单(确认信息)
  */
 public class TestToOrderStock {
-
     /**
      * msg : gathering
      * code : 0

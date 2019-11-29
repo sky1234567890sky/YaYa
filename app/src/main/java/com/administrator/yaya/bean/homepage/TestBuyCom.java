@@ -1,11 +1,12 @@
 package com.administrator.yaya.bean.homepage;
-
+//立即购买
 public class TestBuyCom {
+
 
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":0.01,"comImg":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg","comInventory":9983650,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"}
+     * data : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":0.01,"comImg":"http://192.168.0.198:8082/profile/upload/2019/11/15/9213039ec18ea51f22b4ec4a7c35b856.jpg","comInventory":726378598,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币","commodityPriceDeduction":0}
      */
 
     private String msg;
@@ -48,11 +49,12 @@ public class TestBuyCom {
          * comId : 1
          * comName : 游戏币
          * comPrice : 0.01
-         * comImg : https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571734627769&di=e828da538ddc42ad82a247555f264e35&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F72%2F75%2F58b43c2649ae4_610.jpg
-         * comInventory : 9983650
+         * comImg : http://192.168.0.198:8082/profile/upload/2019/11/15/9213039ec18ea51f22b4ec4a7c35b856.jpg
+         * comInventory : 726378598
          * comPurchaseNumMin : 100
          * comPurchaseNumMax : 10000000
          * comExplain : 这是个游戏币
+         * commodityPriceDeduction : 0
          */
 
         private Object searchValue;
@@ -70,6 +72,7 @@ public class TestBuyCom {
         private int comPurchaseNumMin;
         private int comPurchaseNumMax;
         private String comExplain;
+        private double commodityPriceDeduction;
 
         public Object getSearchValue() {
             return searchValue;
@@ -191,6 +194,14 @@ public class TestBuyCom {
             this.comExplain = comExplain;
         }
 
+        public double getCommodityPriceDeduction() {
+            return commodityPriceDeduction;
+        }
+
+        public void setCommodityPriceDeduction(double commodityPriceDeduction) {
+            this.commodityPriceDeduction = commodityPriceDeduction;
+        }
+
         public static class ParamsBean {
         }
 
@@ -212,6 +223,7 @@ public class TestBuyCom {
                     ", comPurchaseNumMin=" + comPurchaseNumMin +
                     ", comPurchaseNumMax=" + comPurchaseNumMax +
                     ", comExplain='" + comExplain + '\'' +
+                    ", commodityPriceDeduction=" + commodityPriceDeduction +
                     '}';
         }
     }

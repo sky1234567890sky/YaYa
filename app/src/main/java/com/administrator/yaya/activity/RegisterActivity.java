@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.base.ApiConfig;
@@ -102,10 +103,22 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
                 TestRegister register = (TestRegister) t[0];
                 int code = register.getCode();
                 if (code==0){//为0注册成功
-                    if (register.getMsg()==mApplication.SignOut){
-                        ToastUtil.showLong(R.string.username_login_hint+"");
-                        Intent intent = new Intent(this, LoginActivity.class);
-                        startActivity(intent);
+                    if (register.getMsg().equals(mApplication.SignOut)){
+                        Toast.makeText(this, R.string.username_login_hint+"", Toast.LENGTH_SHORT).show();
+
+                        Intent login = new Intent(this, LoginActivity.class);
+
+                        SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
+
+                        SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
+
+                        mApplication.userid =0;
+
+                        mApplication.mToken = "";
+
+                        startActivity(login);
+
+                        finish();
 
                     }else{
                         ToastUtil.showLong(register.getMsg());
@@ -115,7 +128,6 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
                         setResult(100,intent);
                         finish();
                     }
-
                 }
             case ApiConfig.TEXT_INVITECODE://注册获取验证码  验证码   666666
                 //获取验证码前判断手机号是否被注册
@@ -205,7 +217,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
             String regex = "[A-Za-z0-9]{4,12}";
             if (AppValidationMgr.isPhone(userPhone) && userPwd.matches(regex) ){
                 //邀请码与验证码验证   @Field("userPhone") String userPhone, @Field("userPwd") String userPwd, @Field("userInvitationCode") String userInvitationCode, @Field("codeName") String codeName
-                mPresenter.getData(ApiConfig.TEXT_REGISTER,userPhone,userPwd,userInvitationCode,codeName,mApplication.mToken);
+                mPresenter.getData(ApiConfig.TEXT_REGISTER,userPhone,userPwd,userInvitationCode,codeName);
 
             } else ToastUtil.showShort("请输入正确的格式");
         }

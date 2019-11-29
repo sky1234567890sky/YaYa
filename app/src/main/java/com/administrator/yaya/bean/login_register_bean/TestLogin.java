@@ -117,7 +117,7 @@ public class TestLogin implements Serializable {
             private int userStatus;
             private String userInvitationCode;
             private int userParentId;
-            private int userEarningsNow;
+            private double userEarningsNow;
             private int userEarningsTotal;
             private int userContributeTotal;
             private int zfbEd;
@@ -270,11 +270,11 @@ public class TestLogin implements Serializable {
                 this.userParentId = userParentId;
             }
 
-            public int getUserEarningsNow() {
+            public double getUserEarningsNow() {
                 return userEarningsNow;
             }
 
-            public void setUserEarningsNow(int userEarningsNow) {
+            public void setUserEarningsNow(double userEarningsNow) {
                 this.userEarningsNow = userEarningsNow;
             }
 

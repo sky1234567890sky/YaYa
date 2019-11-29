@@ -189,8 +189,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
     public void loadMore() {
+
     }
     public void refresh() {
+
     }
 //    public void registerNetWorkStatus() {
 //        IntentFilter filter = new IntentFilter();

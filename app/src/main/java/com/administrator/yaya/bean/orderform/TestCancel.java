@@ -3,13 +3,12 @@ package com.administrator.yaya.bean.orderform;
 import java.io.Serializable;
 import java.util.List;
 
-//已取消
+//未收货
 public class TestCancel implements Serializable {
-
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币1","comPrice":0.01,"comImg":"http://localhost:8082/profile/upload/2019/11/08/ec5f5e6db7d4c29b0f218f6a2ac915e2.jpg","comInventory":9939354,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"},"amount":null,"orderSalesList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":1,"userId":1,"orderNumber":"213213","commodityPrice":0.01,"salesAmount":19000000,"salesAmountMoney":190000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-07 13:24:16","salesUpdateTime":"2019-11-08 10:46:34","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"}]}
+     * data : {"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":0.01,"comImg":"http://192.168.0.198:8082/profile/upload/2019/11/15/9213039ec18ea51f22b4ec4a7c35b856.jpg","comInventory":730125231,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"},"amount":"200000","orderSalesList":[{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":172,"salesApiId":22,"userId":41,"orderNumber":"191120105772412","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:57:25","salesUpdateTime":"2019-11-25 14:23:26","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":171,"salesApiId":21,"userId":41,"orderNumber":"191120105799585","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:57:24","salesUpdateTime":"2019-11-26 10:04:26","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":169,"salesApiId":19,"userId":41,"orderNumber":"191120104119823","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:41:32","salesUpdateTime":"2019-11-26 10:12:38","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":168,"salesApiId":18,"userId":41,"orderNumber":"191120104187914","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:41:24","salesUpdateTime":"2019-11-20 10:41:51","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":167,"salesApiId":17,"userId":41,"orderNumber":"191120104199209","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:41:23","salesUpdateTime":"2019-11-20 10:41:54","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":166,"salesApiId":16,"userId":41,"orderNumber":"191120104131981","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:41:23","salesUpdateTime":"2019-11-20 10:41:56","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":165,"salesApiId":15,"userId":41,"orderNumber":"191120104029751","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:40:43","salesUpdateTime":"2019-11-20 10:41:00","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":164,"salesApiId":14,"userId":41,"orderNumber":"191120104023910","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-20 10:40:36","salesUpdateTime":"2019-11-20 10:41:06","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":163,"salesApiId":13,"userId":41,"orderNumber":"191120103994683","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:39:55","salesUpdateTime":"2019-11-20 10:40:08","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":162,"salesApiId":12,"userId":41,"orderNumber":"191120103510185","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:35:28","salesUpdateTime":"2019-11-20 10:35:40","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":161,"salesApiId":11,"userId":41,"orderNumber":"191120103323875","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:33:52","salesUpdateTime":"2019-11-20 10:34:04","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":160,"salesApiId":10,"userId":41,"orderNumber":"191120103265487","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:32:26","salesUpdateTime":"2019-11-20 10:32:43","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":159,"salesApiId":9,"userId":41,"orderNumber":"191120102727204","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:27:25","salesUpdateTime":"2019-11-20 10:27:34","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":158,"salesApiId":8,"userId":41,"orderNumber":"191120102611272","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:26:36","salesUpdateTime":"2019-11-20 10:26:46","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":157,"salesApiId":7,"userId":41,"orderNumber":"191120102518484","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-20 10:25:25","salesUpdateTime":"2019-11-20 10:25:34","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":156,"salesApiId":6,"userId":41,"orderNumber":"191120102424978","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-20 10:24:18","salesUpdateTime":"2019-11-20 10:25:44","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"}]}
      */
 
     private String msg;
@@ -40,11 +39,11 @@ public class TestCancel implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean implements Serializable{
+    public static class DataBean {
         /**
-         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币1","comPrice":0.01,"comImg":"http://localhost:8082/profile/upload/2019/11/08/ec5f5e6db7d4c29b0f218f6a2ac915e2.jpg","comInventory":9939354,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"}
-         * amount : null
-         * orderSalesList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":1,"userId":1,"orderNumber":"213213","commodityPrice":0.01,"salesAmount":19000000,"salesAmountMoney":190000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-07 13:24:16","salesUpdateTime":"2019-11-08 10:46:34","salesBuildTimeEnd":null,"userName":"钱浩龙","userPhone":"17631365666"}]
+         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":0.01,"comImg":"http://192.168.0.198:8082/profile/upload/2019/11/15/9213039ec18ea51f22b4ec4a7c35b856.jpg","comInventory":730125231,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"}
+         * amount : 200000
+         * orderSalesList : [{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":172,"salesApiId":22,"userId":41,"orderNumber":"191120105772412","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:57:25","salesUpdateTime":"2019-11-25 14:23:26","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":171,"salesApiId":21,"userId":41,"orderNumber":"191120105799585","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:57:24","salesUpdateTime":"2019-11-26 10:04:26","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":169,"salesApiId":19,"userId":41,"orderNumber":"191120104119823","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:41:32","salesUpdateTime":"2019-11-26 10:12:38","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":168,"salesApiId":18,"userId":41,"orderNumber":"191120104187914","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:41:24","salesUpdateTime":"2019-11-20 10:41:51","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":167,"salesApiId":17,"userId":41,"orderNumber":"191120104199209","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:41:23","salesUpdateTime":"2019-11-20 10:41:54","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":166,"salesApiId":16,"userId":41,"orderNumber":"191120104131981","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:41:23","salesUpdateTime":"2019-11-20 10:41:56","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":165,"salesApiId":15,"userId":41,"orderNumber":"191120104029751","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:40:43","salesUpdateTime":"2019-11-20 10:41:00","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":164,"salesApiId":14,"userId":41,"orderNumber":"191120104023910","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-20 10:40:36","salesUpdateTime":"2019-11-20 10:41:06","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":163,"salesApiId":13,"userId":41,"orderNumber":"191120103994683","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:39:55","salesUpdateTime":"2019-11-20 10:40:08","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":162,"salesApiId":12,"userId":41,"orderNumber":"191120103510185","commodityPrice":0,"salesAmount":100000,"salesAmountMoney":1000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:35:28","salesUpdateTime":"2019-11-20 10:35:40","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":161,"salesApiId":11,"userId":41,"orderNumber":"191120103323875","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:33:52","salesUpdateTime":"2019-11-20 10:34:04","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":160,"salesApiId":10,"userId":41,"orderNumber":"191120103265487","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:32:26","salesUpdateTime":"2019-11-20 10:32:43","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":159,"salesApiId":9,"userId":41,"orderNumber":"191120102727204","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:27:25","salesUpdateTime":"2019-11-20 10:27:34","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":158,"salesApiId":8,"userId":41,"orderNumber":"191120102611272","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":2,"salesBuildTime":"2019-11-20 10:26:36","salesUpdateTime":"2019-11-20 10:26:46","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":157,"salesApiId":7,"userId":41,"orderNumber":"191120102518484","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-20 10:25:25","salesUpdateTime":"2019-11-20 10:25:34","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"},{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"salesId":156,"salesApiId":6,"userId":41,"orderNumber":"191120102424978","commodityPrice":0,"salesAmount":400000,"salesAmountMoney":4000,"parentSalesId":0,"orderPayTpe":0,"salesStatus":3,"salesBuildTime":"2019-11-20 10:24:18","salesUpdateTime":"2019-11-20 10:25:44","salesBuildTimeEnd":null,"userName":"南门屏","userPhone":"18898186027"}]
          */
 
         private CommodityBean commodity;
@@ -75,7 +74,7 @@ public class TestCancel implements Serializable {
             this.orderSalesList = orderSalesList;
         }
 
-        public static class CommodityBean implements Serializable{
+        public static class CommodityBean {
             /**
              * searchValue : null
              * createBy : null
@@ -85,10 +84,10 @@ public class TestCancel implements Serializable {
              * remark : null
              * params : {}
              * comId : 1
-             * comName : 游戏币1
+             * comName : 游戏币
              * comPrice : 0.01
-             * comImg : http://localhost:8082/profile/upload/2019/11/08/ec5f5e6db7d4c29b0f218f6a2ac915e2.jpg
-             * comInventory : 9939354
+             * comImg : http://192.168.0.198:8082/profile/upload/2019/11/15/9213039ec18ea51f22b4ec4a7c35b856.jpg
+             * comInventory : 730125231
              * comPurchaseNumMin : 100
              * comPurchaseNumMax : 10000000
              * comExplain : 这是个游戏币
@@ -230,11 +229,11 @@ public class TestCancel implements Serializable {
                 this.comExplain = comExplain;
             }
 
-            public static class ParamsBean implements Serializable{
+            public static class ParamsBean {
             }
         }
 
-        public static class OrderSalesListBean implements Serializable{
+        public static class OrderSalesListBean {
             /**
              * searchValue : null
              * createBy : null
@@ -243,20 +242,21 @@ public class TestCancel implements Serializable {
              * updateTime : null
              * remark : null
              * params : {}
-             * salesId : 1
-             * userId : 1
-             * orderNumber : 213213
-             * commodityPrice : 0.01
-             * salesAmount : 19000000
-             * salesAmountMoney : 190000
+             * salesId : 172
+             * salesApiId : 22
+             * userId : 41
+             * orderNumber : 191120105772412
+             * commodityPrice : 0
+             * salesAmount : 100000
+             * salesAmountMoney : 1000
              * parentSalesId : 0
              * orderPayTpe : 0
-             * salesStatus : 3
-             * salesBuildTime : 2019-11-07 13:24:16
-             * salesUpdateTime : 2019-11-08 10:46:34
+             * salesStatus : 2
+             * salesBuildTime : 2019-11-20 10:57:25
+             * salesUpdateTime : 2019-11-25 14:23:26
              * salesBuildTimeEnd : null
-             * userName : 钱浩龙
-             * userPhone : 17631365666
+             * userName : 南门屏
+             * userPhone : 18898186027
              */
 
             private Object searchValue;
@@ -267,11 +267,12 @@ public class TestCancel implements Serializable {
             private Object remark;
             private ParamsBeanX params;
             private int salesId;
+            private int salesApiId;
             private int userId;
             private String orderNumber;
-            private double commodityPrice;
+            private int commodityPrice;
             private int salesAmount;
-            private double salesAmountMoney;
+            private int salesAmountMoney;
             private int parentSalesId;
             private int orderPayTpe;
             private int salesStatus;
@@ -345,6 +346,14 @@ public class TestCancel implements Serializable {
                 this.salesId = salesId;
             }
 
+            public int getSalesApiId() {
+                return salesApiId;
+            }
+
+            public void setSalesApiId(int salesApiId) {
+                this.salesApiId = salesApiId;
+            }
+
             public int getUserId() {
                 return userId;
             }
@@ -361,11 +370,11 @@ public class TestCancel implements Serializable {
                 this.orderNumber = orderNumber;
             }
 
-            public double getCommodityPrice() {
+            public int getCommodityPrice() {
                 return commodityPrice;
             }
 
-            public void setCommodityPrice(double commodityPrice) {
+            public void setCommodityPrice(int commodityPrice) {
                 this.commodityPrice = commodityPrice;
             }
 
@@ -377,11 +386,11 @@ public class TestCancel implements Serializable {
                 this.salesAmount = salesAmount;
             }
 
-            public double getSalesAmountMoney() {
+            public int getSalesAmountMoney() {
                 return salesAmountMoney;
             }
 
-            public void setSalesAmountMoney(double salesAmountMoney) {
+            public void setSalesAmountMoney(int salesAmountMoney) {
                 this.salesAmountMoney = salesAmountMoney;
             }
 
@@ -432,6 +441,7 @@ public class TestCancel implements Serializable {
             public void setSalesBuildTimeEnd(Object salesBuildTimeEnd) {
                 this.salesBuildTimeEnd = salesBuildTimeEnd;
             }
+
             public String getUserName() {
                 return userName;
             }
@@ -448,7 +458,7 @@ public class TestCancel implements Serializable {
                 this.userPhone = userPhone;
             }
 
-            public static class ParamsBeanX implements Serializable{
+            public static class ParamsBeanX {
             }
 
             @Override
@@ -462,6 +472,7 @@ public class TestCancel implements Serializable {
                         ", remark=" + remark +
                         ", params=" + params +
                         ", salesId=" + salesId +
+                        ", salesApiId=" + salesApiId +
                         ", userId=" + userId +
                         ", orderNumber='" + orderNumber + '\'' +
                         ", commodityPrice=" + commodityPrice +

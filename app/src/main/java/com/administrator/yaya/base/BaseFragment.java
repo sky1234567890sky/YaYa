@@ -3,6 +3,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ public abstract class BaseFragment extends Fragment {
     public boolean isRefresh = false;//刷新用到
     public String SignOut = "1";
 
+    public FragmentManager manager;
     public LoadingDialogWithContent mDialog;
 //    public BaseApp mApplication;
     //    private boolean isCreate = false;
@@ -41,6 +43,7 @@ public abstract class BaseFragment extends Fragment {
 
         View inflate = inflater.inflate(getLayoutId(), null);
         bind = ButterKnife.bind(this, inflate);
+        manager = getFragmentManager();
         initMvp();
         initData();
         initView(inflate);

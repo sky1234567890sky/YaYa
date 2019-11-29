@@ -60,7 +60,7 @@ public class AccountPaidAdapter extends RecyclerView.Adapter<AccountPaidAdapter.
         accountpaidItem.mYifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
 
         TestAccountPaid.DataBean.CommodityBean commodityBean = commodity.get(0);
-        accountpaidItem.mYifuComPrice.setText("单价￥：" + commodityBean.getComPrice());
+        accountpaidItem.mYifuComPrice.setText("单价：￥" + commodityBean.getComPrice());
         accountpaidItem.mYifuGamemoney.setText(commodityBean.getComName());
         Glide.with(context).load(commodityBean.getComImg()).placeholder(R.mipmap.icon).into(accountpaidItem.mYifuComImg);
 

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_ffffff"
+    tools:context=".activity.my.RebateRecordActivity">
+
+    <ImageView
+        android:layout_width="@dimen/dp_312_5"
+        android:layout_height="@dimen/dp_127_5"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/logo"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"
+            tools:ignore="UselessParent">
+
+            <ImageView
+                android:id="@+id/fanlijilu_back"
+                android:layout_width="@dimen/dp_39"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ripple_bg"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
+                android:src="@mipmap/icon_back"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="返利记录"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_18"
+                tools:ignore="SpUsage" />
+            <!--<TextView-->
+            <!--android:id="@+id/myinvite_friend"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="@dimen/dp_13"-->
+            <!--android:text="返利记录"-->
+            <!--android:textColor="#0099FF"-->
+            <!--android:textSize="@dimen/sp_13"-->
+            <!--tools:ignore="SpUsage" />-->
+        </RelativeLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_90"
+            app:cardBackgroundColor="@color/c_ffffff"
+            app:cardElevation="@dimen/dp_5"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_rl"
+                android:paddingLeft="@dimen/dp_8"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_5">
+
+                <ImageView
+                    android:id="@+id/fanli_dengji_iv"
+                    android:layout_width="32dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_13"
+                    />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/fanli_headler_iv"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon"
+                    app:riv_oval="true" />
+
+                <TextView
+                    android:id="@+id/fanli_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/fanli_headler_iv"
+                    android:layout_marginLeft="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_toRightOf="@id/fanli_headler_iv"
+                    android:text="---"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:id="@+id/fanli_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/fanli_headler_iv"
+                    android:layout_marginLeft="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:layout_toRightOf="@id/fanli_headler_iv"
+                    android:text="ID : ---"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="normal"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+
+                <TextView
+                    android:id="@+id/fanli_bili"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/fanli_id"
+                    android:layout_marginLeft="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:layout_toRightOf="@id/fanli_id"
+                    android:text="返利比例：--"
+                    android:textColor="#000"
+                    android:textSize="@dimen/sp_14" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_5"
+            android:background="@drawable/title_bg_blue"
+            android:padding="@dimen/dp_5">
+            <View
+                android:id="@+id/wire"
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="@dimen/dp_40"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:background="@color/c_ffffff" />
+
+            <TextView
+                android:id="@+id/fanli_jinri"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/wire"
+                android:gravity="center"
+                android:text="---"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_26" />
+
+            <TextView
+                android:id="@+id/fanli_brnyue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/wire"
+                android:gravity="center"
+                android:text="---"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_26"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fanli_jinri"
+                android:layout_toLeftOf="@id/wire"
+                android:gravity="center"
+                android:text="今日收益"
+                android:textColor="#F1F1F1"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:layout_width="183dp"
+                android:layout_height="22dp"
+                android:layout_below="@id/fanli_jinri"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="-1dp"
+                android:layout_toRightOf="@id/wire"
+                android:gravity="center"
+                android:text="本月累计收益"
+                android:textColor="#F1F1F1"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="@dimen/dp_10"-->
+        <!--android:layout_marginTop="@dimen/dp_10"-->
+        <!--android:layout_marginRight="@dimen/dp_10"-->
+        <!--android:text="我的上级"-->
+        <!--android:textColor="@color/c_000000"-->
+        <!--android:textSize="@dimen/sp_14" />-->
+
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/my_superior_rl"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="@dimen/dp_10"-->
+        <!--android:layout_marginRight="@dimen/dp_10"></android.support.v7.widget.RecyclerView>-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="我的下级"
+            android:textColor="@color/c_000000"
+            android:textSize="@dimen/sp_14"
+            tools:ignore="HardcodedText"
+
+            />
+
+
+        <!--我的下级-->
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/fanli_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlEnableAutoLoadMore="true"
+            app:srlEnableLoadMore="true">
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlClassicsSpinnerStyle="FixedBehind"
+                app:srlDrawableMarginRight="@dimen/dp_20"
+                app:srlDrawableProgress="@mipmap/icon_dark_refresh"
+                app:srlDrawableProgressSize="@dimen/dp_20"
+                app:srlEnableLastTime="true"
+                app:srlTextSizeTime="@dimen/sp_8"
+                app:srlTextSizeTitle="@dimen/sp_12"
+                app:srlTextTimeMarginTop="@dimen/dp_2" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fanli_mlist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlDrawableProgress="@mipmap/icon_dark_refresh"
+                app:srlTextSizeTime="@dimen/sp_8"
+                app:srlTextSizeTitle="@dimen/sp_12" />
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+</RelativeLayout>

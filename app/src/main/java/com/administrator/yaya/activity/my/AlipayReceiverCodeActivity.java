@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
@@ -162,27 +163,31 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
     ImageView payAdd2Iv;
     @BindView(R.id.get_menry)
     TextView getMenry;
-
     private int wechatCode;
     private TestWechatReceiverCode testAlipayReceiverCode;
     private AlipayReceiverCodeAdapter adapter;
     private String userId;
+    private String token;
     private File cameraSavePath;
     private int index = -1;
     private double money = 0.0;
     private String imgUrl;
     private View views;
     private int type = 0;
-    private int newType=0;
-    private List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList;
+    private int newType = 0;
+//    private List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_payments_receive;
     }
+
     @Override
     protected void initView() {
         super.initView();
+
         userId = SharedPrefrenceUtils.getString(AlipayReceiverCodeActivity.this, NormalConfig.USER_ID);
+        token = SharedPrefrenceUtils.getString(AlipayReceiverCodeActivity.this, NormalConfig.TOKEN);
         cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
 //        initRecycleView(mList,abligationRefreshLayout);
 //        abligationRefreshLayout.setEnableLoadMore(false);
@@ -191,11 +196,19 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 //        adapter = new AlipayReceiverCodeAdapter(list);
 //        mList.setAdapter(adapter);
 
+        //开关按钮状态
+        boolean aBoolean = SharedPrefrenceUtils.getBoolean(this, NormalConfig.AlipayQr_isChecket);
+        if (aBoolean==true){
+            twoSwitch.setChecked(aBoolean);
+        }else{
+            twoSwitch.setChecked(aBoolean);
+        }
     }
+
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, Integer.parseInt(userId), 2,mApplication.mToken);//1、微信 2、支付
+        mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, Integer.parseInt(userId), 2, token);//1、微信 2、支付
     }
 
     @Override
@@ -203,21 +216,31 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
         switch (whichApi) {
             case ApiConfig.TEST_WECHAT_RECEIVER_CODE:
                 testAlipayReceiverCode = (TestWechatReceiverCode) t[0];
+                if (testAlipayReceiverCode.getMsg().equals(mApplication.SignOut)) {
+                    Toast.makeText(this, "您的当前账户已在其他设备登陆，为安全起见，请及时修改密码或重新登陆！", Toast.LENGTH_SHORT).show();
 
-                if (testAlipayReceiverCode.getMsg()==mApplication.SignOut){
-                    ToastUtil.showLong(""+R.string.username_login_hint);
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    startActivity(intent);
-                    return;
-                }
+                    Intent login = new Intent(this, LoginActivity.class);
 
-                if (testAlipayReceiverCode.getCode()==0) {
-                    TestWechatReceiverCode.DataBean data = testAlipayReceiverCode.getData();
-                    Log.i("tag", "支付宝: "+ testAlipayReceiverCode.toString());
-                    userCodeImgList = data.getUserCodeImgList();
+                    SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
+
+                    SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
+
+                    mApplication.userid = 0;
+
+                    mApplication.mToken = "";
+
+                    startActivity(login);
+
+                    finish();
+
+                } else if (testAlipayReceiverCode.getCode() == 0) {
+
+//                    TestWechatReceiverCode.DataBean data = testAlipayReceiverCode.getData();
+//                    Log.i("tag", "支付宝: " + testAlipayReceiverCode.toString());
+//                    userCodeImgList = data.getUserCodeImgList();
 //                    list.addAll(userCodeImgList);
 //                    adapter.notifyDataSetChanged();
-                    getImageData(userCodeImgList);
+//                    getImageData(userCodeImgList);
                 }
                 break;
 
@@ -241,182 +264,182 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
         }
     }
 
-    private void getImageData(List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList) {
-        for (int i = 0; i < userCodeImgList.size(); i++) {
-            TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1 = userCodeImgList.get(i);
+//    private void getImageData(List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> userCodeImgList) {
+//        for (int i = 0; i < userCodeImgList.size(); i++) {
+//            TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1 = userCodeImgList.get(i);
+//
+//            String imgUrl = userCodeImgListBean1.getImgUrl();
+//            if (userCodeImgListBean1.getImgMoney() == 1000.0) {
+//                type = 1;
+//                Glide.with(this).load(imgUrl).into(ImageViewUrlWechat2);
+//            } else if (userCodeImgListBean1.getImgMoney() == 2000.0) {
+//                type = 2;
+//                Glide.with(this).load(imgUrl).into(ImageViewUrlWechat3);
+//            } else if (userCodeImgListBean1.getImgMoney() == 3000.0) {
+//                Glide.with(this).load(imgUrl).into(ImageViewUrlWechat4);
+//                type = 3;
+////                    getImageStatus2(userCodeImgListBean1,3);
+//            } else if (userCodeImgListBean1.getImgMoney() == 4000.0) {
+//                Glide.with(this).load(imgUrl).into(ImageViewUrlWechat5);
+//                type = 4;
+////          getImageStatus2(userCodeImgListBean1,4);
+//            } else if (userCodeImgListBean1.getImgMoney() == 5000.0) {
+//                Glide.with(this).load(imgUrl).into(ImageViewUrlWechat6);
+//                type = 5;
+////           getImageStatus2(userCodeImgListBean1,5);
+//
+//            } else {
+////                    getImageStatus2(userCodeImgListBean1,5);
+//                Glide.with(this).load(imgUrl).into(ImageViewUrlWechat);
+//                type = 0;
+//
+//            }
+//            getImageStatus(userCodeImgListBean1, type);
+//        }
+//    }
 
-            String imgUrl = userCodeImgListBean1.getImgUrl();
-            if (userCodeImgListBean1.getImgMoney() == 1000.0){
-                type = 1;
-                Glide.with(this).load(imgUrl).into(ImageViewUrlWechat2);
-            } else if (userCodeImgListBean1.getImgMoney() == 2000.0) {
-                type = 2;
-                Glide.with(this).load(imgUrl).into(ImageViewUrlWechat3);
-            } else if (userCodeImgListBean1.getImgMoney() == 3000.0) {
-                Glide.with(this).load(imgUrl).into(ImageViewUrlWechat4);
-                type = 3;
-//                    getImageStatus2(userCodeImgListBean1,3);
-            } else if (userCodeImgListBean1.getImgMoney() == 4000.0) {
-                Glide.with(this).load(imgUrl).into(ImageViewUrlWechat5);
-                type = 4;
-//          getImageStatus2(userCodeImgListBean1,4);
-            } else if (userCodeImgListBean1.getImgMoney() == 5000.0) {
-                Glide.with(this).load(imgUrl).into(ImageViewUrlWechat6);
-                type = 5;
-//           getImageStatus2(userCodeImgListBean1,5);
-
-            } else {
-//                    getImageStatus2(userCodeImgListBean1,5);
-                Glide.with(this).load(imgUrl).into(ImageViewUrlWechat);
-                type = 0;
-
-            }
-            getImageStatus(userCodeImgListBean1, type);
-        }
-    }
-    private void getImageStatus(TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1, int type) {
-        switch (type) {
-            case 0://任意付款金额
-                if (userCodeImgListBean1.getImgStatus() == 1) {
-                    //待审核  不能点击
-                    mLl1.setClickable(false);
-                    ImageViewUrlWechat.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed.setVisibility(View.VISIBLE);
-                    mLl1.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat);
-                } else if (userCodeImgListBean1.getImgStatus() == 2) {
-                    //审核通过
-                    ImageViewUrlWechat.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed.setVisibility(View.GONE);
-                    mLl1.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat);
-                } else if (userCodeImgListBean1.getImgStatus() == 3) {
-                    //待审核不通过
-                    ImageViewUrlWechat.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed.setVisibility(View.VISIBLE);
-                    mLl1.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat);
-                }
-
-                break;
-            case 1:
-                if (userCodeImgListBean1.getImgStatus() == 1) {
-                    //待审核  不能点击
-                    mLl2.setClickable(false);
-
-                    ImageViewUrlWechat2.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed2.setVisibility(View.VISIBLE);
-                    mLl2.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat2);
-                } else if (userCodeImgListBean1.getImgStatus() == 2) {
-                    //审核通过
-                    ImageViewUrlWechat2.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed2.setVisibility(View.GONE);
-                    mLl2.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat);
-                } else if (userCodeImgListBean1.getImgStatus() == 3) {
-                    //待审核不通过
-                    ImageViewUrlWechat2.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed2.setVisibility(View.VISIBLE);
-                    mLl2.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat);
-                }
-                break;
-            case 2:
-                if (userCodeImgListBean1.getImgStatus() == 1) {
-                    //待审核  不能点击
-                    mLl3.setClickable(false);
-
-                    ImageViewUrlWechat3.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed3.setVisibility(View.VISIBLE);
-                    mLl3.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat3);
-                } else if (userCodeImgListBean1.getImgStatus() == 2) {
-                    //审核通过
-                    ImageViewUrlWechat3.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed3.setVisibility(View.GONE);
-                    mLl3.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat3);
-                } else if (userCodeImgListBean1.getImgStatus() == 3) {
-                    //待审核不通过
-                    ImageViewUrlWechat3.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed3.setVisibility(View.VISIBLE);
-                    mLl3.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat3);
-                }
-                break;
-            case 3:
-                if (userCodeImgListBean1.getImgStatus() == 1) {
-                    //待审核  不能点击
-                    mLl4.setClickable(false);
-
-                    ImageViewUrlWechat4.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed4.setVisibility(View.VISIBLE);
-                   mLl4.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat4);
-                } else if (userCodeImgListBean1.getImgStatus() == 2) {
-                    //审核通过
-                    ImageViewUrlWechat4.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed4.setVisibility(View.GONE);
-                    mLl4.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat4);
-                } else if (userCodeImgListBean1.getImgStatus() == 3) {
-                    //待审核不通过
-                    ImageViewUrlWechat4.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed4.setVisibility(View.VISIBLE);
-                    mLl4.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat4);
-                }
-                break;
-            case 4:
-                if (userCodeImgListBean1.getImgStatus() == 1) {
-                    //待审核  不能点击
-                    mLl5.setClickable(false);
-
-                    ImageViewUrlWechat5.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed5.setVisibility(View.VISIBLE);
-                    mLl5.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat5);
-                } else if (userCodeImgListBean1.getImgStatus() == 2) {
-                    //审核通过
-                    ImageViewUrlWechat5.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed5.setVisibility(View.GONE);
-                    mLl5.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat5);
-                } else if (userCodeImgListBean1.getImgStatus() == 3) {
-                    //待审核不通过
-                    ImageViewUrlWechat5.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed5.setVisibility(View.VISIBLE);
-                    mLl5.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat5);
-                }
-                break;
-            case 5:
-                if (userCodeImgListBean1.getImgStatus() == 1) {
-                    //待审核  不能点击
-                    mLl6.setClickable(false);
-
-                    ImageViewUrlWechat6.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed6.setVisibility(View.VISIBLE);
-                    mLl6.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat6);
-                } else if (userCodeImgListBean1.getImgStatus() == 2) {
-                    //审核通过
-                    ImageViewUrlWechat6.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed6.setVisibility(View.GONE);
-                    mLl6.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat6);
-                } else if (userCodeImgListBean1.getImgStatus() == 3) {
-                    //待审核不通过
-                    ImageViewUrlWechat6.setVisibility(View.VISIBLE);
-                    wechatHintUnreviewed6.setVisibility(View.VISIBLE);
-                    mLl6.setVisibility(View.INVISIBLE);
-//                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat6);
-                }
-
-                break;
-        }
-    }
+//    private void getImageStatus(TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1, int type) {
+//        switch (type) {
+//            case 0://任意付款金额
+//                if (userCodeImgListBean1.getImgStatus() == 1) {
+//                    //待审核  不能点击
+//                    mLl1.setClickable(false);
+//                    ImageViewUrlWechat.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed.setVisibility(View.VISIBLE);
+//                    mLl1.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat);
+//                } else if (userCodeImgListBean1.getImgStatus() == 2) {
+//                    //审核通过
+//                    ImageViewUrlWechat.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed.setVisibility(View.GONE);
+//                    mLl1.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat);
+//                } else if (userCodeImgListBean1.getImgStatus() == 3) {
+//                    //待审核不通过
+//                    ImageViewUrlWechat.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed.setVisibility(View.VISIBLE);
+//                    mLl1.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat);
+//                }
+//
+//                break;
+//            case 1:
+//                if (userCodeImgListBean1.getImgStatus() == 1) {
+//                    //待审核  不能点击
+//                    mLl2.setClickable(false);
+//
+//                    ImageViewUrlWechat2.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed2.setVisibility(View.VISIBLE);
+//                    mLl2.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat2);
+//                } else if (userCodeImgListBean1.getImgStatus() == 2) {
+//                    //审核通过
+//                    ImageViewUrlWechat2.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed2.setVisibility(View.GONE);
+//                    mLl2.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat);
+//                } else if (userCodeImgListBean1.getImgStatus() == 3) {
+//                    //待审核不通过
+//                    ImageViewUrlWechat2.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed2.setVisibility(View.VISIBLE);
+//                    mLl2.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat);
+//                }
+//                break;
+//            case 2:
+//                if (userCodeImgListBean1.getImgStatus() == 1) {
+//                    //待审核  不能点击
+//                    mLl3.setClickable(false);
+//
+//                    ImageViewUrlWechat3.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed3.setVisibility(View.VISIBLE);
+//                    mLl3.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat3);
+//                } else if (userCodeImgListBean1.getImgStatus() == 2) {
+//                    //审核通过
+//                    ImageViewUrlWechat3.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed3.setVisibility(View.GONE);
+//                    mLl3.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat3);
+//                } else if (userCodeImgListBean1.getImgStatus() == 3) {
+//                    //待审核不通过
+//                    ImageViewUrlWechat3.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed3.setVisibility(View.VISIBLE);
+//                    mLl3.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat3);
+//                }
+//                break;
+//            case 3:
+//                if (userCodeImgListBean1.getImgStatus() == 1) {
+//                    //待审核  不能点击
+//                    mLl4.setClickable(false);
+//
+//                    ImageViewUrlWechat4.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed4.setVisibility(View.VISIBLE);
+//                    mLl4.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat4);
+//                } else if (userCodeImgListBean1.getImgStatus() == 2) {
+//                    //审核通过
+//                    ImageViewUrlWechat4.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed4.setVisibility(View.GONE);
+//                    mLl4.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat4);
+//                } else if (userCodeImgListBean1.getImgStatus() == 3) {
+//                    //待审核不通过
+//                    ImageViewUrlWechat4.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed4.setVisibility(View.VISIBLE);
+//                    mLl4.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat4);
+//                }
+//                break;
+//            case 4:
+//                if (userCodeImgListBean1.getImgStatus() == 1) {
+//                    //待审核  不能点击
+//                    mLl5.setClickable(false);
+//
+//                    ImageViewUrlWechat5.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed5.setVisibility(View.VISIBLE);
+//                    mLl5.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat5);
+//                } else if (userCodeImgListBean1.getImgStatus() == 2) {
+//                    //审核通过
+//                    ImageViewUrlWechat5.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed5.setVisibility(View.GONE);
+//                    mLl5.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat5);
+//                } else if (userCodeImgListBean1.getImgStatus() == 3) {
+//                    //待审核不通过
+//                    ImageViewUrlWechat5.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed5.setVisibility(View.VISIBLE);
+//                    mLl5.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat5);
+//                }
+//                break;
+//            case 5:
+//                if (userCodeImgListBean1.getImgStatus() == 1) {
+//                    //待审核  不能点击
+//                    mLl6.setClickable(false);
+//                    ImageViewUrlWechat6.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed6.setVisibility(View.VISIBLE);
+//                    mLl6.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat6);
+//                } else if (userCodeImgListBean1.getImgStatus() == 2) {
+//                    //审核通过
+//                    ImageViewUrlWechat6.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed6.setVisibility(View.GONE);
+//                    mLl6.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat6);
+//                } else if (userCodeImgListBean1.getImgStatus() == 3) {
+//                    //待审核不通过
+//                    ImageViewUrlWechat6.setVisibility(View.VISIBLE);
+//                    wechatHintUnreviewed6.setVisibility(View.VISIBLE);
+//                    mLl6.setVisibility(View.INVISIBLE);
+////                    Glide.with(this).load(userCodeImgListBean1.getImgUrl()).into(ImageViewUrlWechat6);
+//                }
+//
+//                break;
+//        }
+//    }
 
     @Override
     protected void initListener() {
@@ -429,11 +452,17 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 //                TestAlipayReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean = userCodeImgList.get(data.getVxButtonStatus());
 //                TestAlipayReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean = list.get(wechatCode);
 //                if (userCodeImgListBean.getImgType() == 2) {
-                if (isChecked) {
 
+                if (isChecked) {
+                    SharedPrefrenceUtils.saveBoolean(AlipayReceiverCodeActivity.this,NormalConfig.AlipayQr_isChecket,isChecked);
+                    if (userId != null)
+                        ToastUtil.showLong("打开");
+                        mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE, Integer.parseInt(userId), 2, 1,token);//开
                 } else {
-//                        ToastUtil.showShort( "onCheckedChanged: 关闭" + isChecked);
-//                        if (userId!=null)mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE,Integer.parseInt(userId),2,2);
+                    SharedPrefrenceUtils.saveBoolean(AlipayReceiverCodeActivity.this,NormalConfig.AlipayQr_isChecket,isChecked);
+                    if (userId != null)
+                        ToastUtil.showLong("关闭");
+                        mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE, Integer.parseInt(userId), 2, 2,token);//关
                 }
             }
         });
@@ -517,6 +546,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
             // imgUrl 图片路径
         }
     }
+
     private void uploadFile(File file) {
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
@@ -566,7 +596,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 //                            }else{
 //                                money=0.0;
 //                            }
-                            mPresenter.getData(ApiConfig.TEST_UPLOAD_GET_QR, Integer.parseInt(userId), 2, imgUrl,money);
+                            mPresenter.getData(ApiConfig.TEST_UPLOAD_GET_QR, Integer.parseInt(userId), 2, imgUrl, money);
 //                            Log.i("tag", "支付宝收款码ImageView: "+imgUrl);
                             //上传收款码
 //                            参数:
@@ -589,6 +619,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
         intent.setType("image/*");
         startActivityForResult(intent, ApiConfig.request_open_album_code);
     }
+
     @OnClick({R.id.pay_receive_back_iv, R.id.wechat_ll1, R.id.wechat_ll2, R.id.wechat_ll3, R.id.wechat_ll4, R.id.wechat_ll5, R.id.wechat_ll6,
 
             R.id.ImageView_url_wechat, R.id.wechat_hint_unreviewed, R.id.wechat_no_shenhe,
@@ -602,7 +633,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
             R.id.iv_money4, R.id.iv_money5
     })
     public void onViewClicked(View view) {
-        int imgId=0;
+        int imgId = 0;
         switch (view.getId()) {
             case R.id.pay_receive_back_iv:
                 AlipayReceiverCodeActivity.this.finish();

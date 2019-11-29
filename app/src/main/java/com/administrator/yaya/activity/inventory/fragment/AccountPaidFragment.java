@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.MainActivity;
@@ -98,8 +100,9 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
     @Override
     public void refresh() {
         super.refresh();
+        mList.scrollToPosition(0);
         //刷新
-        accountRefreshLayout.autoRefresh();
+//        accountRefreshLayout.autoRefresh();
         initData();
     }
 
@@ -185,18 +188,23 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
 
                 TestUpawaySingleGoods testUpawaySingleGoods = (TestUpawaySingleGoods) t[0];
 
-                if (testUpawaySingleGoods.getMsg()==SignOut){
-                    ToastUtil.showLong(R.string.username_login_hint+"");
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                    return;
+                if (testUpawaySingleGoods.getMsg().equals(SignOut)){
+                    Toast.makeText(getActivity(), R.string.username_login_hint+"", Toast.LENGTH_SHORT).show();
+
+                    Intent login = new Intent(getActivity(), LoginActivity.class);
+
+                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
+
+                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
+
+
+                    startActivity(login);
+
+                    getActivity().finish();
+                }else if (testUpawaySingleGoods.getCode() == 0 && testUpawaySingleGoods.getMsg() != null) {
+                    ToastUtil.showShort(testUpawaySingleGoods.getMsg());
                 }
 
-                if (testUpawaySingleGoods.getCode() == 0 && testUpawaySingleGoods.getMsg() != null) {
-                    ToastUtil.showShort(testUpawaySingleGoods.getMsg());
-                } else {
-                    ToastUtil.showShort(testUpawaySingleGoods.getMsg());
-                }
                 break;
         }
         accountRefreshLayout.finishRefresh();//网络请求玩才计时

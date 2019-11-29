@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
@@ -72,9 +73,16 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
     @Override
     public void refresh() {
         super.refresh();
-        rebateRefreshLayout.autoRefresh();
-
+        mList.scrollToPosition(0);
+//        rebateRefreshLayout.autoRefresh();
         initData();
+    }
+
+    @Override
+    public void loadMore() {
+        super.loadMore();
+        rebateRefreshLayout.finishLoadMoreWithNoMoreData();
+        rebateRefreshLayout.setNoMoreData(true);
     }
 
     @Override
@@ -84,17 +92,15 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
-        mList.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ArrayList<>();
+        mList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RebateAdapter(list);
         mList.setAdapter(adapter);
     }
     @Override
     protected void initData() {
-
         userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
-
         if (userId !=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),token,3);//收益类型--1收入-2支出-3返利
     }
     @Override
@@ -117,18 +123,25 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
                 list.clear();
 
                 TestMyEarnings testMyEarnings = (TestMyEarnings) t[0];
-                if (testMyEarnings.getMsg()==SignOut){
-                    ToastUtil.showLong(""+R.string.username_login_hint);
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                    return;
-                }
-                if (testMyEarnings.getCode()==0 && testMyEarnings.getData()!=null)  {
+                if (testMyEarnings.getMsg().equals(SignOut)){
+
+                    Toast.makeText(getActivity(), R.string.username_login_hint+"", Toast.LENGTH_SHORT).show();
+
+                    Intent login = new Intent(getActivity(), LoginActivity.class);
+
+                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
+
+                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
+
+                    startActivity(login);
+
+                    getActivity().finish();
+                }else if (testMyEarnings.getCode()==0 && testMyEarnings.getData()!=null) {
                     TestMyEarnings.DataBean data = testMyEarnings.getData();
                     List<TestMyEarnings.DataBean.UserEarningsListBean> userEarningsList = data.getUserEarningsList();
                     list.addAll(userEarningsList);
                     adapter.notifyDataSetChanged();
-                    Log.i("tag", "返利: "+ testMyEarnings.toString());
+                    Log.i("tag", "返利: " + testMyEarnings.toString());
 
 //                    用户信息:userInfo
 //                    userName 用户姓名
@@ -146,12 +159,11 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
 //                    earningsTime	收益日期
 //                    userId			用户id
 //                    userName		用户昵称
-                }else{
-                    ToastUtil.showShort(testMyEarnings.getMsg());
                 }
                 break;
         }
         rebateRefreshLayout.finishRefresh();
+        rebateRefreshLayout.finishLoadMore();
     }
     //获取焦点时刷新
     @Override

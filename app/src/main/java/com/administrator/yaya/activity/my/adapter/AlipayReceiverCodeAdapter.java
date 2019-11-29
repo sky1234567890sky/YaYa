@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AlipayReceiverCodeAdapter extends RecyclerView.Adapter<AlipayReceiverCodeAdapter.Vh> {
+
     private final List<TestAlipayReceiverCode.DataBean.UserCodeImgListBean> list;
 
     private Context context;
@@ -42,53 +43,53 @@ public class AlipayReceiverCodeAdapter extends RecyclerView.Adapter<AlipayReceiv
     String imgUrl;
     @Override
     public void onBindViewHolder(@NonNull Vh vh, final int i) {
-        TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean  = null;
-        String imgUrl = null;
-        double imgMoney=0;
-        if (list.size() > 0) {
-            for (int j = 0; j < list.size(); j++) {
-                TestAlipayReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1 = list.get(j);
-                imgUrl = userCodeImgListBean.getImgUrl();
-                imgMoney = userCodeImgListBean.getImgMoney();
-                if (userCodeImgListBean.getImgMoney()==1000 && i == 1){
-                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
-                }else  if (userCodeImgListBean.getImgMoney()==2000 && i == 2){
-                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
-                }else  if (userCodeImgListBean.getImgMoney()==3000 && i == 3){
-                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
-                }else  if (userCodeImgListBean.getImgMoney()==4000 && i == 4){
-                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
-                }else  if (userCodeImgListBean.getImgMoney()==5000 && i == 5){
-                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
-                }else{
-                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
-                }
-            }
-        }
-
-        if (i == 0) {
-            vh.mMoneyNumber.setText("任意收款金额");
-        }else if (i==1){
-            vh.mMoneyNumber.setText("1000.0元");
-        }else if (i==2){
-            vh.mMoneyNumber.setText("2000.0元");
-        }else if (i==3){
-            vh.mMoneyNumber.setText("3000.0元");
-        }else if (i==4){
-            vh.mMoneyNumber.setText("4000.0元");
-        }else if (i==5){
-            vh.mMoneyNumber.setText("5000.0元");
-        }
-        vh.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (alipayPayReceiverCodesetOnclikListener!=null){
-                    alipayPayReceiverCodesetOnclikListener.setonclik(i,v);
-                }
-            }
-        });
+////        TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean  = null;
+////        String imgUrl = null;
+////        double imgMoney=0;
+////        if (list.size() > 0) {
+////            for (int j = 0; j < list.size(); j++) {
+////                TestAlipayReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1 = list.get(j);
+////                imgUrl = userCodeImgListBean.getImgUrl();
+////                imgMoney = userCodeImgListBean.getImgMoney();
+////                if (userCodeImgListBean.getImgMoney()==1000 && i == 1){
+////                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
+////                }else  if (userCodeImgListBean.getImgMoney()==2000 && i == 2){
+////                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
+////                }else  if (userCodeImgListBean.getImgMoney()==3000 && i == 3){
+////                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
+////                }else  if (userCodeImgListBean.getImgMoney()==4000 && i == 4){
+////                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
+////                }else  if (userCodeImgListBean.getImgMoney()==5000 && i == 5){
+////                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
+////                }else{
+////                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrl);
+////                }
+////            }
+////        }
+////
+////        if (i == 0) {
+////            vh.mMoneyNumber.setText("任意收款金额");
+////        }else if (i==1){
+////            vh.mMoneyNumber.setText("1000.0元");
+////        }else if (i==2){
+////            vh.mMoneyNumber.setText("2000.0元");
+////        }else if (i==3){
+////            vh.mMoneyNumber.setText("3000.0元");
+////        }else if (i==4){
+////            vh.mMoneyNumber.setText("4000.0元");
+////        }else if (i==5){
+////            vh.mMoneyNumber.setText("5000.0元");
+////        }
+////        vh.itemView.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View v) {
+////                if (alipayPayReceiverCodesetOnclikListener!=null){
+////                    alipayPayReceiverCodesetOnclikListener.setonclik(i,v);
+////                }
+////            }
+////        });
     }
-    @Override
+//    @Override
     public int getItemCount() {
         return 6;
     }

@@ -21,10 +21,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MySuperiorAdapter extends RecyclerView.Adapter<MySuperiorAdapter.Vh> {
-    private final List<TestMyInvite.DataBean.UserInfoBean.ParamsBean> myLowerList;
+    private final List<TestMyInvite.DataBean.UserInfoBean.JuniorUsersBean> myLowerList;
     private Context context;
 
-    public MySuperiorAdapter(List<TestMyInvite.DataBean.UserInfoBean.ParamsBean> myLowerList) {
+    public MySuperiorAdapter(List<TestMyInvite.DataBean.UserInfoBean.JuniorUsersBean> myLowerList) {
 
         this.myLowerList = myLowerList;
     }
@@ -40,7 +40,7 @@ public class MySuperiorAdapter extends RecyclerView.Adapter<MySuperiorAdapter.Vh
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
-        TestMyInvite.DataBean.UserInfoBean.ParamsBean parentUserBean = myLowerList.get(i);
+        TestMyInvite.DataBean.UserInfoBean.JuniorUsersBean parentUserBean = myLowerList.get(i);
         vh.mMysuperiorJunior.setText(parentUserBean.getJunior()+"");
         vh.mMysuperiorRabaterecordName.setText(parentUserBean.getUserName()+"");
         vh.mMysuperiorPutawayNumberTv.setText("用户ID:"+parentUserBean.getUserId()+"");

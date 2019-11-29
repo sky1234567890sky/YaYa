@@ -9,9 +9,11 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.my.UpdataPasswordActivity;
@@ -60,6 +62,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
     private String phoneModel;
     private String deviceNo;
     private String macAddress;
+    private double temptime;
 
     ///从进入登录界面的地方onCreate()方法判断id 跟 token是否为空
     @SuppressLint("CommitPrefEdits")
@@ -133,10 +136,8 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
 //                return;
 //            }
 //        }
-
 //        getPermission(this, true, true);
     }
-
     @SuppressLint("ApplySharedPref")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -152,18 +153,15 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
                     int userId = data.getUserInfo().getUserId();
                     mApplication.userid = userId;
                     ToastUtil.showShort(info.getMsg());
-
                     //获取Token
                     String token = info.getData().getToken();
-
                     mApplication.mToken = token;
-
                     SharedPrefrenceUtils.saveString(LoginActivity.this,NormalConfig.TOKEN,token);
-
+                    Log.i("tag", "token======》: "+token);
+                    Log.i("tag", "userid======》: "+userId);
                     //登录成功保存头像 手机号 密码
                     SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.USER_NAME, name);
                     SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.PASS_WORD, pwd);
-
                     //保存id
                     SharedPrefrenceUtils.saveString(LoginActivity.this, NormalConfig.USER_ID, String.valueOf(userId));
                     Intent intent = new Intent(this, MainActivity.class);
@@ -201,6 +199,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
                 break;
             case R.id.tv_registered://回传值
                 Intent intent1 = new Intent(this, RegisterActivity.class);
+//                startActivity(intent1);
                 startActivityForResult(intent1, 99);
                 break;
             case R.id.tv_forgetPassword://忘记密码
@@ -225,7 +224,6 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
                 ToastUtil.showLong("手机设备信息不完整...");
 
             }else{
-
                 //获取手机设备的信息工具类
                 mPresenter.getData(ApiConfig.TEXT_LOGIN, name, pwd,phoneModel,deviceNo,macAddress);
             }
@@ -239,14 +237,13 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
         if (requestCode == 99 && resultCode == 100) {//注册
             //回传的手机号密码
             String name = data.getStringExtra(NormalConfig.USER_NAME);
-
             String psw = data.getStringExtra(NormalConfig.PASS_WORD);
+
 //            ToastUtil.showShort(name+"\n"+psw);
 //            mName.setText(name);
 //            mPsw.setText(psw);
         }
     }
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
@@ -259,5 +256,30 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
 
     @Override
     public void onError(int whichApi, Throwable e) {
+
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)//主要是对这个函数的复写
+    {
+        if((keyCode == KeyEvent.KEYCODE_BACK)&&(event.getAction() == KeyEvent.ACTION_DOWN))
+        {
+            if(System.currentTimeMillis() - temptime >2000) // 2s内再次选择back键有效
+            {
+                System.out.println(Toast.LENGTH_LONG);
+                Toast.makeText(this, "再按一次退出丫丫", Toast.LENGTH_LONG).show();
+                temptime = System.currentTimeMillis();
+                finish();
+            }
+
+            else {
+                finish();
+                System.exit(0); //凡是非零都表示异常退出!0表示正常退出!
+            }
+
+            return true;
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

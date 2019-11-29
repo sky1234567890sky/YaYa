@@ -3,6 +3,7 @@ package com.administrator.yaya.activity.my;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.session.MediaSession;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
@@ -80,6 +82,7 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     private SlideFromBottomPopup mPop;
     private TakePhotoImpl mTakePhoto;
     private String userId;
+    private String token;
     private String nickName;
 
     private long exittime;
@@ -111,14 +114,27 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
             //上传昵称   接口得调
             case ApiConfig.TEST_UPLOAD_NAME:
                 TestUploadHeadler testUploadHeadler = (TestUploadHeadler) t[0];
-                if (testUploadHeadler.getMsg()==mApplication.SignOut){
-                    ToastUtil.showLong(""+R.string.username_login_hint);
-                    Intent inte = new Intent(this, LoginActivity.class);
-                    startActivity(inte);
-                    return;
+
+                if (testUploadHeadler.getMsg().equals(mApplication.SignOut)){
+
+                    Toast.makeText(this, R.string.username_login_hint+"", Toast.LENGTH_SHORT).show();
+
+                    Intent login = new Intent(this, LoginActivity.class);
+
+                    SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
+
+                    SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
+
+                    mApplication.userid =0;
+
+                    mApplication.mToken = "";
+
+                    startActivity(login);
+
+                    finish();
                 }
 
-                if (testUploadHeadler.getCode() == 0) {
+                if (testUploadHeadler.getCode() == 0 && !testUploadHeadler.getMsg().equals(mApplication.SignOut)) {
                     ToastUtil.showLong(testUploadHeadler.getMsg());
                     SharedPrefrenceUtils.saveString(this, NormalConfig.USER_NICK, nickName);
                     persionalName.setText(nickName);
@@ -237,8 +253,9 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
     }
     private void upLoadHeadlerIv(String nickName) {
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+        token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
 
-        if (!nickName.isEmpty()) mPresenter.getData(ApiConfig.TEST_UPLOAD_NAME, Integer.parseInt(userId), nickName,mApplication.mToken);
+        if (!nickName.isEmpty()) mPresenter.getData(ApiConfig.TEST_UPLOAD_NAME, Integer.parseInt(userId), nickName,token);
     }
 
     @Override

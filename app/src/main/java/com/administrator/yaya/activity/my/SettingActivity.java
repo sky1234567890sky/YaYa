@@ -40,7 +40,8 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout myRelationServiceRl;
     @BindView(R.id.my_wechat_code_rl)
     RelativeLayout myWechatCodeRl;
-    @OnClick({R.id.my_wechat_code_rl,R.id.setting_back_iv,R.id.my_invientory_rl, R.id.my_small_rl, R.id.my_pay_code_rl, R.id.my_update_password_rl, R.id.my_relation_service_rl,R.id.setting_back_login})
+
+    @OnClick({R.id.my_wechat_code_rl, R.id.setting_back_iv, R.id.my_invientory_rl, R.id.my_small_rl, R.id.my_pay_code_rl, R.id.my_update_password_rl, R.id.my_relation_service_rl, R.id.setting_back_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.my_wechat_code_rl://微信收款码
@@ -48,21 +49,21 @@ public class SettingActivity extends BaseActivity {
                 startActivity(wra);
                 break;
             case R.id.my_invientory_rl://我的邀請
-            Intent intent = new Intent(this, MyInviteActivity.class);
-            startActivity(intent);
+                Intent intent = new Intent(this, MyInviteActivity.class);
+                startActivity(intent);
 
-            break;
+                break;
             case R.id.my_small_rl://小賬本
-            Intent sba = new Intent(this, SmallBookActivity.class);
-            startActivity(sba);
-            break;
+                Intent sba = new Intent(this, SmallBookActivity.class);
+                startActivity(sba);
+                break;
             case R.id.setting_back_iv:
-            SettingActivity.this.finish();
-            break;
+                SettingActivity.this.finish();
+                break;
             case R.id.my_pay_code_rl://支付寶收款碼
-            Intent pra = new Intent(this, AlipayReceiverCodeActivity.class);
-            startActivity(pra);
-            break;
+                Intent pra = new Intent(this, AlipayReceiverCodeActivity.class);
+                startActivity(pra);
+                break;
 
             case R.id.my_update_password_rl://修改密码
                 Intent upa = new Intent(this, UpdataPasswordActivity.class);
@@ -82,32 +83,23 @@ public class SettingActivity extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent login = new Intent(SettingActivity.this, LoginActivity.class);
-                                //清除数据
-//                                SharedPreferences settings = getSharedPreferences("config", MODE_PRIVATE);
-////                                SharedPreferences.Editor edit = settings.edit();
-////                                edit.putString(NormalConfig.USER_ID,"");
-//////                                edit.putBoolean(NormalConfig.ISFIRST,false);
-////                                edit.commit();
-                                SharedPrefrenceUtils.saveString(SettingActivity.this,NormalConfig.USER_ID,"");
-
-                                SharedPrefrenceUtils.saveString(SettingActivity.this,NormalConfig.TOKEN,"");
-
-                                mApplication.userid =0;
-
+                                SharedPrefrenceUtils.saveString(SettingActivity.this, NormalConfig.USER_ID, "");
+                                SharedPrefrenceUtils.saveString(SettingActivity.this, NormalConfig.TOKEN, "");
+                                mApplication.userid = 0;
                                 mApplication.mToken = "";
-
                                 startActivity(login);
-
                                 finish();
                             }
                         }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                     }
                 }).show();
                 break;
         }
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_setting;

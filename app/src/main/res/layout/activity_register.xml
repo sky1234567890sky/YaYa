@@ -20,7 +20,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44">
@@ -206,7 +205,6 @@
             />
     </LinearLayout>
         </android.support.v7.widget.CardView>
-
         <!--邀请码-->
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -241,7 +239,7 @@
             android:textColor="@color/c_000000"
             android:maxLines="1"
             android:hint="@string/et_invitationcode"
-            android:inputType="phone|number"
+            android:inputType="phone"
             android:singleLine="true"
             android:textStyle="normal"
             android:textCursorDrawable="@drawable/edit_cursor_color"

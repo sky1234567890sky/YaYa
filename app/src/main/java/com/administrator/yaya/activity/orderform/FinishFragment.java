@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,9 +16,7 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
-import com.administrator.yaya.base.convert.BaseLazyLoadFragment;
-import com.administrator.yaya.bean.orderform.TestAllOrderStock;
-import com.administrator.yaya.fragment.InventoryFragment;
+import com.administrator.yaya.bean.orderform.TestFinish;
 import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
@@ -27,30 +24,30 @@ import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
 /**
  * A simple {@link Fragment} subclass.
  * 已完成
  */
-public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICommonView {
+
+public class FinishFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
+
     @BindView(R.id.finish_lv)
     RecyclerView mList;
     @BindView(R.id.finish_refreshLayout)
     SmartRefreshLayout finishRefresh;
-    private FinishAdapter adapter;
-    private List<TestAllOrderStock.DataBean.OrderSalesListBean>  list = new ArrayList<>();
+    private List<TestFinish.DataBean.OrderSalesListBean> list = new ArrayList<TestFinish.DataBean.OrderSalesListBean>();
     private OrderFormkFragment parentFragment1;
-    private TestAllOrderStock.DataBean data;
     private TextView tvObligation;
     private String token;
+    private String userId;
+    private FinishAdapter adapter;
 
     public FinishFragment() {
-        // Required empty public constructor
     }
     @Override
     protected LoginModel getModel() {
@@ -67,12 +64,13 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-            //不可见的时候关闭加载
-        if (isVisibleToUser ==true){//当前处于可见状态
+        //不可见的时候关闭加载
+        if (isVisibleToUser == true) {//当前处于可见状态
             if (finishRefresh != null)
                 refresh();
         }
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_finish;
@@ -81,16 +79,14 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
-        if(parentFragment1== null){
+        if (parentFragment1 == null) {
             getFragment();
         }
-
-        initRecycleView(mList,finishRefresh);
-        finishRefresh.setEnableLoadMore(false);
+        initRecycleView(mList, finishRefresh);
+//        finishRefresh.setEnableLoadMore(false);
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new FinishAdapter(list);
         mList.setAdapter(adapter);
-
     }
 
     private void getFragment() {
@@ -103,25 +99,33 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
             }
         }
     }
+
     @Override
     protected void initData() {
         super.initData();
-        showLoadingDialog();
+//        showLoadingDialog();
         //已完成
-        String userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
+        userId = SharedPrefrenceUtils.getString(getContext(), NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(getContext(), NormalConfig.TOKEN);
-        if (userId != null) {
-            mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId),token);
-        }
+        mPresenter.getData(ApiConfig.TEST_FINISH, Integer.parseInt(userId), token, 2);//已完成
     }
 
     @Override
     public void refresh() {
         super.refresh();
-
-        finishRefresh.autoRefresh();
-
+        mList.scrollToPosition(0);
+//        finishRefresh.autoRefresh();
         initData();
+    }
+    @Override
+    public void loadMore() {
+        super.loadMore();
+
+
+        finishRefresh.finishLoadMoreWithNoMoreData();
+
+        finishRefresh.setEnableScrollContentWhenLoaded(true);//设置是否在全部加载结束之后Footer跟随内容
+
     }
 
     @Override
@@ -132,64 +136,53 @@ public class FinishFragment  extends BaseMvpFragment<LoginModel> implements ICom
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
-        hideLoadingDialog();
+//        hideLoadingDialog();
         switch (whichApi) {
-            case ApiConfig.TEST_ALL_ORDERSTOCK://已完成
+            case ApiConfig.TEST_FINISH://已完成
+                list.clear();
 
-                if (list!=null&& !list.isEmpty())list.clear();
+                TestFinish testFinish = (TestFinish) t[0];
 
-                TestAllOrderStock testFinish = (TestAllOrderStock) t[0];
+                if (testFinish.getMsg().equals(SignOut)) {
 
-                if (testFinish.getMsg()==SignOut){
-                    ToastUtil.showLong(R.string.username_login_hint+"");
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                    return;
+                    ToastUtil.showLong(R.string.username_login_hint + "");
+
+                    Intent login = new Intent(getActivity(), LoginActivity.class);
+
+                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
+
+                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
+
+                    startActivity(login);
+
+                    getActivity().finish();
                 }
 
-                if (testFinish.getCode() == 0 && testFinish.getData() != null && testFinish.getData().getOrderSalesList() != null) {
+                if (testFinish.getCode() == 0
+                        && testFinish.getData() != null
+                        && testFinish.getData().getOrderSalesList() != null
+                        && !testFinish.getMsg().equals(SignOut)
+                        && testFinish.getData().getCommodity() != null) {
 //                    进货订单集合	orderSalesList
 
-                    data = testFinish.getData();
+                    TestFinish.DataBean data = testFinish.getData();
+
                     if (TextUtils.isEmpty(data.getAmount())) {
-                        tvObligation.setText("今日所收游戏币：0");//库存  父 Fragment 顶部赋值
+
+                        tvObligation.setText("今日收款：0");//库存  父 Fragment 顶部赋值
                     } else {
-                        tvObligation.setText("今日所收游戏币：" +data.getAmount());//库存  父 Fragment 顶部赋值
+
+                        tvObligation.setText("今日收款：" + data.getAmount());//库存  父 Fragment 顶部赋值
                     }
-                    String amount = data.getAmount();
-                    List<TestAllOrderStock.DataBean.OrderSalesListBean> orderStockList = data.getOrderSalesList();
-                    list.addAll(orderStockList);
+                    List<TestFinish.DataBean.OrderSalesListBean> orderSalesList = data.getOrderSalesList();
+                    list.addAll(orderSalesList);
                     adapter.setData(data.getCommodity());
                     adapter.notifyDataSetChanged();
-
-//                    if(data.getAmount()!=null) {
-//                        EventBus.getDefault().postSticky(data.getAmount());
-//                    }
-//                    EventBus.getDefault().postSticky(amount);
-//                    订单id		salesId
-//                    订单编号	orderNumber
-//                    下单时间	salesBuildTime
-//                    数量		salesAmount
-//                    应付金额	salesAmountMoney
-//                    收款方式	orderPayTpe		0无  1微信  2支付宝
-//                    状态		salesStatus		1售卖中 2 已完成 3已取消
-//                    操作时间	salesUpdateTime
-//                    货物信息对象	commodity
-//                    Object commodity = data.getCommodity();
-//                    货物名称	comName
-//                    货物单价	comPrice
-//                    货物图片	comImg
-//                    库存数量	comInventory
-//                    最小购买数量comPurchaseNumMin
-//                            最大购买数量comPurchaseNumMax
-//                    今日收款数		amount
-//                    String amount = data.getAmount();
-                } else {
-                    ToastUtil.showShort(testFinish.getMsg());
                 }
                 break;
         }
         finishRefresh.finishRefresh();
+        finishRefresh.finishLoadMore();
     }
 
 //    @Override

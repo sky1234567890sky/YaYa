@@ -1,11 +1,14 @@
 package com.administrator.yaya.activity.my;
 
 import android.content.Intent;
+import android.content.SyncAdapterType;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
@@ -45,6 +48,8 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
     private List<TestNotificationInfo.DataBean> list;
     private SystemMessagesAdapter adapter;
     private String userId;
+    private String token;
+
 
     //    recycleview
     @Override
@@ -81,25 +86,26 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
     @Override
     public void refresh() {
         super.refresh();
-        mRefresh.autoRefresh();
-
+        mList.scrollToPosition(0);
+//        mRefresh.autoRefresh();
         //走一遍数据加载
         initData();
     }
     @Override
     protected void initData() {
         super.initData();
-        showLoadingDialog();
+//        showLoadingDialog();
 
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
-        String mToken = mApplication.mToken;
+        token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
 
-        mPresenter.getData(ApiConfig.TEST_NOTIFICATION_INFO,Integer.parseInt(userId),mToken);
+
+        mPresenter.getData(ApiConfig.TEST_NOTIFICATION_INFO,Integer.parseInt(userId),token);
     }
 
     @Override
     public void onResponse(int whichApi, Object[] t) {
-        hideLoadingDialog();
+//        hideLoadingDialog();
         switch (whichApi) {
             case ApiConfig.TEST_NOTIFICATION_INFO:
 
@@ -130,6 +136,12 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.system_msg_back_iv:
+
+                if (changeValueCallBack!=null){
+                    //注册接口
+                    changeValueCallBack.changevalue();
+                }
+
                 SystemMessagesActivity.this.finish();
                 break;
         }
@@ -139,11 +151,34 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
     protected void onResume() {
         super.onResume();
         Log.i("tag", "========> onResume");
+
         refresh();
+
+        //获取MainActivity的红点控件  返回时 将其隐藏
+//        LayoutInflater factory = LayoutInflater.from(SystemMessagesActivity.this);
+//        View layout = factory.inflate(R.layout.activity_main, null);
+//        TextView textview = (TextView) layout.findViewById(R.id.hongdian);
+//
+//        Log.i("tag", "红点显示隐藏====>: "+textview.getVisibility());
+//
+//        if (textview.getVisibility()==View.VISIBLE){//如果现显示的话  隐藏掉
+//            textview.setVisibility(View.GONE);
+//        }
+//
     }
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("tag", "========> onPause");
+//        Log.i("tag", "========> onPause");
+    }
+
+
+    private ChangeValueCallBack changeValueCallBack;
+    public interface ChangeValueCallBack {
+        void changevalue();
+    }
+    //提供方法实例化接口
+    public void setChangeValueCallBack(ChangeValueCallBack changeValueCallBack){
+        this.changeValueCallBack=changeValueCallBack;
     }
 }

@@ -24,7 +24,6 @@ public class TestInventoryAdapter extends RecyclerView.Adapter<TestInventoryAdap
     private final ArrayList<TestInventory.DataBean.OrderStockListBean> list;
     private Context context;
     private TestInventory.DataBean.CommodityBean commodity;
-
     public TestInventoryAdapter(ArrayList<TestInventory.DataBean.OrderStockListBean> list) {
         this.list = list;
     }
@@ -33,21 +32,10 @@ public class TestInventoryAdapter extends RecyclerView.Adapter<TestInventoryAdap
     @Override
     public TestInventoryAdapter.AccountpaidItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
-        TestInventory.DataBean.OrderStockListBean orderStockListBean = list.get(i);
-//        订单状态	orderStatus	1、待审核（待付款） 2、审核通过（已付款））
-//        RecyclerView.ViewHolder viewHolder=null;
-//        if (i == 1) {
-//            //待付款
-//            View view = LayoutInflater.from(context).inflate(R.layout.obligation_item, viewGroup, false);
-//            viewHolder = new ObligationItem(view);
-//        } else if (i == 2) {
-//            //已付款
         View view = LayoutInflater.from(context).inflate(R.layout.accountpaid_item, viewGroup, false);
         AccountpaidItem viewHolder = new AccountpaidItem(view);
-//        }
         return viewHolder;
     }
-
     @Override
     public int getItemCount() {
         return list != null ? list.size() : 0;
@@ -55,71 +43,36 @@ public class TestInventoryAdapter extends RecyclerView.Adapter<TestInventoryAdap
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull TestInventoryAdapter.AccountpaidItem viewHolder, @SuppressLint("RecyclerView") final int i) {
-        int itemViewType = getItemViewType(i);
+    public void onBindViewHolder(@NonNull TestInventoryAdapter.AccountpaidItem accountpaidItem, @SuppressLint("RecyclerView") final int i) {
         TestInventory.DataBean.OrderStockListBean orderStockListBean = list.get(i);
         int orderStatus = orderStockListBean.getOrderStatus();
-
-        if (orderStatus == 1) {//待付款
-
-            AccountpaidItem accountpaidItem = (AccountpaidItem) viewHolder;
-            accountpaidItem.mYifuCommodityAmount.setText("数量：" + orderStockListBean.getCommodityAmount());
-            accountpaidItem.mYifuCommodityPrice.setText("应付金额：" + orderStockListBean.getCommodityPrice());
-            accountpaidItem.mYifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
-
-            accountpaidItem.mYifuComPrice.setText("单价￥：" + commodity.getComPrice());
+        if (commodity != null) {
+            accountpaidItem.mYifuComPrice.setText("单价：￥" + commodity.getComPrice());
             accountpaidItem.mYifuGamemoney.setText(commodity.getComName());
             Glide.with(context).load(commodity.getComImg()).placeholder(R.mipmap.icon).into(accountpaidItem.mYifuComImg);
-            accountpaidItem.mYifu_orderBuildTime.setText("下单时间" + orderStockListBean.getOrderBuildTime());
-
-            accountpaidItem.mYifuUpBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (accountpaidTosetOnclikListener != null) {
-                        accountpaidTosetOnclikListener.setonclik(i);
-                    }
-                }
-            });
-        } else if (orderStatus == 2) {
-//            if (viewHolder instanceof AccountpaidItem) {//已付款
-            AccountpaidItem accountpaidItem = (AccountpaidItem) viewHolder;
-            accountpaidItem.mYifuCommodityAmount.setText("数量：" + orderStockListBean.getCommodityAmount());
-            accountpaidItem.mYifuCommodityPrice.setText("应付金额：" + orderStockListBean.getCommodityPrice());
-            accountpaidItem.mYifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
-
-            accountpaidItem.mYifuComPrice.setText("单价￥：" + commodity.getComPrice());
-            accountpaidItem.mYifuGamemoney.setText(commodity.getComName());
-            Glide.with(context).load(commodity.getComImg()).placeholder(R.mipmap.icon).into(accountpaidItem.mYifuComImg);
-            accountpaidItem.mYifu_orderBuildTime.setText("下单时间" + orderStockListBean.getOrderBuildTime());
-            accountpaidItem.mYifukuan.setVisibility(View.VISIBLE);
-            accountpaidItem.mYifu_daifukuan.setVisibility(View.GONE);
-            accountpaidItem.mYifuUpBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (accountpaidTosetOnclikListener != null) {
-                        accountpaidTosetOnclikListener.setonclik(i);
-                    }
-                }
-            });
         }
+        accountpaidItem.mYifukuan.setVisibility(View.GONE);
+        accountpaidItem.mYifu_daifukuan.setVisibility(View.GONE);
 
-//    @Override
-//    public int getItemViewType(int position) {
-//
-//        TestInventory.DataBean.OrderStockListBean orderStockListBean = list.get(position);
-//
-//        if (orderStockListBean.getOrderStatus()==1  ){//待付款
-//
-//            return 1;
-//
-//        }else if (orderStockListBean.getOrderStatus()==2){//已付款
-//
-//            return 2;
-//
-//        }
-//
-//        return super.getItemViewType(position);
-//    }
+//        1、待审核（待付款） 2、审核通过（已付款））
+        if (orderStatus == 1) {//待付款
+            accountpaidItem.mYifu_daifukuan.setVisibility(View.VISIBLE);
+        } else if (orderStatus == 2) {
+            accountpaidItem.mYifukuan.setVisibility(View.VISIBLE);
+        }
+        accountpaidItem.mYifuCommodityAmount.setText("数量：" + orderStockListBean.getCommodityAmount());
+        accountpaidItem.mYifuCommodityPrice.setText("实付金额：" + orderStockListBean.getCommodityPrice());
+        accountpaidItem.mYifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
+        accountpaidItem.mYifu_orderBuildTime.setText("下单时间" + orderStockListBean.getOrderBuildTime());
+        accountpaidItem.mYifuUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (accountpaidTosetOnclikListener != null) {
+                    accountpaidTosetOnclikListener.setonclik(i);
+                }
+            }
+        });
+
     }
 
     public void setData(TestInventory.DataBean.CommodityBean commodity) {

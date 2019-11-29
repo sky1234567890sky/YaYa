@@ -55,10 +55,19 @@ public class ExpendFragment extends BaseLazyLoadFragment<LoginModel> implements 
     @Override
     public void refresh() {
         super.refresh();
-        expendRefreshLayout.autoRefresh();
-
+        mList.scrollToPosition(0);
+//        expendRefreshLayout.autoRefresh();
         initData();
     }
+
+    @Override
+    public void loadMore() {
+        super.loadMore();
+        expendRefreshLayout.finishLoadMoreWithNoMoreData();
+
+        expendRefreshLayout.setNoMoreData(true);
+    }
+
     @Override
     public void fetchData() {
 
@@ -67,10 +76,9 @@ public class ExpendFragment extends BaseLazyLoadFragment<LoginModel> implements 
     @Override
     protected void initData() {
         super.initData();
-
         String userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
-        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),2);//收益类型--1收入-2支出-3返利
-
+        String token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
+        if (userId!=null)mPresenter.getData(ApiConfig.TEST_MY_EARNINGS,Integer.parseInt(userId),token,2);//收益类型--1收入-2支出-3返利
     }
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -89,10 +97,11 @@ public class ExpendFragment extends BaseLazyLoadFragment<LoginModel> implements 
                 }
         }
         expendRefreshLayout.finishRefresh();
+        expendRefreshLayout.finishLoadMore();
     }
     public ExpendFragment() {
-    }
 
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_expend;
@@ -104,7 +113,7 @@ public class ExpendFragment extends BaseLazyLoadFragment<LoginModel> implements 
         initRecycleView(mList,expendRefreshLayout);
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ArrayList<>();
-        expendRefreshLayout.setEnableLoadMore(false);
+//        expendRefreshLayout.setEnableLoadMore(false);
         adapter = new ExpendAdapter(list);
         mList.setAdapter(adapter);
     }
@@ -112,7 +121,6 @@ public class ExpendFragment extends BaseLazyLoadFragment<LoginModel> implements 
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();

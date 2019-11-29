@@ -58,8 +58,8 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="@dimen/dp_82"
                 android:layout_height="match_parent"
-                android:layout_toLeftOf="@id/setting_iv"
-                >
+                android:layout_toLeftOf="@id/setting_iv">
+
                 <ImageView
                     android:id="@+id/system_msg_iv"
                     android:layout_width="@dimen/dp_82"
@@ -68,35 +68,34 @@
                     android:background="@drawable/ripple_bg"
                     android:paddingLeft="@dimen/dp_32"
                     android:paddingRight="@dimen/dp_32"
-                    android:src="@mipmap/icon_xiaoxi"
-                    />
+                    android:src="@mipmap/icon_xiaoxi" />
+
                 <TextView
                     android:id="@+id/my_hongdian"
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_6"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="@dimen/dp_6"
                     android:background="@drawable/boder_ext"
                     android:text="."
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.652"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="HardcodedText"
-                    />
+                    tools:ignore="HardcodedText" />
             </android.support.constraint.ConstraintLayout>
 
             <!--<ImageView-->
-                <!--android:id="@+id/system_msg_iv"-->
-                <!--android:layout_width="@dimen/dp_82"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_toLeftOf="@id/setting_iv"-->
-                <!--android:background="@drawable/ripple_bg"-->
-                <!--android:paddingLeft="@dimen/dp_32"-->
-                <!--android:paddingRight="@dimen/dp_32"-->
-                <!--android:src="@mipmap/icon_xiaoxi" -->
-                <!--/>-->
+            <!--android:id="@+id/system_msg_iv"-->
+            <!--android:layout_width="@dimen/dp_82"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_toLeftOf="@id/setting_iv"-->
+            <!--android:background="@drawable/ripple_bg"-->
+            <!--android:paddingLeft="@dimen/dp_32"-->
+            <!--android:paddingRight="@dimen/dp_32"-->
+            <!--android:src="@mipmap/icon_xiaoxi" -->
+            <!--/>-->
 
         </RelativeLayout>
 
@@ -106,47 +105,47 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/dp_12_5"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_12_5"
-            >
-        <RelativeLayout
-            android:id="@+id/my_ll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dp_8"
-            android:paddingTop="@dimen/dp_5"
-            android:paddingBottom="@dimen/dp_5"
-            >
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/iv"
-                android:layout_width="@dimen/dp_50"
-                android:layout_height="@dimen/dp_50"
-                android:src="@mipmap/icon"
-                app:riv_oval="true" />
-            <TextView
-                android:id="@+id/my_name_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="26dp"
-                android:layout_marginTop="@dimen/dp_5"
-                android:layout_toRightOf="@id/iv"
-                android:text="---"
-                android:textColor="#333333"
-                android:textSize="@dimen/sp_16" />
+            android:layout_marginRight="@dimen/dp_12_5">
 
-            <TextView
-                android:id="@+id/my_name_state_tv"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/my_ll"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/iv"
-                android:layout_marginLeft="@dimen/dp_25"
-                android:layout_marginTop="@dimen/dp_12"
-                android:layout_toRightOf="@id/iv"
-                android:text="账号状态正常，可以正常营业"
-                android:textColor="#333333"
-                android:textSize="@dimen/sp_14"
-                tools:ignore="HardcodedText"
-                />
-        </RelativeLayout>
+                android:paddingLeft="@dimen/dp_8"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_5">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/iv"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:src="@mipmap/icon"
+                    app:riv_oval="true" />
+
+                <TextView
+                    android:id="@+id/my_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="26dp"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_toRightOf="@id/iv"
+                    android:text="---"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:id="@+id/my_name_state_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/iv"
+                    android:layout_marginLeft="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:layout_toRightOf="@id/iv"
+                    android:text="账号状态正常，可以正常营业"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp_14"
+                    tools:ignore="HardcodedText" />
+            </RelativeLayout>
         </android.support.v7.widget.CardView>
         <!---->
         <RelativeLayout
@@ -226,6 +225,16 @@
 
         </RelativeLayout>
 
+        <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+
+        <!--android:layout_marginLeft="@dimen/dp_12"-->
+        <!--android:layout_marginTop="@dimen/dp_20"-->
+        <!--android:layout_marginRight="@dimen/dp_12">-->
+
+        <!--</android.support.v7.widget.CardView>-->
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -289,7 +298,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_use"
+                            android:layout_below="@+id/tv_use"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/dp_10"
                             android:text="已使用额度"
@@ -319,7 +328,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_sheng"
+                            android:layout_below="@+id/tv_sheng"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/dp_10"
                             android:text="剩余额度"
@@ -341,14 +350,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:text="5000"
+                            android:text="50000"
                             android:textColor="@color/c_000000"
                             android:textSize="@dimen/sp_25" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/my_tv_day"
+                            android:layout_below="@+id/my_tv_day"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/dp_10"
                             android:text="每日限度"
@@ -431,7 +440,6 @@
                             android:text="已使用额度"
                             android:textColor="#666666"
                             android:textSize="@dimen/sp_14" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -459,10 +467,6 @@
                             android:textSize="@dimen/sp_14" />
 
                     </RelativeLayout>
-
-
-                    -
-
                     <RelativeLayout
                         android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
@@ -473,14 +477,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:text="5000"
+                            android:text="50000"
                             android:textColor="@color/c_000000"
                             android:textSize="@dimen/sp_25" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/my_tv_wechat_day"
+                            android:layout_below="@+id/my_tv_wechat_day"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/dp_10"
                             android:text="每日限度"

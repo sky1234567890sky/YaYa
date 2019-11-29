@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
@@ -52,7 +53,8 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     TextView mSell;
     @BindView(R.id.inventory_yisell_number)
     TextView mYiSell;
-//    @BindView(R.id.inventory_allgamemoneys)
+
+    //    @BindView(R.id.inventory_allgamemoneys)
 //    TextView inventoryMoney;
 //    @BindView(R.id.inventory_stab)
 //    SlidingTabLayout mTab;
@@ -66,8 +68,10 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     private TestInventory.DataBean data;
     private String userId;
     private String token;
-    public static  final  String FORM_INVENTORY="FORM_INVENTORY";//区分待付款
-    public static final String  FORM_INVENTORY2="FORM_INVENTORY2";//区分已付款
+    public static final String FORM_INVENTORY = "FORM_INVENTORY";//区分待付款
+    public static final String FORM_INVENTORY2 = "FORM_INVENTORY2";//区分已付款
+    private List<TestInventory.DataBean.OrderStockListBean> orderStockList;
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -77,34 +81,37 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
             }
         }
     }
+
     @Override
     protected int getLayoutId() {
 
         return R.layout.fragment_inventory;
     }
+
     @Override
     public void initData() {
         super.initData();
-        showLoadingDialog();
-
+//        showLoadingDialog();
         userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
-        mPresenter.getData(ApiConfig.TEST_INVENTORY, Integer.parseInt(userId),token);
+        mPresenter.getData(ApiConfig.TEST_INVENTORY, Integer.parseInt(userId), token);
     }
-
     @Override
     public void refresh() {
         super.refresh();
+        mList.scrollToPosition(0);
         //下拉刷新，添加你刷新后的逻辑
         //加载完成时，隐藏控件下拉刷新的状态
-
-        mRefreshLayout.autoRefresh();
-
+//        mRefreshLayout.autoRefresh();
         initData();
     }
     @Override
     public void loadMore() {
         super.loadMore();
+
+        mRefreshLayout.finishLoadMoreWithNoMoreData();
+
+        mRefreshLayout.setNoMoreData(true);
         //上拉加载更多，添加你加载数据的逻辑
         //加载完成时，隐藏控件上拉加载的状态
 //        mRefreshLayout.computeScroll();
@@ -127,13 +134,15 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //        if (mTab.getTabCount() > 1) mTab.setCurrentTab(0);
 //        adapter.notifyDataSetChanged();
 
-        mList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRefreshLayout.setEnableLoadMore(false);
+
+        mList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+//        mList.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        mRefreshLayout.setEnableLoadMore(false);
         initRecycleView(mList, mRefreshLayout);
-//        new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         adapter = new TestInventoryAdapter(list);
         mList.setAdapter(adapter);
-}
+    }
+
     //    //接收订阅的事件
 //    @SuppressLint("SetTextI18n")
 //    @Subscribe(threadMode = ThreadMode.MAIN)
@@ -153,47 +162,70 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 
     }
 
-//    库存列表
+    //    库存列表
 ///yayaApp/comBuy/allOrderStock
 //    参数：
 //    userId	用户id
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
-        hideLoadingDialog();
+//        hideLoadingDialog();
 
         switch (whichApi) {
 //            http://192.168.0.198:8082/yayaApp/comBuy/allOrderStock
             case ApiConfig.TEST_INVENTORY:
-                if (!list.isEmpty())list.clear();
+
+                if (!list.isEmpty()) list.clear();
 
                 TestInventory testInventory = (TestInventory) t[0];
-                if (testInventory.getMsg()==SignOut){
+                if (testInventory.getMsg().equals(SignOut)) {
 
-                    ToastUtil.showLong(R.string.username_login_hint+"");
+                    Toast.makeText(getActivity(), R.string.username_login_hint +"", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    Intent login = new Intent(getActivity(), LoginActivity.class);
 
-                    startActivity(intent);
+                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
 
-                    return;
-                }
-                if (testInventory.getCode() == 0) {
-                        Log.i("tag", "库存数据: " + testInventory.toString());
-                        data = testInventory.getData();
-                        TestInventory.DataBean.CommodityBean commodity = data.getCommodity();
-                        List<TestInventory.DataBean.OrderStockListBean> orderStockList = data.getOrderStockList();
-                        mKeYong.setText(data.getUserAllCount() + "");//可用库存
+                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
+
+                    startActivity(login);
+
+                    getActivity().finish();
+
+                }else if (testInventory.getCode() == 0 && !testInventory.getMsg().equals(SignOut)) {
+//
+                    Log.i("tag", "库存数据: " + testInventory.toString());
+
+                    data = testInventory.getData();
+                    TestInventory.DataBean.CommodityBean commodity = data.getCommodity();
+                    orderStockList = data.getOrderStockList();
+                    int userAllCount = data.getUserAllCount();
+
+                    if (userAllCount<0){
+                        mKeYong.setText("0");//可用库存
+                    }else{
+                        mKeYong.setText(userAllCount + "");//可用库存
+                    }
+                    if (data.getUserSalesCount()<0){
+                        mSell.setText("0");//售卖中
+                    }else{
                         mSell.setText(data.getUserSalesCount() + "");//售卖中
+                    }
+                    if (data.getUserDoneCount()<0){
+                        mYiSell.setText("0");//已售卖
+                    }else{
                         mYiSell.setText(data.getUserDoneCount() + "");//已售卖
-                        adapter.setData(data.getCommodity());//货物信息对象	commodity
+                    }
 
-                        list.addAll(orderStockList);
-                        adapter.notifyDataSetChanged();
+                    adapter.setData(data.getCommodity());//货物信息对象	commodity
+                    list.addAll(orderStockList);
+                    adapter.notifyDataSetChanged();
+
                 }
                 break;
         }
         mRefreshLayout.finishRefresh();
+        mRefreshLayout.finishLoadMore();
     }
     @Override
     protected void initListener() {
@@ -202,25 +234,28 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
         adapter.setAccountpaidTosetOnclikListener(new TestInventoryAdapter.AccountpaidTosetOnclikListener() {
             @Override
             public void setonclik(int index) {
-                Intent intent = new Intent(getActivity(), AffirmMessageActivity.class);
                 String orderNumber = list.get(index).getOrderNumber();
-//                Log.i("tag", "订单编号1: "+orderNumber);
+                if (!orderNumber.equals("") && !orderNumber.isEmpty()) {
+                    Intent intent = new Intent(getActivity(), AffirmMessageActivity.class);
+                    Log.i("tag", "订单编号1: " + orderNumber);
 //                intent.putExtra(FORM_INVENTORY2,FORM_INVENTORY2);
-                intent.putExtra("accountPaid", orderNumber);
-                startActivity(intent);
+                    intent.putExtra("accountPaid", orderNumber);
+                    startActivity(intent);
+                }
             }
         });
-
         //待付款
         adapter.setObligationTestOnclikListener(new TestInventoryAdapter.ObligationTestOnclikListener() {
             @Override
             public void setonclik(int index) {
-                Intent intent = new Intent(getActivity(), AffirmMessageActivity.class);
                 String orderNumber = list.get(index).getOrderNumber();
+                if (!orderNumber.equals("") && !orderNumber.isEmpty()) {
+                    Intent intent = new Intent(getActivity(), AffirmMessageActivity.class);
 //                Log.i("tag", "订单编号1: "+orderNumber);
 //                intent.putExtra(FORM_INVENTORY,FORM_INVENTORY);
-                intent.putExtra("OrderNumber", orderNumber);
-                startActivity(intent);
+                    intent.putExtra("OrderNumber", orderNumber);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -292,7 +327,7 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
         if (getActivity() != null && !hidden) {
 //            Log.i("tag", "刷新数据2: ");
             initData();
-            if (mRefreshLayout!=null){
+            if (mRefreshLayout != null) {
                 refresh();
             }
         }

@@ -25,12 +25,12 @@ public class ApiConfig {
     public static final int TEST_NOTIFICATION_INFO = 16;//通知消息
 
 
-    public static final int TEST_MY_INVITE = 17;//我的邀请
+    public static final int TEST_MY_INVITE = 17;//我的邀请 - 查看返利记录
+
     public static final int TEST_SMALLBOOK = 18;//我的小账本
     public static final int TEST_ALIPAY_RECEIVER_CODE = 19;//支付宝二维码
 
     public static final int TEST_UPAWAY_SINGLE_GOODS = 21; //上架单个货物
-
     //所有售卖订单
     public static final int TEST_ALL_ORDERSTOCK = 22;
     public static final int TEST_FINISH = 30;//已完成
@@ -70,4 +70,10 @@ public class ApiConfig {
 
     public static final int TEST_INVENTORY = 42;//库存（新）
     public static final int TEST_DIANJIYINGYE = 43;//点击营业（新）
+    public static final int TEST_NO_RECEIVER_GOODS = 44;//未收货
+
+    public static final int TEST_MY_INVITEALL = 45;//我的邀请
+    public static final int TEST_UPDATE_USERNEW = 46;//读取信息
+
+    public static final int TEST_USERCODE_IMG = 47;//图片参数列表
 }

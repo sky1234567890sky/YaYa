@@ -20,12 +20,12 @@ import butterknife.ButterKnife;
 //我的下级
 public class MyLowerAdapter extends RecyclerView.Adapter<MyLowerAdapter.Vh> {
     private Context context;
-    private List<TestMyInvite.DataBean.UserInfoBean.ParentUserBean> juniorUsers;
+//    private List<TestMyInvite.DataBean.UserInfoBean.ParentUserBean> juniorUsers;
 
-    public MyLowerAdapter(List<TestMyInvite.DataBean.UserInfoBean.ParentUserBean> juniorUsers) {
-        this.context = context;
-        this.juniorUsers = juniorUsers;
-    }
+//    public MyLowerAdapter(List<TestMyInvite.DataBean.UserInfoBean.ParentUserBean> juniorUsers) {
+//        this.context = context;
+//        this.juniorUsers = juniorUsers;
+//    }
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -38,16 +38,17 @@ public class MyLowerAdapter extends RecyclerView.Adapter<MyLowerAdapter.Vh> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
-        TestMyInvite.DataBean.UserInfoBean.ParentUserBean juniorUsersBean = juniorUsers.get(i);
-//        Object userHeadImg = juniorUsersBean.getUserHeadImg();  null
-//        Object userNickName = juniorUsersBean.getUserNickName(); null
-        int userId = juniorUsersBean.getUserId();
-        vh.mId.setText("用户ID："+userId);
-        vh.mName.setText(juniorUsersBean.getUserName());
+//        TestMyInvite.DataBean.UserInfoBean.ParentUserBean juniorUsersBean = juniorUsers.get(i);
+////        Object userHeadImg = juniorUsersBean.getUserHeadImg();  null
+////        Object userNickName = juniorUsersBean.getUserNickName(); null
+//        int userId = juniorUsersBean.getUserId();
+//        vh.mId.setText("用户ID："+userId);
+//        vh.mName.setText(juniorUsersBean.getUserName());
     }
     @Override
     public int getItemCount() {
-        return juniorUsers != null ? juniorUsers.size() : 0;
+//        return juniorUsers != null ? juniorUsers.size() : 0;
+        return 0;
     }
 
     public class Vh extends RecyclerView.ViewHolder {

@@ -25,6 +25,7 @@ import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 /**
  * 修改密码
  */
@@ -33,21 +34,25 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
     @BindView(R.id.update_back_iv)
     ImageView forgetBackIv;
     @BindView(R.id.update_et_code)//手机号
-    EditText updateEtCode;
+            EditText updateEtCode;
     @BindView(R.id.update_et_verificationCode)//验证码   666666
-    EditText forgetEtVerificationCode;
+            EditText forgetEtVerificationCode;
     @BindView(R.id.update_btv_getverificationCode)
     TextView updateBtvGetverificationCode;
     @BindView(R.id.update_password_et)//密码  1234
-    EditText updatePasswordEt;
+            EditText updatePasswordEt;
 
     @BindView(R.id.update_ok_btn)
     Button updateOkBtn;
     private CountDownTimerUtils mDownTimerUtils;
+    private String userId;
+    private String token;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_updata_password;
     }
+
     @Override
     protected void initView() {
         //倒计时工具类
@@ -60,59 +65,48 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
             case R.id.update_back_iv:
                 UpdataPasswordActivity.this.finish();
                 break;
-
             case R.id.update_btv_getverificationCode:
                 String phone = updateEtCode.getText().toString().trim();
                 if (!phone.isEmpty()) {
                     mDownTimerUtils.start();
-                    mPresenter.getData(ApiConfig.TEST_VERIFICATIONCODE,phone);//验证码
-                }else{
+                    mPresenter.getData(ApiConfig.TEST_VERIFICATIONCODE, phone);//验证码
+                } else {
                     ToastUtil.showShort("请输入手机号");
                 }
                 break;
             case R.id.update_ok_btn:
-
                 String phoneCode = updateEtCode.getText().toString().trim();
                 String verificationCode = forgetEtVerificationCode.getText().toString().trim();
                 String psw = updatePasswordEt.getText().toString().trim();
 
-                if (TextUtils.isEmpty(phoneCode)){
+                if (TextUtils.isEmpty(phoneCode)) {
                     ToastUtil.showLong("请输入手机号");
                     return;
                 }
-                if (TextUtils.isEmpty(verificationCode)){
+                if (TextUtils.isEmpty(verificationCode)) {
                     ToastUtil.showLong("请输入验证码");
                     return;
                 }
-                if (TextUtils.isEmpty(psw)){
+                if (TextUtils.isEmpty(psw)) {
                     ToastUtil.showLong("请输入密码");
                     return;
                 }
-//                //如果是当前登陆时的手机号要修改密码  对照
-//                String userPhone = SharedPrefrenceUtils.getString(this, NormalConfig.USER_PHOTO);
-//
-//                String passwordOld = SharedPrefrenceUtils.getString(this, NormalConfig.PASS_WORD);
-//
-//                if(phoneCode.equals(userPhone)){
-//
-//                    if (psw.equals(passwordOld)){
-//
-//                        ToastUtil.showLong("请勿使用旧密码");
-//
-//                        return;
-//
-//                    }
-//
-//                }else{
-//                    //查询 手机号 密码  对照  在 判断 是否 重复修改密码
-//                }
                 //6-16位数字字母混合,不能全为数字,不能全为字母,首位不能为数字
 //              ^(?![0-9])(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{4,12}$
+
                 String regex = "[A-Za-z0-9]{4,12}";
-                   if (AppValidationMgr.isPhone(phoneCode) && psw.matches(regex)) {
-                        mPresenter.getData(ApiConfig.TEST_UPDATEPASSWORD, phoneCode, verificationCode,psw,mApplication.userid,mApplication.mToken);
-//                      okLogin();
-                    } else ToastUtil.showShort("请输入正确的手机号或密码");
+                if (!AppValidationMgr.isPhone(phoneCode)) {
+                    ToastUtil.showShort("请输入正确的手机号或密码");
+                    return;
+                }
+                if (!psw.matches(regex)) {
+                    ToastUtil.showShort("请输入正确的密码格式");
+                    return;
+                }else{
+                    userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
+                    token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
+                    mPresenter.getData(ApiConfig.TEST_UPDATEPASSWORD, phoneCode, verificationCode, psw,Integer.parseInt(userId), token);
+                }
                 break;
         }
     }
@@ -131,6 +125,7 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
     public void onError(int whichApi, Throwable e) {
 
     }
+
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
@@ -138,31 +133,38 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
             case ApiConfig.TEST_UPDATEPASSWORD://修改密碼
                 TestUpdatePwd testUpdatePwd = (TestUpdatePwd) t[0];
 
-                if (testUpdatePwd.getMsg()==mApplication.SignOut){
-
+                if (testUpdatePwd.getMsg().equals(mApplication.SignOut)) {
                     Intent intent = new Intent(this, LoginActivity.class);
+                    SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
 
-                    startActivity(intent);
+                    SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
 
-                    return;
-                }
-                if (testUpdatePwd.getCode()==0){
-                    String phone = updateEtCode.getText().toString();
-                    String pas = updatePasswordEt.getText().toString();
-                    ToastUtil.showShort(testUpdatePwd.getMsg());
-                    Intent intent = new Intent(UpdataPasswordActivity.this, LoginActivity.class);
+                    mApplication.userid = 0;
+
+                    mApplication.mToken = "";
+
                     startActivity(intent);
 
                     finish();
                 }
+                if (testUpdatePwd.getCode() == 0 && !testUpdatePwd.getMsg().equals(mApplication.SignOut)) {
+                    String phone = updateEtCode.getText().toString();
+                    String pas = updatePasswordEt.getText().toString();
+                    ToastUtil.showShort("修改成功");
+                    Intent intent = new Intent(UpdataPasswordActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 break;
-                //获取验证码
+            //获取验证码
             case ApiConfig.TEST_VERIFICATIONCODE:
-                TestGetEtVerificationCode testGetEtVerificationCode = (TestGetEtVerificationCode)t[0];
-                if (testGetEtVerificationCode.getCode() == 0 && testGetEtVerificationCode.getMsg()!=null){
+                TestGetEtVerificationCode testGetEtVerificationCode = (TestGetEtVerificationCode) t[0];
+                if (testGetEtVerificationCode.getCode() == 0 && testGetEtVerificationCode.getMsg() != null) {
 //                    String verificationCode = testGetEtVerificationCode.getMsg();//验证码
 //                    forgetEtVerificationCode.setText(verificationCode);//自动粘贴
                     ToastUtil.showShort(testGetEtVerificationCode.getMsg());
+                } else {
+
                 }
                 break;
         }

@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c_ffffff"
+    android:orientation="vertical"
     tools:context=".activity.my.MyInviteActivity">
+
     <ImageView
         android:layout_width="@dimen/dp_312_5"
         android:layout_height="@dimen/dp_127_5"
-        android:src="@mipmap/logo"
         android:layout_alignParentBottom="true"
+        android:src="@mipmap/logo"
         tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_44">
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44">
+
             <ImageView
-                android:id="@+id/myinvite_book_back_iv"
+                android:id="@+id/myinvite_back"
                 android:layout_width="@dimen/dp_39"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/dp_15"
-                android:paddingRight="@dimen/dp_15"
                 android:layout_centerVertical="true"
                 android:background="@drawable/ripple_bg"
-                android:src="@mipmap/icon_back"
-                />
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
+                android:src="@mipmap/icon_back" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,190 +42,549 @@
                 android:textColor="#333333"
                 android:textSize="@dimen/sp_18"
                 tools:ignore="SpUsage" />
+
             <TextView
-                android:id="@+id/myinvite_friend"
+                android:id="@+id/myinvite_fanli"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/invite_friend"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_13"
+                android:text="返利记录"
                 android:textColor="#0099FF"
                 android:textSize="@dimen/sp_13"
-                tools:ignore="SpUsage"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/dp_13"
-                />
-    </RelativeLayout>
+                tools:ignore="HardcodedText,SpUsage" />
+        </RelativeLayout>
 
         <android.support.v7.widget.CardView
+            android:id="@+id/card_ziliao"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_13"
-            android:layout_marginRight="@dimen/dp_13"
-            android:layout_marginBottom="@dimen/dp_10"
-            >
-    <RelativeLayout
-    android:background="@drawable/background_rl"
-    android:paddingBottom="@dimen/dp_5"
-    android:paddingTop="@dimen/dp_5"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    android:paddingLeft="@dimen/dp_8"
-    android:layout_marginRight="@dimen/dp_5"
-    android:layout_marginTop="@dimen/dp_5"
-    android:layout_marginLeft="@dimen/dp_5"
-    >
-    <com.makeramen.roundedimageview.RoundedImageView
-        app:riv_oval="true"
-        android:layout_height="@dimen/dp_50"
-        android:layout_width="@dimen/dp_50"
-        android:src="@mipmap/icon"
-        android:id="@+id/myinvite_iv"
-        />
-    <TextView
-        android:id="@+id/my_name_tv"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginLeft="@dimen/dp_25"
-        android:textSize="@dimen/sp_16"
-        android:textColor="#333333"
-        android:text="---"
-        android:layout_toRightOf="@id/myinvite_iv"
-        android:layout_alignTop="@id/myinvite_iv"
-        />
-    <TextView
-        android:id="@+id/my_name_state_tv"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="@dimen/dp_25"
-        android:layout_marginTop="@dimen/dp_12"
-        android:textSize="@dimen/sp_14"
-        android:textColor="#333333"
-        android:textStyle="normal"
-        android:text="ID : ---"
-        android:layout_toRightOf="@id/myinvite_iv"
-        android:layout_alignBottom="@id/myinvite_iv"
-        tools:ignore="HardcodedText,RtlHardcoded" />
-    <TextView
-        android:id="@+id/tv3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_25"
-        android:layout_marginTop="@dimen/dp_12"
-        android:textSize="@dimen/sp_14"
-        android:textColor="#000"
-        android:text="返利比例：2%"
-        android:layout_toRightOf="@id/my_name_state_tv"
-        android:layout_alignBottom="@id/my_name_state_tv"
-        />
-</RelativeLayout>
+            android:layout_height="@dimen/dp_90"
+            app:cardBackgroundColor="@color/c_ffffff"
+            app:cardElevation="@dimen/dp_5"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_rl"
+                android:paddingLeft="@dimen/dp_8"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_5">
+
+                <ImageView
+                    android:id="@+id/myinvite_right_dengji_iv"
+                    android:layout_width="32dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_13"
+                    android:src="@mipmap/icon_wangzhe"
+                    />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/myinvite_name_iv1"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon"
+                    app:riv_oval="true" />
+
+                <TextView
+                    android:id="@+id/myinvite_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/myinvite_name_iv1"
+                    android:layout_marginLeft="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_toRightOf="@id/myinvite_name_iv1"
+                    android:text="---"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:id="@+id/myinvite_id_tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/myinvite_name_iv1"
+                    android:layout_marginLeft="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:layout_toRightOf="@id/myinvite_name_iv1"
+                    android:text="ID : ---"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="normal"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+
+                <TextView
+                    android:id="@+id/fanlibili_tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/myinvite_id_tv1"
+                    android:layout_marginLeft="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:layout_toRightOf="@id/myinvite_id_tv1"
+                    android:text="返利比例：--"
+                    android:textColor="#000"
+                    android:textSize="@dimen/sp_14"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+            </RelativeLayout>
+
         </android.support.v7.widget.CardView>
-    <!---->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_100"
-        android:background="@drawable/title_bg_blue"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_10"
-        >
-        <View
-            android:id="@+id/wire"
-            android:background="@color/c_ffffff"
-            android:layout_height="@dimen/dp_93"
-            android:layout_width="@dimen/dp_1"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_20"
-            />
-        <TextView
-            android:id="@+id/today_get_gamemoney_tv"
-            android:layout_height="wrap_content"
+        <!---->
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:textSize="@dimen/sp_26"
-            android:textColor="@color/white"
-            android:text="---"
-            android:layout_toLeftOf="@id/wire"
-            android:layout_marginTop="@dimen/dp_22"
-            android:gravity="center"
-            />
-        <TextView
-            android:id="@+id/today_all_gamemoney_tv"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_toRightOf="@id/wire"
-            android:gravity="center"
-            android:textSize="@dimen/sp_26"
-            android:text="---"
-            android:textColor="@color/white"
-            android:layout_marginTop="@dimen/dp_22"
-            android:layout_alignParentRight="true"
-            />
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/dp_10"
-            android:textSize="@dimen/sp_14"
-            android:text="今日收益（游戏币）"
-            android:layout_toLeftOf="@id/wire"
-            android:layout_below="@id/today_get_gamemoney_tv"
-            android:textColor="#F1F1F1"
-            android:gravity="center"
-            />
-        <TextView
-            android:layout_width="183dp"
-            android:layout_height="22dp"
-            android:layout_below="@id/today_get_gamemoney_tv"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="-1dp"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_toRightOf="@id/wire"
-            android:gravity="center"
-            android:text="累计收益（游戏币）"
-            android:textColor="#F1F1F1"
-            android:textSize="@dimen/sp_14" />
-    </RelativeLayout>
+            android:layout_height="match_parent"
+            app:cardBackgroundColor="@color/c_ffffff"
+            app:cardElevation="@dimen/dp_5"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        android:text="我的上级"
-        android:textColor="@color/c_000000"
-        android:textSize="@dimen/sp_14"
-        android:layout_marginTop="@dimen/dp_10"
-        />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <ImageView
+                    android:layout_width="@dimen/dp_39"
+                    android:layout_height="@dimen/dp_31"
+                    android:layout_marginLeft="@dimen/dp_101"
+                    android:layout_marginTop="@dimen/dp_17"
+                    android:src="@mipmap/bg2"
+                    tools:ignore="RtlHardcoded" />
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/my_superior_rl"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        >
-    </android.support.v7.widget.RecyclerView>
+                <TextView
+                    android:id="@+id/invite_friend_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_24"
+                    android:text="邀请好友一起赚！"
+                    android:textColor="#ff0099ff"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        android:text="我的下级"
-        android:textColor="@color/c_000000"
-        android:textSize="@dimen/sp_14"
-        android:layout_marginTop="@dimen/dp_10"
-        />
-    <!--我的下级-->
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/my_lower_rl"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        android:text="我的下级"
-        >
-    </android.support.v7.widget.RecyclerView>
+                <RelativeLayout
+                    android:id="@+id/rll"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_below="@+id/invite_friend_title"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:background="@drawable/title_bg_blue"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:id="@+id/today_all_gamemoney_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="点击对应的条目可复制邀请码分享给好友"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/sp_12"
+                        tools:ignore="HardcodedText" />
+                </RelativeLayout>
 
-</LinearLayout>
+
+                <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                    android:id="@+id/myinvite_refreshLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srlEnableAutoLoadMore="true"
+                    android:layout_below="@+id/rll"
+                    app:srlEnableLoadMore="true">
+
+                    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srlClassicsSpinnerStyle="FixedBehind"
+                        app:srlDrawableMarginRight="@dimen/dp_20"
+                        app:srlDrawableProgress="@mipmap/icon_dark_refresh"
+                        app:srlDrawableProgressSize="@dimen/dp_20"
+                        app:srlEnableLastTime="true"
+                        app:srlTextSizeTime="@dimen/sp_8"
+                        app:srlTextSizeTitle="@dimen/sp_12"
+                        app:srlTextTimeMarginTop="@dimen/dp_2" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/myinvite_mlist"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srlDrawableProgress="@mipmap/icon_dark_refresh"
+                        app:srlTextSizeTime="@dimen/sp_8"
+                        app:srlTextSizeTitle="@dimen/sp_12" />
+
+                </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+
+
+                <!--<ScrollView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_below="@+id/myinvite_rl">-->
+
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:orientation="vertical">-->
+
+                        <!--<android.support.v7.widget.CardView-->
+                            <!--android:id="@+id/card_dengji_huangjin"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--app:cardBackgroundColor="@color/c_ffffff"-->
+                            <!--app:cardElevation="@dimen/dp_5"-->
+                            <!--app:cardPreventCornerOverlap="true"-->
+                            <!--app:cardUseCompatPadding="true">-->
+
+                            <!--<LinearLayout-->
+                                <!--android:id="@+id/myinvite_ll"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_below="@id/myinvite_rl"-->
+                                <!--android:layout_margin="@dimen/dp_5"-->
+                                <!--android:orientation="horizontal">-->
+
+                                <!--<ImageView-->
+                                    <!--android:layout_width="@dimen/dp_0"-->
+                                    <!--android:layout_height="45dp"-->
+                                    <!--android:layout_alignParentRight="true"-->
+                                    <!--android:layout_marginRight="@dimen/dp_13"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:src="@mipmap/icon_wangzhe" />-->
+
+                                <!--<TextView-->
+                                    <!--android:id="@+id/fenpei_baifen"-->
+                                    <!--android:layout_width="@dimen/dp_0"-->
+                                    <!--android:layout_height="45dp"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:gravity="center"-->
+                                    <!--android:text="分配&#45;&#45;&#45;&#45;%" />-->
+
+                                <!--<TextView-->
+                                    <!--android:id="@+id/jieliu_baifen"-->
+                                    <!--android:layout_width="@dimen/dp_0"-->
+                                    <!--android:layout_height="45dp"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:gravity="center"-->
+                                    <!--android:text="截留&#45;&#45;&#45;&#45;%" />-->
+
+                                <!--<RelativeLayout-->
+                                    <!--android:layout_width="@dimen/dp_0"-->
+                                    <!--android:layout_height="match_parent"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:gravity="center_vertical">-->
+
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/yaoqing_item_btn1"-->
+                                        <!--android:layout_width="wrap_content"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:layout_centerInParent="true"-->
+                                        <!--android:background="@drawable/inventory_tv_btn_selector"-->
+                                        <!--android:gravity="center"-->
+                                        <!--android:paddingLeft="@dimen/dp_10"-->
+                                        <!--android:paddingTop="@dimen/dp_3"-->
+                                        <!--android:paddingRight="@dimen/dp_10"-->
+                                        <!--android:paddingBottom="@dimen/dp_3"-->
+                                        <!--android:text="邀请"-->
+                                        <!--android:textColor="@drawable/btn_tvcolor_selector"-->
+                                        <!--android:textSize="@dimen/sp_14"-->
+                                        <!--tools:ignore="HardcodedText" />-->
+                                <!--</RelativeLayout>-->
+                            <!--</LinearLayout>-->
+                        <!--</android.support.v7.widget.CardView>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <!--&lt;!&ndash;&ndash;&gt;-->
+                        <!--<android.support.v7.widget.CardView-->
+                        <!--android:id="@+id/card_dengji"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--app:cardBackgroundColor="@color/c_ffffff"-->
+                        <!--app:cardElevation="@dimen/dp_5"-->
+                        <!--app:cardPreventCornerOverlap="true"-->
+                        <!--app:cardUseCompatPadding="true">-->
+
+                        <!--<LinearLayout-->
+                        <!--android:id="@+id/myinvite_ll"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@id/myinvite_rl"-->
+                        <!--android:layout_margin="@dimen/dp_5"-->
+                        <!--android:orientation="horizontal">-->
+
+                        <!--<ImageView-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_marginRight="@dimen/dp_13"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:src="@mipmap/icon_wangzhe" />-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/fenpei_baifen"-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="分配&#45;&#45;&#45;&#45;%" />-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/jieliu_baifen"-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="截留&#45;&#45;&#45;&#45;%" />-->
+
+                        <!--<RelativeLayout-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center_vertical">-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/yaoqing_item_btn1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerInParent="true"-->
+                        <!--android:background="@drawable/inventory_tv_btn_selector"-->
+                        <!--android:gravity="center"-->
+                        <!--android:paddingLeft="@dimen/dp_10"-->
+                        <!--android:paddingTop="@dimen/dp_3"-->
+                        <!--android:paddingRight="@dimen/dp_10"-->
+                        <!--android:paddingBottom="@dimen/dp_3"-->
+                        <!--android:text="邀请"-->
+                        <!--android:textColor="@drawable/btn_tvcolor_selector"-->
+                        <!--android:textSize="@dimen/sp_14"-->
+                        <!--tools:ignore="HardcodedText" />-->
+                        <!--</RelativeLayout>-->
+                        <!--</LinearLayout>-->
+                        <!--</android.support.v7.widget.CardView>-->
+                        <!--<android.support.v7.widget.CardView-->
+                        <!--android:id="@+id/card_dengji"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--app:cardBackgroundColor="@color/c_ffffff"-->
+                        <!--app:cardElevation="@dimen/dp_5"-->
+                        <!--app:cardPreventCornerOverlap="true"-->
+                        <!--app:cardUseCompatPadding="true">-->
+
+                        <!--<LinearLayout-->
+                        <!--android:id="@+id/myinvite_ll"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@id/myinvite_rl"-->
+                        <!--android:layout_margin="@dimen/dp_5"-->
+                        <!--android:orientation="horizontal">-->
+
+                        <!--<ImageView-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_marginRight="@dimen/dp_13"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:src="@mipmap/icon_wangzhe" />-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/fenpei_baifen"-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="分配&#45;&#45;&#45;&#45;%" />-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/截留_baifen"-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="截留&#45;&#45;&#45;&#45;%" />-->
+
+                        <!--<RelativeLayout-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center_vertical">-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/yaoqing_item_btn1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerInParent="true"-->
+                        <!--android:background="@drawable/inventory_tv_btn_selector"-->
+                        <!--android:gravity="center"-->
+                        <!--android:paddingLeft="@dimen/dp_10"-->
+                        <!--android:paddingTop="@dimen/dp_3"-->
+                        <!--android:paddingRight="@dimen/dp_10"-->
+                        <!--android:paddingBottom="@dimen/dp_3"-->
+                        <!--android:text="邀请"-->
+                        <!--android:textColor="@drawable/btn_tvcolor_selector"-->
+                        <!--android:textSize="@dimen/sp_14"-->
+                        <!--tools:ignore="HardcodedText" />-->
+                        <!--</RelativeLayout>-->
+                        <!--</LinearLayout>-->
+                        <!--</android.support.v7.widget.CardView>-->
+                        <!--<android.support.v7.widget.CardView-->
+                        <!--android:id="@+id/card_dengji"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--app:cardBackgroundColor="@color/c_ffffff"-->
+                        <!--app:cardElevation="@dimen/dp_5"-->
+                        <!--app:cardPreventCornerOverlap="true"-->
+                        <!--app:cardUseCompatPadding="true">-->
+
+                        <!--<LinearLayout-->
+                        <!--android:id="@+id/myinvite_ll"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@id/myinvite_rl"-->
+                        <!--android:layout_margin="@dimen/dp_5"-->
+                        <!--android:orientation="horizontal">-->
+
+                        <!--<ImageView-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_marginRight="@dimen/dp_13"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:src="@mipmap/icon_wangzhe" />-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/fenpei_baifen"-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="分配&#45;&#45;&#45;&#45;%" />-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/截留_baifen"-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="截留&#45;&#45;&#45;&#45;%" />-->
+
+                        <!--<RelativeLayout-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center_vertical">-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/yaoqing_item_btn1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerInParent="true"-->
+                        <!--android:background="@drawable/inventory_tv_btn_selector"-->
+                        <!--android:gravity="center"-->
+                        <!--android:paddingLeft="@dimen/dp_10"-->
+                        <!--android:paddingTop="@dimen/dp_3"-->
+                        <!--android:paddingRight="@dimen/dp_10"-->
+                        <!--android:paddingBottom="@dimen/dp_3"-->
+                        <!--android:text="邀请"-->
+                        <!--android:textColor="@drawable/btn_tvcolor_selector"-->
+                        <!--android:textSize="@dimen/sp_14"-->
+                        <!--tools:ignore="HardcodedText" />-->
+                        <!--</RelativeLayout>-->
+                        <!--</LinearLayout>-->
+                        <!--</android.support.v7.widget.CardView>-->
+                        <!--<android.support.v7.widget.CardView-->
+                        <!--android:id="@+id/card_dengji"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--app:cardBackgroundColor="@color/c_ffffff"-->
+                        <!--app:cardElevation="@dimen/dp_5"-->
+                        <!--app:cardPreventCornerOverlap="true"-->
+                        <!--app:cardUseCompatPadding="true">-->
+
+                        <!--<LinearLayout-->
+                        <!--android:id="@+id/myinvite_ll"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@id/myinvite_rl"-->
+                        <!--android:layout_margin="@dimen/dp_5"-->
+                        <!--android:orientation="horizontal">-->
+
+                        <!--<ImageView-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_marginRight="@dimen/dp_13"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:src="@mipmap/icon_wangzhe" />-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/fenpei_baifen"-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="分配&#45;&#45;&#45;&#45;%" />-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/截留_baifen"-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="截留&#45;&#45;&#45;&#45;%" />-->
+
+                        <!--<RelativeLayout-->
+                        <!--android:layout_width="@dimen/dp_0"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center_vertical">-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/yaoqing_item_btn1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerInParent="true"-->
+                        <!--android:background="@drawable/inventory_tv_btn_selector"-->
+                        <!--android:gravity="center"-->
+                        <!--android:paddingLeft="@dimen/dp_10"-->
+                        <!--android:paddingTop="@dimen/dp_3"-->
+                        <!--android:paddingRight="@dimen/dp_10"-->
+                        <!--android:paddingBottom="@dimen/dp_3"-->
+                        <!--android:text="邀请"-->
+                        <!--android:textColor="@drawable/btn_tvcolor_selector"-->
+                        <!--android:textSize="@dimen/sp_14"-->
+                        <!--tools:ignore="HardcodedText" />-->
+                        <!--</RelativeLayout>-->
+                        <!--</LinearLayout>-->
+                        <!--</android.support.v7.widget.CardView>-->
+                    <!--</LinearLayout>-->
+
+                <!--</ScrollView>-->
+
+                <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/myinvite_list"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_below="@+id/myinvite_rl"-->
+                <!--/>-->
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 </RelativeLayout>

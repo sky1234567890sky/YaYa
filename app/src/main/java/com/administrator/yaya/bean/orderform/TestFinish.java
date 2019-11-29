@@ -49,11 +49,9 @@ public class TestFinish implements Serializable{
         public CommodityBean getCommodity() {
             return commodity;
         }
-
         public void setCommodity(CommodityBean commodity) {
             this.commodity = commodity;
         }
-
         public String getAmount() {
             return amount;
         }
@@ -271,7 +269,7 @@ public class TestFinish implements Serializable{
             private int orderPayTpe;
             private int salesStatus;
             private String salesBuildTime;
-            private Object salesUpdateTime;
+            private String salesUpdateTime;
             private Object salesBuildTimeEnd;
             private String userName;
             private String userPhone;
@@ -412,11 +410,11 @@ public class TestFinish implements Serializable{
                 this.salesBuildTime = salesBuildTime;
             }
 
-            public Object getSalesUpdateTime() {
+            public String getSalesUpdateTime() {
                 return salesUpdateTime;
             }
 
-            public void setSalesUpdateTime(Object salesUpdateTime) {
+            public void setSalesUpdateTime(String salesUpdateTime) {
                 this.salesUpdateTime = salesUpdateTime;
             }
 

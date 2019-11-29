@@ -20,14 +20,17 @@ import com.administrator.yaya.bean.my.SwitchReceiveingQrCode;
 import com.administrator.yaya.bean.my.TestAlipayReceiverCode;
 import com.administrator.yaya.bean.my.TestExpend;
 import com.administrator.yaya.bean.my.TestGetEtVerificationCode;
+import com.administrator.yaya.bean.my.TestGetUsergCodeImg;
 import com.administrator.yaya.bean.my.TestIncome;
 import com.administrator.yaya.bean.my.TestLoadHeadlerIv;
 import com.administrator.yaya.bean.my.TestMyEarnings;
 import com.administrator.yaya.bean.my.TestMyInvite;
+import com.administrator.yaya.bean.my.TestMyInviteAll;
 import com.administrator.yaya.bean.my.TestNotificationInfo;
 import com.administrator.yaya.bean.my.TestPutawayAllOrderStock;
 import com.administrator.yaya.bean.my.TestRebate;
 import com.administrator.yaya.bean.my.TestSmallBook;
+import com.administrator.yaya.bean.my.TestUpdateUserNew;
 import com.administrator.yaya.bean.my.TestUploadHeadler;
 import com.administrator.yaya.bean.my.TestUserNowMsg;
 import com.administrator.yaya.bean.my.TestWechatReceiverCode;
@@ -35,6 +38,7 @@ import com.administrator.yaya.bean.orderform.TestAllOrderStock;
 import com.administrator.yaya.bean.orderform.TestCancel;
 import com.administrator.yaya.bean.orderform.TestConfirmReceipt;
 import com.administrator.yaya.bean.orderform.TestFinish;
+import com.administrator.yaya.bean.orderform.TestNoReceipt;
 import com.administrator.yaya.bean.orderform.TestToOrderStock;
 import com.administrator.yaya.bean.orderform.TestUpdatePwd;
 
@@ -82,7 +86,8 @@ public interface INetService {
     //    注册
     @POST("appRegister")
     @FormUrlEncoded
-    Observable<TestRegister> getTestRegister(@Field("userPhone") String userPhone, @Field("userPwd") String userPwd, @Field("userInvitationCode") String userInvitationCode, @Field("codeName") String codeName, @Field("token") String token);
+    //userInvitationCodeName
+    Observable<TestRegister> getTestRegister(@Field("userPhone") String userPhone, @Field("userPwd") String userPwd, @Field("userInvitationCodeName") String userInvitationCodeName, @Field("codeName") String codeName);
 
     //手机验证码(注册 和 修改)
     @POST("getPhoneCode")
@@ -98,14 +103,18 @@ public interface INetService {
 ///yayaApp/comBuy/toBuyCom
 //    参数:
 //    用户id		userId
+
     @POST("comBuy/toBuyCom")
     @FormUrlEncoded
-    Observable<TestBuyCom> getTestBuyCom(@Field("userId") int userId,@Field("token") String token);
-    //提交订单
+    Observable<TestBuyCom> getTestBuyCom(@Field("userId") int userId, @Field("token") String token);
+
+    //提交订单接口
+    //参数新增
+    //commodityPriceDeduction    抵扣金额
 //    http://192.168.0.198:8080/yayaApp/comBuy/toOrderStock
     @POST("comBuy/toOrderStock")
     @FormUrlEncoded
-    Observable<TestToOrderStock> getTestOrderStock(@Field("userId") int userId, @Field("token") String token,@Field("commodityPrice") String commodityPrice, @Field("payerName") String payerName, @Field("commodityAmount") String commodityAmount);
+    Observable<TestToOrderStock> getTestOrderStock(@Field("userId") int userId, @Field("token") String token, @Field("commodityPrice") String commodityPrice, @Field("payerName") String payerName, @Field("commodityAmount") String commodityAmount, @Field("commodityPriceDeduction") double commodityPriceDeduction, @Field("flagType") int flagType);
 
     //    查看进货状态-所有进货订单
 //    http://192.168.0.198:8080/yayaApp/comBuy/allOrderStock
@@ -134,7 +143,7 @@ public interface INetService {
     //付款信息 http://192.168.0.198:8080/yayaApp/comBuy/getGathering
     @POST("comBuy/getGathering")
     @FormUrlEncoded
-    Observable<TestPayToAffirmInfo> getTestPayToAffimInfo(@Field("orderNumber") String orderNumber,@Field("token") String token);
+    Observable<TestPayToAffirmInfo> getTestPayToAffimInfo(@Field("orderNumber") String orderNumber, @Field("token") String token);
 
     //取消售货订单
     //http://192.168.0.198:8080/yayaApp/comBuy/cancelOrderStock
@@ -148,23 +157,30 @@ public interface INetService {
     @FormUrlEncoded
     Observable<TestNotificationInfo> getTestNotificationInfo(@Field("userId") int userId, @Field("token") String token);
 
-    //我的邀请
+
+    //    我的邀请
+    @POST("myInviteAll")
+    @FormUrlEncoded
+    Observable<TestMyInviteAll> getTestMyInviteAll(@Field("userId") int userId, @Field("token") String token);
+
+
+    //我的邀请-查看返利记录
 //    http://192.168.0.198:8080/yayaApp/getMyInvite
     @POST("getMyInvite")
     @FormUrlEncoded
-    Observable<TestMyInvite> getTestMyInvite(@Field("userId") int userId,@Field("token") String token);
+    Observable<TestMyInvite> getTestMyInvite(@Field("userId") int userId, @Field("token") String token);
+
 
     //    小账本
 //    http://192.168.0.198:8080/yayaApp/xiaoZhangBen
     @POST("xiaoZhangBen")
     @FormUrlEncoded
-    Observable<TestSmallBook> getTestSmallBook(@Field("userId") int userId,@Field("token") String token);
-
+    Observable<TestSmallBook> getTestSmallBook(@Field("userId") int userId, @Field("token") String token);
 
     //上架单个货物http://192.168.0.198:8080/yayaApp/comBuy/putawayOneOrderStock
     @POST("comBuy/putawayOneOrderStock")
     @FormUrlEncoded
-    Observable<TestUpawaySingleGoods> getTestUpawaySingleGoods(@Field("orderNumber") String orderNumber,@Field("token") String token);
+    Observable<TestUpawaySingleGoods> getTestUpawaySingleGoods(@Field("orderNumber") String orderNumber, @Field("token") String token);
 
     //    上架全部货物
 //    http://192.168.0.198:8080/yayaApp/comBuy/putawayAllOrderStock
@@ -172,9 +188,9 @@ public interface INetService {
 //    用户Id	userId
     @POST("comBuy/putawayAllOrderStock")
     @FormUrlEncoded
-    Observable<TestUpawayAllSingleGoods> getTestUpawayAllSingleGoods(@Field("userId") int userId,@Field("token") String token);
+    Observable<TestUpawayAllSingleGoods> getTestUpawayAllSingleGoods(@Field("userId") int userId, @Field("token") String token);
 
-//    所有售货订单
+    //    所有售货订单
 ///yayaApp/comSell/allOrderSales
 //    参数：
 //    用户id userId
@@ -182,18 +198,18 @@ public interface INetService {
     //全部
     @POST("comSell/allOrderSales")
     @FormUrlEncoded
-    Observable<TestAllOrderStock> getTestAllOrderStock(@Field("userId") int userId,@Field("token") String token);
+    Observable<TestAllOrderStock> getTestAllOrderStock(@Field("userId") int userId, @Field("token") String token);
 
     //其他
     @POST("comSell/allOrderSales")
     @FormUrlEncoded
-    Observable<TestFinish> getTestFinish(@Field("userId") int userId,@Field("token") String token, @Field("salesStatus") int salesStatus);//已完成
+    Observable<TestFinish> getTestFinish(@Field("userId") int userId, @Field("token") String token, @Field("salesStatus") int salesStatus);
 
-//    //已取消
-//    @POST("comSell/allOrderSales")
-//    @FormUrlEncoded
-//    Observable<TestCancel> getTestCancel(@Field("userId") int userId, @Field("token") String token,@Field("salesStatus") int salesStatus);//已完成
-//
+    //未收货
+    @POST("comSell/otherOrderSales")
+    @FormUrlEncoded
+    Observable<TestCancel> getTestCancel(@Field("userId") int userId, @Field("token") String token);//未收货
+
 
     //    确认收货（确认收款）
 //    http://192.168.0.198:8080/yayaApp/comSell/confirmReceipt
@@ -203,6 +219,11 @@ public interface INetService {
     @FormUrlEncoded
     Observable<TestConfirmReceipt> getTestConfirmReceipt(@Field("salesId") int salesId, @Field("userId") int userId, @Field("token") String token);//传入售卖中的selaiD
 
+    //未收款 未收货 comSell/noReceipt
+    @POST("comSell/noReceipt")
+    @FormUrlEncoded
+    Observable<TestNoReceipt> getTestNoReceipt(@Field("salesId") int salesId, @Field("userId") int userId, @Field("token") String token);
+
 
     //    取消售卖订单
 //    http://192.168.0.198:8080/yayaApp/comSell/cancelOrderSales
@@ -210,7 +231,7 @@ public interface INetService {
 //    订单编号	saleId
     @POST("comSell/cancelOrderSales")
     @FormUrlEncoded
-    Observable<TestCancelOrderStock> getTestCancelOrderSales(@Field("salesId") int salesId,@Field("token") String token);//传入取消售卖中的selaiD
+    Observable<TestCancelOrderStock> getTestCancelOrderSales(@Field("salesId") int salesId, @Field("token") String token);//传入取消售卖中的selaiD
 
     //我的收益
 //    http://192.168.0.198:8080/yayaApp/myInfo
@@ -219,22 +240,22 @@ public interface INetService {
 //    收益类型	earningsType	收益类型--1收入-2支出-3返利
     @POST("myInfo")
     @FormUrlEncoded
-    Observable<TestMyEarnings> getTestMyEarnings(@Field("userId") int userId, @Field("token") String token,@Field("earningsType") int earningsType);
+    Observable<TestMyEarnings> getTestMyEarnings(@Field("userId") int userId, @Field("token") String token, @Field("earningsType") int earningsType);
 
     //返利
     @POST("myInfo")
     @FormUrlEncoded
-    Observable<TestRebate> getTestRebate(@Field("userId") int userId,@Field("token") String token, @Field("earningsType") int earningsType);
+    Observable<TestRebate> getTestRebate(@Field("userId") int userId, @Field("token") String token, @Field("earningsType") int earningsType);
 
     //支出
     @POST("myInfo")
     @FormUrlEncoded
-    Observable<TestExpend> getTestExpend(@Field("userId") int userId,@Field("token") String token, @Field("earningsType") int earningsType);
+    Observable<TestExpend> getTestExpend(@Field("userId") int userId, @Field("token") String token, @Field("earningsType") int earningsType);
 
     //收入
     @POST("myInfo")
     @FormUrlEncoded
-    Observable<TestIncome> getTestIncome(@Field("userId") int userId,@Field("token") String token, @Field("earningsType") int earningsType);
+    Observable<TestIncome> getTestIncome(@Field("userId") int userId, @Field("token") String token, @Field("earningsType") int earningsType);
 
 
     //上架全部货物
@@ -252,7 +273,7 @@ public interface INetService {
 // 上架成功
     @POST("myInfoPutaway")
     @FormUrlEncoded
-    Observable<TestPutawayAllOrderStock> getPutawayAllOrderStock(@Field("userId") int userId,@Field("token") String token, @Field("salesAmount") int salesAmount);
+    Observable<TestPutawayAllOrderStock> getPutawayAllOrderStock(@Field("userId") int userId, @Field("token") String token, @Field("salesAmount") int salesAmount);
 
     //    修改密码
 //    http://192.168.0.198:8080/yayaApp/updatePwd
@@ -273,6 +294,7 @@ public interface INetService {
     @POST("getPhoneCode")
     @FormUrlEncoded
     Observable<TestGetEtVerificationCode> getTestVerficationCode(@Field("phone") String phone);
+
     //    开关收款码
 //            openButton
 //    参数：
@@ -282,6 +304,7 @@ public interface INetService {
     @POST("openButton")
     @FormUrlEncoded
     Observable<SwitchReceiveingQrCode> getTestSwitchReceiveingQrCode(@Field("userId") int userId, @Field("type") int type, @Field("status") int status, @Field("token") String token);
+
     //上传头像
 //    参数:
 //    userId 用户id
@@ -311,6 +334,8 @@ public interface INetService {
     //		imgStatus   二维码状态
     //
     //二维码状态 1待审核 2审核完成  3审核不通过
+
+
     @POST("getUserCodeImg")
     @FormUrlEncoded
     Observable<TestAlipayReceiverCode> getAlipayReceiverCode(@Field("userId") int userId, @Field("type") int type, @Field("token") String token);
@@ -322,14 +347,22 @@ public interface INetService {
 //    Observable<TestWechatReceiverCode> getTestUploadImage(@Field("userId") int userId, @Field("type") int type);
 
 
-    //微信二维码  列表展示
+    //参数列表展示
 //    getUserCodeImg
 //    参数:
 //    用户id		userId
 //    类型		type	1、微信 2、支付宝
+    @POST("getUserCodeImgConfig")
+    @FormUrlEncoded
+    Observable<TestWechatReceiverCode> getWechatReceiverCode(@Field("type") int type);
+
+    //图片列表展示
     @POST("getUserCodeImg")
     @FormUrlEncoded
-    Observable<TestWechatReceiverCode> getWechatReceiverCode(@Field("userId") int userId, @Field("type") int type, @Field("token") String token);
+    Observable<TestGetUsergCodeImg> getUserCodeImg(@Field("userId") int userId,@Field("token") String token,@Field("type") int type);
+
+
+
     //微信 上传 图片 二维码   imgId
 //    appUploadCodeImg
 //    参数:
@@ -346,7 +379,6 @@ public interface INetService {
     @FormUrlEncoded
     Observable<TestUpLoadGetQr2> getTestUpLoadGetQrNo2(@Field("imgId") int imgId, @Field("userId") int userId, @Field("imgType") int imgType, @Field("imgUrl") String imgUrl, @Field("imgMoney") double imgMoney);
 
-
     //上传图片
     @POST("uploadCodeImg")
     @Multipart
@@ -357,19 +389,12 @@ public interface INetService {
     @FormUrlEncoded
     Observable<TestUserNowMsg> getTestUserNowMsg(@Field("userId") int userId, @Field("token") String token);
 
-//    读取信息
+    //    读取信息
 ///yayaApp/comSell/updateUserNew
 //    参数:用户id	userId
-//@POST("comSell/getUserNew")
-//@FormUrlEncoded
-//Observable<TestUserNow> getTestUserNowMsg(@Field("userId") int userId, @Field("token") String token);
-
-
-    //未收款 comSell/noReceipt
-//    @POST("comSell/noReceipt")
-//    @FormUrlEncoded
-//    Observable<TestNoReceipt> getTestNoReceipt(@Field("userId") int userId,@Field("token") String token);
-
+    @POST("comSell/updateUserNew")
+    @FormUrlEncoded
+    Observable<TestUpdateUserNew> getTestUpdateUserNew(@Field("userId") int userId, @Field("token") String token);
 
     //    点击营业
 ///yayaApp/comBuy/doBusinese
@@ -381,6 +406,8 @@ public interface INetService {
 
     @POST("comBuy/doBusinese")
     @FormUrlEncoded
-    Observable<TestDianjiYingye> getTestDianjiYingye(@Field("userId") int userId, @Field("token") String token,@Field("userSalesCount") String userSalesCount);
+    Observable<TestDianjiYingye> getTestDianjiYingye(@Field("userId") int userId, @Field("token") String token, @Field("userSalesCount") int userSalesCount);
+
+
     //营业
 }

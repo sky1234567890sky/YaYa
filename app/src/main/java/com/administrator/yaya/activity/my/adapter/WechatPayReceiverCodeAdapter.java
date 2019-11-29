@@ -22,11 +22,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WechatPayReceiverCodeAdapter extends RecyclerView.Adapter<WechatPayReceiverCodeAdapter.Vh> {
-    private final List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> list;
+
+    private final List<TestWechatReceiverCode.DataBean> list;
     private Context context;
     private View inflate;
+    private double imgMoney;
 
-    public WechatPayReceiverCodeAdapter(List<TestWechatReceiverCode.DataBean.UserCodeImgListBean> list) {
+    public WechatPayReceiverCodeAdapter(List<TestWechatReceiverCode.DataBean> list) {
         this.list = list;
     }
 
@@ -41,137 +43,141 @@ public class WechatPayReceiverCodeAdapter extends RecyclerView.Adapter<WechatPay
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Vh vh, final int i) {
-        TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean = null;
+        TestWechatReceiverCode.DataBean userCodeImgListBean = null;
         String imgUrl = null;
 //        double imgMoney = 0.00;
-
         for (int j = 0; j < list.size(); j++) {
-            TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1 = list.get(j);
-            if (userCodeImgListBean1.getImgType() == 1) {//微信
-                if (userCodeImgListBean1.getImgMoney() == 1000.00 && i == 1) {
+
+            TestWechatReceiverCode.DataBean userCodeImgListBean1 = list.get(j);
+
+            if (userCodeImgListBean1.getImgConfigType() == 1) {//微信
+                if (userCodeImgListBean1.getImgConfigMoney() == 1000.00 && i == 0) {
 //                    vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
 //                    if (userCodeImgListBean.getImgStatus() == 1) {
 ////                    //待审核  不能点击
 //                        vh.itemView.setClickable(false);
 //                        vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
 //                        vh.mWechatHint.setVisibility(View.VISIBLE);
-                        Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
+                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
 //                        vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
 //                    }
-                } else if (userCodeImgListBean1.getImgMoney() == 2000.00 && i == 2) {
+                } else if (userCodeImgListBean1.getImgConfigMoney() == 2000.00 && i == 1) {
                     Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
-                } else if (userCodeImgListBean1.getImgMoney() == 3000.00 && i == 3) {
+                } else if (userCodeImgListBean1.getImgConfigMoney() == 3000.00 && i == 2) {
                     Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
-                } else if (userCodeImgListBean1.getImgMoney() == 4000.00 && i == 4) {
-                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
-                } else if (userCodeImgListBean1.getImgMoney() == 5000.00 && i == 5) {
+                } else if (userCodeImgListBean1.getImgConfigMoney() == 4000.00 && i == 3) {
                     Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
                 } else {
                     Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
                 }
-                if (getimageStatus(vh,userCodeImgListBean1)) break;
+                if (getimageStatus(vh, userCodeImgListBean1)) break;
             }
-            }
-//        if (list.size() > 0) {
-//            for (int j = 0; j < list.size(); j++) {
-//                userCodeImgListBean = list.get(j);
-//                imgUrl = userCodeImgListBean.getImgUrl();
-//
-//                imgMoney = userCodeImgListBean.getImgMoney();
-//                //                    imgStatus   二维码状态
-////                    二维码状态 1待审核 2审核完成  3审核不通过
-//                //1.
-////                if (userCodeImgListBean.getImgStatus() == 1) {
-////                    //待审核  不能点击
-//////                    vh.itemView.setOnClickListener();
-//////                    vh.itemView.
-////                    vh.itemView.setClickable(false);
-////                    vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
-////                    vh.mWechatHint.setVisibility(View.VISIBLE);
-////                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
-////                    vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
-////                } else if (userCodeImgListBean.getImgStatus() == 2) {//审核完成
-//////                    if (userCodeImgListBean.getImgMoney() == 1000.00 && i == 1) {
-////                        vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
-////                        vh.mWechatHint.setVisibility(View.GONE);
-////                        vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
-////                        Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
-//////                    }
-////                } else if (userCodeImgListBean.getImgStatus() == 3) {//审核不通过
-////                    vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
-////                    vh.mWechatNoShenhe.setVisibility(View.VISIBLE);
-////                    vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
-////                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
-////                }
-//
-//
-            if (i == 0) {
-                vh.mWechatGetmenryTv.setText("任意收款金额");
-            } else if (i == 1) {
-                vh.mWechatGetmenryTv.setText("1000.00元");
-            } else if (i == 2) {
-                vh.mWechatGetmenryTv.setText("2000.00元");
-            } else if (i == 3) {
-                vh.mWechatGetmenryTv.setText("3000.00元");
-            } else if (i == 4) {
-                vh.mWechatGetmenryTv.setText("4000.00元");
-            } else if (i == 5) {
-                vh.mWechatGetmenryTv.setText("5000.00元");
-            }
+        }
 
-        vh.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (wechatPayReceiverCodesetOnclikListener != null) {
-                    wechatPayReceiverCodesetOnclikListener.setonclik(i, v);
+//             else if (userCodeImgListBean1.getImgConfigMoney() == 5000.00 && i == 5) {
+//            Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
+//        }
+
+        if (list.size() > 0) {
+            for (int j = 0; j < list.size(); j++) {
+                userCodeImgListBean = list.get(j);
+                imgUrl = userCodeImgListBean.getImage();
+                imgMoney = userCodeImgListBean.getImgConfigMoney();
+//                                    imgStatus   二维码状态
+//                    二维码状态 1待审核 2审核完成  3审核不通过
+//                1.
+                if (userCodeImgListBean.getImgConfigType() == 1) {
+                    //待审核  不能点击
+//                    vh.itemView.setOnClickListener();
+//                    vh.itemView.
+                    vh.itemView.setClickable(false);
+                    vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
+                    vh.mWechatHint.setVisibility(View.VISIBLE);
+                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
+                    vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
+                } else if (userCodeImgListBean.getImgConfigType() == 2) {//审核完成
+//                    if (userCodeImgListBean.getImgMoney() == 1000.00 && i == 1) {
+                    vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
+                    vh.mWechatHint.setVisibility(View.GONE);
+                    vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
+                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
+//                    }
+                } else if (userCodeImgListBean.getImgConfigType() == 3) {//审核不通过
+                    vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
+                    vh.mWechatNoShenhe.setVisibility(View.VISIBLE);
+                    vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
+                    Glide.with(context).load(imgUrl).into(vh.mImageViewUrlWechat);
                 }
-            }
-        });
-    }
+//        if (i == 0) {
+//            vh.mWechatGetmenryTv.setText("任意收款金额");
+//        } else
 
-    private boolean getimageStatus(Vh vh, TestWechatReceiverCode.DataBean.UserCodeImgListBean userCodeImgListBean1) {
-        if (userCodeImgListBean1.getImgStatus() == 1) {
+                if (i == 0) {
+                    vh.mWechatGetmenryTv.setText(userCodeImgListBean.getImgConfigMoney()+"元");
+                } else if (i == 1) {
+                    vh.mWechatGetmenryTv.setText(userCodeImgListBean.getImgConfigMoney()+"元");
+                } else if (i == 2) {
+                    vh.mWechatGetmenryTv.setText(userCodeImgListBean.getImgConfigMoney()+"元");
+                } else if (i == 3) {
+                    vh.mWechatGetmenryTv.setText(userCodeImgListBean.getImgConfigMoney()+"元");
+                } else if (i == 4) {
+                    vh.mWechatGetmenryTv.setText(userCodeImgListBean.getImgConfigMoney()+"元");
+                }
+
+                vh.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (wechatPayReceiverCodesetOnclikListener != null) {
+                            wechatPayReceiverCodesetOnclikListener.setonclik(i, v);
+                        }
+                    }
+                });
+
+            }
+        }
+    }
+    private boolean getimageStatus(Vh vh, TestWechatReceiverCode.DataBean userCodeImgListBean1) {
+
+        if (userCodeImgListBean1.getImgConfigType() == 1) {
             //待审核  不能点击
             vh.itemView.setClickable(false);
             vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
             vh.mWechatHint.setVisibility(View.VISIBLE);
             vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
 
-            Glide.with(context).load(userCodeImgListBean1.getImgUrl()).into(vh.mImageViewUrlWechat);
-            double imgMoney1 = userCodeImgListBean1.getImgMoney();
+            Glide.with(context).load(userCodeImgListBean1.getImage()).into(vh.mImageViewUrlWechat);
+            double imgMoney1 = userCodeImgListBean1.getImgConfigMoney();
             vh.mWechatGetmenryTv.setText(imgMoney1 + "元");
             return true;
 
-        }else if (userCodeImgListBean1.getImgStatus() == 2) {
+        } else if (userCodeImgListBean1.getImgConfigType() == 2) {
             //审核通过
             vh.itemView.setClickable(true);
             vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
             vh.mWechatHint.setVisibility(View.GONE);
             vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
 
-            Glide.with(context).load(userCodeImgListBean1.getImgUrl()).into(vh.mImageViewUrlWechat);
-            double imgMoney1 = userCodeImgListBean1.getImgMoney();
+            Glide.with(context).load(userCodeImgListBean1.getImage()).into(vh.mImageViewUrlWechat);
+            double imgMoney1 = userCodeImgListBean1.getImgConfigMoney();
             vh.mWechatGetmenryTv.setText(imgMoney1 + "元");
             return true;
-        }else if (userCodeImgListBean1.getImgStatus() == 3) {
+        } else if (userCodeImgListBean1.getImgConfigType() == 3) {
             //待审核  不能点击
             vh.itemView.setClickable(true);
             vh.mImageViewUrlWechat.setVisibility(View.VISIBLE);
             vh.mWechatNoShenhe.setVisibility(View.VISIBLE);
             vh.mWechatpayItemLl.setVisibility(View.INVISIBLE);
 
-            Glide.with(context).load(userCodeImgListBean1.getImgUrl()).into(vh.mImageViewUrlWechat);
-            double imgMoney1 = userCodeImgListBean1.getImgMoney();
+            Glide.with(context).load(userCodeImgListBean1.getImage()).into(vh.mImageViewUrlWechat);
+            double imgMoney1 = userCodeImgListBean1.getImgConfigMoney();
             vh.mWechatGetmenryTv.setText(imgMoney1 + "元");
             return true;
         }
         return false;
     }
-
-
     @Override
     public int getItemCount() {
-        return 6;
+        return list != null ? list.size() : 0;
     }
 
     //点击图片 拉起相册  选图

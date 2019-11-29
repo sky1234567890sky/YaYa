@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.orderform.FinishFragment">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-    android:id="@+id/finish_refreshLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:srlEnableLoadMore="true"
-    app:srlEnableAutoLoadMore="true"
-    >
-    <com.scwang.smartrefresh.layout.header.ClassicsHeader
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:srlEnableLastTime="true"
-    app:srlClassicsSpinnerStyle="FixedBehind"
-    app:srlTextSizeTitle="@dimen/sp_12"
-    app:srlTextSizeTime="@dimen/sp_8"
-    app:srlTextTimeMarginTop="@dimen/dp_2"
-    app:srlDrawableProgressSize="@dimen/dp_20"
-    app:srlDrawableMarginRight="@dimen/dp_20"
-    app:srlDrawableProgress="@mipmap/icon_dark_refresh"
-    />
-        <android.support.v7.widget.RecyclerView
+        android:id="@+id/finish_refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableAutoLoadMore="true"
+        app:srlEnableLoadMore="true">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/finish_lv" />
-    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:srlTextSizeTitle="@dimen/sp_12"
-    app:srlTextSizeTime="@dimen/sp_8"
-    app:srlDrawableProgress="@mipmap/icon_dark_refresh"
-    />
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlDrawableMarginRight="@dimen/dp_20"
+            app:srlDrawableProgress="@mipmap/icon_dark_refresh"
+            app:srlDrawableProgressSize="@dimen/dp_20"
+            app:srlEnableLastTime="true"
+            app:srlTextSizeTime="@dimen/sp_8"
+            app:srlTextSizeTitle="@dimen/sp_12"
+            app:srlTextTimeMarginTop="@dimen/dp_2" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/finish_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlDrawableProgress="@mipmap/icon_dark_refresh"
+            app:srlTextSizeTime="@dimen/sp_8"
+            app:srlTextSizeTitle="@dimen/sp_12" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </FrameLayout>

@@ -24,4 +24,9 @@ public class NormalConfig {
     public static final String NET_HAS_CONNECTED = "netHasConnected";
 
 
+    //二维码开关状态
+    public static final String WechatQr_isChecket = "wechatQr";
+    public static final String AlipayQr_isChecket = "alipayQr";
+
+    public static String isChecket = "shiyongyongjin";//使用佣金
 }

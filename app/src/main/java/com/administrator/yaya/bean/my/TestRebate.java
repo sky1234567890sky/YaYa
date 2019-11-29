@@ -276,7 +276,7 @@ public class TestRebate {
                 this.userEarningsTotal = userEarningsTotal;
             }
 
-            public int getUserContributeTotal() {
+            public double getUserContributeTotal() {
                 return userContributeTotal;
             }
 
