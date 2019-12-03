@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/c_ffffff"
+    android:layout_height="match_parent"
+    tools:context=".activity.my.ranking.TuiguangRankingFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tuiguang_hint_refresh_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="每天0点前更新~~"
+        android:textSize="@dimen/sp_12"
+        android:textColor="#999999"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_5"
+        />
+    <TextView
+        android:id="@+id/tuiguang_di_ming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="您今日未上榜"
+        android:textSize="@dimen/sp_14"
+        android:textColor="#FFFFFF"
+        android:background="@mipmap/bg"
+        android:gravity="center"
+        />
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/tuiguang_refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableAutoLoadMore="true"
+        app:srlEnableLoadMore="true">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlDrawableMarginRight="@dimen/dp_20"
+            app:srlDrawableProgress="@mipmap/icon_dark_refresh"
+            app:srlDrawableProgressSize="@dimen/dp_20"
+            app:srlEnableLastTime="true"
+            app:srlTextSizeTime="@dimen/sp_8"
+            app:srlTextSizeTitle="@dimen/sp_12"
+            android:background="@color/c_ccc"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:id="@+id/tuiguang_mlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlDrawableProgress="@mipmap/icon_dark_refresh"
+            app:srlTextSizeTime="@dimen/sp_8"
+            app:srlTextSizeTitle="@dimen/sp_12" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+</LinearLayout>

@@ -21,6 +21,7 @@ import com.administrator.yaya.bean.my.TestRebate;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
+import com.administrator.yaya.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -74,6 +75,14 @@ public class IncomeFragment extends BaseLazyLoadFragment<LoginModel> implements 
     @Override
     public void refresh() {
         super.refresh();
+        //自动回弹
+        incomeRefreshLayout.getLayout().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                incomeRefreshLayout.finishRefresh();
+
+            }
+        }, 200l);
         mList.scrollToPosition(0);
 //        incomeRefreshLayout.autoRefresh();
         initData();
@@ -124,7 +133,7 @@ public class IncomeFragment extends BaseLazyLoadFragment<LoginModel> implements 
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong("服务器错误！");
     }
 
     @Override

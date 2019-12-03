@@ -23,7 +23,9 @@
             app:srlEnableLastTime="true"
             app:srlTextSizeTime="@dimen/sp_8"
             app:srlTextSizeTitle="@dimen/sp_12"
-            app:srlTextTimeMarginTop="@dimen/dp_2" />
+            app:srlTextTimeMarginTop="@dimen/dp_2"
+            android:background="@color/c_ccc"
+            />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/finish_lv"

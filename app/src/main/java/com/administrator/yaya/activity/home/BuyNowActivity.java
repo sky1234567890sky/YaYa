@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -34,6 +36,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -48,10 +53,8 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     TextView mComName;
     @BindView(R.id.buy_comPrice)
     TextView mComPrice;
-
     @BindView(R.id.now_bu_gamemoney_iv)
     RoundedImageView nowBuGamemoneyIv;
-
     @BindView(R.id.buy_gamemoney_number)
     EditText buyGamemoneyNumber;
 
@@ -60,22 +63,18 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
     @BindView(R.id.buy_min_gamemoney_remaining_quantity)
     TextView buyMinGamemoneyRemainingQuantity;
-
     @BindView(R.id.buy_max_gamemoney_remaining_quantity)
     TextView buyMaxGamemoneyRemainingQuantity;
-
     @BindView(R.id.pay_money)
     TextView payMoney;
     @BindView(R.id.pay_money2)
     TextView payMoney2;
-
     @BindView(R.id.pay_way)
     TextView payWay;
     @BindView(R.id.nowbuy_commit_btn)
     TextView nowbuyCommitBtn;
     @BindView(R.id.bank_name)
     EditText bankName;
-
     @BindView(R.id.now_buy_yongjin_tv)//使用佣金
             TextView mShiyongYongjinTv;
     @BindView(R.id.buy_now_switch)//开关
@@ -106,6 +105,16 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
         boolean aBoolean = SharedPrefrenceUtils.getBoolean(BuyNowActivity.this, NormalConfig.isChecket);
 //        mSwitch.setChecked(aBoolean);
 
+        nextEt();
+    }
+
+    private void nextEt() {
+        //限制有 空格和特殊字符 输入
+        setEditTextInhibitInputSpaChat(buyGamemoneyNumber);
+        setEditTextInhibitInputSpaChat(bankName);
+
+        setEditTextLengthLimit(buyGamemoneyNumber, 20);//输入付款金额长度
+        setEditTextLengthLimit(bankName, 20);//输入付款人姓名（姓名最长15个字）
     }
 
     @Override
@@ -120,7 +129,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong("服务器错误！");
     }
 
     @SuppressLint("SetTextI18n")
@@ -133,7 +142,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 data = testBuyCom.getData();
 
                 if (testBuyCom.getMsg().equals(mApplication.SignOut)) {
-
 
 
                     Toast.makeText(this, "您的账号正在其他设备登录!请重新登陆！", Toast.LENGTH_SHORT).show();
@@ -205,8 +213,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     startActivity(login);
 
                     BuyNowActivity.this.finish();
-                }
-                if (testToOrderStock.getCode() == 0 && testToOrderStock.getData() != null && !testToOrderStock.getMsg().equals(mApplication.SignOut)) {
+                } else if (testToOrderStock.getCode() == 0 && testToOrderStock.getData() != null && !testToOrderStock.getMsg().equals(mApplication.SignOut)) {
 
                     TestToOrderStock.DataBean data = testToOrderStock.getData();
                     //银行
@@ -236,7 +243,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                         intent.putExtra("bankCard", bankCard);//
                         intent.putExtra("remark", remark);//备注
 
-                        intent.putExtra("name2",bankName.getText().toString());
+                        intent.putExtra("name2", bankName.getText().toString());
                         startActivity(intent);
                         finish();
                     }
@@ -249,15 +256,19 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     protected int getLayoutId() {
         return R.layout.activity_buy_now;
     }
+
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initListener() {
+
         buyGamemoneyNumber.addTextChangedListener(new TextWatcher() {
+
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence source, int start, int count, int after) {
 
             }
+
             @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -265,7 +276,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 if (mSwitch.isChecked() == true) {
                     mSwitch.setChecked(false);
                 }
-
                 String tv = String.valueOf(s);
                 if (tv.isEmpty()) {
                     payMoney2.setText("0");
@@ -291,6 +301,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     buyGamemoneyNumber.setInputType(InputType.TYPE_CLASS_TEXT);//来开启软键盘
                 }
             }
+
             @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
@@ -322,7 +333,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                             mShiyongYongjin.setText("- " + commodityPriceDeduction);
                             //应付金额 - 佣金
                             payMoney2.setText("" + (index - commodityPriceDeduction));
-                        }else{
+                        } else {
                             ToastUtil.showLong("暂无佣金可使用");
                             mSwitch.setChecked(false);
                         }
@@ -337,6 +348,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
             }
         });
     }
+
     @OnClick({R.id.now_buy_iv, R.id.nowbuy_commit_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -352,7 +364,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     if (comPurchaseNumMin <= i && i <= comPurchaseNumMax) {
                         //付款人姓名上传对照
                         String name = bankName.getText().toString().trim();
-                        SharedPrefrenceUtils.saveString(this,NormalConfig.fukuanren,name);
+                        SharedPrefrenceUtils.saveString(this, NormalConfig.fukuanren, name);
 
                         Double commodityPriceDeduction = data.getCommodityPriceDeduction();
                         if (!name.isEmpty()) {
@@ -387,9 +399,34 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
         super.onPause();
         initData();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         initData();
+    }
+
+    //点击回车 或者 下个 自动跳转下一个输入框
+    public class JumpTextWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            String str = s.toString();
+            if (str.indexOf("\r") >= 0 || str.indexOf("\n") >= 0) {
+                buyGamemoneyNumber.setText(str.replace("\r", "").replace("\n", ""));//去掉回车符和换行符
+                bankName.requestFocus();//让editText2获取焦点
+                bankName.setSelection(bankName.getText().length());//若editText2有内容就将光标移动到文本末尾
+            }
+        }
     }
 }

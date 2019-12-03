@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
 /**
  * 我的邀請
  */
@@ -109,6 +110,14 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     @Override
     public void refresh() {
         super.refresh();
+        //自动回弹
+        mRefresh.getLayout().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRefresh.finishRefresh();
+
+            }
+        }, 200l);
         mRefresh.setEnableScrollContentWhenLoaded(true);
         mList.scrollToPosition(0);
 //        mRefresh.autoRefresh();
@@ -161,9 +170,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                     mApplication.mToken = "";
                     startActivity(intent);
                     finish();
-                }
-
-                if (testMyInviteAll.getCode() == 0 && !testMyInviteAll.getMsg().equals(mApplication.SignOut)) {
+                }else if (testMyInviteAll.getCode() == 0 && !testMyInviteAll.getMsg().equals(mApplication.SignOut)) {
                     TestMyInviteAll.DataBean data = testMyInviteAll.getData();
 //                    profit    返利比例
                     double profit = data.getProfit();
@@ -204,7 +211,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 //                    codeName  邀请码
 //                    lvProfit  返利比例（分配）
                     list.addAll(listBeans);
-                    adapter.setData(profit,data.getUserInfo());
+                    adapter.setData(profit, data.getUserInfo());
                     adapter.notifyDataSetChanged();
                 }
                 break;
@@ -221,6 +228,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         if (userId != null)
             mPresenter.getData(ApiConfig.TEST_MY_INVITEALL, Integer.parseInt(userId), token);
     }
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -372,7 +380,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showShort(e.getMessage());
+        ToastUtil.showShort("服务器错误！");
     }
 
     @Override

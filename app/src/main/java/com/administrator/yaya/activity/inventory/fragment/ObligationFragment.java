@@ -141,7 +141,7 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong(R.string.error+"");
     }
     @Override
     protected void initData() {
@@ -165,6 +165,14 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
     @Override
     public void refresh() {
         super.refresh();
+        //自动回弹
+        abligationRefreshLayout.getLayout().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                abligationRefreshLayout.finishRefresh();
+
+            }
+        }, 200l);
         mList.scrollToPosition(0);
         //进入刷新
 //        abligationRefreshLayout.autoRefresh();

@@ -104,7 +104,7 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showShort(e.getMessage());
+        ToastUtil.showShort("服务器错误！");
     }
 
     @Override

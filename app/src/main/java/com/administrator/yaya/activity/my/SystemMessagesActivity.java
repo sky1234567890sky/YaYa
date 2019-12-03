@@ -69,7 +69,7 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong("服务器错误！");
     }
     @Override
     protected void initView() {
@@ -86,6 +86,14 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
     @Override
     public void refresh() {
         super.refresh();
+        //自动回弹
+        mRefresh.getLayout().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRefresh.finishRefresh();
+
+            }
+        }, 200l);
         mList.scrollToPosition(0);
 //        mRefresh.autoRefresh();
         //走一遍数据加载

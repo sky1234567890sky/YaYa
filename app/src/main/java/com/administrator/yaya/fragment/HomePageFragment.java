@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
+import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.activity.home.BuyNowActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
@@ -24,6 +25,7 @@ import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.squareup.haha.perflib.Main;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -56,17 +58,36 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 
     private String userId;
     private String token;
+    private ImageView img;
+    private ImageView img_ying;
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser == true) {//可见
+
+        }
+    }
+
+    @SuppressLint("WrongViewCast")
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
+
+        if (getActivity()!=null){
+            img = getActivity().findViewById(R.id.close_business_iv);//歇业
+            //营业
+            img_ying = getActivity().findViewById(R.id.dobusiness_iv);
+        }
     }
+
     @Override
     protected void initData() {
         super.initData();
 //        showLoadingDialog();
         userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
+
 //        Log.i("tag", "首页: "+userId+"<||>"+token);
         mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId), token);
     }
@@ -96,21 +117,45 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
                     startActivity(login);
                     getActivity().finish();
                 } else if (data.getCode() == 0 && data.getData() != null) {
-                        TestHomePageData.DataBean databean = data.getData();
-                        TestHomePageData.DataBean.UserInfoBean userInfo = databean.getUserInfo();
-                        Log.i("tag", "首頁==》: " + data.toString());
-//                    commodity:  货物信息
-                        TestHomePageData.DataBean.CommodityBean commodity = databean.getCommodity();
-//                    comName 货物名称
-                        String comName = commodity.getComName();
-                        homeGamemoneyName.setText(comName);
-//                    comImg 商品图片
-                        String comImg = commodity.getComImg();
 
-                        Glide.with(getContext()).load(comImg).placeholder(R.mipmap.icon).into(mHeadlerIv);
+                    TestHomePageData.DataBean databean = data.getData();
+                    TestHomePageData.DataBean.UserInfoBean userInfo = databean.getUserInfo();
+                    Log.i("tag", "首頁==》: " + data.toString());
+//                    commodity:  货物信息
+                    TestHomePageData.DataBean.CommodityBean commodity = databean.getCommodity();
+//                    comName 货物名称
+                    String comName = commodity.getComName();
+                    homeGamemoneyName.setText(comName);
+//                    comImg 商品图片
+                    String comImg = commodity.getComImg();
+
+                    Glide.with(getContext()).load(comImg).placeholder(R.mipmap.icon).into(mHeadlerIv);
 //                    comPrice 商品价格
-                        double comPrice1 = commodity.getComPrice();
-                        homeGamemoneyPrice.setText("进货价:￥" + comPrice1);
+                    double comPrice1 = commodity.getComPrice();
+                    homeGamemoneyPrice.setText("进货价:￥" + comPrice1);
+
+
+
+
+//                    1.开始营业（歇业）   2.正在营业（营业中）
+                    int doBusineseStatus = userInfo.getDoBusineseStatus();
+                    Log.i("tag", "是否营业: "+doBusineseStatus);
+
+                    if (doBusineseStatus == 2) {//营业
+                        img.setVisibility(View.GONE);//歇业
+                        img_ying.setVisibility(View.VISIBLE);
+                    } else {
+                        img.setVisibility(View.VISIBLE);//歇业
+                        img_ying.setVisibility(View.GONE);
+                    }
+                    
+                    img.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            ToastUtil.showLong("点击了");
+
+                        }
+                    });
 
 //                    zfbEd 支付宝已使用额度
 //                        tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
@@ -153,7 +198,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 
     @Override
     public void onError(int whichApi, Throwable e) {
-//        ToastUtil.showShort(e.getMessage());
+        ToastUtil.showLong(R.string.error+"");
     }
 
     @Override
@@ -162,6 +207,10 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
         if (getActivity() != null && !hidden) {
 //            Log.i("tag", "刷新数据2: ");
             initData();
+
+            img = getActivity().findViewById(R.id.close_business_iv);//歇业
+            //营业
+            img_ying = getActivity().findViewById(R.id.dobusiness_iv);
         }
     }
 }

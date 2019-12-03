@@ -1,10 +1,10 @@
-package com.administrator.yaya;
-//点击营业
+package com.administrator.yaya.bean.homepage;
+//停止营业
+public class TestStopYingYe {
 
-public class TestDianjiYingye {
 
     /**
-     * msg : 营业成功
+     * msg : 歇业成功
      * code : 0
      */
 

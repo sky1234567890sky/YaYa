@@ -196,6 +196,15 @@ public class WeiShouHuoFragment extends BaseMvpFragment<LoginModel> implements I
     public void refresh() {
         super.refresh();
 
+        //自动回弹
+        cacelRefreshLayout.getLayout().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                cacelRefreshLayout.finishRefresh();
+
+            }
+        }, 200l);
+
         mList.scrollToPosition(0);//回到列表顶部
 
 //        cacelRefreshLayout.autoRefresh();//自动刷新
@@ -228,7 +237,7 @@ public class WeiShouHuoFragment extends BaseMvpFragment<LoginModel> implements I
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong(R.string.error+"");
     }
 
 //    @Override

@@ -24,6 +24,7 @@ import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.AppValidationMgr;
 import com.administrator.yaya.utils.CountDownTimerUtils;
+import com.administrator.yaya.utils.JumpTextWatcherUtils;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
@@ -39,26 +40,21 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.OnClick;
 import razerdp.design.SlideFromBottomPopup;
+
 /**
  * 注册界面
  */
-public class RegisterActivity extends BaseMvpActivity<LoginModel> implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick{
-
+public class RegisterActivity extends BaseMvpActivity<LoginModel> implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick {
     @BindView(R.id.register_back_iv)
     ImageView registerBackIv;
-
     @BindView(R.id.register_headleriv)
     ImageView registerHeadlerIv;
-
     @BindView(R.id.register_et_uname)
     EditText registerEtUname;//手机号
-
     @BindView(R.id.et_register_verificationcode)
     EditText etRegisterVerificationcode;//输入验证码     8888
-
     @BindView(R.id.btn_register_phonecode)//获取手机验证码
-    TextView mInvitecode;
-
+            TextView mInvitecode;
     @BindView(R.id.et_register_pw)
     EditText etRegisterPw;//输入密码
 
@@ -67,19 +63,22 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
 
     @BindView(R.id.register_register_btn)
     TextView registerRegisterBtn;
-//    @BindView(R.id.sms_verify_view)
+    //    @BindView(R.id.sms_verify_view)
 //    SmsVerifyView mView;
     private SlideFromBottomPopup mPop;
     private TakePhotoImpl mTakePhoto;
     private CountDownTimerUtils mDownTimerUtils;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_register;
     }
+
     @Override
     protected LoginModel getModel() {
         return new LoginModel();
     }
+
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
@@ -87,14 +86,25 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
 
     @Override
     protected void initView() {
+        setEditTextInhibitInputSpaChat(registerEtUname);//无空格  特殊字符
+        setEditTextInhibitInputSpaChat(etRegisterVerificationcode);//无空格  特殊字符
+        setEditTextInhibitInputSpaChat(etGetcode);//无空格  特殊字符
+
+        setEditTextLengthLimit(registerEtUname, 11);//长度 11 位
+        setEditTextLengthLimit(etRegisterVerificationcode, 6);//长度 11 位
+        setEditTextLengthLimit(etGetcode, 6);//长度 11 位
+
         //设置此界面为竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //倒计时工具类
         mDownTimerUtils = new CountDownTimerUtils(mInvitecode, 60000, 1000);
+//        registerEtUname.addTextChangedListener(new JumpTextWatcherUtils.JumpTextWatcher(registerEtUname,etRegisterVerificationcode));
+//        etRegisterVerificationcode.addTextChangedListener(new JumpTextWatcherUtils.JumpTextWatcher(etRegisterVerificationcode,etRegisterPw));
+//        etRegisterPw.addTextChangedListener(new JumpTextWatcherUtils.JumpTextWatcher(etRegisterPw,etGetcode));
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
+        ToastUtil.showLong("服务器错误！");
     }
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -102,9 +112,9 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
             case ApiConfig.TEXT_REGISTER://注册
                 TestRegister register = (TestRegister) t[0];
                 int code = register.getCode();
-                if (code==0){//为0注册成功
-                    if (register.getMsg().equals(mApplication.SignOut)){
-                        Toast.makeText(this, R.string.username_login_hint+"", Toast.LENGTH_SHORT).show();
+                if (code == 0) {//为0注册成功
+                    if (register.getMsg().equals(mApplication.SignOut)) {
+                        Toast.makeText(this, R.string.username_login_hint + "", Toast.LENGTH_SHORT).show();
 
                         Intent login = new Intent(this, LoginActivity.class);
 
@@ -112,7 +122,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
 
                         SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
 
-                        mApplication.userid =0;
+                        mApplication.userid = 0;
 
                         mApplication.mToken = "";
 
@@ -120,21 +130,21 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
 
                         finish();
 
-                    }else{
+                    } else {
                         ToastUtil.showLong(register.getMsg());
                         Intent intent = new Intent();
-                        intent.putExtra(NormalConfig.USER_NAME,registerEtUname.getText().toString());
-                        intent.putExtra(NormalConfig.PASS_WORD,etRegisterPw.getText().toString());
-                        setResult(100,intent);
+                        intent.putExtra(NormalConfig.USER_NAME, registerEtUname.getText().toString());
+                        intent.putExtra(NormalConfig.PASS_WORD, etRegisterPw.getText().toString());
+                        setResult(100, intent);
                         finish();
                     }
                 }
             case ApiConfig.TEXT_INVITECODE://注册获取验证码  验证码   666666
                 //获取验证码前判断手机号是否被注册
                 TestRegister testInviteCode = (TestRegister) t[0];
-                if (testInviteCode.getCode() == 0){
+                if (testInviteCode.getCode() == 0) {
                     ToastUtil.showLong(testInviteCode.getMsg());
-                }else{
+                } else {
                     ToastUtil.showLong(testInviteCode.getMsg());
                 }
                 break;
@@ -160,16 +170,18 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
 //                break;
         }
     }
+
     private void loginIm() {
 
     }
+
     @Override
     protected void initData() {
         super.initData();
-
         //给权限
 //        getPermission();
     }
+
     @OnClick({R.id.register_back_iv, R.id.register_headleriv, R.id.btn_register_phonecode, R.id.register_register_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -180,11 +192,12 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
 //                mView.setSmsVerifyCallback(this);
                 //初始化底部弹出拍照的pop
                 mPop = new SlideFromBottomPopup(this);
-                mPop.setLineText(getString(R.string.camera),getString(R.string.photo), getString(R.string.cancel));
+                mPop.setLineText(getString(R.string.camera), getString(R.string.photo), getString(R.string.cancel));
                 mPop.setBottomClickListener(this);
                 mPop.showPopupWindow();
                 break;
             case R.id.btn_register_phonecode://验证码
+
 //              mPresenter.getData(ApiConfig.TEXT_INVITECODE,0);
 //              ToastUtil.showShort("验证码已发送请注意查收");//验证码获取网络解析
                 String phoneCode = registerEtUname.getText().toString().trim();
@@ -192,9 +205,10 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
                 if (!phoneCode.isEmpty()) {
                     mDownTimerUtils.start();
                     mPresenter.getData(ApiConfig.TEXT_INVITECODE, phoneCode);
-                }else{
+                } else {
                     ToastUtil.showLong("请输入手机号");
                 }
+
                 break;
             case R.id.register_register_btn://注册
                 //MD5加密解密
@@ -211,17 +225,18 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
         String codeName = etRegisterVerificationcode.getText().toString().trim();//验证码
         String userInvitationCode = etGetcode.getText().toString().trim();//邀请码
 
-        if (userPhone.isEmpty() || userPwd.isEmpty()  || userInvitationCode.isEmpty() || codeName.isEmpty()) {
+        if (userPhone.isEmpty() || userPwd.isEmpty() || userInvitationCode.isEmpty() || codeName.isEmpty()) {
             ToastUtil.showShort("请输入完整信息");
-        }else{
+        } else {
             String regex = "[A-Za-z0-9]{4,12}";
-            if (AppValidationMgr.isPhone(userPhone) && userPwd.matches(regex) ){
+            if (AppValidationMgr.isPhone(userPhone) && userPwd.matches(regex)) {
                 //邀请码与验证码验证   @Field("userPhone") String userPhone, @Field("userPwd") String userPwd, @Field("userInvitationCode") String userInvitationCode, @Field("codeName") String codeName
-                mPresenter.getData(ApiConfig.TEXT_REGISTER,userPhone,userPwd,userInvitationCode,codeName);
+                mPresenter.getData(ApiConfig.TEXT_REGISTER, userPhone, userPwd, userInvitationCode, codeName);
 
             } else ToastUtil.showShort("请输入正确的格式");
         }
     }
+
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 //        ToastUtil.showShort(event.getKeyCode()+"");
@@ -231,6 +246,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
         }
         return super.dispatchKeyEvent(event);
     }
+
     /**
      * 点击相册选图
      */
@@ -245,6 +261,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
 //        mTakePhoto.onPickFromGallery();
         mPop.dismiss();
     }
+
     /**
      * 点击拍照
      */
@@ -286,8 +303,10 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
         Uri imageUri = Uri.fromFile(file);
         return imageUri;
     }
+
     /**
      * 获取拍照或相册处理过的图片路劲
+     *
      * @param result
      */
     @Override
@@ -295,15 +314,17 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
         String path = result.getImage().getCompressPath() != null ? result.getImage().getCompressPath() : result.getImage().getOriginalPath();//先设置到列表中
         if (!TextUtils.isEmpty(path)) {
             //记住头像
-            SharedPrefrenceUtils.saveString(this,NormalConfig.HEADLER_IMAGEVIEW,path);
+            SharedPrefrenceUtils.saveString(this, NormalConfig.HEADLER_IMAGEVIEW, path);
             ToastUtil.showShort("上传成功");
 //            showLoadingDialog();
 //            mPresenter.getData(ApiConfig.UPLOAD_IMAGE, path);
             Glide.with(this).load(path).into(registerHeadlerIv);
         }
     }
+
     /**
      * 拍照或获取相册图片失败
+     *
      * @param result
      * @param msg
      */
@@ -312,6 +333,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
     public void takeFail(TResult result, String msg) {
         ToastUtil.showShort(msg);
     }
+
     /**
      * 取消获取图片
      */
@@ -319,6 +341,7 @@ public class RegisterActivity extends BaseMvpActivity<LoginModel> implements Tak
     public void takeCancel() {
 //        ToastUtil.showShort("cancel_get_image");
     }
+
     @Override
     public void smsCodeSend() {
 

@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c_ffffff"
-    tools:context=".activity.my.MyIncomeActivity">
-
+    tools:context=".activity.my.MyIncomeActivity"
+    >
     <ImageView
         android:layout_width="@dimen/dp_312_5"
         android:layout_height="@dimen/dp_127_5"
         android:layout_alignParentBottom="true"
         android:src="@mipmap/logo"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        />
 
     <RelativeLayout
         android:id="@+id/myincome_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44">
-
         <ImageView
             android:id="@+id/myincome_back_iv"
             android:layout_width="@dimen/dp_39"
@@ -68,7 +68,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_20"
-            android:background="#FFBCBCBD" />
+            android:background="#FFBCBCBD"
+            />
 
         <TextView
             android:id="@+id/get_gamemony_tv"
@@ -79,7 +80,8 @@
             android:gravity="center"
             android:text="xxx"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_26" />
+            android:textSize="@dimen/sp_26"
+            />
 
         <TextView
             android:id="@+id/all_gamemoney_top_tv"
@@ -93,7 +95,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/sp_26"
             tools:ignore="HardcodedText" />
-
         <TextView
             android:id="@+id/get_gamemoney_down_tv"
             android:layout_width="match_parent"
@@ -104,9 +105,8 @@
             android:gravity="center"
             android:text="当前可用XXX"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_14" />
-
-
+            android:textSize="@dimen/sp_14"
+            />
         <TextView
             android:id="@+id/all_gamemoney_down_tv"
             android:layout_width="183dp"
@@ -132,9 +132,10 @@
         app:tabIndicatorColor="@color/blue"
         app:tabIndicatorHeight="@dimen/dp_0"
         app:tabSelectedTextColor="#333333"
-        app:tabTextColor="#999999">
+        app:tabBackground="@android:color/transparent"
+        app:tabTextColor="#999999"
+        >
     </android.support.design.widget.TabLayout>
-
     <!--<com.flyco.tablayout.SlidingTabLayout-->
     <!--android:id="@+id/tab_layout"-->
     <!--android:layout_width="match_parent"-->

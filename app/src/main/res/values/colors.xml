@@ -24,6 +24,8 @@
     <color name="c_cccccc">#CCCCCC</color>
     <color name="light_blue">#ff35a6ff</color>
     <color name="grey_loading">#868686</color>
+    <color name="c_ccc">#fff</color>
+    <color name="bg_piechar_color">#E0EEFF</color>
 
 
     <!--<color name="colorPrimary">#3F51B5</color>-->

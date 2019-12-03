@@ -30,6 +30,7 @@
     app:srlDrawableProgressSize="@dimen/dp_20"
     app:srlDrawableMarginRight="@dimen/dp_20"
     app:srlDrawableProgress="@mipmap/icon_dark_refresh"
+        android:background="@color/c_ccc"
     />
         <!--<com.scwang.smartrefresh.layout.header.ClassicsHeader-->
             <!--android:layout_width="match_parent"-->

@@ -14,13 +14,11 @@ import android.widget.TextView;
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.MainActivity;
-import com.administrator.yaya.activity.UpGameMoneyActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.invite.TestPayToAffirmInfo;
-import com.administrator.yaya.bean.orderform.TestToOrderStock;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
@@ -28,9 +26,6 @@ import com.administrator.yaya.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.administrator.yaya.fragment.InventoryFragment.FORM_INVENTORY;
-import static com.administrator.yaya.fragment.InventoryFragment.FORM_INVENTORY2;
 
 
 /**
@@ -72,6 +67,7 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     private String payeeName;
     private String name2;
     private String comMoney;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_affirm_message;
@@ -122,10 +118,10 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
             }
         }
         String name = SharedPrefrenceUtils.getString(this, NormalConfig.fukuanren);
-        if (name.isEmpty()){
-            import_hint.setText("请务必使用姓名为xxx的银行卡进行转账，转账金额为"+comMoney+"元，请填好备注信息，才能及时发货，谢谢!");
-        }else{
-            import_hint.setText("请务必使用姓名为"+name+"的银行卡进行转账，转账金额为"+comMoney+"元，请填好备注信息，才能及时发货，谢谢!");
+        if (name.isEmpty()) {
+            import_hint.setText("请务必使用姓名为xxx的银行卡进行转账，转账金额为" + comMoney + "元，请填好备注信息，才能及时发货，谢谢!");
+        } else {
+            import_hint.setText("请务必使用姓名为" + name + "的银行卡进行转账，转账金额为" + comMoney + "元，请填好备注信息，才能及时发货，谢谢!");
         }
 
 //        Log.i("tag", "data======》: " + commodityAmount + payerName + commodityPrice + userId);
@@ -139,6 +135,7 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
         //库存的
         //查看详情
     }
+
     //}
     //待付款跳转此页面 时 的展示 数据
 //}
@@ -178,6 +175,7 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                 if (mRemarkTv != null) remark.setText(mRemarkTv.getText());
                 ToastUtil.showShort("已复制至粘贴栏");
                 break;
+
             case R.id.affirm_msg_look_btn:
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("affirm", 2);
@@ -208,6 +206,7 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     public void onError(int whichApi, Throwable e) {
 //        String message = e.getMessage();
 //        Log.e("aaaaaa",message);
+        ToastUtil.showLong("服务器错误！");
     }
 
     @SuppressLint("SetTextI18n")

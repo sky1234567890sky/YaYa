@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.base.ApiConfig;
@@ -22,10 +23,9 @@ import com.administrator.yaya.utils.AppValidationMgr;
 import com.administrator.yaya.utils.CountDownTimerUtils;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
+
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.administrator.yaya.activity.my.SettingActivity.FORSETTING;
 
 /**
  * 修改密码 找回密码
@@ -46,6 +46,7 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
     private CountDownTimerUtils mDownTimerUtils;
     private String userId;
     private String token;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_updata_password;
@@ -53,16 +54,24 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
 
     @Override
     protected void initView() {
+
+        //去除空格 和 特殊字符不能输入
+        setEditTextInhibitInputSpaChat(updateEtCode);
+        setEditTextInhibitInputSpaChat(forgetEtVerificationCode);
+        //去除空格与限制字段长度会起冲突  此方法解决冲突
+        setEditTextLengthLimit(updateEtCode,11);
+        setEditTextLengthLimit(forgetEtVerificationCode,6);
+
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
         //倒计时工具类
         mDownTimerUtils = new CountDownTimerUtils(updateBtvGetverificationCode, 60000, 1000);
+
     }
 
     @OnClick({R.id.update_back_iv, R.id.update_btv_getverificationCode, R.id.update_ok_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-
             case R.id.update_back_iv:
                 UpdataPasswordActivity.this.finish();
                 break;
@@ -80,13 +89,12 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
                 break;
         }
     }
-
     private void updatePass() {
         String phoneCode = updateEtCode.getText().toString().trim();
         String verificationCode = forgetEtVerificationCode.getText().toString().trim();
         String psw = updatePasswordEt.getText().toString().trim();
 
-        if (TextUtils.isEmpty(phoneCode)|| "".equals(phoneCode)) {//
+        if (TextUtils.isEmpty(phoneCode) || "".equals(phoneCode)) {//
             ToastUtil.showLong("请输入手机号");//为空
             return;
         }
@@ -109,9 +117,9 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
             ToastUtil.showShort("请输入正确的密码格式");
             return;
         }
-        int anInt = Integer.parseInt(userId);
+//        int anInt = Integer.parseInt(userId);
 //        @Field("telephone") String telephone, @Field("codename") String codename, @Field("pwd") String pwd, @Field("userId") int userId, @Field("token") String token
-        mPresenter.getData(ApiConfig.TEST_UPDATEPASSWORD, phoneCode, verificationCode, psw,anInt, token);
+        mPresenter.getData(ApiConfig.TEST_UPDATEPASSWORD, phoneCode, verificationCode, psw);
     }
     @Override
     protected LoginModel getModel() {
@@ -123,12 +131,10 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
 
         return new CommonPresenter();
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong("服务器错误！");
     }
-
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
@@ -144,7 +150,6 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
                     mApplication.mToken = "";
                     startActivity(intent);
                     finish();
-
                 } else if (testUpdatePwd.getCode() == 0 && !testUpdatePwd.getMsg().equals(mApplication.SignOut)) {
                     String phone = updateEtCode.getText().toString();
                     String pas = updatePasswordEt.getText().toString();
@@ -166,8 +171,6 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
 //                    String verificationCode = testGetEtVerificationCode.getMsg();//验证码
 //                    forgetEtVerificationCode.setText(verificationCode);//自动粘贴
                     ToastUtil.showShort(testGetEtVerificationCode.getMsg());
-                } else {
-
                 }
                 break;
         }

@@ -61,16 +61,16 @@ public class OrderFormkFragment extends BaseFragment {
 
         sellFragment = new AllFragment();
         finishFragment = new FinishFragment();
-        cancelFragment = new WeiShouHuoFragment();
+//        cancelFragment = new WeiShouHuoFragment();
         daiQueRenFragment = new DaiQueRenFragment();
         fragments.add(sellFragment);
         fragments.add(daiQueRenFragment);
-        fragments.add(cancelFragment);
+//        fragments.add(cancelFragment);
         fragments.add(finishFragment);
 
         titles.add("全部");
         titles.add("待确认");
-        titles.add("未收货");
+//        titles.add("未收货");
         titles.add("已完成");
         OrderFormAdapter orderFormAdapter = new OrderFormAdapter(getChildFragmentManager(), fragments, titles);
         vp.setAdapter(orderFormAdapter);
@@ -104,7 +104,6 @@ public class OrderFormkFragment extends BaseFragment {
 //            public void onTabReselected(TabLayout.Tab tab) {
 //            }
 //        });
-
     }
     private OrderFormsetOnclikListener orderFormsetOnclikListener;
     public interface OrderFormsetOnclikListener {

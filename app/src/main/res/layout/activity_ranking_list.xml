@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_ffffff"
+    android:orientation="vertical"
+    tools:context=".activity.my.RankingListActivity">
+
+    <ImageView
+        android:layout_width="@dimen/dp_312_5"
+        android:layout_height="@dimen/dp_127_5"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/logo"
+        tools:ignore="ContentDescription" />
+
+    <!--android:background="@drawable/raning_bg"-->
+
+    <RelativeLayout
+        android:id="@+id/raning_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_180"
+        android:background="@mipmap/youtu"
+          >
+        <ImageView
+            android:id="@+id/rankinglist_back_iv"
+            android:layout_width="@dimen/dp_39"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_34_5"
+            android:paddingBottom="@dimen/dp_15"
+            android:src="@mipmap/icon_back"
+            />
+        <!--<TextView-->
+            <!--android:id="@+id/raning_tv"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dp_33"-->
+            <!--android:layout_marginTop="@dimen/dp_82"-->
+            <!--android:text="排行榜"-->
+            <!--android:textColor="@color/c_ffffff"-->
+            <!--android:textSize="@dimen/dp_23"-->
+            <!--android:textStyle="bold" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/raning_tv"-->
+            <!--android:layout_marginLeft="@dimen/dp_33"-->
+            <!--android:layout_marginTop="@dimen/dp_14"-->
+            <!--android:text="距离NO.1还需要在努力哦！"-->
+            <!--android:textColor="@color/c_ffffff"-->
+            <!--android:textSize="@dimen/dp_13" />-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@color/c_ffffff" />-->
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/raning_rl"
+        android:orientation="vertical">
+
+        <!--<android.support.design.widget.TabLayout-->
+            <!--android:id="@+id/rankinglist_tab"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dp_15"-->
+            <!--android:layout_marginRight="@dimen/dp_15"-->
+            <!--app:tabBackground="@drawable/ranking_tab"-->
+            <!--app:tabIndicatorHeight="@dimen/dp_0"-->
+            <!--app:tabSelectedTextColor="@color/c_ffffff"-->
+            <!--app:tabTextColor="@color/blue" />-->
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/rankinglist_tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"
+            android:background="#FFFFFF"
+            android:layout_below="@id/orderform_rl"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            app:tl_indicator_margin_left="@dimen/dp_2"
+            app:tl_indicator_margin_right="@dimen/dp_2"
+            app:tl_indicator_height="@dimen/dp_2"
+            app:tl_indicator_width="@dimen/dp_50"
+            app:tl_indicator_corner_radius="@dimen/dp_2"
+
+            app:tl_textUnselectColor="#333333"
+            app:tl_textSelectColor="#0099FF"
+            app:tl_indicator_color="#408DEE"
+            app:tl_divider_color="@color/c_000000"
+            app:tl_tab_space_equal="true"
+            tools:ignore="ObsoleteLayoutParam" />
+        <!--app:tl_indicator_style="BLOCK"-->
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ranking_vp"
+            >
+        </android.support.v4.view.ViewPager>
+
+    </LinearLayout>
+</RelativeLayout>

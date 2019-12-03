@@ -89,6 +89,11 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
 
     @Override
     protected void initView() {
+        setEditTextInhibitInputSpaChat(mName);//无空格  特殊字符
+        setEditTextInhibitInputSpaChat(mPsw);//无空格  特殊字符
+
+        setEditTextLengthLimit(mName,11);//长度 11 位
+        setEditTextLengthLimit(mPsw,12);//密码长度 12位
         //    userPhone
 //    userPwd
 //    手机型号  appModel
@@ -240,9 +245,8 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong("服务器错误！");
     }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)//主要是对这个函数的复写
     {

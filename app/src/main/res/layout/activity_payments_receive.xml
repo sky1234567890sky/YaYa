@@ -610,6 +610,7 @@
                 app:srlEnableLastTime="true"
                 app:srlTextSizeTime="@dimen/sp_8"
                 app:srlTextSizeTitle="@dimen/sp_12"
+                android:background="@color/c_ccc"
                 />
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/alipay_list"

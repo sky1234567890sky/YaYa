@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.constraint.ConstraintLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -13,22 +12,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.administrator.yaya.R;
-import com.administrator.yaya.TestDianjiYingye;
+import com.administrator.yaya.bean.homepage.TestDianjiYingye;
 import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.MainActivity;
-import com.administrator.yaya.activity.my.SettingActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
-import com.administrator.yaya.bean.invite.TestInventory;
+import com.administrator.yaya.bean.invite.TestUserCount;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 //确认营业
@@ -42,17 +38,25 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
     @BindView(R.id.et_cinfirm_number)
     EditText mEtCinfirmNumber;
     private int userSalesCount;
+
     private String userId;
     private String token;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_confirm_yingye;
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong("服务器错误！");
     }
+    @Override
+    protected void initView() {
+        super.initView();
+        setEditTextInhibitInputSpaChat(mEtCinfirmNumber);
+        //去除空格与限制字段长度会起冲突  此方法解决冲突
+        setEditTextLengthLimit(mEtCinfirmNumber,20);//购买数量
+    }
+
     @Override
     protected void initData() {
         super.initData();
@@ -61,8 +65,8 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
         //库存里面的
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
-
-        mPresenter.getData(ApiConfig.TEST_INVENTORY, Integer.parseInt(userId),token);
+//        mPresenter.getData(ApiConfig.TEST_INVENTORY, Integer.parseInt(userId),token);
+        mPresenter.getData(ApiConfig.TEST_USER_COUNT,Integer.parseInt(userId));
     }
 
     @SuppressLint("SetTextI18n")
@@ -72,56 +76,35 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
             //确认营业
             case ApiConfig.TEST_DIANJIYINGYE:
                 TestDianjiYingye testDianjiYingye = (TestDianjiYingye) t[0];
-
                 if (testDianjiYingye.getMsg().equals(mApplication.SignOut)) {
-
                     Toast.makeText(this, R.string.username_login_hint+"", Toast.LENGTH_SHORT).show();
-
                     Intent login = new Intent(this, LoginActivity.class);
-
                     SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
-
                     SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
-
                     mApplication.userid =0;
-
                     mApplication.mToken = "";
-
                     startActivity(login);
-
                     finish();
-                }else
-                //其他设备登陆  跳转 到登录界面
-                if (testDianjiYingye.getCode() == 0 && !testDianjiYingye.getMsg().equals(mApplication.SignOut)) {
-                    ToastUtil.showLong("营业成功");
+                }else//其他设备登陆  跳转 到登录界面
+                    if (testDianjiYingye.getCode() == 0 && !testDianjiYingye.getMsg().equals(mApplication.SignOut)) {
+                    ToastUtil.showLong(""+testDianjiYingye.getMsg());
+                    //让开始营业
+
                     Intent intent = new Intent(this, MainActivity.class);//到库存
                     intent.putExtra("confirmyingye", 10);
                     startActivity(intent);
                     finish();
                 }
                 break;
-
             //库存
-            case ApiConfig.TEST_INVENTORY:
-                TestInventory testInventory = (TestInventory) t[0];
-                if (testInventory.getMsg().equals(mApplication.SignOut)) {
-                    ToastUtil.showLong("您的当前账户已在其他设备登陆，为安全起见，请及时修改密码或重新登陆！");
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
-                    SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
-                    mApplication.userid = 0;
-                    mApplication.mToken = "";
-                    startActivity(intent);
-                    finish();
-                    //提示
-                }
-                if (testInventory.getCode() == 0 && !testInventory.getMsg().equals(mApplication.SignOut)) {
-                    if (testInventory.getData() != null) {
-                        //登录
-                        userSalesCount = testInventory.getData().getUserAllCount();
-                        if (userSalesCount>0){
-                            mInventory_number.setText("" + userSalesCount);
-                        }
+            case ApiConfig.TEST_USER_COUNT:
+                TestUserCount testUserCount = (TestUserCount) t[0];
+                if (testUserCount.getCode()==0) {
+                    TestUserCount.DataBean data = testUserCount.getData();
+                    TestUserCount.DataBean.CommodityBean commodity = data.getCommodity();
+                    int userAllCount = data.getUserAllCount();
+                    if (userAllCount>0){
+                        mInventory_number.setText(userAllCount+"");
                     }
                 }
                 break;
@@ -134,7 +117,6 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
         mConfirm_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String etNumber = mEtCinfirmNumber.getText().toString().trim();
                 if (etNumber.isEmpty()) {
                     ToastUtil.showLong("请输入您的营业数量");
@@ -147,7 +129,7 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
                 if (Integer.parseInt(etNumber) > userSalesCount) {
                     ToastUtil.showLong("你输入的数量超过库存数量！");
                 } else {
-                    mPresenter.getData(ApiConfig.TEST_DIANJIYINGYE,Integer.parseInt(userId),token, Integer.parseInt(etNumber));
+                    mPresenter.getData(ApiConfig.TEST_DIANJIYINGYE,Integer.parseInt(userId),token);
                 }
             }
         });
@@ -187,12 +169,14 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
+
     //
+
     @OnClick({R.id.confirm_back_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.confirm_back_iv:
-                finish();
+                ConfirmYingyeActivity.this.finish();
                 break;
             case R.id.confirm_btn:
                 break;

@@ -6,13 +6,11 @@
     android:layout_height="match_parent"
     android:background="@color/c_ffffff"
     tools:context=".activity.home.BuyNowActivity">
-
     <ImageView
         android:layout_width="@dimen/dp_312_5"
         android:layout_height="@dimen/dp_127_5"
         android:layout_alignParentBottom="true"
         android:src="@mipmap/logo" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -61,20 +59,16 @@
                     android:layout_marginTop="@dimen/dp_5"
                     android:layout_marginRight="@dimen/dp_10"
                     app:cardBackgroundColor="@color/c_ffffff"
-                    app:cardCornerRadius="@dimen/dp_5"
-                    >
-
+                    app:cardCornerRadius="@dimen/dp_5">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/homepage_shape_bg"
                         android:orientation="vertical">
-
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_13_5">
-
                             <com.makeramen.roundedimageview.RoundedImageView
                                 android:id="@+id/now_bu_gamemoney_iv"
                                 android:layout_width="@dimen/dp_21"
@@ -86,7 +80,6 @@
                                 android:src="@mipmap/icon_youxibi"
                                 app:riv_oval="true"
                                 tools:ignore="RtlHardcoded" />
-
                             <TextView
                                 android:id="@+id/buy_comName"
                                 android:layout_width="wrap_content"
@@ -99,7 +92,6 @@
                                 android:textSize="@dimen/dp_16"
                                 tools:ignore="HardcodedText" />
                         </RelativeLayout>
-
                         <TextView
                             android:id="@+id/buy_comPrice"
                             android:layout_width="wrap_content"
@@ -111,7 +103,6 @@
                             android:textColor="@color/c_000000"
                             android:textSize="@dimen/dp_14"
                             tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlHardcoded,SpUsage" />
-
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -119,7 +110,6 @@
                             android:layout_marginTop="@dimen/dp_25"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -128,7 +118,6 @@
                                 android:textColor="@color/c_000000"
                                 android:textSize="@dimen/sp_14"
                                 tools:ignore="HardcodedText" />
-
                             <EditText
                                 android:id="@+id/buy_gamemoney_number"
                                 android:layout_width="wrap_content"
@@ -139,7 +128,7 @@
                                 android:gravity="center_vertical"
                                 android:hint="请填写购买游戏币数量"
                                 android:inputType="phone|number"
-                                android:maxLength="8"
+                                android:maxLength="20"
                                 android:numeric="integer"
                                 android:singleLine="true"
                                 android:textColor="#333333"
@@ -268,6 +257,8 @@
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:hint="请输入银行卡持有人姓名"
+                                android:maxLength="20"
+                                android:maxLines="1"
                                 android:textColor="@color/c_000000"
                                 android:textColorHint="#A8AFBC"
                                 android:textCursorDrawable="@drawable/edit_cursor_color"
@@ -284,8 +275,8 @@
                     android:layout_marginTop="@dimen/dp_5"
                     android:layout_marginRight="@dimen/dp_10"
                     app:cardBackgroundColor="@color/c_ffffff"
-                    app:cardCornerRadius="@dimen/dp_5"
-                    >
+                    app:cardCornerRadius="@dimen/dp_5">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -303,15 +294,14 @@
                             tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
 
 
-
                         <TextView
                             android:id="@+id/now_buy_yongjin_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/shiyongyongjin"
                             android:layout_marginLeft="@dimen/dp_14"
                             android:layout_marginTop="@dimen/dp_5"
                             android:layout_marginBottom="@dimen/dp_5"
+                            android:layout_toRightOf="@+id/shiyongyongjin"
                             android:text=":￥0"
                             android:textColor="#A8AFBC"
                             android:textSize="@dimen/sp_15"
@@ -333,9 +323,9 @@
                             android:id="@+id/yiyong_yongyin_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toLeftOf="@+id/buy_now_switch"
-                            android:layout_marginRight="@dimen/dp_20"
                             android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp_20"
+                            android:layout_toLeftOf="@+id/buy_now_switch"
                             android:text="- 0"
                             android:textColor="@color/blue"
                             android:textSize="@dimen/dp_15"

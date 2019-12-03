@@ -19,10 +19,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,9 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.haha.perflib.Main;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.ButterKnife;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 import static com.scwang.smartrefresh.layout.util.DensityUtil.px2dp;
@@ -51,6 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Activity activity;
     private NetBroadcastReceiver netWorkChangReceiver;
     public LoadingDialogWithContent mDialog;
+
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,7 +124,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void initExit() {
-
     }
 
     @Override
@@ -162,7 +168,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showLongToast(String content) {
+
         Toast.makeText(this, content, Toast.LENGTH_LONG).show();
+
     }
     public void hideLoadingDialog() {
         if (mDialog.isShowing()) mDialog.dismiss();
@@ -249,6 +257,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(netWorkChangReceiver, filter);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -370,5 +379,37 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * 禁止EditText输入空格
+     *
+     * @param editText
+     */
+    public static void setEditTextInhibitInputSpaChat(EditText editText) {
+        InputFilter filter_space = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                if (source.equals(" "))
+                    return "";
+                else
+                    return null;
+            }
+        };
+        InputFilter filter_speChat = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned spanned, int i2, int i3) {
+                String speChat = "[`~!@#_$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）— +|{}【】‘；：”“’。，、？]";
+                Pattern pattern = Pattern.compile(speChat);
+                Matcher matcher = pattern.matcher(charSequence.toString());
+                if (matcher.find()) return "";
+                else return null;
+            }
+        };
+        editText.setFilters(new InputFilter[]{filter_space, filter_speChat});
+    }
+    /**
+     *EditText动态限制字数
+     */
+    public static void setEditTextLengthLimit( EditText editText, int length) {
+        editText.setFilters( new InputFilter[]{new InputFilter.LengthFilter(length)});
+    }
 }

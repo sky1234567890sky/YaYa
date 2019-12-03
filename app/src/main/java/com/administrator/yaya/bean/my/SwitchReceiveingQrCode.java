@@ -1,7 +1,6 @@
 package com.administrator.yaya.bean.my;
 //开关收款码
 public class SwitchReceiveingQrCode {
-
     /**
      * msg : 操作成功
      * code : 0

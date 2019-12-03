@@ -1,22 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.orderform.AllFragment"
-    >
+    tools:context=".activity.orderform.AllFragment">
+    <LinearLayout
+        android:id="@+id/sell_no_datas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:ignore="UseCompoundDrawables">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_push_msg_empty"
+            tools:ignore="ContentDescription"
+            />
+        <TextView
+            android:id="@+id/share_psl_emptyMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="亲，数据空空"
+            tools:ignore="HardcodedText"
+            />
+    </LinearLayout>
+
+    <!--列表-->
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/sell_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         app:srlEnableAutoLoadMore="true"
-        app:srlEnableLoadMore="true">
+        app:srlEnableLoadMore="true"
+        >
+
+        <!--app:srlReboundDuration="2000"-->
+
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/c_ccc"
             app:srlClassicsSpinnerStyle="FixedBehind"
             app:srlDrawableMarginRight="@dimen/dp_20"
             app:srlDrawableProgress="@mipmap/icon_dark_refresh"
@@ -24,35 +53,29 @@
             app:srlEnableLastTime="true"
             app:srlTextSizeTime="@dimen/sp_8"
             app:srlTextSizeTitle="@dimen/sp_12"
-            app:srlTextTimeMarginTop="@dimen/dp_2"
-            />
-        <!--<com.bunny.android.library.LoadDataLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--app:ldl_loading_tv="不要急,等丫丫加载完成..."-->
-            <!--app:ldl_empty_tv="好像什么也没有..."-->
-            <!--app:ldl_error_tv="oh no! 好像出错了..."-->
-            <!--app:ldl_loading_img="@mipmap/ajax_loader"-->
-            <!--app:ldl_empty_img="@drawable/ic_empty"-->
-            <!--app:ldl_error_img="@drawable/ic_launcher"-->
-            <!--&gt;-->
+            app:srlTextTimeMarginTop="@dimen/dp_2" />
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/pageStateLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:psl_contentLayoutId="@id/recyclerView"-->
+        <!--app:psl_emptyImgSrc="@mipmap/ic_push_msg_empty"-->
+        <!--app:psl_errorImgSrc="@mipmap/ic_pager_invalid"-->
+        <!--app:psl_errorNetImgSrc="@mipmap/ic_network_invalid"-->
+        <!--tools:ignore="MissingPrefix"-->
+        <!--&gt;-->
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/sell_lv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/sell_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-        <!--</com.bunny.android.library.LoadDataLayout>-->
-
+        <!--</RelativeLayout>-->
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlDrawableProgress="@mipmap/icon_dark_refresh"
             app:srlTextSizeTime="@dimen/sp_8"
             app:srlTextSizeTitle="@dimen/sp_12" />
-
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-
 </RelativeLayout>

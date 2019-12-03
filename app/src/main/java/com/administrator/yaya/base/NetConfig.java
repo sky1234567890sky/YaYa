@@ -8,9 +8,8 @@ public class NetConfig {
     public static String DQD_BASE1 = "http://sport-data.dqdgame.com/";
     static {//http://103.251.91.21:8080/yaya/
         //http://103.251.91.21:8080/yaya/login
-        if (API_TYPE == 1) BaseUrl = "http://103.251.91.21:8080/yaya/yayaApp/";
-        else if (API_TYPE == 2) BaseUrl = "http://192.168.0.198:8082/yayaApp/";
+        if (API_TYPE == 1) BaseUrl = "http://103.251.91.21:8080/yyWeb/yaya/yayaApp/";
+        else if (API_TYPE == 2) BaseUrl = "http://192.168.0.198:8082/yyWeb/yayaApp/";
         else BaseUrl = "";
     }
-
 }

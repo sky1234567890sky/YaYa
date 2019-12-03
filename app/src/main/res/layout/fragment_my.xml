@@ -68,7 +68,8 @@
                     android:background="@drawable/ripple_bg"
                     android:paddingLeft="@dimen/dp_32"
                     android:paddingRight="@dimen/dp_32"
-                    android:src="@mipmap/icon_xiaoxi" />
+                    android:src="@mipmap/icon_xiaoxi"
+                    />
 
                 <TextView
                     android:id="@+id/my_hongdian"
@@ -82,7 +83,9 @@
                     app:layout_constraintHorizontal_bias="0.652"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="HardcodedText" />
+                    tools:ignore="HardcodedText"
+                    android:visibility="gone"
+                    />
             </android.support.constraint.ConstraintLayout>
 
             <!--<ImageView-->
@@ -192,6 +195,12 @@
                     android:textColor="#F1F1F1"
                     android:textSize="@dimen/sp_14"
                     tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="丫丫APP&#xA;请刷新页面，如果一直出现这个界面可能是你浏览器版本过低&#xA;&#xA;true&#xA;" />
             </LinearLayout>
 
             <LinearLayout
@@ -375,19 +384,19 @@
 
 
         <android.support.v7.widget.CardView
+            android:id="@+id/my_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-
             android:layout_marginLeft="@dimen/dp_12"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_12">
 
             <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_15">
-
                 <LinearLayout
                     android:id="@+id/ll2"
                     android:layout_width="match_parent"

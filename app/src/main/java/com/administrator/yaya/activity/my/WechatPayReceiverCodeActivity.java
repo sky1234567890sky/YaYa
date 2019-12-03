@@ -23,6 +23,7 @@ import com.administrator.yaya.base.NetConfig;
 import com.administrator.yaya.bean.TestUpLoadCodeIv2;
 import com.administrator.yaya.bean.TestUpLoadGetQr;
 import com.administrator.yaya.bean.my.SwitchReceiveingQrCode;
+import com.administrator.yaya.bean.my.TestAlipayReceiverCode;
 import com.administrator.yaya.bean.my.TestGetUsergCodeImg;
 import com.administrator.yaya.bean.my.TestWechatReceiverCode;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
@@ -150,6 +151,9 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     private View view;
     private Integer imgId;
     private List<TestGetUsergCodeImg.DataBean.UserCodeImgListBean> userCodeImgList = new ArrayList<>();
+    private int vxButtonStatus;
+    private int zfbButtonStatus;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_wechat_pay_receiver_code;
@@ -176,7 +180,6 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
                 }
             }
         });
-
 // else {
 ////            monesssy = 0.00;
 ////        }
@@ -184,14 +187,13 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {//开启
-                    SharedPrefrenceUtils.saveBoolean(WechatPayReceiverCodeActivity.this, NormalConfig.WechatQr_isChecket, isChecked);
+//                    SharedPrefrenceUtils.saveBoolean(WechatPayReceiverCodeActivity.this, NormalConfig.WechatQr_isChecket, isChecked);
                     ToastUtil.showLong("开启");
                     if (userId != null)
                         mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE, Integer.parseInt(userId), 1, 1, token);
                 } else {
                     ToastUtil.showLong("关闭");
-                    SharedPrefrenceUtils.saveBoolean(WechatPayReceiverCodeActivity.this, NormalConfig.WechatQr_isChecket, isChecked);
-
+//                    SharedPrefrenceUtils.saveBoolean(WechatPayReceiverCodeActivity.this, NormalConfig.WechatQr_isChecket, isChecked);
                     mPresenter.getData(ApiConfig.TEST_SWITCH_RECEIVEING_QRCODE, Integer.parseInt(userId), 1, 2, token);
                 }
             }
@@ -200,13 +202,16 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 
     @Override
     protected void initView() {
+
         //开关按钮状态
-        boolean aBoolean = SharedPrefrenceUtils.getBoolean(this, NormalConfig.WechatQr_isChecket);
-        if (aBoolean == true) {
-            wechatpayTwoSwitch.setChecked(aBoolean);
-        } else {
-            wechatpayTwoSwitch.setChecked(aBoolean);
-        }
+        //刚进来时  返回2 关着 但显示 开着
+//        boolean aBoolean = SharedPrefrenceUtils.getBoolean(this, NormalConfig.WechatQr_isChecket);
+//        if (aBoolean == true){
+//            wechatpayTwoSwitch.setChecked(aBoolean);
+//        } else {
+//            wechatpayTwoSwitch.setChecked(aBoolean);
+//        }
+
         userId = SharedPrefrenceUtils.getString(WechatPayReceiverCodeActivity.this, NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(WechatPayReceiverCodeActivity.this, NormalConfig.TOKEN);
 //        Log.i("tag", "initView======: "+userId);
@@ -221,6 +226,15 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     @Override
     public void refresh() {
         super.refresh();
+        //自动回弹
+        mSmartRefresh.getLayout().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSmartRefresh.finishRefresh();
+
+            }
+        }, 200l);
+
         mList.scrollToPosition(0);
         //下拉刷新，添加你刷新后的逻辑
         //加载完成时，隐藏控件下拉刷新的状态
@@ -246,6 +260,10 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 
         userCodeImgList.clear();
 
+        //二维码状态     1、微信 2、支付宝
+        mPresenter.getData(ApiConfig.TEST_ALIPAY_RECEIVER_CODE,Integer.parseInt(userId),1,token);
+
+
         mPresenter.getData(ApiConfig.TEST_WECHAT_RECEIVER_CODE, 1);//1、微信 2、支付宝
     }
 
@@ -253,6 +271,23 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
     public void onResponse(int whichApi, Object[] t) {
 //        hideLoadingDialog();
         switch (whichApi) {
+
+            //二维码状态
+            case ApiConfig.TEST_ALIPAY_RECEIVER_CODE:
+                TestAlipayReceiverCode qrState = (TestAlipayReceiverCode) t[0];
+                if (qrState.getCode()==0){
+                    vxButtonStatus = qrState.getData().getVxButtonStatus();
+                    zfbButtonStatus = qrState.getData().getZfbButtonStatus();
+                    Log.i("tag", "微信开关: "+vxButtonStatus);
+                    if (vxButtonStatus == 1) {//开
+                        SharedPrefrenceUtils.saveBoolean(this, NormalConfig.WechatQr_isChecket, true);
+                        wechatpayTwoSwitch.setChecked(true);
+                    } else {
+                        SharedPrefrenceUtils.saveBoolean(this, NormalConfig.WechatQr_isChecket, false);
+                        wechatpayTwoSwitch.setChecked(false);
+                    }
+                }
+                break;
             //收款码数列表
             case ApiConfig.TEST_WECHAT_RECEIVER_CODE:
                 TestWechatReceiverCode testWechatReceiverCode = (TestWechatReceiverCode) t[0];
@@ -659,7 +694,7 @@ public class WechatPayReceiverCodeActivity extends BaseMvpActivity<LoginModel> i
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong(R.string.error+"");
     }
     //    @Override
 //    protected void onPause() {

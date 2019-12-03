@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.bean.invite.TestInventory;
+import com.administrator.yaya.bean.invite.TestInvitory2;
+import com.administrator.yaya.bean.invite.TestUserCount;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
@@ -21,10 +23,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TestInventoryAdapter extends RecyclerView.Adapter<TestInventoryAdapter.AccountpaidItem> {
-    private final ArrayList<TestInventory.DataBean.OrderStockListBean> list;
+    private final ArrayList<TestInvitory2> list;
     private Context context;
-    private TestInventory.DataBean.CommodityBean commodity;
-    public TestInventoryAdapter(ArrayList<TestInventory.DataBean.OrderStockListBean> list) {
+    private TestUserCount.DataBean.CommodityBean commodity;
+    public TestInventoryAdapter(ArrayList<TestInvitory2> list) {
         this.list = list;
     }
 
@@ -44,8 +46,9 @@ public class TestInventoryAdapter extends RecyclerView.Adapter<TestInventoryAdap
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull TestInventoryAdapter.AccountpaidItem accountpaidItem, @SuppressLint("RecyclerView") final int i) {
-        TestInventory.DataBean.OrderStockListBean orderStockListBean = list.get(i);
+        TestInvitory2 orderStockListBean = list.get(i);
         int orderStatus = orderStockListBean.getOrderStatus();
+
         if (commodity != null) {
             accountpaidItem.mYifuComPrice.setText("单价：￥" + commodity.getComPrice());
             accountpaidItem.mYifuGamemoney.setText(commodity.getComName());
@@ -72,10 +75,9 @@ public class TestInventoryAdapter extends RecyclerView.Adapter<TestInventoryAdap
                 }
             }
         });
-
     }
 
-    public void setData(TestInventory.DataBean.CommodityBean commodity) {
+    public void setData(TestUserCount.DataBean.CommodityBean commodity) {
         this.commodity = commodity;
         notifyDataSetChanged();
     }

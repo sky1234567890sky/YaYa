@@ -113,6 +113,14 @@ public class FinishFragment extends BaseMvpFragment<LoginModel> implements IComm
     @Override
     public void refresh() {
         super.refresh();
+        //自动回弹
+        finishRefresh.getLayout().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finishRefresh.finishRefresh();
+
+            }
+        }, 200l);
         mList.scrollToPosition(0);
 //        finishRefresh.autoRefresh();
         initData();
@@ -130,7 +138,7 @@ public class FinishFragment extends BaseMvpFragment<LoginModel> implements IComm
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong(R.string.error+"");
     }
 
     @SuppressLint("SetTextI18n")

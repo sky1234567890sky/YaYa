@@ -35,7 +35,6 @@ public class RetrievePasswordActivity extends BaseMvpActivity<LoginModel> implem
     EditText forgetEtPhone;
     @BindView(R.id.forget_et_verificationCode)
     EditText getcode;
-
     @BindView(R.id.forget_getcode_btn)
     TextView forgetGetcodeBtn;
     @BindView(R.id.forget_et_login_password)
@@ -85,7 +84,7 @@ public class RetrievePasswordActivity extends BaseMvpActivity<LoginModel> implem
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong("服务器错误！");
     }
 
     @Override

@@ -68,12 +68,17 @@ public class ApiConfig {
     public static final int TEST_UPLOAD_GET_QR_NO2 = 40;//第二次上传收款码
     public static final int TEST_GET_USERNOW_MSG = 41;//消息未读
 
+    public static final int TEST_USER_COUNT = 49;//库存总数
     public static final int TEST_INVENTORY = 42;//库存（新）
+
     public static final int TEST_DIANJIYINGYE = 43;//点击营业（新）
+    public static final int TEST_STOP_YINGYE = 50;//停止营业
+
     public static final int TEST_NO_RECEIVER_GOODS = 44;//未收货
 
     public static final int TEST_MY_INVITEALL = 45;//我的邀请
     public static final int TEST_UPDATE_USERNEW = 46;//读取信息
 
     public static final int TEST_USERCODE_IMG = 47;//图片参数列表
+
 }

@@ -1,6 +1,6 @@
 package com.administrator.yaya.base;
 
-import com.administrator.yaya.TestDianjiYingye;
+import com.administrator.yaya.bean.homepage.TestDianjiYingye;
 import com.administrator.yaya.bean.TestCancelOrderStock;
 import com.administrator.yaya.bean.TestUpLoadCodeIv2;
 import com.administrator.yaya.bean.TestUpLoadGetQr;
@@ -8,12 +8,14 @@ import com.administrator.yaya.bean.TestUpLoadGetQr2;
 import com.administrator.yaya.bean.VerifyCodeInfo;
 import com.administrator.yaya.bean.homepage.TestBuyCom;
 import com.administrator.yaya.bean.homepage.TestHomePageData;
+import com.administrator.yaya.bean.homepage.TestStopYingYe;
 import com.administrator.yaya.bean.invite.TestAccountPaid;
 import com.administrator.yaya.bean.invite.TestInventory;
 import com.administrator.yaya.bean.invite.TestObligation;
 import com.administrator.yaya.bean.invite.TestPayToAffirmInfo;
 import com.administrator.yaya.bean.invite.TestUpawayAllSingleGoods;
 import com.administrator.yaya.bean.invite.TestUpawaySingleGoods;
+import com.administrator.yaya.bean.invite.TestUserCount;
 import com.administrator.yaya.bean.login_register_bean.TestLogin;
 import com.administrator.yaya.bean.login_register_bean.TestRegister;
 import com.administrator.yaya.bean.my.SwitchReceiveingQrCode;
@@ -22,7 +24,6 @@ import com.administrator.yaya.bean.my.TestExpend;
 import com.administrator.yaya.bean.my.TestGetEtVerificationCode;
 import com.administrator.yaya.bean.my.TestGetUsergCodeImg;
 import com.administrator.yaya.bean.my.TestIncome;
-import com.administrator.yaya.bean.my.TestLoadHeadlerIv;
 import com.administrator.yaya.bean.my.TestMyEarnings;
 import com.administrator.yaya.bean.my.TestMyInvite;
 import com.administrator.yaya.bean.my.TestMyInviteAll;
@@ -68,10 +69,8 @@ public interface INetService {
     Observable<VerifyCodeInfo> getVerify2(@Body RequestBody pBody);
 
     //====================================?
-
     //    登录
 //    参数增加：
-//
 //    userPhone
 //    userPwd
 //    手机型号  appModel
@@ -132,6 +131,15 @@ public interface INetService {
     @FormUrlEncoded
     //已付款
     Observable<TestAccountPaid> getTestAccountPaid(@Field("userId") int userId, @Field("orderStatus") int orderStatus);//2
+
+
+    //库存总数
+//    comBuy/getUserCount
+    @POST("comBuy/getUserCount")
+    @FormUrlEncoded
+    //已付款
+    Observable<TestUserCount> getTestUserCount(@Field("userId") int userId);//2
+
 
     //库存(新)
     @POST("comBuy/allOrderStock")
@@ -283,7 +291,7 @@ public interface INetService {
 
     @POST("updatePwd")
     @FormUrlEncoded
-    Observable<TestUpdatePwd> getTestUpdatePwd(@Field("telephone") String telephone, @Field("codename") String codename, @Field("pwd") String pwd, @Field("userId") int userId, @Field("token") String token);
+    Observable<TestUpdatePwd> getTestUpdatePwd(@Field("telephone") String telephone, @Field("codename") String codename, @Field("pwd") String pwd);
 
     //    修改密码--获取验证码
 //    http://192.168.0.198:8080/yayaApp/getPhoneCode
@@ -334,11 +342,9 @@ public interface INetService {
     //
     //二维码状态 1待审核 2审核完成  3审核不通过
 
-
     @POST("getUserCodeImg")
     @FormUrlEncoded
     Observable<TestAlipayReceiverCode> getAlipayReceiverCode(@Field("userId") int userId, @Field("type") int type, @Field("token") String token);
-
 
 //    @POST("updateHeadImg")
 //    @Multipart
@@ -404,8 +410,12 @@ public interface INetService {
 
     @POST("comBuy/doBusinese")
     @FormUrlEncoded
-    Observable<TestDianjiYingye> getTestDianjiYingye(@Field("userId") int userId, @Field("token") String token, @Field("userSalesCount") int userSalesCount);
+    Observable<TestDianjiYingye> getTestDianjiYingye(@Field("userId") int userId, @Field("token") String token);
 
 
-    //营业
+    //    停止营业
+///yayaApp/comBuy/doBusineseEnd
+    @POST("comBuy/doBusineseEnd")
+    @FormUrlEncoded
+    Observable<TestStopYingYe> getTestStopYingYe(@Field("userId") int userId, @Field("token") String token);
 }

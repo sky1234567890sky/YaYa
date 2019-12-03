@@ -100,6 +100,14 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
     @Override
     public void refresh() {
         super.refresh();
+        //自动回弹
+        accountRefreshLayout.getLayout().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                accountRefreshLayout.finishRefresh();
+
+            }
+        }, 200l);
         mList.scrollToPosition(0);
         //刷新
 //        accountRefreshLayout.autoRefresh();
@@ -216,6 +224,7 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
     @SuppressLint("CheckResult")
     @Override
     public void onError(int whichApi, Throwable e) {
+        ToastUtil.showLong("服务器错误！");
     }
 
     @Override

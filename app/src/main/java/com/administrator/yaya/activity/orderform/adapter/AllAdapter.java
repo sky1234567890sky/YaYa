@@ -1,5 +1,4 @@
 package com.administrator.yaya.activity.orderform.adapter;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -21,7 +20,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 public class AllAdapter extends RecyclerView.Adapter<AllAdapter.Vh> {
-
     private  List<TestAllOrderStock.DataBean.OrderSalesListBean> orderSalesList;
     private Context context;
     private TestAllOrderStock.DataBean.CommodityBean commodity;

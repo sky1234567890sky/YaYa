@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -18,8 +19,10 @@ import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.MainActivity;
 import com.administrator.yaya.activity.my.MyIncomeActivity;
 import com.administrator.yaya.activity.my.PersonalDatActivity;
+import com.administrator.yaya.activity.my.RankingListActivity;
 import com.administrator.yaya.activity.my.SettingActivity;
 import com.administrator.yaya.activity.my.SystemMessagesActivity;
+import com.administrator.yaya.activity.my.XinyufenRacordActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
@@ -78,6 +81,8 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     RelativeLayout myLl;
     @BindView(R.id.wire)
     View wire;
+    @BindView(R.id.my_rl)
+    CardView my_rl;
 
     @BindView(R.id.my_right_ll)
     LinearLayout myRightLl;
@@ -86,6 +91,8 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     private String userId;
     private String token;
     private OrderFormkFragment parentFragment1;
+    private ImageView img;
+    private ImageView img_ying;
 
     public MyFragment() {
         // Required empty public constructor
@@ -95,7 +102,6 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     protected int getLayoutId() {
         return R.layout.fragment_my;
     }
-
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -108,12 +114,11 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
-//        StatusBarUtil.setColor(getActivity(),getResources().getColor(R.color.c_ffffff));
-//        if (databean.getUserEarningsToday()!=null) {SpannableString spannableString = ChangTvSizeUtils.changTVsize((Integer.parseInt( databean.getUserEarningsToday()) + Integer.parseInt("0.00"))+"");
-//        getGamemoneyTv.setText(spannableString);}
-//        SpannableString getInventory2 = ChangTvSizeUtils.changTVsize((userInfo.getUserEarningsTotal()+Integer.parseInt("0.00"))+"");
-//        if (getInventory2!=null)allGamemoneyTv.setText(getInventory2);
-//        getFragment();
+        if (getActivity() != null) {
+            img = getActivity().findViewById(R.id.close_business_iv);//歇业
+            //营业
+            img_ying = getActivity().findViewById(R.id.dobusiness_iv);
+        }
     }
 
     private void getFragment() {
@@ -137,20 +142,20 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 //            Glide.with(getContext()).load(urlPath).apply(new RequestOptions().circleCrop()).placeholder(R.mipmap.icon).into(iv);
 //        }
 //        getPermission();//权限
-
         userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
 
         token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
-        //消息列表数据
+
+        //我的页面数据
         mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId), token);
 
         //消息未读
         mPresenter.getData(ApiConfig.TEST_GET_USERNOW_MSG, Integer.parseInt(userId), token);
-
         //读取消息
-        mPresenter.getData(ApiConfig.TEST_UPDATE_USERNEW,Integer.parseInt(userId), token);
+        mPresenter.getData(ApiConfig.TEST_UPDATE_USERNEW, Integer.parseInt(userId), token);
     }
-    @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_right_ll, R.id.my_left_ll})
+
+    @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_right_ll, R.id.my_left_ll, R.id.my_rl})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.system_msg_iv://系統消息
@@ -174,6 +179,12 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                 Intent myincome1 = new Intent(getActivity(), MyIncomeActivity.class);
                 startActivity(myincome1);
                 break;
+            //测试信誉积分页面
+            case R.id.my_rl:
+//                startActivity(new Intent(getActivity(),XinyufenRacordActivity.class));
+
+                startActivity(new Intent(getActivity(), RankingListActivity.class));
+                break;
         }
     }
 
@@ -181,7 +192,6 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 11 && resultCode == 12) {//结果码
-
             String nickName = data.getStringExtra("sky");
             if (nickName != null) {
                 myNameTv.setText(nickName);
@@ -201,7 +211,7 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong(R.string.error+"");
     }
 
     @SuppressLint("SetTextI18n")
@@ -280,70 +290,81 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     Glide.with(getContext()).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(iv);
 
 //                    myNameTv.setText();
+                    //                    1.开始营业（歇业）   2.正在营业（营业中）
+                    int doBusineseStatus = userInfo.getDoBusineseStatus();
+                    Log.i("tag", "我的页面是否营业: "+doBusineseStatus);
+                    if (doBusineseStatus == 2) {
+                        img.setVisibility(View.GONE);//歇业
+                        img_ying.setVisibility(View.VISIBLE);
 
-                }
-                break;
-
-            case ApiConfig.TEST_GET_USERNOW_MSG:
-                TestUserNowMsg testUserNowMsg = (TestUserNowMsg) t[0];
-//                结果：1有	2无
-                if (testUserNowMsg.getMsg().equals(SignOut)) {
-
-                    ToastUtil.showLong(R.string.username_login_hint + "");
-
-                    Intent login = new Intent(getActivity(), LoginActivity.class);
-
-                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
-
-                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
-
-                    startActivity(login);
-
-                    getActivity().finish();
-
-                } else if (testUserNowMsg.getCode() == 0) {
-
-                    String msg = testUserNowMsg.getMsg();
-
-                    int data1 = testUserNowMsg.getData();
-
-                    Log.i("tag", "消息读了吗=====> " + data1);
-
-                    if (data1 == 2) {//默认不显示
-                        mMy_hongdian.setVisibility(View.GONE);
-                    } else if (data1 == 1) {//有
-                        //显示
-                        mMy_hongdian.setVisibility(View.VISIBLE);
-                        //通知有新消息
+                    } else {
+                        img.setVisibility(View.VISIBLE);//歇业
+                        img_ying.setVisibility(View.GONE);
                     }
                 }
                 break;
 
+        case ApiConfig.TEST_GET_USERNOW_MSG:
+        TestUserNowMsg testUserNowMsg = (TestUserNowMsg) t[0];
+//                结果：1有	2无
+        if (testUserNowMsg.getMsg().equals(SignOut)) {
 
-            case ApiConfig.TEST_UPDATE_USERNEW:
+            ToastUtil.showLong(R.string.username_login_hint + "");
 
-                TestUpdateUserNew testUpdateUserNew = (TestUpdateUserNew) t[0];
-                if (testUpdateUserNew.getMsg().equals(SignOut)) {
+            Intent login = new Intent(getActivity(), LoginActivity.class);
 
-                    ToastUtil.showLong(R.string.username_login_hint + "");
+            SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
 
-                    Intent login = new Intent(getActivity(), LoginActivity.class);
+            SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
 
-                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
+            startActivity(login);
 
-                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
+            getActivity().finish();
 
-                    startActivity(login);
+        } else if (testUserNowMsg.getCode() == 0) {
 
-                    getActivity().finish();
-                }else if (testUpdateUserNew.getCode()==0){
-                    //已读取  隐藏
+            String msg = testUserNowMsg.getMsg();
+
+            int data1 = testUserNowMsg.getData();
+
+            Log.i("tag", "消息读了吗=====> " + data1);
+
+            if (data1 == 2) {//默认不显示
+                mMy_hongdian.setVisibility(View.GONE);
+            } else if (data1 == 1) {//有
+                //显示
+                mMy_hongdian.setVisibility(View.VISIBLE);
+                //通知有新消息
+            }
+        }
+        break;
+
+
+        case ApiConfig.TEST_UPDATE_USERNEW:
+
+        TestUpdateUserNew testUpdateUserNew = (TestUpdateUserNew) t[0];
+        if (testUpdateUserNew.getMsg().equals(SignOut)) {
+
+            ToastUtil.showLong(R.string.username_login_hint + "");
+
+            Intent login = new Intent(getActivity(), LoginActivity.class);
+
+            SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
+
+            SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
+
+            startActivity(login);
+
+            getActivity().finish();
+        } else if (testUpdateUserNew.getCode() == 0) {
+            //已读取  隐藏
 //                    ToastUtil.showLong(testUpdateUserNew.getMsg());
 //                    mMy_hongdian.setVisibility(View.GONE);
-                }
-                break;
         }
+        break;
     }
+
+}
 
     @Override
     public void onResume() {//返回时走
@@ -367,9 +388,10 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (getActivity() != null && !hidden) {
-//            Log.i("tag", "刷新数据2: ");
+            Log.i("tag", "我的页面:onHiddenChanged ");
 //            getFragment();
             initData();
+
         }
     }
 }

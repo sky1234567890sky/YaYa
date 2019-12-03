@@ -75,7 +75,7 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong("服务器错误！");
     }
 
     @SuppressLint("SetTextI18n")

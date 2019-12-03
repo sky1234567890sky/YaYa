@@ -7,7 +7,7 @@ public class TestHomePageData implements Serializable {
     /**
      * msg : 操作成功
      * code : 0
-     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":41,"userName":"南门屏","userNickName":null,"userHeadImg":"http://192.168.0.198:8082/profile/upload/2019/11/19/d7c2b9c3cd052472f3c8cdc9acadcaa2.png","userPhone":"18898186027","userPwd":"1234","userProfit":0.006,"userStatus":1,"userInvitationCode":"215409","userParentId":40,"userEarningsNow":91334,"userEarningsTotal":82664,"userContributeTotal":24278,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"userAllCount":4000000,"userSalesCount":8000000,"userDoneCount":1500000,"userSalesCountLock":300000,"userNews":1,"userToken":"397ce45e39b444faa070c9c0120dfb8a","parentUser":null,"juniorUsers":null,"junior":null},"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":0.01,"comImg":"http://192.168.0.198:8082/profile/upload/2019/11/15/9213039ec18ea51f22b4ec4a7c35b856.jpg","comInventory":730125453,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"},"userEarningsToday":"19800"}
+     * data : {"userInfo":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1103,"userName":"王优秀","userHeadImg":null,"userPhone":"13311111111","userPwd":"1234","userProfit":0.009,"userStatus":1,"userParentId":0,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"userAllCount":811105,"userSalesCount":288888,"userDoneCount":0,"userSalesCountLock":0,"userNews":2,"userToken":"49ea8f8eb7ad408b936192fd1ad82d18","userLevel":1,"userCredit":75,"creatTime":"2019-12-02 09:47:20","doBusineseStatus":1,"userLevelName":"王者","parentUser":null,"juniorUsers":null,"junior":null},"commodity":{"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":1,"comImg":"http://192.168.0.198:8082/profile/upload/2019/11/28/50cb427dbda4ad7efce363de67f6dc13.jpg","comInventory":706885240,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币","commodityPriceDeduction":0},"userEarningsToday":null}
      */
 
     private String msg;
@@ -40,14 +40,15 @@ public class TestHomePageData implements Serializable {
 
     public static class DataBean {
         /**
-         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":41,"userName":"南门屏","userNickName":null,"userHeadImg":"http://192.168.0.198:8082/profile/upload/2019/11/19/d7c2b9c3cd052472f3c8cdc9acadcaa2.png","userPhone":"18898186027","userPwd":"1234","userProfit":0.006,"userStatus":1,"userInvitationCode":"215409","userParentId":40,"userEarningsNow":91334,"userEarningsTotal":82664,"userContributeTotal":24278,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"userAllCount":4000000,"userSalesCount":8000000,"userDoneCount":1500000,"userSalesCountLock":300000,"userNews":1,"userToken":"397ce45e39b444faa070c9c0120dfb8a","parentUser":null,"juniorUsers":null,"junior":null}
-         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":0.01,"comImg":"http://192.168.0.198:8082/profile/upload/2019/11/15/9213039ec18ea51f22b4ec4a7c35b856.jpg","comInventory":730125453,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币"}
-         * userEarningsToday : 19800
+         * userInfo : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"userId":1103,"userName":"王优秀","userHeadImg":null,"userPhone":"13311111111","userPwd":"1234","userProfit":0.009,"userStatus":1,"userParentId":0,"userEarningsNow":0,"userEarningsTotal":0,"userContributeTotal":0,"zfbEd":0,"wxEd":0,"vxButtonStatus":2,"zfbButtonStatus":2,"userAllCount":811105,"userSalesCount":288888,"userDoneCount":0,"userSalesCountLock":0,"userNews":2,"userToken":"49ea8f8eb7ad408b936192fd1ad82d18","userLevel":1,"userCredit":75,"creatTime":"2019-12-02 09:47:20","doBusineseStatus":1,"userLevelName":"王者","parentUser":null,"juniorUsers":null,"junior":null}
+         * commodity : {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"comId":1,"comName":"游戏币","comPrice":1,"comImg":"http://192.168.0.198:8082/profile/upload/2019/11/28/50cb427dbda4ad7efce363de67f6dc13.jpg","comInventory":706885240,"comPurchaseNumMin":100,"comPurchaseNumMax":10000000,"comExplain":"这是个游戏币","commodityPriceDeduction":0}
+         * userEarningsToday : null
          */
 
         private UserInfoBean userInfo;
         private CommodityBean commodity;
         private String userEarningsToday;
+
         public UserInfoBean getUserInfo() {
             return userInfo;
         }
@@ -81,29 +82,32 @@ public class TestHomePageData implements Serializable {
              * updateTime : null
              * remark : null
              * params : {}
-             * userId : 41
-             * userName : 南门屏
-             * userNickName : null
-             * userHeadImg : http://192.168.0.198:8082/profile/upload/2019/11/19/d7c2b9c3cd052472f3c8cdc9acadcaa2.png
-             * userPhone : 18898186027
+             * userId : 1103
+             * userName : 王优秀
+             * userHeadImg : null
+             * userPhone : 13311111111
              * userPwd : 1234
-             * userProfit : 0.006
+             * userProfit : 0.009
              * userStatus : 1
-             * userInvitationCode : 215409
-             * userParentId : 40
-             * userEarningsNow : 91334
-             * userEarningsTotal : 82664
-             * userContributeTotal : 24278
+             * userParentId : 0
+             * userEarningsNow : 0
+             * userEarningsTotal : 0
+             * userContributeTotal : 0
              * zfbEd : 0
              * wxEd : 0
              * vxButtonStatus : 2
              * zfbButtonStatus : 2
-             * userAllCount : 4000000
-             * userSalesCount : 8000000
-             * userDoneCount : 1500000
-             * userSalesCountLock : 300000
-             * userNews : 1
-             * userToken : 397ce45e39b444faa070c9c0120dfb8a
+             * userAllCount : 811105
+             * userSalesCount : 288888
+             * userDoneCount : 0
+             * userSalesCountLock : 0
+             * userNews : 2
+             * userToken : 49ea8f8eb7ad408b936192fd1ad82d18
+             * userLevel : 1
+             * userCredit : 75
+             * creatTime : 2019-12-02 09:47:20
+             * doBusineseStatus : 1
+             * userLevelName : 王者
              * parentUser : null
              * juniorUsers : null
              * junior : null
@@ -118,15 +122,13 @@ public class TestHomePageData implements Serializable {
             private ParamsBean params;
             private int userId;
             private String userName;
-            private Object userNickName;
             private String userHeadImg;
             private String userPhone;
             private String userPwd;
             private double userProfit;
             private int userStatus;
-            private String userInvitationCode;
             private int userParentId;
-            private double userEarningsNow;
+            private int userEarningsNow;
             private int userEarningsTotal;
             private int userContributeTotal;
             private int zfbEd;
@@ -139,6 +141,11 @@ public class TestHomePageData implements Serializable {
             private int userSalesCountLock;
             private int userNews;
             private String userToken;
+            private int userLevel;
+            private int userCredit;
+            private String creatTime;
+            private int doBusineseStatus;
+            private String userLevelName;
             private Object parentUser;
             private Object juniorUsers;
             private Object junior;
@@ -215,14 +222,6 @@ public class TestHomePageData implements Serializable {
                 this.userName = userName;
             }
 
-            public Object getUserNickName() {
-                return userNickName;
-            }
-
-            public void setUserNickName(Object userNickName) {
-                this.userNickName = userNickName;
-            }
-
             public String getUserHeadImg() {
                 return userHeadImg;
             }
@@ -263,14 +262,6 @@ public class TestHomePageData implements Serializable {
                 this.userStatus = userStatus;
             }
 
-            public String getUserInvitationCode() {
-                return userInvitationCode;
-            }
-
-            public void setUserInvitationCode(String userInvitationCode) {
-                this.userInvitationCode = userInvitationCode;
-            }
-
             public int getUserParentId() {
                 return userParentId;
             }
@@ -279,11 +270,11 @@ public class TestHomePageData implements Serializable {
                 this.userParentId = userParentId;
             }
 
-            public double getUserEarningsNow() {
+            public int getUserEarningsNow() {
                 return userEarningsNow;
             }
 
-            public void setUserEarningsNow(double userEarningsNow) {
+            public void setUserEarningsNow(int userEarningsNow) {
                 this.userEarningsNow = userEarningsNow;
             }
 
@@ -383,6 +374,46 @@ public class TestHomePageData implements Serializable {
                 this.userToken = userToken;
             }
 
+            public int getUserLevel() {
+                return userLevel;
+            }
+
+            public void setUserLevel(int userLevel) {
+                this.userLevel = userLevel;
+            }
+
+            public int getUserCredit() {
+                return userCredit;
+            }
+
+            public void setUserCredit(int userCredit) {
+                this.userCredit = userCredit;
+            }
+
+            public String getCreatTime() {
+                return creatTime;
+            }
+
+            public void setCreatTime(String creatTime) {
+                this.creatTime = creatTime;
+            }
+
+            public int getDoBusineseStatus() {
+                return doBusineseStatus;
+            }
+
+            public void setDoBusineseStatus(int doBusineseStatus) {
+                this.doBusineseStatus = doBusineseStatus;
+            }
+
+            public String getUserLevelName() {
+                return userLevelName;
+            }
+
+            public void setUserLevelName(String userLevelName) {
+                this.userLevelName = userLevelName;
+            }
+
             public Object getParentUser() {
                 return parentUser;
             }
@@ -422,12 +453,13 @@ public class TestHomePageData implements Serializable {
              * params : {}
              * comId : 1
              * comName : 游戏币
-             * comPrice : 0.01
-             * comImg : http://192.168.0.198:8082/profile/upload/2019/11/15/9213039ec18ea51f22b4ec4a7c35b856.jpg
-             * comInventory : 730125453
+             * comPrice : 1
+             * comImg : http://192.168.0.198:8082/profile/upload/2019/11/28/50cb427dbda4ad7efce363de67f6dc13.jpg
+             * comInventory : 706885240
              * comPurchaseNumMin : 100
              * comPurchaseNumMax : 10000000
              * comExplain : 这是个游戏币
+             * commodityPriceDeduction : 0
              */
 
             private Object searchValue;
@@ -439,12 +471,13 @@ public class TestHomePageData implements Serializable {
             private ParamsBeanX params;
             private int comId;
             private String comName;
-            private double comPrice;
+            private int comPrice;
             private String comImg;
             private int comInventory;
             private int comPurchaseNumMin;
             private int comPurchaseNumMax;
             private String comExplain;
+            private int commodityPriceDeduction;
 
             public Object getSearchValue() {
                 return searchValue;
@@ -518,11 +551,11 @@ public class TestHomePageData implements Serializable {
                 this.comName = comName;
             }
 
-            public double getComPrice() {
+            public int getComPrice() {
                 return comPrice;
             }
 
-            public void setComPrice(double comPrice) {
+            public void setComPrice(int comPrice) {
                 this.comPrice = comPrice;
             }
 
@@ -564,6 +597,14 @@ public class TestHomePageData implements Serializable {
 
             public void setComExplain(String comExplain) {
                 this.comExplain = comExplain;
+            }
+
+            public int getCommodityPriceDeduction() {
+                return commodityPriceDeduction;
+            }
+
+            public void setCommodityPriceDeduction(int commodityPriceDeduction) {
+                this.commodityPriceDeduction = commodityPriceDeduction;
             }
 
             public static class ParamsBeanX {

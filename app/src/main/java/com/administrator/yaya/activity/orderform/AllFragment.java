@@ -3,12 +3,13 @@ package com.administrator.yaya.activity.orderform;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,6 @@ import com.administrator.yaya.bean.orderform.TestNoReceipt;
 import com.administrator.yaya.fragment.OrderFormkFragment;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
-import com.administrator.yaya.utils.FragmentUtils;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -44,6 +44,13 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
     RecyclerView mList;
     @BindView(R.id.sell_refreshLayout)
     SmartRefreshLayout sellResh;
+    @BindView(R.id.sell_no_datas)
+    LinearLayout sell_no_datas;
+
+    //    @BindView(R.id.pageStateLayout)
+//    RelativeLayout pageStateLayout;
+    //@BindView(R.id.all_pageStateLayout)
+//    com.mylhyl.pagestate.PageStateLayout mPageStateLayout;
     private List<TestAllOrderStock.DataBean.OrderSalesListBean> listBean = new ArrayList<>();
     private AllAdapter adapter;
     private OrderFormkFragment parentFragment1;
@@ -78,14 +85,23 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
 
     @Override
     protected int getLayoutId() {
-
         return R.layout.fragment_sell;
     }
 
     @Override
     public void onError(int whichApi, Throwable e) {
 
+        ToastUtil.showLong("服务器错误！");
+
+        if (listBean.isEmpty()) {
+            sellResh.setVisibility(View.GONE);
+            sell_no_datas.setVisibility(View.VISIBLE);//无数据占位图片显示
+        } else {
+            sellResh.setVisibility(View.VISIBLE);
+            sell_no_datas.setVisibility(View.GONE);//无数据占位图片隐藏
+        }
     }
+
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
@@ -93,14 +109,19 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
         if (parentFragment1 == null) {
             getFragment();
         }
-
         initRecycleView(mList, sellResh);
         mList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new AllAdapter(listBean);
+        //如果子布局大小是固定的，起到优化的效果
+        mList.setHasFixedSize(true);
 //        sellResh.setEnableLoadMore(false);
         mList.setAdapter(adapter);
+//        //适配器是空的无数据
+//        if (adapter==null){
+//            sellResh.setVisibility(View.GONE);
+//            sell_no_datas.setVisibility(View.VISIBLE);
+//        }
     }
-
     private void getFragment() {
         Fragment parentFragment = getParentFragment();
         if (parentFragment instanceof OrderFormkFragment) {
@@ -118,22 +139,19 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
 //        hideLoadingDialog();
         switch (whichApi) {
             case ApiConfig.TEST_ALL_ORDERSTOCK://全部
+
                 if (listBean != null && !listBean.isEmpty()) listBean.clear();
                 TestAllOrderStock testAllOrderStock = (TestAllOrderStock) t[0];
 
                 if (testAllOrderStock.getMsg().equals(SignOut)) {
 
                     Toast.makeText(getActivity(), R.string.username_login_hint + "", Toast.LENGTH_SHORT).show();
-
                     Intent login = new Intent(getActivity(), LoginActivity.class);
 
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
 
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
-
-
                     startActivity(login);
-
                     getActivity().finish();
                 }
 
@@ -170,10 +188,16 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
 //                    最小购买数量comPurchaseNumMin
 //                            最大购买数量comPurchaseNumMax
 //                    今日收款数		amount
+                    if (listBean.isEmpty()) {
+                        sellResh.setVisibility(View.GONE);
+                        sell_no_datas.setVisibility(View.VISIBLE);//无数据占位图片显示
+                    } else {
+                        sellResh.setVisibility(View.VISIBLE);
+                        sell_no_datas.setVisibility(View.GONE);//无数据占位图片隐藏
+                    }
                 }
 
                 break;
-
             //取消进货订单
             case ApiConfig.TEST_CANCEL_ORDER_SALES:
                 TestCancelOrderStock testCancelOrderStock = (TestCancelOrderStock) t[0];
@@ -191,9 +215,8 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
                     startActivity(login);
 
                     getActivity().finish();
-                }
-                if (testCancelOrderStock.getCode() == 0 && !testCancelOrderStock.getMsg().equals(SignOut)) {
 
+                } else if (testCancelOrderStock.getCode() == 0 && !testCancelOrderStock.getMsg().equals(SignOut)) {
                     ToastUtil.showLong(testCancelOrderStock.getMsg());
 //                    adapter.notifyDataSetChanged();
                     refresh();
@@ -217,13 +240,12 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
 //                    adapter.notifyItemChanged(reconfirmIndex);
                     adapter.notifyDataSetChanged();
                 }
-
                 //刷新
                 refresh();
                 break;
+
             case ApiConfig.TEST_NO_RECEIVER_GOODS:
                 TestNoReceipt testNoReceipt = (TestNoReceipt) t[0];
-
                 if (testNoReceipt.getMsg().equals(SignOut)) {
                     ToastUtil.showLong(R.string.username_login_hint + "");
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -231,12 +253,11 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
                     startActivity(intent);
                     getActivity().finish();
-                }
-                if (!testNoReceipt.getMsg().equals(SignOut) && testNoReceipt.getCode() == 0) {
+                } else if (!testNoReceipt.getMsg().equals(SignOut) && testNoReceipt.getCode() == 0) {
                     ToastUtil.showLong(testNoReceipt.getMsg());
                     //Weishouho
 //                    listBean.remove(noReceiverIndex);
-//
+//Y
 //                    adapter.notifyItemChanged(noReceiverIndex);
                     adapter.notifyDataSetChanged();
                 }
@@ -247,9 +268,27 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
         sellResh.finishLoadMore();
     }
 
+
+    //                if (listBean.isEmpty()) {
+//                    sellResh.setVisibility(View.GONE);
+//                    sell_no_datas.setVisibility(View.VISIBLE);//无数据占位图片显示
+//                }else{
+//                    sellResh.setVisibility(View.VISIBLE);
+//                    sell_no_datas.setVisibility(View.GONE);//无数据占位图片隐藏
+//                }
+
     @Override
     public void refresh() {
         super.refresh();
+
+        //自动回弹
+        sellResh.getLayout().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                sellResh.finishRefresh();
+
+            }
+        }, 200l);
 
         sellResh.setEnableScrollContentWhenLoaded(true);//设置是否在全部加载结束之后Footer跟随内容
         //自动到顶部
@@ -257,6 +296,7 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
         //加载
 //        sellResh.autoRefresh();
         initData();
+
     }
 
     @Override
@@ -277,6 +317,7 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
         token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
         mPresenter.getData(ApiConfig.TEST_ALL_ORDERSTOCK, Integer.parseInt(userId), token);
     }
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -305,7 +346,7 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
             }
         });
 
-        // //未收货
+        //未收货
         adapter.setCancelsetOnclikListener(new AllAdapter.CancelsetOnclikListener() {
             @Override
             public void setonclik(int postion) {
@@ -316,8 +357,23 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
                 mPresenter.getData(ApiConfig.TEST_NO_RECEIVER_GOODS, salesId, Integer.parseInt(userId), token);
             }
         });
-    }
 
+        //点击时切换状态
+        sell_no_datas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                if (listBean.isEmpty()) {
+//                    sellResh.setVisibility(View.GONE);
+//                    sell_no_datas.setVisibility(View.VISIBLE);//无数据占位图片显示
+//                } else {
+                sellResh.setVisibility(View.VISIBLE);
+                sell_no_datas.setVisibility(View.GONE);//无数据占位图片隐藏
+//                }//
+                refresh();
+            }
+        });
+    }
 //    @Override
 //    public void onHiddenChanged(boolean hidden) {
 //        super.onHiddenChanged(hidden);
@@ -327,4 +383,5 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
 //        }
 //
 //    }
+
 }

@@ -1,5 +1,4 @@
 package com.administrator.yaya.bean.orderform;
-
 import java.io.Serializable;
 import java.util.List;
 //所有售賣訂單  售卖中

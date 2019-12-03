@@ -9,9 +9,7 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        //
         multiDexEnabled true
-
 //        vectorDrawables.useSupportLibrary = true
 //        // Stops the Gradle plugin’s automatic rasterization of vectors
 //        generatedDensities = []
@@ -21,7 +19,6 @@ android {
 //    aaptOptions {
 //        additionalParameters "--no-version-vectors"
 //    }
-
     //必须写到buildTypes上边
 //    signingConfigs {
 //        debug {
@@ -104,6 +101,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation "com.android.support:design:$supportVsersion"
     implementation "com.android.support:support-v4:$supportVsersion"
+//    implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.android.support:support-v4:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -143,7 +141,6 @@ dependencies {
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanary"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanary"
     implementation "com.scwang.smartrefresh:SmartRefreshLayout:$smartRefresh"
-
     //粘性头部/悬浮头
 
     //implementation 'com.github.qdxxxx:StickyHeaderDecoration:1.0.1'
@@ -179,6 +176,9 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.2.1'
     implementation project(':basepop')
     implementation project(':takephoto')
+//    implementation projict('pagerstatelayoutlibrary')
+
+
     implementation files('libs/alipaySdk-20180403.jar')
     implementation 'com.android.support:multidex:1.0.3'
     //noinspection GradleDynamicVersion,GradleDependency
@@ -212,7 +212,13 @@ dependencies {
 
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
     //加载进度条
+    //noinspection GradleDynamicVersion
     implementation 'com.zhengliang:LoadDdataLayout:1.+'
+    //多状态布局
+//    implementation 'com.helin.loadinglayout:loadinglayout:0.0.1'
+//    implementation 'com.github.mylhyl:Android-PageStateLayout:1.0.4'
+//    implementation project(':library')
 
-
+    //环形进度条
+    implementation 'com.github.luweibin3118:PieChartView:v1.1.2'
 }

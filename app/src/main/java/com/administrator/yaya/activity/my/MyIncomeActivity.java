@@ -68,12 +68,11 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
     TabLayout mTab;
     @BindView(R.id.myincome_vp)
     ViewPager vp;
+
     private PopupWindow popupWindow;
     private ArrayList<Fragment> fragments;
     private IncomeFragment incomeFragment;
-    //    private ExpendFragment expendFragment;
     private RebateFragment rebateFragment;
-
     private double userEarningsNow;
     private int userContributeTotal;
     private String userId;
@@ -98,7 +97,6 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
         incomeFragment = new IncomeFragment();//收入
 //        expendFragment = new ExpendFragment();//支出
 //        rebateFragment = new RebateFragment();//返利
-
         fragments.add(incomeFragment);
 //        fragments.add(expendFragment);
 //        fragments.add(rebateFragment);
@@ -108,9 +106,11 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
 //        mTab.addTab(mTab.newTab().setText("返利记录"));
         ArrayList<String> titles = new ArrayList<>();
         titles.add("收入记录");
+
 //        titles.add("支出记录");
 //        titles.add("返利记录");
 //        mTab.setupWithViewPager(vp);
+
         MyInviteFragmentAdapter myInviteFragmentAdapter = new MyInviteFragmentAdapter(getSupportFragmentManager(), fragments, titles);
         vp.setAdapter(myInviteFragmentAdapter);
         mTab.setupWithViewPager(vp);
@@ -278,7 +278,9 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
         return new CommonPresenter();
     }
     @Override
-    public void onError(int whichApi, Throwable e) {}
+    public void onError(int whichApi, Throwable e) {
+        ToastUtil.showLong(R.string.error+"");
+    }
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {

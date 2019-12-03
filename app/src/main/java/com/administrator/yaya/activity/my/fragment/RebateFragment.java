@@ -73,6 +73,16 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
     @Override
     public void refresh() {
         super.refresh();
+
+        //自动回弹
+        rebateRefreshLayout.getLayout().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                rebateRefreshLayout.finishRefresh();
+
+            }
+        }, 200l);
+
         mList.scrollToPosition(0);
 //        rebateRefreshLayout.autoRefresh();
         initData();
@@ -114,7 +124,7 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
 
     @Override
     public void onError(int whichApi, Throwable e) {
-
+        ToastUtil.showLong("服务器错误！");
     }
     @Override
     public void onResponse(int whichApi, Object[] t) {
