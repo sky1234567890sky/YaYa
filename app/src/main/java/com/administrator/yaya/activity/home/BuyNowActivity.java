@@ -309,6 +309,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 Log.i("tag", "afterTextChanged: 正删除后");
             }
         });
+
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @SuppressLint("SetTextI18n")
             @Override
