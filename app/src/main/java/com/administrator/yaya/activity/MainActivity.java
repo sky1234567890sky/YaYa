@@ -38,6 +38,7 @@ import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
+import com.administrator.yaya.bean.homepage.TestDianjiYingye;
 import com.administrator.yaya.bean.homepage.TestStopYingYe;
 import com.administrator.yaya.bean.invite.TestAccountPaid;
 import com.administrator.yaya.bean.invite.TestInventory;
@@ -59,10 +60,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
-    //@BindView(R.id.title_tb)
-//    TextView mTitle;
-//    @BindView(R.id.toolbar)
-//    Toolbar mToolbar;
     @BindView(R.id.home_fragment)
     FrameLayout mFl;
     @BindView(R.id.homepage)
@@ -100,6 +97,7 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
     private int data;
     private String token;
     private int userSalesCount;
+    private String isYingye;
 
     @Override
     protected int getLayoutId() {
@@ -121,6 +119,17 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
         //覆盖在RadioGroup之上LinearLayout的第五个占位子布局
 
         MonitorNetWorkChange();
+
+        //判断歇业还是营业
+//        1.开始营业（歇业）   2.正在营业（营业中）
+        isYingye = SharedPrefrenceUtils.getString(this, NormalConfig.isYingYe);
+
+        //如果为1  歇业
+        if (!isYingye.equals(mApplication.SignOut)){
+            //营业
+            close_business_iv.setVisibility(View.GONE);
+            mDobusinessIv.setVisibility(View.VISIBLE);
+        }
     }
 
     private void addHomeFragment() {
@@ -159,9 +168,10 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 
         int home = getIntent().getIntExtra("confirmyingye", 0);
         if (home == 10) {
+
             //让营业
-            close_business_iv.setVisibility(View.GONE);
-            mDobusinessIv.setVisibility(View.VISIBLE);
+//            close_business_iv.setVisibility(View.GONE);
+//            mDobusinessIv.setVisibility(View.VISIBLE);
 
 
             getSupportFragmentManager()
@@ -202,7 +212,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 
         //消息
 //        mPresenter.getData(ApiConfig.TEST_GET_USERNOW_MSG, Integer.parseInt(userId), token);
-
 //        mMineBtn
     }
 
@@ -218,18 +227,24 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
                 //判断   库存列表数据
 //                mPresenter.getData(ApiConfig.TEST_INVENTORY, Integer.parseInt(userId), token);//库存是否有数据
 
-                //库存总数
-                mPresenter.getData(ApiConfig.TEST_USER_COUNT,Integer.parseInt(userId));
+//                //库存总数
+//                mPresenter.getData(ApiConfig.TEST_USER_COUNT,Integer.parseInt(userId));
+
+                //开始营业
+                mPresenter.getData(ApiConfig.TEST_DIANJIYINGYE,Integer.parseInt(userId),token);
+
                 Log.i("tag", "img:开始营业 ");
-                     }
+
+               }
         });
 
         //歇业
         close_business_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                
                 //停止营业
-                mPresenter.getData(ApiConfig.TEST_STOP_YINGYE, Integer.parseInt(userId), token);
+                 mPresenter.getData(ApiConfig.TEST_STOP_YINGYE, Integer.parseInt(userId), token);
                 Log.i("tag", "img:歇业 ");
             }
         });
@@ -254,9 +269,7 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
                     popupSelector(testObligation.getData().getAmount());//营业
 
 //                    mDobusinessIv.setOnClickListener(null);
-
                 } else {
-
                     if (TextUtils.isEmpty(testObligation.getData().getAmount())) {
                         ToastUtil.showLong("当前没有库存，不能营业哦！");
                     }
@@ -342,8 +355,33 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
                 }
                 break;
 
+                //开始营业
+            case ApiConfig.TEST_DIANJIYINGYE:
+                TestDianjiYingye testDianjiYingye = (TestDianjiYingye) t[0];
+                if (testDianjiYingye.getMsg().equals(mApplication.SignOut)) {
+                    ToastUtil.showLong("您的当前账户已在其他设备登陆，为安全起见，请及时修改密码或重新登陆！");
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
+                    SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
+                    mApplication.userid = 0;
+                    mApplication.mToken = "";
+                    startActivity(intent);
+                    finish();
+                    //提示
+                }else if (testDianjiYingye.getCode()==0){
+                    String msg = testDianjiYingye.getMsg();
+                    ToastUtil.showLong(msg+"");
+//                    跳转开始营业
+                    Intent intent = new Intent(this, ConfirmYingyeActivity.class);
+                    startActivity(intent);
+
+                }
+
+                break;
+
             //停止营业
             case ApiConfig.TEST_STOP_YINGYE:
+
                 TestStopYingYe testStopYingYe = (TestStopYingYe) t[0];
                 if (testStopYingYe.getMsg().equals(mApplication.SignOut)) {
                     ToastUtil.showLong("您的当前账户已在其他设备登陆，为安全起见，请及时修改密码或重新登陆！");
@@ -358,12 +396,14 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
                 } else if (testStopYingYe.getCode() == 0) {
                     ToastUtil.showLong(testStopYingYe.getMsg());
                     //歇业
-                    close_business_iv.setVisibility(View.VISIBLE);
-                    mDobusinessIv.setVisibility(View.GONE);
+//                    close_business_iv.setVisibility(View.VISIBLE);
+//                    mDobusinessIv.setVisibility(View.GONE);
                 }
                 break;
+
             //库存总数
             case ApiConfig.TEST_USER_COUNT:
+
                 TestUserCount testUserCount = (TestUserCount) t[0];
                 if (testUserCount.getCode() == 0) {
                     TestUserCount.DataBean data = testUserCount.getData();
@@ -374,10 +414,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
                     int userAllCount = data.getUserAllCount();
                     int amount = data.getAmount();
 
-                    if (userAllCount>0 && mDobusinessIv.getVisibility()==View.VISIBLE){
-                        //进入营业
-
-                    }
                 }
 
                 break;

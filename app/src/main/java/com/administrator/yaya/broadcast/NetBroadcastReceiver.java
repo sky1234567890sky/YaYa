@@ -28,6 +28,7 @@ public class NetBroadcastReceiver extends BroadcastReceiver {
                     break;
             }
         }
+
         //监听网络连接，包括wifi和移动数据的打开和关闭,以及连接上可用的连接都会接到监听
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
             //获取联网状态的NetworkInfo对象
@@ -38,6 +39,7 @@ public class NetBroadcastReceiver extends BroadcastReceiver {
                     if (info.getType() == ConnectivityManager.TYPE_WIFI || info.getType() == ConnectivityManager.TYPE_MOBILE) {
                         Toast.makeText(context, getConnectionType(info.getType()), Toast.LENGTH_SHORT).show();
                     }
+
                 } else {
                     Toast.makeText(context, "无网络", Toast.LENGTH_SHORT).show();
                 }

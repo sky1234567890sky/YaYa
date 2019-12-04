@@ -52,6 +52,7 @@ import butterknife.BindView;
  * 我的邀請
  */
 public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements View.OnClickListener {
+
     private PopupWindow popupWindow;
     private long exittime;
     private ImageView mMyinviteTwoDimentionCodeIv;
@@ -136,7 +137,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
     @Override
     protected void initView() {
         mMyinviteBack = findViewById(R.id.myinvite_back);
-        mMyinviteFriend = findViewById(R.id.myinvite_fanli);
+        mMyinviteFriend = findViewById(R.id.myinvite_fanli);//返利记录
         mMyinviteRightDengjiIv = findViewById(R.id.myinvite_right_dengji_iv);
         mMyinviteNameIv = findViewById(R.id.myinvite_name_iv1);
         mMyinviteIdTv = findViewById(R.id.myinvite_id_tv1);
@@ -237,6 +238,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
             public void nviteOnClickListeneri(int i) {
                 String codeName = list.get(i).getCodeName();
                 popupSelector(codeName);
+
             }
         });
 
@@ -264,6 +266,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
         mMyinviteTwoDimentionCodTv = inflate.findViewById(R.id.myinvite_two_dimention_cod_tv);//邀请码
         mMyinviteShareWechatBtnTv = inflate.findViewById(R.id.myinvite_share_wechat_btn_tv);//微信分享按钮
         mMyinviteCloneDissPopupIv = inflate.findViewById(R.id.myinvite_clone_diss_popup_iv);//关闭弹窗
+
         //复制验证码
         fuzhi_yanzhengma = inflate.findViewById(R.id.fuzhi_yanzhengma);
         mMyinviteTwoDimentionCodTv.setText("邀请码:" + codeName);
@@ -309,8 +312,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                     ClipboardManager name = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     // 将文本内容放到系统剪贴板里。
                     name.setText(codeName);
-
-                    ToastUtil.showShort("已复制至粘贴栏");
+                    ToastUtil.showShort("邀请码已复制至粘贴栏");
                 }
 
             }

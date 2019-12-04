@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.InputType;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,11 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
-import com.administrator.yaya.activity.my.SettingActivity;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
@@ -35,9 +31,6 @@ import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -98,6 +91,8 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
     private double yongjin = 0;
     private double commodityPriceDeduction;
     private String token;
+    String regEx = "[^\u4E00-\u9FA5]";//正则限制汉字
+
 
     @Override
     protected void initView() {
@@ -110,13 +105,12 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
     private void nextEt() {
         //限制有 空格和特殊字符 输入
-        setEditTextInhibitInputSpaChat(buyGamemoneyNumber);
-        setEditTextInhibitInputSpaChat(bankName);
-
-        setEditTextLengthLimit(buyGamemoneyNumber, 20);//输入付款金额长度
-        setEditTextLengthLimit(bankName, 20);//输入付款人姓名（姓名最长15个字）
+//        setEditTextInhibitInputSpaChat(buyGamemoneyNumber);
+//        setEditTextInhibitInputSpaChat(bankName);
+//
+//        setEditTextLengthLimit(buyGamemoneyNumber,8);//输入付款金额长度
+//        setEditTextLengthLimit(bankName, 15);//输入付款人姓名（姓名最长15个字）
     }
-
     @Override
     protected void initData() {
         super.initData();
@@ -129,7 +123,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong(R.string.error+"");
     }
 
     @SuppressLint("SetTextI18n")
@@ -143,8 +137,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
                 if (testBuyCom.getMsg().equals(mApplication.SignOut)) {
 
-
-                    Toast.makeText(this, "您的账号正在其他设备登录!请重新登陆！", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showLong("" + R.string.username_login_hint);
 
                     Intent login = new Intent(this, LoginActivity.class);
 
@@ -159,11 +152,11 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     startActivity(login);
 
                     BuyNowActivity.this.finish();
-                }
 
-                if (testBuyCom.getCode() == 0 && !testBuyCom.getMsg().equals(mApplication.SignOut)) {
+                } else if (testBuyCom.getCode() == 0 && !testBuyCom.getMsg().equals(mApplication.SignOut)) {
 
                     Log.i("tag", "立即購買====》: " + testBuyCom.toString());
+
                     commodityPriceDeduction = data.getCommodityPriceDeduction();
 
                     String comImg = testBuyCom.getData().getComImg();
@@ -244,6 +237,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                         intent.putExtra("remark", remark);//备注
 
                         intent.putExtra("name2", bankName.getText().toString());
+                        intent.putExtra("jine", payMoney2.getText().toString());
                         startActivity(intent);
                         finish();
                     }
@@ -268,7 +262,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
             public void beforeTextChanged(CharSequence source, int start, int count, int after) {
 
             }
-
             @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -281,14 +274,22 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     payMoney2.setText("0");
                     return;
                 }
+
                 char tv_money = tv.charAt(0);
+
                 if (s.length() <= 0 || s.equals("")) {
                     payMoney2.setText("0");
                     return;
                 } else {
-                    int i = Integer.parseInt(String.valueOf(s));
+//                    if (tv.matches(regEx)){
+//                        ToastUtil.showLong("不能输入汉字哦！");
+//                        return;
+//                    }
+
+                    Integer i = Integer.parseInt(String.valueOf(s));
                     index = (i * comPrice);//输入数量  *  单价
-                    payMoney2.setText(i * comPrice + "");
+                    String string = i * comPrice + "";
+                    payMoney2.setText(string);
                 }
                 int i = Integer.parseInt(String.valueOf(s));
                 //最大数量
@@ -300,12 +301,12 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     buyGamemoneyNumber.setInputType(InputType.TYPE_NULL);//来禁止手机软键盘
                     buyGamemoneyNumber.setInputType(InputType.TYPE_CLASS_TEXT);//来开启软键盘
                 }
+                Log.i("tag", "afterTextChanged: 正删除中");
             }
-
             @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
-
+                Log.i("tag", "afterTextChanged: 正删除后");
             }
         });
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -356,6 +357,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 finish();
                 break;
             case R.id.nowbuy_commit_btn:
+
                 userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
                 String s = buyGamemoneyNumber.getText().toString().trim();//货物数量
                 String paymoey = payMoney2.getText().toString().trim();//付款金额
@@ -364,10 +366,8 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     if (comPurchaseNumMin <= i && i <= comPurchaseNumMax) {
                         //付款人姓名上传对照
                         String name = bankName.getText().toString().trim();
-                        SharedPrefrenceUtils.saveString(this, NormalConfig.fukuanren, name);
-
-                        Double commodityPriceDeduction = data.getCommodityPriceDeduction();
                         if (!name.isEmpty()) {
+                            SharedPrefrenceUtils.saveString(this, NormalConfig.fukuanren, name);
                             //在此请求网络数据 传到  确认付款 页面(在此解析讲数据传值)（提交数据的  不是 查看详情的）
                             mPresenter.getData(ApiConfig.TEXT_ORDER_STOCK, Integer.parseInt(userId), token, paymoey, name, s, yongjin, flagType);
                             //==================================================》

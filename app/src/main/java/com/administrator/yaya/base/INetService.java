@@ -35,6 +35,8 @@ import com.administrator.yaya.bean.my.TestUpdateUserNew;
 import com.administrator.yaya.bean.my.TestUploadHeadler;
 import com.administrator.yaya.bean.my.TestUserNowMsg;
 import com.administrator.yaya.bean.my.TestWechatReceiverCode;
+import com.administrator.yaya.bean.my.ranking.TestTodayRanking;
+import com.administrator.yaya.bean.my.ranking.TestTuiguangRanking;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
 import com.administrator.yaya.bean.orderform.TestCancel;
 import com.administrator.yaya.bean.orderform.TestConfirmReceipt;
@@ -418,4 +420,14 @@ public interface INetService {
     @POST("comBuy/doBusineseEnd")
     @FormUrlEncoded
     Observable<TestStopYingYe> getTestStopYingYe(@Field("userId") int userId, @Field("token") String token);
+
+    //今日排行/yayaApp/getGeRen
+    @POST("getGeRen")
+    @FormUrlEncoded
+    Observable<TestTodayRanking> getTestTodayRanking(@Field("userId") int userId);
+
+    //推广排行yayaApp/getSheng
+    @POST("getSheng")
+    @FormUrlEncoded
+    Observable<TestTodayRanking> getTestTuiguangRanking(@Field("userId") int userId);
 }

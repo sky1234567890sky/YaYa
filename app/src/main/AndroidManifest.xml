@@ -112,9 +112,8 @@
         <!-- 写在style.xml文件里（windowAnimationStyle可以不添加，这里只是一个动画）： -->
         <!-- // 下面两行代码可有可无 -->
         <!-- // 指定一个主题，这里是无标题、半透明的主题 -->
-
-
         <!-- 支付宝 -->
+
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"

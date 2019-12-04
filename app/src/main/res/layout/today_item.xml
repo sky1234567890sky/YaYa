@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_5"
+    >
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_11"
+        android:paddingBottom="@dimen/dp_15"
+        android:background="@drawable/ranking_item_bg"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:id="@+id/today_img_dengji"
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_32"
+            android:src="@mipmap/icon_no1"
+            android:layout_marginLeft="@dimen/dp_23"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/today_tv_dengji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textColor="#999999"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/dp_23"
+            android:gravity="center_vertical"
+            />
+
+        <TextView
+            android:id="@+id/taday_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="---向前冲"
+            android:textColor="#ff333333"
+            android:textSize="@dimen/sp_15"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_15"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@+id/today_chengjiao_dan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="成交---单"
+            android:textColor="#fff4854f"
+            android:textSize="15sp"
+            android:gravity="right"
+            android:layout_marginRight="@dimen/dp_15"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+    <!--线-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:textColor="#F8F8F8"
+        />
+
+</LinearLayout>

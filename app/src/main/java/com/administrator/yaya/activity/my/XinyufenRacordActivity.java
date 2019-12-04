@@ -1,14 +1,16 @@
 package com.administrator.yaya.activity.my;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.administrator.yaya.R;
-import com.administrator.yaya.activity.my.ranking.TodayRankingFragment;
-import com.administrator.yaya.activity.my.ranking.TuiguangRankingFragment;
+import com.administrator.yaya.activity.my.adapter.XinyufenAdapter;
+import com.administrator.yaya.activity.my.rankinga_dapter.TodayAdapter;
 import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
@@ -17,37 +19,42 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+
 /**
  * 信誉分记录
  */
 public class XinyufenRacordActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
-    @BindView(R.id.xinyufen_back_iv)
-    ImageView mBack;
-    @BindView(R.id.xinyufen_shuoming_btn)
-    ImageView mShuomingBtn;
+    @BindView(R.id.xinyufen_back_iv)//返回
+            ImageView mBack;
+    @BindView(R.id.xinyufen_shuoming_btn)//右上角说明
+            ImageView mShuomingBtn;
 
-    @BindView(R.id.xinyufen_chegnji)
-    TextView mTv1;
-    @BindView(R.id.xinyufen_chegnji1)
-    TextView mTv2;
+    @BindView(R.id.xinyufen_chegnji)//信誉分数  进度条内的 数字
+            TextView mTv1;
+    @BindView(R.id.xinyufen_chegnji1)//良好
+            TextView mTv2;
     @BindView(R.id.myinvite_mlist)
-    RecyclerView mList;
+    RecyclerView mlist;
     @BindView(R.id.myinvite_refreshLayout)
     SmartRefreshLayout mRefresh;
     @BindView(R.id.progress_xinyufen)
     CircularProgressView progress_xinyufen;
 
     private int index = 0;
-//    @Override
+    private ArrayList<Object> list;
+    private XinyufenAdapter adapter;
+
+    //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_xinyufen_racord);
 //        ButterKnife.bind(this);
 //
 //    }
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_xinyufen_racord;
@@ -66,18 +73,49 @@ public class XinyufenRacordActivity extends BaseMvpActivity<LoginModel> implemen
 //        pieChartView.addItemType(new PieChartView.ItemType("", 50, R.color.blue));
 //        pieChartView.addItemType(new PieChartView.ItemType("", 50, 0xff20B2AA));
 
-
-
+        initRecycleView(mlist,mRefresh);
+        mlist.setLayoutManager(new LinearLayoutManager(this));
+        list = new ArrayList<>();
+//        expendRefreshLayout.setEnableLoadMore(false);
+        adapter = new XinyufenAdapter();
+        mlist.setAdapter(adapter);
     }
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong(R.string.error + "");
     }
 
     @Override
     public void onResponse(int whichApi, Object[] t) {
 
+
+        mRefresh.finishRefresh();
+        mRefresh.finishLoadMore();
+
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        //自动回弹
+        mRefresh.getLayout().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRefresh.finishRefresh();
+
+            }
+        }, 200l);
+        mlist.scrollToPosition(0);
+//        expendRefreshLayout.autoRefresh();
+        initData();
+
+    }
+    @Override
+    public void loadMore() {
+        super.loadMore();
+        mRefresh.finishLoadMoreWithNoMoreData();
+        mRefresh.setNoMoreData(true);
     }
 
     @Override
@@ -89,6 +127,7 @@ public class XinyufenRacordActivity extends BaseMvpActivity<LoginModel> implemen
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
     }
+
     @OnClick({R.id.xinyufen_back_iv, R.id.xinyufen_shuoming_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -96,9 +135,22 @@ public class XinyufenRacordActivity extends BaseMvpActivity<LoginModel> implemen
                 this.finish();
                 break;
             case R.id.xinyufen_shuoming_btn:
-                Intent intent = new Intent(this,GameMoneyExplainActivity.class);
+                Intent intent = new Intent(this, GameMoneyExplainActivity.class);
                 startActivity(intent);
                 break;
         }
+    }
+
+    //刷新数据
+    @Override
+    protected void onResume() {//退出
+        super.onResume();
+        initData();
+    }
+
+    @Override
+    protected void onPause() {//进入
+        super.onPause();
+        initData();
     }
 }

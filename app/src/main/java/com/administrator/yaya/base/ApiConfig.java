@@ -81,4 +81,6 @@ public class ApiConfig {
 
     public static final int TEST_USERCODE_IMG = 47;//图片参数列表
 
+    public static final int TEST_TODAY_RANKING = 51; //今日排行
+    public static final int TEST_TUIGUANG_RANKING = 52;///推广排行
 }

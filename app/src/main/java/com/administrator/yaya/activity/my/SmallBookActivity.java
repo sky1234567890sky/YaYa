@@ -37,8 +37,10 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
 
     @BindView(R.id.ll2)
     LinearLayout ll2;
-    @BindView(R.id.tv_wechat_use)
-    TextView tvWechatUse;
+
+    @BindView(R.id.tv_wechat_shoukua)//今日收款
+    TextView tv_wechat_shoukua;
+
     @BindView(R.id.tv_wechat_day)
     TextView tvWechatDay;
     @BindView(R.id.ll1)
@@ -47,6 +49,7 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
     TextView smallBookTvUseMoney;
     @BindView(R.id.tv_day)
     TextView tvDay;
+
     private String userId;
     private String token;
     @Override
@@ -121,7 +124,7 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
                             smallBookPayMoneyTv.setText(moneyToday + "");
                         }
                         int moneyZfbToday = data.getMoneyZfbToday();
-                        tvWechatUse.setText(moneyZfbToday + "");
+                        tv_wechat_shoukua.setText(moneyZfbToday + "");//今日收款
                         tvWechatDay.setText(""+data.getMoneyZfbHistory());
                         smallBookTvUseMoney.setText(data.getMoneyWxToday()+"");
                         tvDay.setText(data.getMoneyWxHistory() + "");
@@ -130,7 +133,6 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
                 break;
         }
     }
-
     @OnClick({R.id.small_book_back_iv, R.id.small_book_pay_money_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {

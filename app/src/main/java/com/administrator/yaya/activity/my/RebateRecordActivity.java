@@ -67,7 +67,6 @@ public class RebateRecordActivity extends BaseMvpActivity<LoginModel> implements
     protected LoginModel getModel() {
         return new LoginModel();
     }
-
     @Override
     protected CommonPresenter getPresenter() {
         return new CommonPresenter();
@@ -112,14 +111,16 @@ public class RebateRecordActivity extends BaseMvpActivity<LoginModel> implements
 //        myLowerAdapter = new MyLowerAdapter(juniorUsers);//上级
 //        myLowerRl.setAdapter(mySuperiorAdapter);
 //        mySuperiorRl.setAdapter(myLowerAdapter);
+
         String userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         String token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
+
         mPresenter.getData(ApiConfig.TEST_MY_INVITE,Integer.parseInt(userId),token);
     }
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong(R.string.error+"");
     }
     @SuppressLint("SetTextI18n")
     @Override

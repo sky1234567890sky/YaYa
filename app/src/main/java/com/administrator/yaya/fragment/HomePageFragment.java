@@ -31,7 +31,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
-
     @BindView(R.id.title_tb)
     TextView titleTb;
     @BindView(R.id.headler_iv)
@@ -74,7 +73,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     protected void initView(View inflate) {
         super.initView(inflate);
 
-        if (getActivity()!=null){
+        if (getActivity() != null) {
             img = getActivity().findViewById(R.id.close_business_iv);//歇业
             //营业
             img_ying = getActivity().findViewById(R.id.dobusiness_iv);
@@ -134,28 +133,10 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
                     double comPrice1 = commodity.getComPrice();
                     homeGamemoneyPrice.setText("进货价:￥" + comPrice1);
 
-
-
-
 //                    1.开始营业（歇业）   2.正在营业（营业中）
                     int doBusineseStatus = userInfo.getDoBusineseStatus();
-                    Log.i("tag", "是否营业: "+doBusineseStatus);
-
-                    if (doBusineseStatus == 2) {//营业
-                        img.setVisibility(View.GONE);//歇业
-                        img_ying.setVisibility(View.VISIBLE);
-                    } else {
-                        img.setVisibility(View.VISIBLE);//歇业
-                        img_ying.setVisibility(View.GONE);
-                    }
-                    
-                    img.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-//                            ToastUtil.showLong("点击了");
-
-                        }
-                    });
+                    Log.i("tag", "HomePager是否营业: " + doBusineseStatus);
+                    SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.isYingYe, String.valueOf(doBusineseStatus));
 
 //                    zfbEd 支付宝已使用额度
 //                        tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
@@ -198,7 +179,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong(R.string.error + "");
     }
 
     @Override
@@ -207,10 +188,6 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
         if (getActivity() != null && !hidden) {
 //            Log.i("tag", "刷新数据2: ");
             initData();
-
-            img = getActivity().findViewById(R.id.close_business_iv);//歇业
-            //营业
-            img_ying = getActivity().findViewById(R.id.dobusiness_iv);
         }
     }
 }

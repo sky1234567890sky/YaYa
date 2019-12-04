@@ -1,68 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c_ffffff"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".activity.my.ranking.TodayRankingFragment">
 
     <TextView
         android:id="@+id/today_hint_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="每天0点前更新~~"
-        android:textSize="@dimen/sp_12"
-        android:textColor="#999999"
-        android:gravity="center"
         android:layout_marginTop="@dimen/dp_5"
-        />
+        android:gravity="center"
+        android:text="每天0点前更新~~"
+        android:textColor="#999999"
+        android:textSize="@dimen/sp_12"
+        tools:ignore="HardcodedText" />
+
     <TextView
         android:id="@+id/today_di_ming"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="您的排名是第--名，成交--单"
-        android:textSize="@dimen/sp_14"
-        android:textColor="#FFFFFF"
         android:background="@mipmap/bg"
         android:gravity="center"
-        />
+        android:text="您今日未上榜"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/sp_14"
+        tools:ignore="HardcodedText" />
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/today_refreshLayout"
+
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableAutoLoadMore="true"
-        android:layout_below="@+id/rll"
-        app:srlEnableLoadMore="true">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        app:cardPreventCornerOverlap="true"
+        app:cardBackgroundColor="@color/c_00000000"
+        >
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/today_refreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlClassicsSpinnerStyle="FixedBehind"
-            app:srlDrawableMarginRight="@dimen/dp_20"
-            app:srlDrawableProgress="@mipmap/icon_dark_refresh"
-            app:srlDrawableProgressSize="@dimen/dp_20"
-            app:srlEnableLastTime="true"
-            app:srlTextSizeTime="@dimen/sp_8"
-            app:srlTextSizeTitle="@dimen/sp_12"
-            android:background="@color/c_ccc"
-            />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/today_mlist"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:srlEnableAutoLoadMore="true"
+            app:srlEnableLoadMore="true">
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/c_ccc"
+                app:srlClassicsSpinnerStyle="FixedBehind"
+                app:srlDrawableMarginRight="@dimen/dp_20"
+                app:srlDrawableProgress="@mipmap/icon_dark_refresh"
+                app:srlDrawableProgressSize="@dimen/dp_20"
+                app:srlEnableLastTime="true"
+                app:srlTextSizeTime="@dimen/sp_8"
+                app:srlTextSizeTitle="@dimen/sp_12" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/today_mlist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_5"
+                />
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlDrawableProgress="@mipmap/icon_dark_refresh"
+                app:srlTextSizeTime="@dimen/sp_8"
+                app:srlTextSizeTitle="@dimen/sp_12" />
 
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlDrawableProgress="@mipmap/icon_dark_refresh"
-            app:srlTextSizeTime="@dimen/sp_8"
-            app:srlTextSizeTitle="@dimen/sp_12" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
+    </android.support.v7.widget.CardView>
 
 
 </LinearLayout>

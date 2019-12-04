@@ -116,8 +116,11 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                 mRemarkTv.setText(remark + "");
 
             }
+
         }
+
         String name = SharedPrefrenceUtils.getString(this, NormalConfig.fukuanren);
+
         if (name.isEmpty()) {
             import_hint.setText("请务必使用姓名为xxx的银行卡进行转账，转账金额为" + comMoney + "元，请填好备注信息，才能及时发货，谢谢!");
         } else {

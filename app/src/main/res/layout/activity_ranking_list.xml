@@ -14,9 +14,7 @@
         android:layout_alignParentBottom="true"
         android:src="@mipmap/logo"
         tools:ignore="ContentDescription" />
-
     <!--android:background="@drawable/raning_bg"-->
-
     <RelativeLayout
         android:id="@+id/raning_rl"
         android:layout_width="match_parent"

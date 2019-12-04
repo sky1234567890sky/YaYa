@@ -30,4 +30,11 @@ public class NormalConfig {
 
     public static String isChecket = "shiyongyongjin";//使用佣金
     public static String fukuanren = "bankname";//付款人姓名
+
+    public static String yingye_status = "yingye";//营业
+
+    public static String xieye_status = "xieye";//歇业
+
+
+    public static String isYingYe = "statusYing";//营业状态
 }

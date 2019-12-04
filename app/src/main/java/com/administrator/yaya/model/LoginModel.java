@@ -352,6 +352,29 @@ public class LoginModel implements ICommonModel {
                 netManager.method(netManager.getNetService(NetConfig.BaseUrl)
                         .getTestStopYingYe((int) t[0], (String) t[1]), view, whichApi);
                 break;
+            //今日排行
+            case ApiConfig.TEST_TODAY_RANKING:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestTodayRanking((int) t[0]), view, whichApi);
+                break;
+            //推广排行
+            case ApiConfig.TEST_TUIGUANG_RANKING:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestTuiguangRanking((int) t[0]), view, whichApi);
+                break;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

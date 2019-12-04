@@ -199,6 +199,7 @@ dependencies {
     //轮播图
     implementation 'com.gongwen:marqueelibrary:1.1.3'
     //跑馬燈
+    implementation 'com.sunfusheng:marqueeview:1.3.3'
     //二维码
     //noinspection GradleDependency,GradleDynamicVersion
     implementation 'com.google.zxing:core:3.3.0'

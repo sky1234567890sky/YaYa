@@ -73,7 +73,7 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
-            //确认营业
+            //点击营业
             case ApiConfig.TEST_DIANJIYINGYE:
                 TestDianjiYingye testDianjiYingye = (TestDianjiYingye) t[0];
                 if (testDianjiYingye.getMsg().equals(mApplication.SignOut)) {
@@ -89,14 +89,14 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
                     if (testDianjiYingye.getCode() == 0 && !testDianjiYingye.getMsg().equals(mApplication.SignOut)) {
                     ToastUtil.showLong(""+testDianjiYingye.getMsg());
                     //让开始营业
-
                     Intent intent = new Intent(this, MainActivity.class);//到库存
                     intent.putExtra("confirmyingye", 10);
                     startActivity(intent);
                     finish();
                 }
                 break;
-            //库存
+
+            //库存总数
             case ApiConfig.TEST_USER_COUNT:
                 TestUserCount testUserCount = (TestUserCount) t[0];
                 if (testUserCount.getCode()==0) {
@@ -126,9 +126,8 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
                     ToastUtil.showLong("当前账户无库存");
                     return;
                 }
-                if (Integer.parseInt(etNumber) > userSalesCount) {
-                    ToastUtil.showLong("你输入的数量超过库存数量！");
-                } else {
+
+                if (Integer.parseInt(etNumber) < userSalesCount) {
                     mPresenter.getData(ApiConfig.TEST_DIANJIYINGYE,Integer.parseInt(userId),token);
                 }
             }
@@ -155,8 +154,10 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
                     mConfirm_btn.setEnabled(Boolean.TRUE);//启用按钮
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         });
     }

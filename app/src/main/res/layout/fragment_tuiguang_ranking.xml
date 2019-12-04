@@ -6,8 +6,9 @@
     android:background="@color/c_ffffff"
     android:layout_height="match_parent"
     tools:context=".activity.my.ranking.TuiguangRankingFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="HardcodedText"
+    >
     <TextView
         android:id="@+id/tuiguang_hint_refresh_tv"
         android:layout_width="match_parent"
@@ -22,12 +23,28 @@
         android:id="@+id/tuiguang_di_ming"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="您今日未上榜"
+        android:text="您的排名是第--名，成交--单"
         android:textSize="@dimen/sp_14"
         android:textColor="#FFFFFF"
         android:background="@mipmap/bg"
         android:gravity="center"
-        />
+         />
+
+
+
+
+
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        app:cardPreventCornerOverlap="true"
+        app:cardBackgroundColor="@color/c_00000000"
+        >
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/tuiguang_refreshLayout"
         android:layout_width="match_parent"
@@ -48,11 +65,12 @@
             />
 
         <android.support.v7.widget.RecyclerView
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             android:id="@+id/tuiguang_mlist"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            />
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
@@ -62,6 +80,6 @@
             app:srlTextSizeTitle="@dimen/sp_12" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

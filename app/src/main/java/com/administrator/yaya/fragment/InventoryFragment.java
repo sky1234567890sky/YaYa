@@ -83,7 +83,6 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //    public static final String FORM_INVENTORY = "FORM_INVENTORY";//区分待付款
 //    public static final String FORM_INVENTORY2 = "FORM_INVENTORY2";//区分已付款
 //    private List<TestInventory.DataBean.OrderStockListBean> orderStockList;
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -251,7 +250,6 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
                     getActivity().finish();
 
                 }else if (testInventory.getCode() == 0 && !testInventory.getMsg().equals(SignOut)) {
-
                     Log.i("tag", "库存数据: " + testInventory.toString());
 //                    货物名称	comName
 //                    货物单价	comPrice
@@ -259,16 +257,15 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //                    data = testInventory.getData();
 //                    orderStockList = data.getOrderStockList();
 //                    adapter.setData(data.getCommodity());//货物信息对象	commodity
-
-                    String msg = testInventory.getMsg();
-                    String msg0 = msg.replaceAll("\\[","");
-                    String msg01 = msg0.replaceAll("\\]","");
-                    String msg1 = msg01.replaceAll("\\}\\,","}\\&");
-                    String msgs[] = msg1.split("&");
+                    Gson gson = new Gson();
+                    String testInvitory = gson.toJson(testInventory, TestInventory.class);
+                    String testInventorys1 = testInvitory.replaceAll("\"\\[","[");
+                    String testInventorys2 = testInventorys1.replaceAll("\\]\"","]");
+                    String testInventorys3 = testInventorys2.replaceAll("\\\\","");
                     List<TestInvitory2> channelBeanList = new ArrayList<>();
-
                     try {
-                        JSONArray jsonArray = new JSONArray(msgs);
+                        JSONObject object = new JSONObject(testInventorys3.toString());
+                        JSONArray jsonArray = object.getJSONArray("msg");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             TestInvitory2 testInvitory2 = new TestInvitory2();
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -291,8 +288,7 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
                     }
 
 
-                    Gson gson = new Gson();
-//                    TestInvitory2 testInvitory2 = gson.toJson(msg, TestInvitory2.class);
+
 
                     list.addAll(channelBeanList);
                     adapter.notifyDataSetChanged();
@@ -333,6 +329,7 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
                     Log.i("tag", "订单编号1: " + orderNumber);
 //                intent.putExtra(FORM_INVENTORY2,FORM_INVENTORY2);
                     intent.putExtra("accountPaid", orderNumber);
+
                     startActivity(intent);
                 }
             }

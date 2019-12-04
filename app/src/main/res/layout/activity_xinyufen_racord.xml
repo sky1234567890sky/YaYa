@@ -96,16 +96,17 @@
                 <!--android:layout_marginTop="@dimen/dp_6"-->
                 <!--android:layout_marginBottom="@dimen/dp_6"-->
                 <!--/>-->
+
                 <com.administrator.yaya.custom.CircularProgressView
                     android:id="@+id/progress_xinyufen"
                     android:layout_width="@dimen/dp_206"
                     android:layout_height="match_parent"
-                    android:padding="30dp"
+                    android:padding="@dimen/dp_15"
                     app:backColor="#E0EEFF"
-                    app:backWidth="20dp"
+                    app:backWidth="@dimen/dp_20"
                     app:progColor="#418EEE"
                     android:layout_centerInParent="true"
-                    app:progWidth="25dp"
+                    app:progWidth="@dimen/dp_23"
                     app:progress="70"
                     app:progStartColor="#5FCAF7"
                     app:progFirstColor="#418EEE"

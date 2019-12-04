@@ -342,7 +342,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_12"
                         android:layout_marginBottom="@dimen/dp_15"
-                        android:text="请务必使用姓名为xxx的银行卡进行转账，转账金额为xxx元，请填好备注信息，才能及时发货，谢谢请务必使用姓名为xxx的银行卡进行转账，转账金额为xxx元，请填好备注信息，才能及时发货，谢谢！"
+                        android:text="请务必使用姓名为xxx的银行卡进行转账，转账金额为xxx元，请填好备注信息，才能及时发货，谢谢!"
                         android:textColor="#999999"
                         android:textSize="@dimen/sp_13" />
                 </LinearLayout>
