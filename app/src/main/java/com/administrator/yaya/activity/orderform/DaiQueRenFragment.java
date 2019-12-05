@@ -58,7 +58,6 @@ public class DaiQueRenFragment extends BaseMvpFragment<LoginModel> implements IC
     public DaiQueRenFragment() {
 
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -120,6 +119,7 @@ public class DaiQueRenFragment extends BaseMvpFragment<LoginModel> implements IC
     @Override
     protected void initListener() {
         super.initListener();
+
         //确认收货
         adapter.setAccountpaidsetOnclikListener(new DaiQueRenAdapter.AccountpaidsetOnclikListener() {
             @Override
@@ -133,16 +133,14 @@ public class DaiQueRenFragment extends BaseMvpFragment<LoginModel> implements IC
 
             }
         });
-        //未收货
+
+        //未收货（不用）
         adapter.setCancelsetOnclikListener(new DaiQueRenAdapter.CancelsetOnclikListener() {
             @Override
             public void setonclik(int postion) {
                 noReceiverIndex = postion;
-
                 int salesId = list.get(postion).getSalesId();
-
-                mPresenter.getData(ApiConfig.TEST_NO_RECEIVER_GOODS, salesId, Integer.parseInt(userId), token);
-
+//                mPresenter.getData(ApiConfig.TEST_NO_RECEIVER_GOODS, salesId, Integer.parseInt(userId), token);
             }
         });
     }
@@ -164,7 +162,7 @@ public class DaiQueRenFragment extends BaseMvpFragment<LoginModel> implements IC
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
     @SuppressLint("SetTextI18n")
     @Override
@@ -213,7 +211,7 @@ public class DaiQueRenFragment extends BaseMvpFragment<LoginModel> implements IC
                 TestConfirmReceipt testConfirmReceipt = (TestConfirmReceipt) t[0];
 
                 if (testConfirmReceipt.getMsg().equals(SignOut)) {
-                    ToastUtil.showLong(R.string.username_login_hint + "");
+                    ToastUtil.showLong( getResources().getString(R.string.username_login_hint));
                     Intent login = new Intent(getActivity(), LoginActivity.class);
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
@@ -233,7 +231,7 @@ public class DaiQueRenFragment extends BaseMvpFragment<LoginModel> implements IC
             case ApiConfig.TEST_NO_RECEIVER_GOODS:
                 TestNoReceipt testNoReceipt = (TestNoReceipt) t[0];
                 if (testNoReceipt.getMsg().equals(SignOut)) {
-                    ToastUtil.showLong(R.string.username_login_hint + "");
+                    ToastUtil.showLong( getResources().getString(R.string.username_login_hint));
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");

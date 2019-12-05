@@ -110,6 +110,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 //
 //        setEditTextLengthLimit(buyGamemoneyNumber,8);//输入付款金额长度
 //        setEditTextLengthLimit(bankName, 15);//输入付款人姓名（姓名最长15个字）
+
     }
     @Override
     protected void initData() {
@@ -123,9 +124,8 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -137,7 +137,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
                 if (testBuyCom.getMsg().equals(mApplication.SignOut)) {
 
-                    ToastUtil.showLong("" + R.string.username_login_hint);
+                    ToastUtil.showLong( getResources().getString(R.string.username_login_hint));
 
                     Intent login = new Intent(this, LoginActivity.class);
 
@@ -191,7 +191,7 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 //查看信息   非提交订单
                 if (testToOrderStock.getMsg().equals(mApplication.SignOut)) {
 
-                    ToastUtil.showLong("您的账号正在其他设备登录!请重新登陆！");
+                    ToastUtil.showLong( getResources().getString(R.string.username_login_hint));
 
                     Intent login = new Intent(this, LoginActivity.class);
 
@@ -206,8 +206,8 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     startActivity(login);
 
                     BuyNowActivity.this.finish();
-                } else if (testToOrderStock.getCode() == 0 && testToOrderStock.getData() != null && !testToOrderStock.getMsg().equals(mApplication.SignOut)) {
 
+                } else if (testToOrderStock.getCode() == 0 && testToOrderStock.getData() != null && !testToOrderStock.getMsg().equals(mApplication.SignOut)) {
                     TestToOrderStock.DataBean data = testToOrderStock.getData();
                     //银行
                     bankName1 = data.getBankName();
@@ -228,8 +228,11 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 //                    mRemarkTv.setText(remark + "");
 
                     Intent intent = new Intent(BuyNowActivity.this, AffirmMessageActivity.class);
+
                     if (!TextUtils.isEmpty(payeeName) || !TextUtils.isEmpty(bankName1) || !TextUtils.isEmpty(comMoney)
+
                             || !TextUtils.isEmpty(bankCard) || !TextUtils.isEmpty(remark)) {
+
                         intent.putExtra("bankName", bankName1);//银行
                         intent.putExtra("payeeName", payeeName);//收款人姓名
                         intent.putExtra("comMoney", comMoney);//收款金额
@@ -238,7 +241,11 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 
                         intent.putExtra("name2", bankName.getText().toString());
                         intent.putExtra("jine", payMoney2.getText().toString());
+                        //保存持卡人姓名
+                        SharedPrefrenceUtils.saveString(this,NormalConfig.fukuanren,bankName.getText().toString());
+
                         startActivity(intent);
+
                         finish();
                     }
                 }
@@ -274,7 +281,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                     payMoney2.setText("0");
                     return;
                 }
-
                 char tv_money = tv.charAt(0);
 
                 if (s.length() <= 0 || s.equals("")) {
@@ -286,9 +292,9 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
 //                        return;
 //                    }
 
-                    Integer i = Integer.parseInt(String.valueOf(s));
+                    int i = Integer.parseInt(String.valueOf(s));
                     index = (i * comPrice);//输入数量  *  单价
-                    String string = i * comPrice + "";
+                    String string = i * comPrice +"";
                     payMoney2.setText(string);
                 }
                 int i = Integer.parseInt(String.valueOf(s));
@@ -358,7 +364,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 finish();
                 break;
             case R.id.nowbuy_commit_btn:
-
                 userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
                 String s = buyGamemoneyNumber.getText().toString().trim();//货物数量
                 String paymoey = payMoney2.getText().toString().trim();//付款金额
@@ -384,7 +389,6 @@ public class BuyNowActivity extends BaseMvpActivity<LoginModel> implements IComm
                 break;
         }
     }
-
     @Override
     protected LoginModel getModel() {
         return new LoginModel();

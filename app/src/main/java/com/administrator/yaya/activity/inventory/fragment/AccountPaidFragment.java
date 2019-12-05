@@ -224,7 +224,7 @@ public class AccountPaidFragment extends BaseLazyLoadFragment<LoginModel> implem
     @SuppressLint("CheckResult")
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
 
     @Override

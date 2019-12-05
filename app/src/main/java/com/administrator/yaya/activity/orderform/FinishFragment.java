@@ -138,7 +138,7 @@ public class FinishFragment extends BaseMvpFragment<LoginModel> implements IComm
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
 
     @SuppressLint("SetTextI18n")
@@ -153,7 +153,7 @@ public class FinishFragment extends BaseMvpFragment<LoginModel> implements IComm
 
                 if (testFinish.getMsg().equals(SignOut)) {
 
-                    ToastUtil.showLong(R.string.username_login_hint + "");
+                    ToastUtil.showLong( getResources().getString(R.string.username_login_hint));
 
                     Intent login = new Intent(getActivity(), LoginActivity.class);
 

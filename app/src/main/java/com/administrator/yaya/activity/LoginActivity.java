@@ -245,7 +245,7 @@ public class LoginActivity extends BaseMvpActivity<LoginModel> {
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)//主要是对这个函数的复写

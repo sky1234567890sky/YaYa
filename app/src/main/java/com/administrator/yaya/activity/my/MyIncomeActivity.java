@@ -47,6 +47,7 @@ import butterknife.OnClick;
  * TODO:我的收益（累计收益）界面
  */
 public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
+
     @BindView(R.id.myincome_back_iv)
     ImageView myincomeBackIv;
     @BindView(R.id.myincome_game_money_plain_iv)
@@ -279,7 +280,7 @@ public class MyIncomeActivity extends BaseMvpActivity<LoginModel> implements ICo
     }
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
     @SuppressLint("SetTextI18n")
     @Override

@@ -85,20 +85,18 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     @SuppressLint("SetTextI18n")
     @Override
     protected void initData() {
-
-
-        //網絡請求  付款信息
+        //付款信息
 //        orderNumber = getIntent().getStringExtra(FORM_INVENTORY2);//已付款
         String accountPaid = getIntent().getStringExtra("accountPaid");
 //        orderNumbers = getIntent().getStringExtra(FORM_INVENTORY);//待付款
-        String orderNumber = getIntent().getStringExtra("OrderNumber");
+//        String orderNumber = getIntent().getStringExtra("OrderNumber");
 
-        //已付款
-        if (!TextUtils.isEmpty(accountPaid) && accountPaid != null)//不为空则是 查看详情  为空则是 提交订单传过来的值
-            mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO, accountPaid, token);
+        //库存界面订单编号  查看信息
+        if (!TextUtils.isEmpty(accountPaid) && accountPaid != null){//不为空则是 查看详情  为空则是 提交订单传过来的值
+            mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO, accountPaid,token);
             //待付款
-        else if (!TextUtils.isEmpty(orderNumber) && orderNumber != null) {
-            mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO, orderNumber, token);
+//        else if (!TextUtils.isEmpty(orderNumber) && orderNumber != null) {
+//            mPresenter.getData(ApiConfig.TEXT_PAYINFO_TO_AFFIRMINFO, orderNumber, token);
         } else {
             //提交订单传过来的数据
             //应付款金额
@@ -107,6 +105,8 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
             comMoney = getIntent().getStringExtra("comMoney");
             String bankCard = getIntent().getStringExtra("bankCard");
             String remark = getIntent().getStringExtra("remark");
+            String name2 = getIntent().getStringExtra("name2");
+            String jine = getIntent().getStringExtra("jine");
             if (!TextUtils.isEmpty(payeeName) || !TextUtils.isEmpty(bankName) || !TextUtils.isEmpty(comMoney)
                     || !TextUtils.isEmpty(bankCard) || !TextUtils.isEmpty(remark)) {
                 bankYinhang.setText(bankName + "");
@@ -114,18 +114,11 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                 bankCodeNumber.setText(bankCard + "");
                 moneyTv.setText(comMoney + "");
                 mRemarkTv.setText(remark + "");
-
             }
 
         }
-
         String name = SharedPrefrenceUtils.getString(this, NormalConfig.fukuanren);
-
-        if (name.isEmpty()) {
-            import_hint.setText("请务必使用姓名为xxx的银行卡进行转账，转账金额为" + comMoney + "元，请填好备注信息，才能及时发货，谢谢!");
-        } else {
-            import_hint.setText("请务必使用姓名为" + name + "的银行卡进行转账，转账金额为" + comMoney + "元，请填好备注信息，才能及时发货，谢谢!");
-        }
+        import_hint.setText("请务必使用姓名为" + name + "的银行卡进行转账，转账金额为" + comMoney + "元，请填好备注信息，才能及时发货，谢谢!");
 
 //        Log.i("tag", "data======》: " + commodityAmount + payerName + commodityPrice + userId);
 //        int i = Integer.parseInt(userId);
@@ -189,7 +182,6 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                 break;
         }
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -209,13 +201,14 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
     public void onError(int whichApi, Throwable e) {
 //        String message = e.getMessage();
 //        Log.e("aaaaaa",message);
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong(getResources().getString(R.string.error));
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
         switch (whichApi) {
+
 //            case ApiConfig.TEXT_ORDER_STOCK:
 //                TestToOrderStock testToOrderStock = (TestToOrderStock) t[0];
 //                Log.i("tag", "确认信息: " + testToOrderStock.toString());
@@ -241,7 +234,7 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
 
                 if (testPayToAffirmInfo.getMsg().equals(mApplication.SignOut)) {
 
-                    ToastUtil.showLong("您的账号正在其他设备登录！");
+                    ToastUtil.showLong(getResources().getString(R.string.username_login_hint));
 
                     Intent login = new Intent(this, LoginActivity.class);
 
@@ -256,13 +249,10 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                     startActivity(login);
 
                     finish();
-                }
-                if (testPayToAffirmInfo.getCode() == 0 && !testPayToAffirmInfo.getMsg().equals(mApplication.SignOut)) {
-
+                } else if (testPayToAffirmInfo.getCode() == 0 && !testPayToAffirmInfo.getMsg().equals(mApplication.SignOut)) {
                     TestPayToAffirmInfo.DataBean data = testPayToAffirmInfo.getData();
 //                    收款人姓名	payeeName
                     String payeeName = data.getPayeeName();
-
                     receiverName.setText(payeeName);
 //                    银行卡号	bankCard
                     String bankCard = data.getBankCard();
@@ -275,9 +265,9 @@ public class AffirmMessageActivity extends BaseMvpActivity<LoginModel> implement
                     moneyTv.setText(comMoney + "");
 //                    备注信息	remark
                     String remark = data.getRemark();
-                    mRemarkTv.setText(remark);
-                    String userName = SharedPrefrenceUtils.getString(this, NormalConfig.USER_NICK);
 
+                    mRemarkTv.setText(remark);
+//                    import_hint.setText("请务必使用姓名为" + name2 + "的银行卡进行转账，转账金额为" + comMoney + "元，请填好备注信息，才能及时发货，谢谢!");
                 }
                 break;
         }

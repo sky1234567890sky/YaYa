@@ -363,9 +363,16 @@ public class LoginModel implements ICommonModel {
                         .getTestTuiguangRanking((int) t[0]), view, whichApi);
                 break;
 
+//            信誉分记录
+//                    /yayaApp/myCredit
+//            参数:
+//            用户id userId
+//            token
 
-
-
+            case ApiConfig.TEST_XINYUFEN_JILU:
+                netManager.method(netManager.getNetService(NetConfig.BaseUrl)
+                        .getTestXinyufenJilu((int) t[0],(String)t[1]), view, whichApi);
+                break;
 
 
 

@@ -105,7 +105,7 @@ public class WeiShouHuoFragment extends BaseMvpFragment<LoginModel> implements I
                 TestConfirmReceipt testConfirmReceipt = (TestConfirmReceipt) t[0];
 
                 if (testConfirmReceipt.getMsg().equals(SignOut)) {
-                    ToastUtil.showLong(R.string.username_login_hint + "");
+                    ToastUtil.showLong( getResources().getString(R.string.username_login_hint));
                     Intent login = new Intent(getActivity(), LoginActivity.class);
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
@@ -237,7 +237,7 @@ public class WeiShouHuoFragment extends BaseMvpFragment<LoginModel> implements I
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
 
 //    @Override

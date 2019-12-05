@@ -10,9 +10,18 @@ public class TestStopYingYe {
 
     private String msg;
     private int code;
+    private  int data;
 
     public String getMsg() {
         return msg;
+    }
+
+    public int getData() {
+        return data;
+    }
+
+    public void setData(int data) {
+        this.data = data;
     }
 
     public void setMsg(String msg) {

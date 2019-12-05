@@ -61,27 +61,24 @@ public class TuiguangRankingAdapter extends RecyclerView.Adapter<TuiguangRanking
         vh.mName.setText(uname);
 
         if (id == 1) {
-            vh.mName.setText(uname + "向前冲");
             //显示
             vh.mTvDengji.setVisibility(View.GONE);
             vh.mImgDengji.setVisibility(View.VISIBLE);
             Glide.with(context).load(R.mipmap.icon_no1).into(vh.mImgDengji);
 
         } else if (id == 2) {
-            vh.mName.setText(uname + "向前冲");
             //显示
             vh.mTvDengji.setVisibility(View.GONE);
             vh.mImgDengji.setVisibility(View.VISIBLE);
             Glide.with(context).load(R.mipmap.icon_no2).into(vh.mImgDengji);
 
         } else if (id == 3) {
-            vh.mName.setText(uname + "向前冲");
             //显示
             vh.mTvDengji.setVisibility(View.GONE);
             vh.mImgDengji.setVisibility(View.VISIBLE);
             Glide.with(context).load(R.mipmap.icon_no3).into(vh.mImgDengji);
         } else if (id == 4) {
-            vh.mName.setText(uname + "向前冲");
+            vh.mName.setText(uname);
         } else {
             vh.mTvDengji.setText(id + "");
         }

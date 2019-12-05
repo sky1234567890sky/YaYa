@@ -124,7 +124,7 @@ public class RebateFragment extends BaseLazyLoadFragment<LoginModel> implements 
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
     @Override
     public void onResponse(int whichApi, Object[] t) {

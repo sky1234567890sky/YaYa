@@ -2,15 +2,10 @@ package com.administrator.yaya.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,8 +14,6 @@ import com.administrator.yaya.R;
 import com.administrator.yaya.activity.LoginActivity;
 import com.administrator.yaya.activity.home.AffirmMessageActivity;
 import com.administrator.yaya.activity.inventory.adapter.TestInventoryAdapter;
-import com.administrator.yaya.activity.inventory.fragment.AccountPaidFragment;
-import com.administrator.yaya.activity.inventory.fragment.ObligationFragment;
 import com.administrator.yaya.base.ApiConfig;
 import com.administrator.yaya.base.BaseMvpFragment;
 import com.administrator.yaya.base.CommonPresenter;
@@ -33,8 +26,6 @@ import com.administrator.yaya.model.LoginModel;
 import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import org.json.JSONArray;
@@ -45,8 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 /**
  * 库存
  */
@@ -60,29 +49,13 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     TextView mKeYong;
     @BindView(R.id.inventory_sell_number)
     TextView mSell;
-
     @BindView(R.id.inventory_yisell_number)
     TextView mYiSell;
-
     @BindView(R.id.invite_no_datas)
     LinearLayout invite_no_datas;
-
-    //    @BindView(R.id.inventory_allgamemoneys)
-//    TextView inventoryMoney;
-//    @BindView(R.id.inventory_stab)
-//    SlidingTabLayout mTab;
-//    @BindView(R.id.inventory_vp)
-//    ViewPager vp;
-    private ArrayList<String> titles;
-    private ArrayList<Fragment> fragments;
-    private AccountPaidFragment accountPaidFragment;
-    private ObligationFragment obligationFragment;
     private TestInventoryAdapter adapter;
     private String userId;
     private String token;
-//    public static final String FORM_INVENTORY = "FORM_INVENTORY";//区分待付款
-//    public static final String FORM_INVENTORY2 = "FORM_INVENTORY2";//区分已付款
-//    private List<TestInventory.DataBean.OrderStockListBean> orderStockList;
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -117,13 +90,11 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
             mRefreshLayout.setVisibility(View.VISIBLE);
             invite_no_datas.setVisibility(View.GONE);//无数据占位图片隐藏
         }
-
     }
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
-
     @Override
     public void refresh() {
         super.refresh();
@@ -132,7 +103,7 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
             @Override
             public void run() {
                 mRefreshLayout.finishRefresh();
-                initData();
+
             }
         }, 200l);
         mList.scrollToPosition(0);
@@ -144,8 +115,6 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     @Override
     public void loadMore() {
         super.loadMore();
-
-
         mRefreshLayout.finishLoadMoreWithNoMoreData();
 
         mRefreshLayout.setNoMoreData(true);
@@ -155,6 +124,7 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
     }
     @Override
     protected void initView(View inflate) {
+
 //        titles = new ArrayList<>();
 //        titles.add("待付款");
 //        titles.add("已付款");
@@ -170,8 +140,9 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
 //        if (mTab.getTabCount() > 1) mTab.setCurrentTab(0);//大于一是因为多个fragment
 //        if (mTab.getTabCount() > 1) mTab.setCurrentTab(0);
 //        adapter.notifyDataSetChanged();
-        mList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-//        mList.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        mList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+
+        mList.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        mRefreshLayout.setEnableLoadMore(false);
         initRecycleView(mList, mRefreshLayout);
         adapter = new TestInventoryAdapter(list);
@@ -222,12 +193,12 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
                     if (userAllCount>0){
                         mKeYong.setText(userAllCount + "");//可用库存
                     }
-
                     if (amount>0){
                         mYiSell.setText(amount+ "");//已售卖
                     }
+
 //                    comInventory库存中数量
-                    if (commodity.getComInventory()<0){
+                    if (commodity.getComInventory()>0){
                         mSell.setText(commodity.getComInventory() + "");//售卖中
                     }
                     adapter.setData(testUserCount.getData().getCommodity());
@@ -315,25 +286,26 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
         }
         return in;
     }
-
     @Override
     protected void initListener() {
         super.initListener();
-        //已付款
+
+        //付款信息
         adapter.setAccountpaidTosetOnclikListener(new TestInventoryAdapter.AccountpaidTosetOnclikListener() {
             @Override
             public void setonclik(int index) {
                 String orderNumber = list.get(index).getOrderNumber();
+                String payeeName = list.get(index).getPayeeName();
                 if (!orderNumber.equals("") && !orderNumber.isEmpty()) {
                     Intent intent = new Intent(getActivity(), AffirmMessageActivity.class);
                     Log.i("tag", "订单编号1: " + orderNumber);
 //                intent.putExtra(FORM_INVENTORY2,FORM_INVENTORY2);
-                    intent.putExtra("accountPaid", orderNumber);
-
+                    intent.putExtra("accountPaid", orderNumber);//订单编号
                     startActivity(intent);
                 }
             }
         });
+
         //待付款
         adapter.setObligationTestOnclikListener(new TestInventoryAdapter.ObligationTestOnclikListener() {
             @Override
@@ -350,13 +322,13 @@ public class InventoryFragment extends BaseMvpFragment<LoginModel> implements IC
             }
         });
 
+        //无数据时
         invite_no_datas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 invite_no_datas.setVisibility(View.VISIBLE);
                 mRefreshLayout.setVisibility(View.GONE);//无数据占位图片隐藏
-//                }//
-
+//                }
                 refresh();
 
             }

@@ -27,6 +27,7 @@ import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.homepage.TestHomePageData;
 import com.administrator.yaya.bean.my.TestUpdateUserNew;
 import com.administrator.yaya.bean.my.TestUserNowMsg;
+import com.administrator.yaya.bean.my.TestXinyufenJilu;
 import com.administrator.yaya.custom.CircularProgressView;
 import com.administrator.yaya.local_utils.SharedPrefrenceUtils;
 import com.administrator.yaya.model.LoginModel;
@@ -34,6 +35,8 @@ import com.administrator.yaya.utils.NormalConfig;
 import com.administrator.yaya.utils.ToastUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,15 +47,13 @@ import butterknife.OnClick;
  */
 public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonView {
 
-    @BindView(R.id.get_gamemoney_tv)//今日收益
-            TextView getGamemoneyTv;
-    @BindView(R.id.all_gamemoney_tv)//本月累计收益
-            TextView allGamemoneyTv;
+//    @BindView(R.id.get_gamemoney_tv)//今日收益
+//            TextView getGamemoneyTv;
+//    @BindView(R.id.all_gamemoney_tv)//本月累计收益
+//            TextView allGamemoneyTv;
 
     @BindView(R.id.my_paiming)//第几名
             TextView my_paiming;
-
-
     @BindView(R.id.system_msg_iv)//信息
             ImageView systemMsgIv;
     @BindView(R.id.setting_iv)//设置
@@ -68,6 +69,7 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
             TextView myNameTv;
     @BindView(R.id.my_progress_xinyufen)//进度条
             CircularProgressView mProgress;
+
     @BindView(R.id.my_xinyufen_chegnji_tv)//0  进度值
             TextView my_xinyufen_chegnji_tv;
 
@@ -79,11 +81,15 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 
     @BindView(R.id.my_name_state_tv)//账号是否正常状态提示
             TextView myNameStateTv;
+
     @BindView(R.id.tv_use)//支付宝  额度
             TextView tvUse;
 
     @BindView(R.id.my_tv_day)//wechat  限度
             TextView wechatEdu;
+
+    @BindView(R.id.chakanjilu_btn_ll)//查看记录
+            LinearLayout chakanjilu_btn_ll;
 
     //    @BindView(R.id.tv_wechat_shoukua)
 //    TextView tvWechatUse;
@@ -96,13 +102,16 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     @BindView(R.id.my_ll)
     RelativeLayout myLl;
 
-    @BindView(R.id.my_right_ll)
-    LinearLayout myRightLl;
+    //
+//    @BindView(R.id.my_right_ll)
+//    LinearLayout myRightLl;
     private TestHomePageData.DataBean.UserInfoBean userInfo;
     private TestHomePageData.DataBean databean;
     private String userId;
     private String token;
     private OrderFormkFragment parentFragment1;
+    private String message;
+    private TestHomePageData data;
 
     public MyFragment() {
     }
@@ -115,6 +124,7 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView(View inflate) {
+
     }
 
     @Override
@@ -127,56 +137,71 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
         userId = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.USER_ID);
 
         token = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.TOKEN);
-
         //我的页面数据
         mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId), token);
 
         //消息未读
         mPresenter.getData(ApiConfig.TEST_GET_USERNOW_MSG, Integer.parseInt(userId), token);
 
-        //读取消息
-        mPresenter.getData(ApiConfig.TEST_UPDATE_USERNEW, Integer.parseInt(userId), token);
     }
+//    R.id.my_right_ll, R.id.my_left_ll,
 
-    @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_right_ll, R.id.my_left_ll, R.id.my_chakan_jilu_btn, R.id.my_card3})
+    @OnClick({R.id.system_msg_iv, R.id.setting_iv, R.id.my_ll, R.id.my_chakan_jilu_btn, R.id.my_card3, R.id.chakanjilu_btn_ll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.system_msg_iv://系統消息
-                Intent intent = new Intent(getActivity(), SystemMessagesActivity.class);
-                startActivity(intent);
+                //读取消息
+                mPresenter.getData(ApiConfig.TEST_UPDATE_USERNEW, Integer.parseInt(userId), token);
                 break;
             case R.id.setting_iv:
-                Intent sa = new Intent(getActivity(), SettingActivity.class);
-                startActivity(sa);
+                if (data.getData().getUserInfo().getUserStatus() == 2) {
+                    ToastUtil.showLong("当前用户状态不可用！");
+                } else {
+                    Intent sa = new Intent(getActivity(), SettingActivity.class);
+                    startActivity(sa);
+                }
                 break;
             case R.id.my_ll:
-                Intent pd = new Intent(getActivity(), PersonalDatActivity.class);
-                startActivityForResult(pd, 11);
-                break;
+                if (data.getData().getUserInfo().getUserStatus() == 2) {
+                    ToastUtil.showLong("当前用户状态不可用！");
 
-            case R.id.my_right_ll:
-                Intent myincome = new Intent(getActivity(), MyIncomeActivity.class);
-                startActivity(myincome);
+                } else {
+                    Intent pd = new Intent(getActivity(), PersonalDatActivity.class);
+                    startActivityForResult(pd, 11);
+                }
+
                 break;
-            case R.id.my_left_ll:
-                Intent myincome1 = new Intent(getActivity(), MyIncomeActivity.class);
-                startActivity(myincome1);
-                break;
+            //我的收益
+//            case R.id.my_right_ll:
+//                Intent myincome = new Intent(getActivity(), MyIncomeActivity.class);
+//                startActivity(myincome);
+//                break;
+            //我的收益
+
+//            case R.id.my_left_ll:
+//                Intent myincome1 = new Intent(getActivity(), MyIncomeActivity.class);
+//                startActivity(myincome1);
+//                break;
 //            //测试信誉积分页面
 //            case R.id.my_rl:
 ////                startActivity(new Intent(getActivity(),XinyufenRacordActivity.class));
 //                startActivity(new Intent(getActivity(), RankingListActivity.class));
 //                break;
 
-            //查看记录
+
+            //信用分
             case R.id.my_chakan_jilu_btn:
-                Intent intent1 = new Intent(getActivity(), XinyufenRacordActivity.class);
-                startActivity(intent1);
+
                 break;
             //显示排名
             case R.id.my_card3:
                 Intent intent2 = new Intent(getActivity(), RankingListActivity.class);
                 startActivity(intent2);
+                break;
+            //信用分
+            case R.id.chakanjilu_btn_ll:
+                Intent intent1 = new Intent(getActivity(), XinyufenRacordActivity.class);
+                startActivity(intent1);
                 break;
         }
     }
@@ -204,7 +229,8 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error + "");
+        message = e.getMessage();
+        ToastUtil.showLong(getResources().getString(R.string.error));
     }
 
     @SuppressLint("SetTextI18n")
@@ -213,7 +239,7 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 //        hideLoadingDialog();
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
-                TestHomePageData data = (TestHomePageData) t[0];
+                data = (TestHomePageData) t[0];
                 //1
                 if (data.getMsg().equals(SignOut)) {
 
@@ -229,7 +255,9 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 
                     getActivity().finish();
                 } else if (data.getCode() == 0 && data.getData() != null && data.getData().getUserInfo() != null && !data.getMsg().equals(SignOut)) {
+
                     databean = data.getData();
+
                     userInfo = databean.getUserInfo();
 //                    tvDay.setText(""+);//每日限額
 //                    tvWechatDay.setText(""+);
@@ -248,15 +276,16 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
 //                    userNickName 昵称
 //                    String userNickName = userInfo.getUserNickName();
 //                    userEarningsTotal 总收益
-                    allGamemoneyTv.setText(userInfo.getUserEarningsTotal() + "");//總收益
+//                    allGamemoneyTv.setText(userInfo.getUserEarningsTotal() + "");//總收益
+
 //                    zfbEd 支付宝已使用额度
 //                    wxEd 微信已使用额度
-
 //                    userEarningsToday 今日收益
+
                     String userEarningsToday = databean.getUserEarningsToday();
-                    if (userEarningsToday != null) {
-                        getGamemoneyTv.setText(userEarningsToday);
-                    }
+//                    if (userEarningsToday != null) {
+//                        getGamemoneyTv.setText(userEarningsToday);
+//                    }
 
                     //保存图片 跟 昵称
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.HEADLER_IMAGEVIEW, userHeadImg);
@@ -266,24 +295,8 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     wechatEdu.setText(userInfo.getWxEd() + "");//微信已使用额度
 
                     String alipay_residue = tvUse.getText().toString().trim();//获取支付宝额度
-//                    int alipayInt = Integer.parseInt(alipay_residue);
-//                    String wechat_residue = tvWechatSheng.getText().toString().trim();//获取微信额度
-//                    int wechatInt = Integer.parseInt(alipay_residue);
-
-                    //剩余额度
-//                    if (alipayInt >= userInfo.getZfbEd())
-//                        tvSheng.setText((alipayInt - userInfo.getZfbEd()) + "");
-//                    else ToastUtil.showShort("已达到每日限度");
-
-//                    if (wechatInt >= userInfo.getWxEd())
-//                        tvWechatSheng.setText((wechatInt - userInfo.getWxEd()) + "");
-//                    else ToastUtil.showShort("已达到每日限度");
-
                     RequestOptions requestOptions = new RequestOptions().centerCrop();
                     Glide.with(getContext()).load(userHeadImg).apply(requestOptions).placeholder(R.mipmap.icon).into(iv);
-
-//                    myNameTv.setText();
-
                     //等级勋章
                     int userLevel = userInfo.getUserLevel();
                     String userLevelName = userInfo.getUserLevelName();
@@ -299,15 +312,40 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     } else if (userLevel == 5) {
                         Glide.with(getActivity()).load(iv[4]).placeholder(R.mipmap.icon).into(my_right_dengji_iv);
                     }
-                    //                    1.开始营业（歇业）   2.正在营业（营业中）
+//                    userCredit  信誉额度
+//                    userAllOrderCount 用户诚信代售次数
+                    int userCredit = userInfo.getUserCredit();
+//                    int userAllOrderCount = userInfo.getUserAllOrderCount();//用户诚信代售次数
+                    int userAllOrderCount = databean.getUserAllOrderCount();
+                    String creditName = databean.getCreditName();
+
+                    my_xinyufen_chegnji_tv.setText(userCredit + "");//信誉额度
+                    my_daishou_ci_tv.setText(userAllOrderCount + "");//用户诚信代售次数
+                    my_xinyufen_chegnji1_tv.setText(creditName + "");//评价  ： 良好   信誉分等级
+                    mProgress.setProgress(userCredit);
+
+                    //账号状态  userStatus  1.正常  2.禁用
+                    if (userInfo.getUserStatus() == 1) {
+                        myNameStateTv.setText("账号状态正常，可以正常营业！");
+                    } else {
+                        myNameStateTv.setText("当前用户状态不可用！");
+                    }
+
                     int doBusineseStatus = userInfo.getDoBusineseStatus();
-                    Log.i("tag", "我的页面是否营业歇业: " + doBusineseStatus);
+//                    Log.i("tag", "我的页面是否营业歇业: " + doBusineseStatus);
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.yingye_status, String.valueOf(doBusineseStatus));
+
+                } else {
+                    myNameStateTv.setText("当前用户状态不可用！");
+                    ToastUtil.showLong(data.getMsg());
                 }
+
                 break;
             case ApiConfig.TEST_GET_USERNOW_MSG:
                 TestUserNowMsg testUserNowMsg = (TestUserNowMsg) t[0];
+
 //                结果：1有	2无
+
                 if (testUserNowMsg.getMsg().equals(SignOut)) {
 
                     ToastUtil.showLong(R.string.username_login_hint + "");
@@ -321,26 +359,23 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     startActivity(login);
 
                     getActivity().finish();
-
                 } else if (testUserNowMsg.getCode() == 0) {
 
                     String msg = testUserNowMsg.getMsg();
-
                     int data1 = testUserNowMsg.getData();
 
-                    Log.i("tag", "消息读了吗=====> " + data1);
-
-                    if (data1 == 2) {//默认不显示
-                        mMy_hongdian.setVisibility(View.GONE);
-                    } else if (data1 == 1) {//有
+                    Log.i("tag", "我的页面消息读了吗=====> " + data1);
+//                    结果：1有	2无
+                    if (data1 == 1) {//有
                         //显示
                         mMy_hongdian.setVisibility(View.VISIBLE);
                         //通知有新消息
+                    } else {
+                        mMy_hongdian.setVisibility(View.GONE);
                     }
                 }
                 break;
-
-
+            //访问读取信息接口
             case ApiConfig.TEST_UPDATE_USERNEW:
 
                 TestUpdateUserNew testUpdateUserNew = (TestUpdateUserNew) t[0];
@@ -357,12 +392,17 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
                     startActivity(login);
 
                     getActivity().finish();
+
                 } else if (testUpdateUserNew.getCode() == 0) {
-                    //已读取  隐藏
-//                    ToastUtil.showLong(testUpdateUserNew.getMsg());
+                    //已读取
 //                    mMy_hongdian.setVisibility(View.GONE);
+                    Intent intent = new Intent(getActivity(), SystemMessagesActivity.class);
+                    startActivity(intent);
+                    ToastUtil.showLong(testUpdateUserNew.getMsg());
                 }
                 break;
+
+
         }
 
     }
@@ -372,7 +412,7 @@ public class MyFragment extends BaseMvpFragment<LoginModel> implements ICommonVi
         super.onResume();
 //        getFragment();
         Log.i("tag", "onResume刷新数据1:" + "");
-        initData();
+//        initData();
     }
 
     @Override

@@ -91,7 +91,7 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
     @Override
     public void onError(int whichApi, Throwable e) {
 
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong( getResources().getString(R.string.error));
 
         if (listBean.isEmpty()) {
             sellResh.setVisibility(View.GONE);
@@ -226,7 +226,7 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
             case ApiConfig.TEST_CONFIRM_RECEIPT:
                 TestConfirmReceipt testConfirmReceipt = (TestConfirmReceipt) t[0];
                 if (testConfirmReceipt.getMsg().equals(SignOut)) {
-                    ToastUtil.showLong(R.string.username_login_hint + "");
+                    ToastUtil.showLong( getResources().getString(R.string.username_login_hint));
                     Intent login = new Intent(getActivity(), LoginActivity.class);
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
@@ -247,7 +247,7 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
             case ApiConfig.TEST_NO_RECEIVER_GOODS:
                 TestNoReceipt testNoReceipt = (TestNoReceipt) t[0];
                 if (testNoReceipt.getMsg().equals(SignOut)) {
-                    ToastUtil.showLong(R.string.username_login_hint + "");
+                    ToastUtil.showLong( getResources().getString(R.string.username_login_hint));
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.USER_ID, "");
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.TOKEN, "");
@@ -346,15 +346,15 @@ public class AllFragment extends BaseMvpFragment<LoginModel> implements ICommonV
             }
         });
 
-        //未收货
+        //未收货（不用）
         adapter.setCancelsetOnclikListener(new AllAdapter.CancelsetOnclikListener() {
             @Override
             public void setonclik(int postion) {
                 noReceiverIndex = postion;
 
-                int salesId = listBean.get(postion).getSalesId();
+//                int salesId = listBean.get(postion).getSalesId();
 
-                mPresenter.getData(ApiConfig.TEST_NO_RECEIVER_GOODS, salesId, Integer.parseInt(userId), token);
+//                mPresenter.getData(ApiConfig.TEST_NO_RECEIVER_GOODS, salesId, Integer.parseInt(userId), token);
             }
         });
 

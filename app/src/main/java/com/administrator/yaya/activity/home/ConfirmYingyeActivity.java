@@ -41,13 +41,15 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
 
     private String userId;
     private String token;
+    private int userAllCount;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_confirm_yingye;
     }
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
     @Override
     protected void initView() {
@@ -94,6 +96,7 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
                     startActivity(intent);
                     finish();
                 }
+
                 break;
 
             //库存总数
@@ -102,9 +105,9 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
                 if (testUserCount.getCode()==0) {
                     TestUserCount.DataBean data = testUserCount.getData();
                     TestUserCount.DataBean.CommodityBean commodity = data.getCommodity();
-                    int userAllCount = data.getUserAllCount();
-                    if (userAllCount>0){
-                        mInventory_number.setText(userAllCount+"");
+                    userAllCount = data.getUserAllCount();
+                    if (userAllCount >0){
+                        mInventory_number.setText(userAllCount +"");
                     }
                 }
                 break;
@@ -127,12 +130,13 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
                     return;
                 }
 
-                if (Integer.parseInt(etNumber) < userSalesCount) {
+                if (Integer.parseInt(etNumber) < userAllCount) {
                     mPresenter.getData(ApiConfig.TEST_DIANJIYINGYE,Integer.parseInt(userId),token);
+                }else{
+                    ToastUtil.showLong("您输入的数量有误！");
                 }
             }
         });
-
         //监听输入框
         mEtCinfirmNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -145,7 +149,7 @@ public class ConfirmYingyeActivity extends BaseMvpActivity<LoginModel> implement
                 //输入框为空  不能点击按钮
                 if (TextUtils.isEmpty(mEtCinfirmNumber.getText())) {
                     mConfirm_btn.setBackground(getResources().getDrawable(R.drawable.confirm_bg_shape));
-                    mConfirm_btn.setTextColor(getResources().getColor(R.color.c_cccccc));
+                    mConfirm_btn.setTextColor(getResources().getColor(R.color.c_ffffff));
                     mConfirm_btn.setEnabled(Boolean.FALSE);//不启用按钮
                 } else {
                     //非空

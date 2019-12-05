@@ -31,7 +31,6 @@ public class AllAdapter extends RecyclerView.Adapter<AllAdapter.Vh> {
         this.commodity = commodity;
         notifyDataSetChanged();
     }
-
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -59,7 +58,6 @@ public class AllAdapter extends RecyclerView.Adapter<AllAdapter.Vh> {
             }
             vh.allGcomName.setText(commodity.getComName());
         }
-
 //        收款方式 orderPayTpe  0无  1微信  2支付宝
 //        状态  salesStatus  1售卖中 2 已完成 3已取消
 //        进货订单集合	orderSalesList
@@ -70,26 +68,28 @@ public class AllAdapter extends RecyclerView.Adapter<AllAdapter.Vh> {
         if (salesStatus==1){//售卖中（待确认）
             vh.allIvFinish.setVisibility(View.GONE);//
             vh.sellGetGatheringBtn.setVisibility(View.VISIBLE);//确认收货
-            vh.sellCancelOrderform.setVisibility(View.VISIBLE);//取消收货
+//            vh.sellCancelOrderform.setVisibility(View.VISIBLE);//取消收货
         }else if (salesStatus==2){//已完成
             vh.allIvCancel.setVisibility(View.GONE);//已取消
             vh.allIvFinish.setVisibility(View.VISIBLE);//已完成
             vh.sellGetGatheringBtn.setVisibility(View.GONE);
             vh.sellZaiciQueren.setVisibility(View.INVISIBLE);
-            vh.sellCancelOrderform.setVisibility(View.GONE);
+//            vh.sellCancelOrderform.setVisibility(View.GONE);
         }else if (salesStatus==3){//已取消
             vh.allIvFinish.setVisibility(View.GONE);//
             vh.allIvCancel.setVisibility(View.VISIBLE);//已取消显示
             vh.sellGetGatheringBtn.setVisibility(View.GONE);//占位  不响应   看不见
-            vh.sellCancelOrderform.setVisibility(View.GONE);
+//            vh.sellCancelOrderform.setVisibility(View.GONE);
             vh.sellZaiciQueren.setVisibility(View.INVISIBLE);
-        } else if (salesStatus==4){//未收货（再次确认）
-            vh.allIvCancel.setVisibility(View.GONE);//已取消隐藏
-            vh.allIvFinish.setVisibility(View.GONE);
-            vh.sellGetGatheringBtn.setVisibility(View.GONE);
-            vh.sellCancelOrderform.setVisibility(View.GONE);
-            vh.sellZaiciQueren.setVisibility(View.VISIBLE);//再次确认
         }
+//        else if (salesStatus==4){//未收货（再次确认）
+//            vh.allIvCancel.setVisibility(View.GONE);//已取消隐藏
+//            vh.allIvFinish.setVisibility(View.GONE);
+//            vh.sellGetGatheringBtn.setVisibility(View.GONE);
+//            vh.sellCancelOrderform.setVisibility(View.GONE);
+//            vh.sellZaiciQueren.setVisibility(View.VISIBLE);//再次确认
+//        }
+
         vh.allCommodityAmount.setText("售卖数量:"+orderSalesListBean.getSalesAmount());
         vh.allCommodityPrice.setText("售卖总价:￥"+orderSalesListBean.getSalesAmountMoney());
         vh.allOrderBuildTime.setText("订单时间："+orderSalesListBean.getSalesBuildTime());

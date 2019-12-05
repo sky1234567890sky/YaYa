@@ -163,7 +163,7 @@ public class MyInviteActivity extends BaseMvpActivity<LoginModel> implements Vie
                 list.clear();
                 TestMyInviteAll testMyInviteAll = (TestMyInviteAll) t[0];
                 if (testMyInviteAll.getMsg().equals(mApplication.SignOut)) {
-                    ToastUtil.showLong("您的账号正在其他设备登录！");
+                    ToastUtil.showLong( getResources().getString(R.string.username_login_hint));
                     Intent intent = new Intent(this, LoginActivity.class);
                     SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
                     SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");

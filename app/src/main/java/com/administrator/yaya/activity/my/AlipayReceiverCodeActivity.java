@@ -250,7 +250,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
             case ApiConfig.TEST_ALIPAY_RECEIVER_CODE:
                 TestAlipayReceiverCode qrState = (TestAlipayReceiverCode) t[0];
                 if (qrState.getMsg().equals(mApplication.SignOut)) {
-                    ToastUtil.showLong("您的当前账户已在其他设备登陆，为安全起见，请及时修改密码或重新登陆！");
+                    ToastUtil.showLong( getResources().getString(R.string.username_login_hint));
                     Intent intent = new Intent(this, LoginActivity.class);
                     SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
                     SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
@@ -410,7 +410,7 @@ public class AlipayReceiverCodeActivity extends BaseMvpActivity<LoginModel> impl
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
 
     @Override

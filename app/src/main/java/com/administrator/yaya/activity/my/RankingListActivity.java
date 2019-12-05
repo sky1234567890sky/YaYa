@@ -79,7 +79,7 @@ public class RankingListActivity extends BaseMvpActivity<LoginModel> implements 
     }
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
     @Override
     public void onResponse(int whichApi, Object[] t) {

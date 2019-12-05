@@ -39,8 +39,8 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     TextView homeGamemoneyName;
     @BindView(R.id.home_gamemoney_price)
     TextView homeGamemoneyPrice;
-//    @BindView(R.id.home_buy_now_btn_tv)
-//    TextView homeBuyNowBtnTv;
+    @BindView(R.id.home_buy_now_btn_tv)
+    TextView homeBuyNowBtnTv;
 //    @BindView(R.id.homepage_use)
 //    TextView tvUse;
 //    @BindView(R.id.homepage_sheng)
@@ -59,27 +59,23 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     private String token;
     private ImageView img;
     private ImageView img_ying;
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser == true) {//可见
-
-        }
-    }
+    private String isYingYe;
 
     @SuppressLint("WrongViewCast")
     @Override
     protected void initView(View inflate) {
         super.initView(inflate);
 
-        if (getActivity() != null) {
-            img = getActivity().findViewById(R.id.close_business_iv);//歇业
-            //营业
-            img_ying = getActivity().findViewById(R.id.dobusiness_iv);
-        }
-    }
+//        if (getActivity() != null) {
+//            img = getActivity().findViewById(R.id.close_business_iv);//歇业
+//            //营业
+//            img_ying = getActivity().findViewById(R.id.dobusiness_iv);
+//        }
 
+        isYingYe = SharedPrefrenceUtils.getString(getActivity(), NormalConfig.isYingYe);
+
+
+    }
     @Override
     protected void initData() {
         super.initData();
@@ -89,8 +85,8 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 
 //        Log.i("tag", "首页: "+userId+"<||>"+token);
         mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId), token);
-    }
 
+    }
     @Override
     protected void initListener() {
         super.initListener();
@@ -107,6 +103,7 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 //        hideLoadingDialog();
         switch (whichApi) {
             case ApiConfig.TEXT_HOMEPAGE_DATA:
+
                 TestHomePageData data = (TestHomePageData) t[0];
                 if (data.getMsg().equals(SignOut)) {
                     Toast.makeText(getActivity(), R.string.username_login_hint + "", Toast.LENGTH_SHORT).show();
@@ -116,7 +113,6 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
                     startActivity(login);
                     getActivity().finish();
                 } else if (data.getCode() == 0 && data.getData() != null) {
-
                     TestHomePageData.DataBean databean = data.getData();
                     TestHomePageData.DataBean.UserInfoBean userInfo = databean.getUserInfo();
                     Log.i("tag", "首頁==》: " + data.toString());
@@ -135,9 +131,21 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 
 //                    1.开始营业（歇业）   2.正在营业（营业中）
                     int doBusineseStatus = userInfo.getDoBusineseStatus();
+
                     Log.i("tag", "HomePager是否营业: " + doBusineseStatus);
+
                     SharedPrefrenceUtils.saveString(getActivity(), NormalConfig.isYingYe, String.valueOf(doBusineseStatus));
 
+
+//                    if (doBusineseStatus==1){//歇业
+//                        homeBuyNowBtnTv.setBackground(getResources().getDrawable(R.drawable.confirm_bg_shape));
+//                        homeBuyNowBtnTv.setTextColor(getResources().getColor(R.color.c_ccc));
+//                        homeBuyNowBtnTv.setEnabled(Boolean.FALSE);//不启用按钮
+//                    }else {
+//                        homeBuyNowBtnTv.setBackground(getResources().getDrawable(R.drawable.ripple_btn));
+//                        homeBuyNowBtnTv.setTextColor(getResources().getColor(R.color.c_ffffff));
+//                        homeBuyNowBtnTv.setEnabled(Boolean.TRUE);//启用按钮
+//                    }
 //                    zfbEd 支付宝已使用额度
 //                        tvUse.setText(userInfo.getZfbEd() + "");//支付宝已使用额度
 ////                    wxEd 微信已使用额度
@@ -151,6 +159,16 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 //                    userName 用户姓名
 //                    userNickName 昵称
 //                    userEarningsTotal 总收益
+
+
+//                    userCredit  信誉额度
+//                    userAllOrderCount 用户诚信代售次数
+                    int userCredit = userInfo.getUserCredit();
+//                    int userAllOrderCount = userInfo.getUserAllOrderCount();
+                    int userAllOrderCount = databean.getUserAllOrderCount();
+
+                }else{
+                    ToastUtil.showLong(data.getMsg());
                 }
                 break;
         }
@@ -160,8 +178,15 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.home_buy_now_btn_tv:
-                Intent intent = new Intent(getActivity(), BuyNowActivity.class);
-                startActivity(intent);
+                //歇业
+                if (isYingYe.equals("2")){
+                    Intent intent = new Intent(getActivity(), BuyNowActivity.class);
+                    startActivity(intent);
+
+                }else{
+                    ToastUtil.showLong("请停止营业后再购买商品！");
+
+                }
                 break;
         }
     }
@@ -173,13 +198,11 @@ public class HomePageFragment extends BaseMvpFragment<LoginModel> implements ICo
 
     @Override
     protected CommonPresenter getPresenter() {
-
         return new CommonPresenter();
     }
-
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error + "");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
 
     @Override

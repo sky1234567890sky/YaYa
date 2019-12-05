@@ -111,6 +111,7 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
                         tvObligation.setText("游戏币库存合计：" + data.getAmount());//库存  父 Fragment 顶部赋值
                     }
                 }
+
                 if (testObligation.getCode() == 0) {
                     TestObligation.DataBean dataBean = testObligation.getData();
                     TestObligation.DataBean.CommodityBean commodity = testObligation.getData().getCommodity();
@@ -141,7 +142,7 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
     @Override
     protected void initData() {
@@ -192,6 +193,7 @@ public class ObligationFragment extends BaseLazyLoadFragment<LoginModel> impleme
 //                mPresenter.getData(ApiConfig.TEST_CANCEL_ORDER_SALES, stockId);
 //            }
 //        });
+
         //跳转至确认信息
         adapter.setAccountpaidTosetOnclikListener(new ObligationAdapter.AccountpaidTosetOnclikListener() {
             @Override

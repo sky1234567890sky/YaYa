@@ -108,7 +108,7 @@ public class TuiguangRankingFragment extends BaseMvpFragment<LoginModel> impleme
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong( getResources().getString(R.string.error));
 
     }
     @Override

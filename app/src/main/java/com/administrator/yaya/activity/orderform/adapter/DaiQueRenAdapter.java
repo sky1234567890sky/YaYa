@@ -57,7 +57,6 @@ public class DaiQueRenAdapter extends RecyclerView.Adapter<DaiQueRenAdapter.Vh> 
             Glide.with(context).load(commodity.getComImg()).placeholder(R.mipmap.icon).into(vh.daiqurenComImg);
             vh.daiqurenGcomName.setText(commodity.getComName());
         }
-
         //确认收货
         vh.daiqurenGetGatheringBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +116,6 @@ public class DaiQueRenAdapter extends RecyclerView.Adapter<DaiQueRenAdapter.Vh> 
     public void setAccountpaidsetOnclikListener(AccountpaidsetOnclikListener accountpaidsetOnclikListener) {
         this.accountpaidsetOnclikListener = accountpaidsetOnclikListener;
     }
-
     //未收货
     private CancelsetOnclikListener cancelsetOnclikListener;
 

@@ -35,6 +35,7 @@ import com.administrator.yaya.bean.my.TestUpdateUserNew;
 import com.administrator.yaya.bean.my.TestUploadHeadler;
 import com.administrator.yaya.bean.my.TestUserNowMsg;
 import com.administrator.yaya.bean.my.TestWechatReceiverCode;
+import com.administrator.yaya.bean.my.TestXinyufenJilu;
 import com.administrator.yaya.bean.my.ranking.TestTodayRanking;
 import com.administrator.yaya.bean.my.ranking.TestTuiguangRanking;
 import com.administrator.yaya.bean.orderform.TestAllOrderStock;
@@ -430,4 +431,12 @@ public interface INetService {
     @POST("getSheng")
     @FormUrlEncoded
     Observable<TestTodayRanking> getTestTuiguangRanking(@Field("userId") int userId);
+    //            信誉分记录
+//                    /yayaApp/myCredit
+//            参数:
+//            用户id userId
+//            token
+    @POST("myCredit")
+    @FormUrlEncoded
+    Observable<TestXinyufenJilu> getTestXinyufenJilu(@Field("userId") int userId, @Field("token") String token);
 }

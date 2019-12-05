@@ -133,7 +133,7 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
     }
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -161,6 +161,8 @@ public class UpdataPasswordActivity extends BaseMvpActivity<LoginModel> implemen
                     ToastUtil.showShort("修改成功");
                     startActivity(login);
                     finish();
+                }else{
+                    ToastUtil.showLong(testUpdatePwd.getMsg());
                 }
                 break;
 

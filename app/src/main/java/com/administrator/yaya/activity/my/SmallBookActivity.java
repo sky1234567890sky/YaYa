@@ -78,7 +78,7 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
 
     @SuppressLint("SetTextI18n")
@@ -88,7 +88,7 @@ public class SmallBookActivity extends BaseMvpActivity<LoginModel> implements IC
             case ApiConfig.TEST_SMALLBOOK:
                 TestSmallBook testSmallBook = (TestSmallBook) t[0];
                 if (testSmallBook.getMsg().equals(mApplication.SignOut)) {
-                    ToastUtil.showLong("您的账号正在其他设备登录,请重新登陆！");
+                    ToastUtil.showLong( getResources().getString(R.string.username_login_hint));
                     Intent intent = new Intent(this, LoginActivity.class);
 
                     SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");

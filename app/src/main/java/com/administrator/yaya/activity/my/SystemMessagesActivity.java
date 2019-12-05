@@ -34,7 +34,6 @@ import butterknife.OnClick;
  * 系统消息
  */
 public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implements ICommonView {
-
     @BindView(R.id.system_msg_back_iv)
     ImageView systemMsgBackIv;
 
@@ -69,8 +68,9 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
+
     @Override
     protected void initView() {
         super.initView();
@@ -78,11 +78,10 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
         initRecycleView(mList,mRefresh);//
         mList.setLayoutManager(new LinearLayoutManager(this));
         //禁止加载
-        mRefresh.setEnableLoadMore(false);
+//        mRefresh.setEnableLoadMore(false);
         adapter = new SystemMessagesAdapter(list);
         mList.setAdapter(adapter);
     }
-
     @Override
     public void refresh() {
         super.refresh();
@@ -91,7 +90,6 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
             @Override
             public void run() {
                 mRefresh.finishRefresh();
-
             }
         }, 200l);
         mList.scrollToPosition(0);
@@ -99,6 +97,14 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
         //走一遍数据加载
         initData();
     }
+
+    @Override
+    public void loadMore() {
+        super.loadMore();
+        mRefresh.finishLoadMoreWithNoMoreData();
+        mRefresh.setNoMoreData(true);
+    }
+
     @Override
     protected void initData() {
         super.initData();
@@ -107,6 +113,7 @@ public class SystemMessagesActivity extends BaseMvpActivity<LoginModel> implemen
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
 
+        //
         mPresenter.getData(ApiConfig.TEST_NOTIFICATION_INFO,Integer.parseInt(userId),token);
 
     }

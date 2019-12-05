@@ -39,6 +39,7 @@ import com.administrator.yaya.base.BaseMvpActivity;
 import com.administrator.yaya.base.CommonPresenter;
 import com.administrator.yaya.base.ICommonView;
 import com.administrator.yaya.bean.homepage.TestDianjiYingye;
+import com.administrator.yaya.bean.homepage.TestHomePageData;
 import com.administrator.yaya.bean.homepage.TestStopYingYe;
 import com.administrator.yaya.bean.invite.TestAccountPaid;
 import com.administrator.yaya.bean.invite.TestInventory;
@@ -75,9 +76,9 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
     @BindView(R.id.rg)
     RadioGroup mRg;
     @BindView(R.id.dobusiness_iv)//营业
-    ImageView mDobusinessIv;
+            ImageView mDobusinessIv;
     @BindView(R.id.close_business_iv)//歇业
-    ImageView close_business_iv;
+            ImageView close_business_iv;
     @BindView(R.id.hongdian)
     TextView mHongdian;
     private FragmentManager manager;
@@ -98,6 +99,8 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
     private String token;
     private int userSalesCount;
     private String isYingye;
+    private Toast toast;
+    private String isYingYe;
 
     @Override
     protected int getLayoutId() {
@@ -119,16 +122,18 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
         //覆盖在RadioGroup之上LinearLayout的第五个占位子布局
 
         MonitorNetWorkChange();
-
         //判断歇业还是营业
 //        1.开始营业（歇业）   2.正在营业（营业中）
         isYingye = SharedPrefrenceUtils.getString(this, NormalConfig.isYingYe);
 
         //如果为1  歇业
-        if (!isYingye.equals(mApplication.SignOut)){
+        if (isYingye.equals("2")) {
             //营业
-            close_business_iv.setVisibility(View.GONE);
             mDobusinessIv.setVisibility(View.VISIBLE);
+            close_business_iv.setVisibility(View.GONE);
+        }else {
+            mDobusinessIv.setVisibility(View.GONE);
+            close_business_iv.setVisibility(View.VISIBLE);
         }
     }
 
@@ -168,12 +173,9 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 
         int home = getIntent().getIntExtra("confirmyingye", 0);
         if (home == 10) {
-
             //让营业
 //            close_business_iv.setVisibility(View.GONE);
 //            mDobusinessIv.setVisibility(View.VISIBLE);
-
-
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.home_fragment, inventoryFragment)
@@ -191,6 +193,7 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 //            mInventoryBtn.setChecked(true);
 //        }
     }
+
     private void initFragment() {
         homePageFragment = new HomePageFragment();
         inventoryFragment = new InventoryFragment();
@@ -206,15 +209,16 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
     @Override
     protected void initData() {
         super.initData();
-
         userId = SharedPrefrenceUtils.getString(this, NormalConfig.USER_ID);
         token = SharedPrefrenceUtils.getString(this, NormalConfig.TOKEN);
 
+        isYingYe = SharedPrefrenceUtils.getString(this, NormalConfig.isYingYe);
         //消息
 //        mPresenter.getData(ApiConfig.TEST_GET_USERNOW_MSG, Integer.parseInt(userId), token);
 //        mMineBtn
+        //获取是否营业的状态
+        mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId), token);
     }
-
     @Override
     protected void initListener() {
         super.initListener();
@@ -226,33 +230,71 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 //                ToastUtil.showLong("点击");
                 //判断   库存列表数据
 //                mPresenter.getData(ApiConfig.TEST_INVENTORY, Integer.parseInt(userId), token);//库存是否有数据
-
 //                //库存总数
 //                mPresenter.getData(ApiConfig.TEST_USER_COUNT,Integer.parseInt(userId));
-
                 //开始营业
-                mPresenter.getData(ApiConfig.TEST_DIANJIYINGYE,Integer.parseInt(userId),token);
+//                Log.i("tag", "img:开始营业 ");
 
-                Log.i("tag", "img:开始营业 ");
+                    tanChuang();
 
-               }
+            }
         });
 
         //歇业
         close_business_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
+                stopPop();
                 //停止营业
-                 mPresenter.getData(ApiConfig.TEST_STOP_YINGYE, Integer.parseInt(userId), token);
-                Log.i("tag", "img:歇业 ");
+//                mPresenter.getData(ApiConfig.TEST_STOP_YINGYE, Integer.parseInt(userId), token);
+//                Log.i("tag", "img:歇业 ");
             }
         });
     }
 
+    private void stopPop() {
+
+        new AlertDialog.Builder(this)
+                .setTitle("是否停止营业？")
+                .setNegativeButton("确认", new DialogInterface.OnClickListener() {
+                    @SuppressLint("ApplySharedPref")
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        mPresenter.getData(ApiConfig.TEST_STOP_YINGYE, Integer.parseInt(userId), token);
+
+                    }
+                }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        }).show();
+    }
+
+    //确认营业
+    private void tanChuang() {
+
+        new AlertDialog.Builder(this)
+                .setTitle("是否营业？")
+                .setNegativeButton("确认", new DialogInterface.OnClickListener() {
+                    @SuppressLint("ApplySharedPref")
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        mPresenter.getData(ApiConfig.TEST_DIANJIYINGYE, Integer.parseInt(userId), token);
+
+                    }
+                }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        }).show();
+    }
+
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong(getResources().getString(R.string.error));
     }
 
     @Override
@@ -260,14 +302,37 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 //        hideLoadingDialog();
         //已付款
         switch (whichApi) {
+            //获取是否开始营业的状态
+            case ApiConfig.TEXT_HOMEPAGE_DATA:
+                TestHomePageData data = (TestHomePageData) t[0];
+                if (data.getMsg().equals("1")) {
+                    Toast.makeText(this, R.string.username_login_hint + "", Toast.LENGTH_SHORT).show();
+                    Intent login = new Intent(this, LoginActivity.class);
+                    SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
+                    SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
+                    startActivity(login);
+                    finish();
+                } else if (data.getCode() == 0 && data.getData() != null) {
+                    TestHomePageData.DataBean.UserInfoBean userInfo = data.getData().getUserInfo();
+//                    int userStatus = userInfo.getUserStatus();//账号  1.正常  2.禁用
+                    int doBusineseStatus = userInfo.getDoBusineseStatus();
+//                    1.开始营业（歇业）   2.正在营业（营业中）
+
+                    if (doBusineseStatus==2){//营业
+                        close_business_iv.setVisibility(View.GONE);
+                        mDobusinessIv.setVisibility(View.VISIBLE);
+                    }else{
+                        close_business_iv.setVisibility(View.VISIBLE);
+                        mDobusinessIv.setVisibility(View.GONE);
+                    }
+                }
+
+                break;
             case ApiConfig.TEXT_GATHERING2:
                 testObligation = (TestAccountPaid) t[0];
-
                 if (testObligation.getCode() == 0 && !TextUtils.isEmpty(testObligation.getData().getAmount())) {
 //                    Log.i("tag", "============: "+testObligation.getData().getAmount());
-
                     popupSelector(testObligation.getData().getAmount());//营业
-
 //                    mDobusinessIv.setOnClickListener(null);
                 } else {
                     if (TextUtils.isEmpty(testObligation.getData().getAmount())) {
@@ -281,12 +346,9 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
                 TestUserNowMsg testUserNowMsg = (TestUserNowMsg) t[0];
 //                结果：1有	2无
                 if (testUserNowMsg.getMsg().equals(mApplication.SignOut)) {
-                    Toast.makeText(this, R.string.username_login_hint + "", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(this, getResources().getString(R.string.username_login_hint), Toast.LENGTH_SHORT).show();
                     Intent login = new Intent(this, LoginActivity.class);
-
                     SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
-
                     SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
 
                     mApplication.userid = 0;
@@ -297,29 +359,28 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 
                     finish();
                 }
-
                 if (testUserNowMsg.getCode() == 0 && !testUserNowMsg.getMsg().equals(mApplication.SignOut)) {
                     String msg = testUserNowMsg.getMsg();
-                    data = testUserNowMsg.getData();
-
-                    Log.i("tag", "main1or2: " + data);
-
-                    if (data == 2) {//默认不显示
-//                        mHongdian.setVisibility(View.GONE);
-
-                    } else if (data == 1) {//有
-                        //显示
-
-//                        mHongdian.setVisibility(View.VISIBLE);
-                        //通知有新消息
-                    }
+//                    data = testUserNowMsg.getData();
+//
+//                    Log.i("tag", "main1or2: " + data);
+//
+//                    if (data == 2) {//默认不显示
+////                        mHongdian.setVisibility(View.GONE);
+//
+//                    } else if (data == 1) {//有
+//                        //显示
+//
+////                        mHongdian.setVisibility(View.VISIBLE);
+//                        //通知有新消息
+//                    }
                 }
                 break;
 
             case ApiConfig.TEST_INVENTORY:
                 TestInventory testInventory = (TestInventory) t[0];
                 if (testInventory.getMsg().equals(mApplication.SignOut)) {
-                    ToastUtil.showLong("您的当前账户已在其他设备登陆，为安全起见，请及时修改密码或重新登陆！");
+                    ToastUtil.showLong(getResources().getString(R.string.username_login_hint));
                     Intent intent = new Intent(this, LoginActivity.class);
                     SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
                     SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
@@ -329,7 +390,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
                     finish();
                     //提示
                 } else if (testInventory.getCode() == 0 && !testInventory.getMsg().equals(mApplication.SignOut)) {
-
 //                    if (testInventory.getData() != null) {
 //                        userSalesCount = testInventory.getData().getUserAllCount();
 //                        if (userSalesCount > 0) {
@@ -354,12 +414,11 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
 //                    }
                 }
                 break;
-
-                //开始营业
+            //开始营业
             case ApiConfig.TEST_DIANJIYINGYE:
                 TestDianjiYingye testDianjiYingye = (TestDianjiYingye) t[0];
                 if (testDianjiYingye.getMsg().equals(mApplication.SignOut)) {
-                    ToastUtil.showLong("您的当前账户已在其他设备登陆，为安全起见，请及时修改密码或重新登陆！");
+                    ToastUtil.showLong(getResources().getString(R.string.username_login_hint));
                     Intent intent = new Intent(this, LoginActivity.class);
                     SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
                     SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
@@ -368,23 +427,32 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
                     startActivity(intent);
                     finish();
                     //提示
-                }else if (testDianjiYingye.getCode()==0){
-                    String msg = testDianjiYingye.getMsg();
-                    ToastUtil.showLong(msg+"");
+
+                } else if (testDianjiYingye.getCode() == 0) {
+
+
+                    toast = Toast.makeText(getApplicationContext(),
+                            testDianjiYingye.getMsg() + "", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+
 //                    跳转开始营业
-                    Intent intent = new Intent(this, ConfirmYingyeActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(this, ConfirmYingyeActivity.class);
+//                    startActivity(intent);
+                    SharedPrefrenceUtils.saveString(this, NormalConfig.isYingYe, testDianjiYingye.getData()+"");
+                    isYingYe = testDianjiYingye.getData()+"";
 
+                    close_business_iv.setVisibility(View.VISIBLE);
+                    mDobusinessIv.setVisibility(View.GONE);
+                    //首页 和 我的  获取是否营业的状态
+//                    mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId), token);
                 }
-
                 break;
-
             //停止营业
             case ApiConfig.TEST_STOP_YINGYE:
-
                 TestStopYingYe testStopYingYe = (TestStopYingYe) t[0];
                 if (testStopYingYe.getMsg().equals(mApplication.SignOut)) {
-                    ToastUtil.showLong("您的当前账户已在其他设备登陆，为安全起见，请及时修改密码或重新登陆！");
+                    ToastUtil.showLong(getResources().getString(R.string.username_login_hint));
                     Intent intent = new Intent(this, LoginActivity.class);
                     SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
                     SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
@@ -394,31 +462,44 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
                     finish();
                     //提示
                 } else if (testStopYingYe.getCode() == 0) {
-                    ToastUtil.showLong(testStopYingYe.getMsg());
                     //歇业
 //                    close_business_iv.setVisibility(View.VISIBLE);
 //                    mDobusinessIv.setVisibility(View.GONE);
+
+                    SharedPrefrenceUtils.saveString(this, NormalConfig.isYingYe, testStopYingYe.getData()+"");
+                    isYingYe = testStopYingYe.getData()+"";
+                    toast = Toast.makeText(getApplicationContext(),
+                            testStopYingYe.getMsg() + "", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                    //保存
+//                    SharedPrefrenceUtils.saveString(this,NormalConfig.isYingYe,"2");
+//                    if (isYingye.equals(mApplication.SignOut)){//歇业
+                    close_business_iv.setVisibility(View.GONE);
+                    mDobusinessIv.setVisibility(View.VISIBLE);
+
+                    //首页 和 我的  获取是否营业的状态
+//                    mPresenter.getData(ApiConfig.TEXT_HOMEPAGE_DATA, Integer.parseInt(userId), token);
+//                    }
                 }
                 break;
-
             //库存总数
             case ApiConfig.TEST_USER_COUNT:
-
                 TestUserCount testUserCount = (TestUserCount) t[0];
                 if (testUserCount.getCode() == 0) {
-                    TestUserCount.DataBean data = testUserCount.getData();
-                    TestUserCount.DataBean.CommodityBean commodity = data.getCommodity();
+                    TestUserCount.DataBean data1 = testUserCount.getData();
+                    TestUserCount.DataBean.CommodityBean commodity = data1.getCommodity();
 //                    所有可用库存 userAllCount
 //                    今日已售数量  amount
 //                    库存数量 comInventory
-                    int userAllCount = data.getUserAllCount();
-                    int amount = data.getAmount();
+                    int userAllCount = data1.getUserAllCount();
+                    int amount = data1.getAmount();
 
                 }
-
                 break;
         }
     }
+
     @OnClick({R.id.homepage, R.id.inventory_btn, R.id.dobusiness_btn, R.id.orderform_btn, R.id.mine_btn, R.id.dobusiness_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -434,7 +515,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
                 FragmentUtils.addFragment(manager, inventoryFragment.getClass(), R.id.home_fragment, null);
                 break;
             case R.id.dobusiness_iv:
-
                 //请求数据
 //                mPresenter.getData(ApiConfig.TEXT_GATHERING2, Integer.parseInt(userId), num);
                 break;
@@ -442,7 +522,6 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
             case R.id.orderform_btn://订单
                 //消息未读接口
 //                mPresenter.getData(ApiConfig.TEST_GET_USERNOW_MSG, Integer.parseInt(userId), token);
-
                 FragmentUtils.addFragment(manager, orderFormkFragment.getClass(), R.id.home_fragment, null);
                 break;
             case R.id.mine_btn://我的
@@ -593,6 +672,16 @@ public class MainActivity extends BaseMvpActivity<LoginModel> implements ICommon
         initData();
     }
 
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+//        if (close_business_iv.getVisibility()==View.GONE){//歇业状态 ， 立即购买不能点击
+//            TextView tvBtn = findViewById(R.id.home_buy_now_btn_tv);
+//            tvBtn.setClickable(false);
+//            ToastUtil.showLong("正在歇业中...");
+//        }
+//    }
 }
 //接口回调  隐藏  红点
 //    @Override

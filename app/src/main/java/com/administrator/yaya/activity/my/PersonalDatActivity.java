@@ -61,6 +61,7 @@ import razerdp.design.SlideFromBottomPopup;
  * 个人资料
  */
 public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements TakePhoto.TakeResultListener, SmsVerifyView.SmsVerifyCallback, SlideFromBottomPopup.BottomPopClick {
+
     @BindView(R.id.personal_back_iv)
     ImageView personalBackIv;
     @BindView(R.id.personal_nick_name_ll)
@@ -220,7 +221,6 @@ public class PersonalDatActivity extends BaseMvpActivity<LoginModel> implements 
                 mPop.setBottomClickListener(this);
                 mPop.showPopupWindow();
                 break;
-
             case R.id.personal_nick_name_ll:
                 updateNick();
                 break;

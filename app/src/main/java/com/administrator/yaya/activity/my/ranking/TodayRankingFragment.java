@@ -115,7 +115,7 @@ public class TodayRankingFragment extends BaseMvpFragment<LoginModel> implements
     }
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
 
     @SuppressLint("SetTextI18n")

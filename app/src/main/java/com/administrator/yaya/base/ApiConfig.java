@@ -83,4 +83,6 @@ public class ApiConfig {
 
     public static final int TEST_TODAY_RANKING = 51; //今日排行
     public static final int TEST_TUIGUANG_RANKING = 52;///推广排行
+
+    public static final int TEST_XINYUFEN_JILU = 53;////            信誉分记录
 }

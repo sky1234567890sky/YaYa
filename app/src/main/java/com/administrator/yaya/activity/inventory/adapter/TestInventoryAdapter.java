@@ -67,6 +67,7 @@ public class TestInventoryAdapter extends RecyclerView.Adapter<TestInventoryAdap
         accountpaidItem.mYifuCommodityPrice.setText("实付金额：" + orderStockListBean.getCommodityPrice());
         accountpaidItem.mYifuOrderNumber.setText("订单编号：" + orderStockListBean.getOrderNumber());
         accountpaidItem.mYifu_orderBuildTime.setText("下单时间" + orderStockListBean.getOrderBuildTime());
+        //付款信息
         accountpaidItem.mYifuUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

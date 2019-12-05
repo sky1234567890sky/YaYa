@@ -158,7 +158,9 @@
                 android:text="未收货"
                 android:textColor="@drawable/btn_tvcolor_selector"
                 android:textSize="@dimen/sp_14"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"
+                android:visibility="gone"
+                />
         </RelativeLayout>
 
 

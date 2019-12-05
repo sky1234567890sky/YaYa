@@ -137,7 +137,7 @@ public class ExpendFragment extends BaseLazyLoadFragment<LoginModel> implements 
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong("服务器错误！");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
     //获取焦点时刷新
     @Override

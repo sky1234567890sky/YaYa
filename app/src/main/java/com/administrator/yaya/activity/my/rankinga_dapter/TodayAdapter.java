@@ -59,7 +59,7 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.Vh> {
         int ucount = listBean.getUcount();
 
         vh.mChengjiaoDan.setText("成交"+ucount+"单");
-        vh.mName.setText(uname+"向前冲");
+        vh.mName.setText(uname);
 
         if (id==1){
             //显示
@@ -77,12 +77,11 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.Vh> {
             vh.mImgDengji.setVisibility(View.VISIBLE);
             Glide.with(context).load(R.mipmap.icon_no3).into(vh.mImgDengji);
         }else if (id==4){
-            vh.mName.setText(uname+"向前冲");
+            vh.mName.setText(uname);
         } else{
             vh.mTvDengji.setText(id+"");
         }
     }
-
     @Override
     public int getItemCount() {
         return list!=null ? list.size() : 0;

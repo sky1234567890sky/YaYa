@@ -120,8 +120,9 @@ public class RebateRecordActivity extends BaseMvpActivity<LoginModel> implements
 
     @Override
     public void onError(int whichApi, Throwable e) {
-        ToastUtil.showLong(R.string.error+"");
+        ToastUtil.showLong( getResources().getString(R.string.error));
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponse(int whichApi, Object[] t) {
@@ -132,7 +133,7 @@ public class RebateRecordActivity extends BaseMvpActivity<LoginModel> implements
 
                 TestMyInvite testMyInvite = (TestMyInvite) t[0];
                 if (testMyInvite.getMsg().equals(mApplication.SignOut)) {
-                    ToastUtil.showLong("您的当前账户已在其他设备登陆，为安全起见，请及时修改密码或重新登陆!");
+                    ToastUtil.showLong( getResources().getString(R.string.username_login_hint));
                     Intent intent = new Intent(this, LoginActivity.class);
                     SharedPrefrenceUtils.saveString(this, NormalConfig.USER_ID, "");
                     SharedPrefrenceUtils.saveString(this, NormalConfig.TOKEN, "");
